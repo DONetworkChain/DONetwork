@@ -1,18 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2020-11-17 14:14:11
- * @LastEditTime: 2020-11-17 14:14:12
- * @LastEditors: your name
- * @Description: In User Settings Edit
- * @FilePath: \ebpc\utils\CTimer.hpp
- */
-//
-//  CTimer.hpp
-//
-//  Created by lzj<lizhijian_21@163.com> on 2018/7/20.
-//  Copyright © 2018 ZJ. All rights reserved.
-//
-
 #ifndef CTimer_hpp
 #define CTimer_hpp
 

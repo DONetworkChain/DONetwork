@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2020-11-17 14:14:33
- * @LastEditTime: 2020-11-17 14:14:33
- * @LastEditors: your name
- * @Description: In User Settings Edit
- * @FilePath: \ebpc\utils\CTimer.cpp
- */
 #include "CTimer.hpp"
 #include <future>
 

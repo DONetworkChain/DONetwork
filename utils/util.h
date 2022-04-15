@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2021-03-17 09:27:10
- * @LastEditTime: 2021-03-27 14:06:04
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \ebpc\utils\util.h
- */
 #ifndef _Util_H_
 #define _Util_H_
 

@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2020-05-07 17:30:18
- * @LastEditTime: 2021-08-24 10:52:16
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \ebpc\utils\util.cpp
- */
 #include <sys/time.h>
 #include <stdlib.h>
 #include <iostream>

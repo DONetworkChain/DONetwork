@@ -1,11 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2021-01-14 17:59:45
- * @LastEditTime: 2021-02-25 09:44:45
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \ebpc\net\pack.cpp
- */
 #include <string>
 #include <random>
 #include <chrono>

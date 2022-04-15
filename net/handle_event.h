@@ -1,12 +1,3 @@
-/*
- * @Author: your name
- * @Date: 2021-01-14 17:59:45
- * @LastEditTime: 2021-03-10 17:47:14
- * @LastEditors: Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: \ebpc\net\handle_event.h
- */
-
 #ifndef _HANDLE_EVENT_H_
 #define _HANDLE_EVENT_H_
 
