@@ -1,10 +1,8 @@
 #include "socket_buf.h"
 #include "global.h"
-#include "../utils/util.h"
-#include "../ca/ca_base64.h"
-
-// #define BOOST_STACKTRACE_USE_ADDR2LINE
-// #include <boost/stacktrace.hpp>
+#include "utils/util.h"
+#include "utils/base64_2.h"
+#include "utils/console.h"
 
 
 std::unordered_map<int, std::unique_ptr<std::mutex>> fds_mutex;
@@ -89,17 +87,15 @@ bool SocketBuf::add_data_to_read_buf(char *data, size_t len)
 	size_t curr_msg_len = 0;
     if (this->cache.size() >= 4)
     {
-        memcpy(&curr_msg_len, this->cache.data(), 4);  
-        //DEBUGLOG("curr_msg_len:{} cache.size:{}" , (int)curr_msg_len, (int)cache.size() );
+        memcpy(&curr_msg_len, this->cache.data(), 4);  //The total length of the current message
         
         SocketBuf::verify_cache(curr_msg_len);
 
         while (this->cache.size() >= (size_t)(4 + curr_msg_len))
         {
-            this->cache.erase(0, 4);  //this leak! 
+            this->cache.erase(0, 4); 
             std::string read_data(this->cache.begin(), this->cache.begin() + curr_msg_len);
 
-            
             if (read_data.size() < sizeof(uint32_t) * 3)
             {
                 SocketBuf::correct_cache();
@@ -114,8 +110,6 @@ bool SocketBuf::add_data_to_read_buf(char *data, size_t len)
                 return false;    
             }
             this->cache.erase(0, curr_msg_len);
-
-            // data + checksum + flag + end
             this->send_pk_to_mess_queue(read_data);
 
             if (this->cache.size() < 4)
@@ -124,7 +118,6 @@ bool SocketBuf::add_data_to_read_buf(char *data, size_t len)
             SocketBuf::verify_cache(curr_msg_len);
         }
         
-        //this->cache.reserve(this->cache.size());
         if(this->cache.capacity() > this->cache.size() * 20)
         {
             this->cache.shrink_to_fit();
@@ -154,7 +147,7 @@ void SocketBuf::printf_cache()
     DEBUGLOG("fd: {}", this->fd);
     DEBUGLOG("port_and_ip: {}", this->port_and_ip);
     DEBUGLOG("cache: {}", this->cache.c_str());
-    DEBUGLOG("send_cache: {}", this->send_cache.c_str());
+    DEBUGLOG("send_cache： {}", this->send_cache.c_str());
 }
 
 std::string SocketBuf::get_send_msg()
@@ -249,9 +242,6 @@ bool BufferCrol::add_write_buffer_queue(uint32_t ip, uint16_t port, const std::s
 bool BufferCrol::add_read_buffer_queue(uint64_t port_and_ip, char *buf, socklen_t len)
 {
     auto port_ip = net_data::apack_port_and_ip_to_str(port_and_ip);
-    // std::cout << "read data==========================" << std::endl;
-    // std::cout << "ip:" << port_ip.second << std::endl;
-    // std::cout << "port:" << port_ip.first << std::endl;
     if (buf == NULL || len == 0)
     {
         ERRORLOG("add_read_buffer_queue error buf == NULL or len == 0");
@@ -290,8 +280,6 @@ bool BufferCrol::add_buffer(uint64_t port_and_ip, const int fd)
 
     if (port_and_ip == 0 || fd <= 0)
     {
-        // ERRORLOG("add_buffer error port_and_ip == 0 or fd <= 0 port_and_ip: {}  fd: {}", port_and_ip, fd);
-        // std::cout << boost::stacktrace::stacktrace() << std::endl;   
         return false;
     }
 
@@ -300,7 +288,6 @@ bool BufferCrol::add_buffer(uint64_t port_and_ip, const int fd)
     auto itr = this->BufferMap.find(port_and_ip);
     if (itr != this->BufferMap.end())
     {
-        //WARNLOG(" port_and_ip exist in map, port_and_ip: {}", port_and_ip);
         return false;
     }
     std::shared_ptr<SocketBuf> tmp(new SocketBuf());
@@ -319,6 +306,7 @@ bool BufferCrol::add_buffer(std::string ip, uint16_t port, const int fd)
 
 bool BufferCrol::add_buffer(uint32_t ip, uint16_t port, const int fd)
 {
+
     uint64_t port_and_ip = net_data::pack_port_and_ip(port, ip);
     return this->add_buffer(port_and_ip, fd);
 }
@@ -341,6 +329,7 @@ bool BufferCrol::delete_buffer(std::string ip, uint16_t port)
 }
 bool BufferCrol::delete_buffer(uint32_t ip, uint16_t port)
 {
+    DEBUGLOG("delete_buffer ip:({}),port:({})",IpPort::ipsz(ip),port);
     uint64_t port_and_ip = net_data::pack_port_and_ip(port, ip);
     return this->delete_buffer(port_and_ip);
 }
@@ -356,12 +345,39 @@ bool BufferCrol::delete_buffer(uint64_t port_and_ip)
     auto itr = this->BufferMap.find(port_and_ip);
     if(itr != this->BufferMap.end())
     {
-      
         this->BufferMap.erase(port_and_ip);
         return true;
     }
     return false;
 }
+
+bool BufferCrol::delete_buffer(const int fd)
+{
+    if (fd <= 0)
+    {
+        return false;
+    }
+
+    std::lock_guard<std::mutex> lck(mutex_);
+
+    auto iter = std::find_if(BufferMap.begin(), BufferMap.end(), [fd](auto & i){
+
+        return i.second->fd == fd;
+
+    });
+
+    if (iter == BufferMap.end())
+    {
+        DEBUGLOG("delete_buffer(const int fd) iter == BufferMap.end()");
+        return false;
+    }
+    
+    std::pair<uint16_t, uint32_t> pair = net_data::apack_port_and_ip_to_int(iter->second->port_and_ip);
+    DEBUGLOG("delete_buffer(const int fd) ip:({}),port:({})",IpPort::ipsz(pair.first), pair.second);
+    BufferMap.erase(iter);
+    return true;
+}
+
 
 void BufferCrol::pop_n_write_buffer_queue(uint32_t ip, uint16_t port, int n)
 {
@@ -420,6 +436,35 @@ bool BufferCrol::is_exists(uint32_t ip, uint16_t port)
 	return is_exists(port_and_ip);
 }
 
+std::shared_ptr<SocketBuf> BufferCrol::get_socket_buf(uint32_t ip, uint16_t port)
+{
+    std::lock_guard<std::mutex> lck(mutex_);
+
+    uint64_t port_and_ip = net_data::pack_port_and_ip(port, ip);
+    auto iter = BufferMap.find(port_and_ip);
+    if (iter == BufferMap.end())
+    {
+        return std::shared_ptr<SocketBuf>();
+    }
+    
+    return iter->second;
+}
+
+bool BufferCrol::is_unqiue_connection(uint32_t ip)
+{
+    for(auto &iter : BufferMap)
+    {
+        std::pair<uint16_t, uint32_t> ip_and_port = net_data::apack_port_and_ip_to_int(iter.first);
+
+        if(ip_and_port.second == ip)
+        {
+            DEBUGLOG("repeat connection ip: {} , port: {} ", IpPort::ipsz(ip), ip_and_port.first);
+            return false;
+        }  
+    }
+    return true;
+}
+
 bool BufferCrol::add_write_pack(uint64_t port_and_ip, const std::string ios_msg)
 {
 	if (ios_msg.size() == 0)
@@ -465,27 +510,3 @@ bool BufferCrol::is_cache_empty(uint32_t ip, uint16_t port)
     }
     return itr->second->is_send_cache_empty();
 }
-
-// void BufferCrol::print_cache_size()
-// {
-//     std::lock_guard<std::mutex> lck(mutex_);
-//     for(auto i : this->BufferMap)
-//     {
-//         total_recv_capacity += i.second->cache.capacity();
-//         total_send_capacity += i.second->send_cache.capacity();
-//         total_recv_size += i.second->cache.size();
-//         total_send_size += i.second->send_cache.size();
-//     }
-//     std::cout << "BufferMap size is " << this->BufferMap.size() << std::endl;
-//     std::cout << "total_recv_capacity = " << total_recv_capacity / 1024 / 1024  << std::endl;
-//     std::cout << "total_send_capacity = " << total_send_capacity / 1024 / 1024 << std::endl;
-//     std::cout << "total_capacity = " << (total_recv_capacity + total_send_capacity) / 1024 / 1024 << std::endl;
-//     std::cout << std::endl;
-//     std::cout << "total_recv_size = " << total_recv_size / 1024 / 1024 << std::endl;
-//     std::cout << "total_send_size = " << total_send_size / 1024 / 1024 << std::endl;
-//     std::cout << "total_size = " << (total_recv_size + total_send_size) / 1024 / 1024 << std::endl;
-//     total_recv_size = 0;
-//     total_send_size = 0;
-//     total_recv_capacity = 0;
-//     total_send_capacity = 0;
-// }

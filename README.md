@@ -1,14 +1,49 @@
-# DONetwork
+## Compile and install
 
-Decentralized Organization Network is an excellent decentralized performance blockchain system, based on the waves protocol can fast complete on-chain consensus, efficient conduct DAO transactions, design the unique economic model to improve DAO related application sustainable development.
-
-## Usage
-
-### Compile
+### Compile and install devnet debug version
 
 ```
-mkdir build && cd build
-cmake ..
-make 
+mkdir build_dev_debug && cd build_dev_debug
+cmake .. 
+make
+```
 
+### Compile and install devnet release version
+
+```
+mkdir build_dev_release && cd build_dev_release
+cmake .. -DCMAKE_BUILD_TYPE=Release
+make
+```
+
+### Compile and install test net debug version
+
+```
+mkdir build_test_debug && cd build_test_debug
+cmake .. -DTESTCHAIN=ON
+make
+```
+
+### Compile and install test net RELEASE version
+
+```
+mkdir build_test_release && cd build_test_release
+cmake .. -DTESTCHAIN=ON -DCMAKE_BUILD_TYPE=Release
+make
+```
+
+### Compile and install the main network debug version
+
+```
+mkdir build_primary_debug && cd build_primary_debug
+cmake .. -DPRIMARYCHAIN=ON 
+make
+```
+
+### Translate and install the main network release version
+
+```
+mkdir build_primary_release && cd build_primary_release
+cmake .. -DPRIMARYCHAIN=ON -DCMAKE_BUILD_TYPE=Release
+make
 ```

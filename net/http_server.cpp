@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <functional>
 #include "../common/config.h"
-#include "../utils/singleton.h"
+#include "../utils/MagicSingleton.h"
 
 
 std::thread HttpServer::listen_thread;
@@ -23,7 +23,7 @@ void HttpServer::work()
   }
 
   int port = 8080;
-  port = Singleton<Config>::get_instance()->GetHttpPort();
+  port = MagicSingleton<Config>::GetInstance()->GetHttpPort();
   svr.listen("0.0.0.0", port);
 }
 

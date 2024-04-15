@@ -14,33 +14,14 @@ class Util
 public:
     Util();
     ~Util();
-    
+
     static uint32_t adler32(const unsigned char *data, size_t len); 
-   
-   static int IsVersionCompatible( std::string recvVersion );
+    static int IsVersionCompatible( std::string recvVersion );
 
-   static int IsLinuxVersionCompatible(const std::vector<std::string> & vRecvVersion);
+    static int IsLinuxVersionCompatible(const std::vector<std::string> & vRecvVersion);
 
-   static int IsOtherVersionCompatible(const std::string & vRecvVersion, bool bIsAndroid);
-
-   static int CalcPledgeRate(double &AnnualizedReturn);
-   static int CalcAnnualizedReturn();
-   static int GetAnnualizedReturn(uint64_t PledgeRate,double &AnnualizedReturn);
-
-private:
-    static double Aror[25][100];
-    static bool ArorFlag;
+    static int IsOtherVersionCompatible(const std::string & vRecvVersion, bool bIsAndroid);
 };
 
-
-
-struct ExitCaller
-{
-	~ExitCaller() { functor_(); }
-	ExitCaller(std::function<void()>&& functor) : functor_(std::move(functor)) {}
-
-private:
-	std::function<void()> functor_;
-};
 
 #endif

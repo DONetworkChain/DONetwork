@@ -1,5 +1,6 @@
 #include "epoll_mode.h"
 #include "./global.h"
+#include "utils/console.h"
 
 EpollMode::EpollMode()
 {
@@ -54,7 +55,7 @@ int EpollMode::epoll_loop()
     u16 u16_port;
     int e_fd;
     MsgData data;
-
+    //Sets the maximum number of files allowed to be opened per process
     rt.rlim_max = rt.rlim_cur = MAXEPOLLSIZE;
     if (setrlimit(RLIMIT_NOFILE, &rt) == -1)
     {
@@ -63,29 +64,30 @@ int EpollMode::epoll_loop()
     INFOLOG("epoll loop start success!");
     while (1)
     {
-
+        //Wait for something to happen
         nfds = epoll_wait(this->epoll_fd, events, MAXEPOLLSIZE, 1 * 1000);
         if (nfds == -1)
         {
-            ERRORLOG("epoll err: {}", errno);
             continue;
         }
+        //Handle all events
         for (n = 0; n < nfds; ++n)
         {
             if (events[n].events & EPOLLERR)
             {
-                // ERRORLOG("EPOLLERR=================");
                 int status, err;
                 socklen_t len;
                 err = 0;
                 len = sizeof(err);
                 e_fd = events[n].data.fd;
                 status = getsockopt(e_fd, SOL_SOCKET, SO_ERROR, &err, &len);
+                //Connection failed
                 if (status == 0)
                 {
-                    Singleton<PeerNode>::get_instance()->delete_by_fd(e_fd);
+                    MagicSingleton<PeerNode>::GetInstance()->delete_by_fd(e_fd);
                 }
             }
+            //Handle primary connection listening
             if (events[n].data.fd == this->fd_ser_main)
             {
                 int connfd = 0;
@@ -94,20 +96,17 @@ int EpollMode::epoll_loop()
                 while ((connfd = net_tcp::Accept(lis_fd, (struct sockaddr *)&cliaddr, &socklen)) > 0)
                 {
                     net_tcp::set_fd_noblocking(connfd);
+                    //Turn off all signals
                     int value = 1;
                     setsockopt(connfd, SOL_SOCKET, MSG_NOSIGNAL, &value, sizeof(value));
 
                     u32_ip = IpPort::ipnum(inet_ntoa(cliaddr.sin_addr));
                     u16_port = htons(cliaddr.sin_port);
-
-                    auto self = Singleton<PeerNode>::get_instance()->get_self_node();
+                    auto self = MagicSingleton<PeerNode>::GetInstance()->get_self_node();
                     DEBUGLOG(YELLOW "u32_ip({}),u16_port({}),self.public_ip({}),self.local_ip({})" RESET, IpPort::ipsz(u32_ip), u16_port, IpPort::ipsz(self.public_ip), IpPort::ipsz(self.listen_ip));
-
-
-                    Singleton<BufferCrol>::get_instance()->add_buffer(u32_ip, u16_port, connfd);
-                    Singleton<EpollMode>::get_instance()->add_epoll_event(connfd, EPOLLIN | EPOLLOUT | EPOLLET);
-            
-                } 
+                    MagicSingleton<BufferCrol>::GetInstance()->add_buffer(u32_ip, u16_port, connfd);
+                    MagicSingleton<EpollMode>::GetInstance()->add_epoll_event(connfd, EPOLLIN | EPOLLOUT | EPOLLET);
+                }
                 if (connfd == -1)
                 {
                     if (errno != EAGAIN && errno != ECONNABORTED && errno != EPROTO && errno != EINTR)
@@ -121,6 +120,10 @@ int EpollMode::epoll_loop()
                 this->delete_epoll_event(e_fd);
                 u32_ip = IpPort::get_peer_nip(e_fd);
                 u16_port = IpPort::get_peer_port(e_fd);
+                if(u16_port == SERVERMAINPORT)
+                {
+                     u16_port = IpPort::get_connect_port(e_fd);
+                }
 
                 data.ip = u32_ip;
                 data.port = u16_port;
@@ -133,8 +136,12 @@ int EpollMode::epoll_loop()
                 e_fd = events[n].data.fd;
                 u32_ip = IpPort::get_peer_nip(e_fd);
                 u16_port = IpPort::get_peer_port(e_fd);
-               
-                bool isempty = Singleton<BufferCrol>::get_instance()->is_cache_empty(u32_ip, u16_port);
+                if(u16_port == SERVERMAINPORT)
+                {
+                     u16_port = IpPort::get_connect_port(e_fd);
+                }
+                
+                bool isempty = MagicSingleton<BufferCrol>::GetInstance()->is_cache_empty(u32_ip, u16_port);
                 if(isempty){
                     continue;
                 }

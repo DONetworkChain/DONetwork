@@ -12,7 +12,7 @@ void StringUtil::Trim(std::string& str, bool bLeft, bool bRight)
 }
 
 
-void StringUtil::SplitString(const std::string& s, std::vector<std::string>& v, const std::string& c)
+void StringUtil::SplitString(const std::string& s, const std::string& c ,std::vector<std::string>& v)
 {
     std::string::size_type pos1, pos2;
     pos2 = s.find(c);

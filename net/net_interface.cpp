@@ -1,78 +1,29 @@
 #include <string.h>
 #include "../include/net_interface.h"
 #include "../include/logging.h"
-#include "../utils/singleton.h"
 #include "./ip_port.h"
 
 #include "./peer_node.h"
 #include "./pack.h"
 #include "./net_api.h"
-#include "node_cache.h"
 #include "net.pb.h"
 
-#define CA_SEND 1
-#define CA_BROADCAST 1
-
+//Obtaining the ID of your own node returns 0 successfully
 std::string net_get_self_node_id()
 {
-	return Singleton<PeerNode>::get_instance()->get_self_id();
+	return MagicSingleton<PeerNode>::GetInstance()->get_self_id();
 }
 
 Node net_get_self_node() 
 {
-    return Singleton<PeerNode>::get_instance()->get_self_node();
+    return MagicSingleton<PeerNode>::GetInstance()->get_self_node();
 }
 
-void net_set_self_fee(uint64_t fee)
-{	
-	Singleton<PeerNode>::get_instance()->set_self_fee(fee);
-	global::fee_inited++;
-	if(global::fee_inited >= 2)
-	{
-		global::cond_fee_is_set.notify_all();
-		INFOLOG("cond_fee_is_set:notify_all");
-	}
-    
-}
-
-void net_set_self_base58_address(string address)
-{
-	Singleton<PeerNode>::get_instance()->set_self_base58_address(address);
-}
-
-void net_update_fee_and_broadcast(uint64_t fee)
-{
-	Singleton<PeerNode>::get_instance()->set_self_fee(fee);
-	UpdateFeeReq updateFeeReq;
-	updateFeeReq.set_id(Singleton<PeerNode>::get_instance()->get_self_id());
-	updateFeeReq.set_fee(fee);
-	net_com::broadcast_message(updateFeeReq, net_com::Compress::kCompress_False, net_com::Encrypt::kEncrypt_False, net_com::Priority::kPriority_Low_0);
-}
-
-void net_set_self_package_fee(uint64_t package_fee)
-{	
-	Singleton<PeerNode>::get_instance()->set_self_package_fee(package_fee);
-	global::fee_inited++;
-    if(global::fee_inited >= 2)
-	{
-		global::cond_fee_is_set.notify_all();
-   		INFOLOG("cond_package_fee_is_set:notify_all");
-	}
-}
-
-void net_update_package_fee_and_broadcast(uint64_t package_fee)
-{
-	Singleton<PeerNode>::get_instance()->set_self_package_fee(package_fee);
-	UpdatePackageFeeReq updatePackageFeeReq;
-	updatePackageFeeReq.set_id(Singleton<PeerNode>::get_instance()->get_self_id());
-	updatePackageFeeReq.set_package_fee(package_fee);
-	net_com::broadcast_message(updatePackageFeeReq, net_com::Compress::kCompress_False, net_com::Encrypt::kEncrypt_False, net_com::Priority::kPriority_Low_0);
-}
-
+//Returns all IDs of the K bucket
 std::vector<std::string> net_get_node_ids()
 {
 	std::vector<std::string> ids;
-	auto nodelist = Singleton<PeerNode>::get_instance()->get_nodelist();
+	auto nodelist = MagicSingleton<PeerNode>::GetInstance()->get_nodelist();
 	for(auto& node:nodelist)
 	{
 		ids.push_back(node.base58address);
@@ -82,7 +33,7 @@ std::vector<std::string> net_get_node_ids()
 
 double net_get_connected_percent()
 {
-	auto nodelist = Singleton<PeerNode>::get_instance()->get_nodelist();
+	auto nodelist = MagicSingleton<PeerNode>::GetInstance()->get_nodelist();
 	int num = 0;
 	for(auto& node:nodelist)
 	{
@@ -95,10 +46,11 @@ double net_get_connected_percent()
 	return total_num == 0 ? 0 : num/total_num;
 }
 
+//Returns the public network node
 std::vector<Node> net_get_public_node()
 {
 	std::vector<Node> vnodes;
-	auto nodelist = Singleton<PeerNode>::get_instance()->get_nodelist(NODE_PUBLIC);
+	auto nodelist = MagicSingleton<PeerNode>::GetInstance()->get_nodelist(NODE_PUBLIC);
 	for(auto& node: nodelist)
 	{
 		if(node.fd > 0)
@@ -109,55 +61,18 @@ std::vector<Node> net_get_public_node()
 	return vnodes;
 }
 
+//Returns all public network nodes, regardless of whether they are connected or not
 std::vector<Node> net_get_all_public_node()
 {
-	std::vector<Node> vnodes = Singleton<PeerNode>::get_instance()->get_nodelist(NODE_PUBLIC, false);
+	std::vector<Node> vnodes = MagicSingleton<PeerNode>::GetInstance()->get_nodelist(NODE_PUBLIC, false);
 	return vnodes;
 }
 
-std::map<std::string, uint64_t> net_get_node_ids_and_fees()
-{
-	std::vector<Node> nodelist;
-	if (Singleton<PeerNode>::get_instance()->get_self_node().is_public_node)
-	{
-		nodelist = Singleton<PeerNode>::get_instance()->get_nodelist();
-	}
-	else
-	{
-		nodelist = Singleton<NodeCache>::get_instance()->get_nodelist();
-	}
-	
-	std::map<std::string, uint64_t> res;
-	for(auto& node:nodelist)
-	{
-		res[node.base58address] = node.sign_fee;
-	}
-	return res;
-}
-
-std::map<std::string, uint64_t> net_get_pub_node_ids_and_fees()
-{
-	std::vector<Node> nodelist = Singleton<PeerNode>::get_instance()->get_public_node();
-
-	std::map<std::string, uint64_t> res;
-	for(auto & node : nodelist)
-	{
-		res[node.base58address] = node.sign_fee;
-	}
-	return res;
-}
-
+//Returns all node IDs and base58address
 std::map<std::string, string> net_get_node_ids_and_base58address()
 {
 	std::vector<Node> nodelist;
-	if (Singleton<PeerNode>::get_instance()->get_self_node().is_public_node)
-	{
-		nodelist = Singleton<PeerNode>::get_instance()->get_nodelist();
-	}
-	else
-	{
-		nodelist = Singleton<NodeCache>::get_instance()->get_nodelist();
-	}
+	nodelist = MagicSingleton<PeerNode>::GetInstance()->get_nodelist();
 
 	std::map<std::string, string> res;
 	for(auto& node:nodelist)
@@ -167,9 +82,10 @@ std::map<std::string, string> net_get_node_ids_and_base58address()
 	return res;
 }
 
+//Find the ID by IP
 std::string net_get_ID_by_ip(std::string ip)
 {
-	auto nodelist = Singleton<PeerNode>::get_instance()->get_nodelist(NODE_PUBLIC);
+	auto nodelist = MagicSingleton<PeerNode>::GetInstance()->get_nodelist(NODE_PUBLIC);
 	for(auto& node:nodelist)
 	{	
 		

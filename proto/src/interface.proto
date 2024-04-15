@@ -1,0 +1,341 @@
+
+syntax = "proto3";
+
+
+
+message GetBlockReq
+{
+    string version = 1;
+    uint64 height = 2;
+}
+
+message BlockItem
+{
+    string  blockhash = 1;
+    repeated string  addr = 2;
+}
+
+message GetBlockAck
+{
+    string version = 1;
+    sint32 code = 2;
+    string message = 3;
+    uint64 height = 4;
+    uint64 timestamp = 5;
+    repeated BlockItem list = 6; 
+}
+
+message GetBalanceReq 
+{
+    string version = 1;
+    string address = 2;
+}
+
+message GetBalanceAck 
+{
+    string version = 1;
+    sint32 code = 2;
+    string message = 3;
+
+    //data
+    string address = 4;
+    uint64 balance = 5;
+}
+
+message GetNodeInfoReq 
+{
+    string version = 1;
+}
+
+message GetNodeInfoAck 
+{
+    string version = 1;
+    sint32 code = 2;
+    string message = 3;
+
+    //data
+    string address = 4;
+    string ip = 5;
+    uint64 height = 6;
+    uint64 gas = 7;
+    string ver = 8;
+}
+
+message GetStakeListReq 
+{
+    string version = 1; 
+    string addr = 2;
+}
+
+message StakeItem
+{
+    string blockhash = 1; 
+    uint32 blockheight = 2;
+    string utxo = 3;
+    uint64 amount = 4;
+    uint64 time  = 5; 
+    string fromaddr = 6; 
+    string toaddr = 7;
+    string detail = 8;
+}  
+
+message GetStakeListAck
+{
+    string version = 1;
+    int32 code = 2;
+    string message = 3;
+    repeated StakeItem list = 4;
+}
+
+message GetInvestListReq
+{
+    string version = 1;
+    string addr = 2;
+}
+
+message InvestItem
+{
+    string blockhash = 1;
+    uint32 blockheight = 2;
+    string utxo = 3;
+    uint64 amount = 4; 
+    uint64 time  = 5;
+    string fromaddr = 6;
+    string toaddr = 7;
+    string detail = 8;
+}
+
+message GetInvestListAck
+{
+    string version = 1;
+    int32 code = 2;
+    string message = 3;
+    repeated InvestItem list = 4;
+}
+
+enum TxType
+{
+    TxTypeUnknown = 0;
+    TxTypeTx = 1;
+    TxTypeStake = 2;
+    TxTypeUnstake = 3;
+    TxTypeInvest = 4;
+    TxTypeDisinvest = 5;
+    TxTypeBonus = 6;
+}
+
+message GetUtxoReq
+{
+    string version = 1;
+    string address = 2;
+}
+
+message Utxo
+{
+    string hash = 1; // utxo hash
+    uint64 value = 2; // utxo value
+    uint32 n = 3; // utxo n
+}
+
+message GetUtxoAck
+{
+    string version = 1;
+    int32 code = 2;
+    string message = 3;
+    string address = 4;
+    repeated Utxo utxos = 5;
+}
+
+message GetAllInvestAddressReq 
+{
+    string version              = 1;
+    string addr                 = 2;
+}
+
+message InvestAddressItem 
+{
+    string addr                 = 1;
+    uint64 value                = 2;
+}
+
+message GetAllInvestAddressAck 
+{
+    string version     = 1;
+    sint32 code        = 2;
+    string message     = 3;
+    string addr        = 4;
+    repeated InvestAddressItem list = 5;
+}
+
+message GetAllStakeNodeListReq 
+{
+    string version  = 1;
+}
+
+message StakeNode 
+{
+    string addr           = 1;
+    string name           = 2;
+    string ip             = 3;
+    bytes identity        = 4;
+    string logo           = 5;
+    uint64 height         = 6;
+    string version        = 7;
+}
+
+message GetAllStakeNodeListAck 
+{
+    string version     = 1;
+    sint32 code        = 2;
+    string message     = 3;
+    repeated StakeNode list = 4;
+}
+
+message GetSignCountListReq 
+{
+    string version  = 1;
+}
+
+message SignCount
+{
+    string addr   = 1;
+    uint32 count = 2;
+}
+
+message GetSignCountListAck 
+{
+    string version     = 1;
+    sint32 code        = 2;
+    string message     = 3;
+    repeated SignCount list  = 4;
+}
+
+message GetHeightReq 
+{
+    string version = 1;
+}
+
+message GetHeightAck
+{
+    string version = 1;
+    int32 code = 2;
+    string message = 3;
+    uint64 height = 4;
+}
+
+message GetBonusListReq
+{
+    string version = 1;
+    string bonusAddr = 2;
+}
+
+message BonusItem
+{
+    string addr = 1;
+    uint64 value = 2;
+}
+
+message GetBonusListAck
+{
+    string version = 1;
+    int32 code = 2;
+    string message = 3;
+    string bonusAddr = 4;
+    repeated BonusItem list = 5;
+}
+
+message MultiSignTxReq
+{
+  string version  = 1;
+  uint64 height = 2;
+  bytes txRaw = 3;
+}
+
+message MultiSignTxAck
+{
+  string version  = 1;
+  int32 code      = 2;
+  string message  = 3;
+  bytes txRaw = 4;
+  
+}
+
+message SuccessRate
+{
+    string hash = 1;
+    double rate = 2;
+}
+
+message IsOnChainReq
+{
+    string version  = 1; 
+    repeated string txhash = 2;
+    uint64 time = 3;
+}
+
+
+message IsOnChainAck
+{
+    string version  = 1;
+    int32 code      = 2;
+    string message  = 3;
+    uint64 time     = 4;
+    repeated SuccessRate percentage = 5; 
+}
+
+message CorresHash
+{
+    string hash = 1;
+    uint32 flag = 2;
+}
+
+message CheckTxReq
+{
+    string version         = 1;
+    repeated string txhash = 2;
+    string msg_id          = 3;
+}
+
+message CheckTxAck
+{
+    string version = 1;
+    repeated CorresHash flaghash = 2;
+    string msg_id = 3;
+    string base58addr = 4;
+}
+
+message GetRestInvestAmountReq
+{
+    string version = 1;
+    string base58 = 2;
+}
+
+message GetRestInvestAmountAck
+{
+    string version  = 1;
+    int32 code      = 2;
+    string message  = 3;
+    uint64 amount   = 4;
+    string base58   = 5; 
+}
+
+//get confirm transaction message
+message ConfirmTransactionReq
+{
+    string version         = 1; //version
+    repeated string txhash = 2; //transaction hash
+    uint64 time            = 3; //time
+    uint64 height          = 4; //transaction height 
+}
+
+//send confirm transaction message
+message ConfirmTransactionAck
+{
+    string      version                  = 1; //version
+    int32       code                     = 2; //Error code
+    string      message                  = 3; //Returns an error message
+    uint64      time                     = 4; //time
+    repeated    SuccessRate percentage   = 5; //success transaction percentage
+    uint32      send_size                = 6; //sendNumber   
+    uint32      received_size            = 7; //received number 
+} 

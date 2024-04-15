@@ -8,7 +8,6 @@
 #include <sys/resource.h>
 #include "../include/logging.h"
 #include "./net_api.h"
-#include "../utils/singleton.h"
 #include "./peer_node.h"
 #include "./net_api.h"
 #include "./socket_buf.h"
@@ -16,7 +15,6 @@
 class EpollMode
 {
     /*Inner Var*/
-    friend class Singleton<EpollMode>;
 private:
     std::thread* listen_thread;
     /*Inner Func*/

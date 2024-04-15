@@ -3,30 +3,32 @@
 namespace global
 {
     std::string local_ip;
-    std::string mac_md5;
     int cpu_nums;
-    atomic<int> nodelist_refresh_time;
-    MsgQueue queue_read("ReadQueue");   
-    MsgQueue queue_work("WorkQueue");   
-    MsgQueue queue_write("WriteQueue"); 
-
-    std::list<int> phone_list; //
+    atomic<int> nodelist_refresh_time = 100;
+    MsgQueue queue_read("ReadQueue");   // Read queue
+    MsgQueue queue_work("WorkQueue");   // Work queue is mainly used to process the queue calling CA code after read
+    MsgQueue queue_write("WriteQueue"); // Write queue
+    std::list<int> phone_list; // Store FD connected to mobile phone
     std::mutex mutex_for_phone_list;
-    CTimer g_timer;
+    CTimer heart_timer;
     CTimer broadcast_timer;
-    CTimer registe_public_node_timer; //liuzg
     std::mutex mutex_listen_thread;
+    std::mutex mutex_switch_thread;
     std::mutex mutex_set_fee;
     std::condition_variable_any cond_listen_thread;
-    std::condition_variable_any cond_fee_is_set;
     bool listen_thread_inited = false;
-    int fee_inited = 0;
 
     std::mutex g_mutex_req_cnt_map;
-    std::map<std::string, std::pair<uint32_t, uint64_t>> reqCntMap; // 
+    std::map<std::string, std::pair<uint32_t, uint64_t>> reqCntMap;
 
+    //Stores transaction information obtained by other nodes
     std::mutex g_mutex_transinfo;
     bool g_is_utxo_empty = true;
-    GetTransInfoAck g_trans_info;
+
+    #ifdef DEVCHAIN
+        int broadcast_threshold = 15;
+    #else
+        int broadcast_threshold = 50;
+    #endif
 
 }

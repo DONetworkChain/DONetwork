@@ -11,7 +11,6 @@
 
 
 #include "../include/logging.h"
-#include "../utils/singleton.h"
 #include "./msg_queue.h"
 #include "./net_api.h"
 
@@ -19,7 +18,7 @@
 extern std::unordered_map<int, std::unique_ptr<std::mutex>> fds_mutex;
 std::mutex& get_fd_mutex(int fd);
 
-
+/* Message length is the first 4 bytes of the message and does not contain these 4 bytes */
 class SocketBuf
 {
 public:
@@ -52,7 +51,7 @@ public:
         if(!this->send_cache.empty())
             DEBUGLOG("send_cache: {}", this->send_cache.c_str());
     };
-/*API*/
+
     bool add_data_to_read_buf(char *data, size_t len);
     void printf_cache();
     std::string get_send_msg();
@@ -62,8 +61,8 @@ public:
 	bool is_sending_msg();
 	void set_sending_msg(bool is_sending);
 
-    void verify_cache(size_t curr_msg_len);      
-    void correct_cache();                       
+    void verify_cache(size_t curr_msg_len);      //Verify the buffer and fix if there are errors
+    void correct_cache();                       //Fix buffers
 };
 
 
@@ -88,6 +87,7 @@ public:
     bool delete_buffer(std::string ip, uint16_t port);
     bool delete_buffer(uint32_t ip, uint16_t port);
     bool delete_buffer(uint64_t port_and_ip);
+    bool delete_buffer(const int fd);
     std::string get_write_buffer_queue(uint64_t port_and_ip);
     std::string get_write_buffer_queue(std::string ip, uint16_t port);
     std::string get_write_buffer_queue(uint32_t ip, uint16_t port);
@@ -107,11 +107,13 @@ public:
 	bool is_exists(std::string ip, uint16_t port);
 	bool is_exists(uint32_t ip, uint16_t port);
 
+    std::shared_ptr<SocketBuf> get_socket_buf(uint32_t ip, uint16_t port);
+    bool is_unqiue_connection(uint32_t ip);
+    
     bool is_cache_empty(uint32_t ip, uint16_t port);
 
     /*test api*/
     void print_bufferes();
-    // void print_cache_size();
 };
 
 

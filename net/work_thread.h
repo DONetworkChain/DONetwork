@@ -6,9 +6,11 @@
 #include <list>
 #include <deque>
 #include "./net_api.h"
-#include "../utils/singleton.h"
 #include "./msg_queue.h"
 #include "../common/config.h"
+
+void sys_thread_set_cpu(unsigned int cpu_index, pthread_t tid);
+int get_cpu_index();
 
 class WorkThreads
 {
@@ -16,8 +18,9 @@ public:
 	WorkThreads() = default;
 	~WorkThreads() = default;
 	
-	
-	static int handle_net_read(const MsgData& data);	static int handle_network_event(MsgData& data);
+	// Processing network messages
+	static int handle_net_read(const MsgData& data);
+	static int handle_network_event(MsgData& data);
 	static bool handle_net_write(const MsgData& data);
 	static void work(int num);
 	static void work_read(int id);

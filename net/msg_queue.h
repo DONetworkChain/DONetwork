@@ -28,7 +28,7 @@ typedef struct msg_data
     uint32_t ip;
     std::string data;
     net_pack pack;
-    id_type id;
+    std::string id;
 }MsgData;
 
 

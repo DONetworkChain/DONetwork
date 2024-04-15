@@ -6,7 +6,7 @@
 #include "common.pb.h"
 #include "./peer_node.h"
 #include "utils/compress.h"
-#include "common/version.h"
+#include "common/global.h"
 
 class Pack
 {
@@ -28,14 +28,14 @@ template <typename T>
 bool Pack::InitCommonMsg(CommonMsg& msg, T& submsg, int32_t encrypt, int32_t compress)
 {
 	msg.set_type(submsg.descriptor()->name());
-	msg.set_version(g_NetVersion);
+	msg.set_version(global::kNetVersion);
 	msg.set_encrypt(encrypt);
 	
 	const string & tmp = submsg.SerializeAsString();
 	if (compress) 
 	{
 		Compress cpr(tmp);
-		
+		//Try compression, if the compression ratio is poor, do not use compression
 		if (cpr.m_compress_data.size() > tmp.size())
 		{
 			msg.set_compress(0);

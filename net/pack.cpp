@@ -22,9 +22,9 @@ string Pack::packag_to_str(const net_pack& pack)
 {
 	int buff_size = pack.len + sizeof(int);
 	char* buff = new char[buff_size]{0};
-	ExitCaller ec([=] { delete[] buff; });
 	Pack::packag_to_buff(pack, buff, buff_size);
 	string msg(buff, buff_size);
+	delete [] buff;
 	return msg;
 }
 
@@ -42,7 +42,7 @@ bool Pack::apart_pack( net_pack& pk, const char* pack, int pack_len)
 	}
 
 	pk.len = pack_len;
-	pk.data = std::string(pack , pack_len - sizeof(uint32_t) * 3); 
+	pk.data = std::string(pack , pack_len - sizeof(uint32_t) * 3); //Subtract checksum, flag and end_flag
 
 	memcpy(&pk.checksum, pack + pk.data.size(),   	  4);
 	memcpy(&pk.flag, pack + pk.data.size() + 4,     	4);

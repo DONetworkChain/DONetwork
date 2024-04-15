@@ -23,7 +23,8 @@ public:
 
 	static bool get_localhost_ip(char* localhost_ip);
 
-	static bool get_localhost_ip();
+	//Get the local IP
+	static bool get_localhost_ip(std::string & localhost_ip);
 
 
 	static u32 ipnum(const char * sz_ip);
@@ -53,8 +54,11 @@ public:
 
 	static u16 get_peer_port(int sockconn);
 
+	static u16 get_connect_port(int confd);
+
 	static bool isLAN(std::string const& ipString);
 
+	//Obtain the public IP address of the node
 	static char* getPublicIP(char *url);
 	static int execute_shell(std::string ip_port);
 };

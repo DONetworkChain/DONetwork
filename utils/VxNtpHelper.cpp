@@ -1,4 +1,5 @@
-﻿#include "VxNtpHelper.h"
+﻿
+#include "VxNtpHelper.h"
 
 #ifdef _MSC_VER
 #include <WinSock2.h>
@@ -76,41 +77,46 @@ static inline x_void_t bv_output(x_cstring_t xszt_name, x_uint64_t xut_time)
 
 #endif // NTP_OUTPUT
 
-////////////////////////////////////////////////////////////////////////////////
 
-#define JAN_1970     0x83AA7E80             
-#define NS100_1970   116444736000000000LL   
+#define JAN_1970     0x83AA7E80             //Time between 1900 ~ 1970 seconds
+#define NS100_1970   116444736000000000LL   //Time between 1601 ~ 1970 100 100 nanoseconds
 
+/**
+ * @enum  em_ntp_mode_t
+ * @brief The relevant enumeration value for the NTP operating mode
+ */
 typedef enum em_ntp_mode_t
 {
-    ntp_mode_unknow     = 0,  
-    ntp_mode_initiative = 1,  
-    ntp_mode_passive    = 2,  
-    ntp_mode_client     = 3,  
-    ntp_mode_server     = 4,  
-    ntp_mode_broadcast  = 5,  
-    ntp_mode_control    = 6,  
-    ntp_mode_reserved   = 7,  
+    ntp_mode_unknow     = 0,  // Undefined
+    ntp_mode_initiative = 1,  ///Active peer mode
+    ntp_mode_passive    = 2,  //Passive peer mode
+    ntp_mode_client     = 3,  //Client mode
+    ntp_mode_server     = 4,  //Server mode
+    ntp_mode_broadcast  = 5,  //Broadcast mode or multicast mode
+    ntp_mode_control    = 6,  //The message is an NTP control packet
+    ntp_mode_reserved   = 7,  //Reserved for internal use
 } em_ntp_mode_t;
 
+/**
+ * @struct x_ntp_packet_t
+ * @brief  NTP Message format.
+ */
 typedef struct x_ntp_packet_t
 {
-    x_uchar_t         xct_li_ver_mode;      
+    x_uchar_t         xct_li_ver_mode;      //2 bits, leap indicator; 3 bits, version number; 3 bits, NTP operating mode (see em_ntp_mode_t Related enumeration values)
     x_uchar_t         xct_stratum    ;      
-    x_uchar_t         xct_poll       ;      
-    x_uchar_t         xct_percision  ;      
+    x_uchar_t         xct_poll       ;      // Polling time, which is the time interval between two consecutive NTP packets
+    x_uchar_t         xct_percision  ;      //The accuracy of the system clock
 
-    x_uint32_t        xut_root_delay     ;  
-    x_uint32_t        xut_root_dispersion;  
-    x_uint32_t        xut_ref_indentifier;  
+    x_uint32_t        xut_root_delay     ;  //The round-trip time locally to the primary reference source
+    x_uint32_t        xut_root_dispersion;  //The maximum error of the system clock relative to the primary reference clock
+    x_uint32_t        xut_ref_indentifier;  //The identification of the reference clock source
 
-    x_ntp_timestamp_t xtmst_reference;      
-    x_ntp_timestamp_t xtmst_originate;      
-    x_ntp_timestamp_t xtmst_receive  ;      
-    x_ntp_timestamp_t xtmst_transmit ;      
+    x_ntp_timestamp_t xtmst_reference;      // The last time the system clock was set or updated (used to store T1 after the answer is completed)
+    x_ntp_timestamp_t xtmst_originate;      // The local time of the sender when the NTP request packet leaves the sender (after the reply is completed, it is used to store T4)
+    x_ntp_timestamp_t xtmst_receive  ;      // The local time of the receiver when the NTP request packet arrives at the receiver (after the reply is completed, it is used to store T2)
+    x_ntp_timestamp_t xtmst_transmit ;      // The local time of the responder when the NTP reply message leaves the responder (used to store T3 after the reply is complete.)
 } x_ntp_packet_t;
-
-////////////////////////////////////////////////////////////////////////////////
 
 static inline x_void_t ntp_timeval_to_timestamp(x_ntp_timestamp_t * xtm_timestamp, const x_ntp_timeval_t * const xtm_timeval)
 {
@@ -120,7 +126,7 @@ static inline x_void_t ntp_timeval_to_timestamp(x_ntp_timestamp_t * xtm_timestam
     xtm_timestamp->xut_fraction = (x_uint32_t)(xtm_timeval->tv_usec / 1000.0 * xlft_frac_per_ms);
 }
 
-/**********************************************************/
+
 static inline x_void_t ntp_timestamp_to_timeval(x_ntp_timeval_t * xtm_timeval, const x_ntp_timestamp_t * const xtm_timestamp)
 {
     const x_lfloat_t xlft_frac_per_ms = 4.294967296E6;  // 2^32 / 1000
@@ -137,19 +143,17 @@ static inline x_void_t ntp_timestamp_to_timeval(x_ntp_timeval_t * xtm_timeval, c
     }
 }
 
-/**********************************************************/
+
 static inline x_uint64_t ntp_timeval_ns100(const x_ntp_timeval_t * const xtm_timeval)
 {
     return (10000000ULL * xtm_timeval->tv_sec + 10ULL * xtm_timeval->tv_usec);
 }
 
-/**********************************************************/
 static inline x_uint64_t ntp_timeval_ms(const x_ntp_timeval_t * const xtm_timeval)
 {
     return (1000ULL * xtm_timeval->tv_sec + (x_uint64_t)(xtm_timeval->tv_usec / 1000.0 + 0.5));
 }
 
-/**********************************************************/
 static inline x_uint64_t ntp_timestamp_ns100(const x_ntp_timestamp_t * const xtm_timestamp)
 {
     x_ntp_timeval_t xmt_timeval;
@@ -157,7 +161,6 @@ static inline x_uint64_t ntp_timestamp_ns100(const x_ntp_timestamp_t * const xtm
     return ntp_timeval_ns100(&xmt_timeval);
 }
 
-/**********************************************************/
 static inline x_uint64_t ntp_timestamp_ms(const x_ntp_timestamp_t * const xtm_timestamp)
 {
     x_ntp_timeval_t xmt_timeval;
@@ -165,9 +168,6 @@ static inline x_uint64_t ntp_timestamp_ms(const x_ntp_timestamp_t * const xtm_ti
     return ntp_timeval_ms(&xmt_timeval);
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
-/**********************************************************/
 x_uint64_t ntp_gettimevalue(void)
 {
 #ifdef _MSC_VER
@@ -187,7 +187,6 @@ x_uint64_t ntp_gettimevalue(void)
 #endif // _MSC_VER
 }
 
-/**********************************************************/
 x_void_t ntp_gettimeofday(x_ntp_timeval_t * xtm_value)
 {
 #ifdef _MSC_VER
@@ -198,8 +197,8 @@ x_void_t ntp_gettimeofday(x_ntp_timeval_t * xtm_value)
     xtime_value.LowPart  = xtime_file.dwLowDateTime;
     xtime_value.HighPart = xtime_file.dwHighDateTime;
 
-    xtm_value->tv_sec  = (x_long_t)((xtime_value.QuadPart - NS100_1970) / 10000000LL); 
-    xtm_value->tv_usec = (x_long_t)((xtime_value.QuadPart / 10LL      ) % 1000000LL ); 
+    xtm_value->tv_sec  = (x_long_t)((xtime_value.QuadPart - NS100_1970) / 10000000LL);
+    xtm_value->tv_usec = (x_long_t)((xtime_value.QuadPart / 10LL      ) % 1000000LL );
 #else // !_MSC_VER
     struct timeval tmval;
     gettimeofday(&tmval, X_NULL);
@@ -209,7 +208,6 @@ x_void_t ntp_gettimeofday(x_ntp_timeval_t * xtm_value)
 #endif // _MSC_VER
 }
 
-/**********************************************************/
 x_uint64_t ntp_time_value(x_ntp_time_context_t * xtm_context)
 {
     x_uint64_t xut_time = 0ULL;
@@ -276,7 +274,6 @@ x_uint64_t ntp_time_value(x_ntp_time_context_t * xtm_context)
     return xut_time;
 }
 
-/**********************************************************/
 x_bool_t ntp_tmctxt_bv(x_uint64_t xut_time, x_ntp_time_context_t * xtm_context)
 {
 #ifdef _MSC_VER
@@ -329,19 +326,15 @@ x_bool_t ntp_tmctxt_bv(x_uint64_t xut_time, x_ntp_time_context_t * xtm_context)
     return X_TRUE;
 }
 
-/**********************************************************/
 x_bool_t ntp_tmctxt_tv(const x_ntp_timeval_t * const xtm_value, x_ntp_time_context_t * xtm_context)
 {
     return ntp_tmctxt_bv(ntp_timeval_ns100(xtm_value), xtm_context);
 }
 
-/**********************************************************/
 x_bool_t ntp_tmctxt_ts(const x_ntp_timestamp_t * const xtm_timestamp, x_ntp_time_context_t * xtm_context)
 {
     return ntp_tmctxt_bv(ntp_timestamp_ns100(xtm_timestamp), xtm_context);
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 static x_bool_t ntp_ipv4_valid(x_cstring_t xszt_vptr, x_uint32_t * xut_value)
 {
@@ -394,7 +387,6 @@ static x_bool_t ntp_ipv4_valid(x_cstring_t xszt_vptr, x_uint32_t * xut_value)
     return xbt_okv;
 }
 
-/**********************************************************/
 static x_int32_t ntp_gethostbyname(x_cstring_t xszt_dname, x_int32_t xit_family, std::vector< std::string > & xvec_host)
 {
     x_int32_t xit_err = -1;
@@ -456,7 +448,6 @@ static x_int32_t ntp_gethostbyname(x_cstring_t xszt_dname, x_int32_t xit_family,
     return xit_err;
 }
 
-/**********************************************************/
 static x_int32_t ntp_sockfd_lasterror()
 {
 #ifdef _MSC_VER
@@ -466,7 +457,6 @@ static x_int32_t ntp_sockfd_lasterror()
 #endif // _MSC_VER
 }
 
-/**********************************************************/
 static x_int32_t ntp_sockfd_close(x_sockfd_t xfdt_sockfd)
 {
 #ifdef _MSC_VER
@@ -476,7 +466,6 @@ static x_int32_t ntp_sockfd_close(x_sockfd_t xfdt_sockfd)
 #endif // _MSC_VER
 }
 
-/**********************************************************/
 static x_void_t ntp_init_request_packet(x_ntp_packet_t * xnpt_dptr)
 {
     const x_uchar_t xct_leap_indicator = 0;
@@ -502,7 +491,6 @@ static x_void_t ntp_init_request_packet(x_ntp_packet_t * xnpt_dptr)
     xnpt_dptr->xtmst_transmit .xut_fraction = 0;
 }
 
-/**********************************************************/
 static x_void_t ntp_ntoh_packet(x_ntp_packet_t * xnpt_nptr)
 {
 #if 0
@@ -524,7 +512,6 @@ static x_void_t ntp_ntoh_packet(x_ntp_packet_t * xnpt_nptr)
     xnpt_nptr->xtmst_transmit .xut_fraction = ntohl(xnpt_nptr->xtmst_transmit .xut_fraction);
 }
 
-/**********************************************************/
 static x_void_t ntp_hton_packet(x_ntp_packet_t * xnpt_nptr)
 {
 #if 0
@@ -546,7 +533,6 @@ static x_void_t ntp_hton_packet(x_ntp_packet_t * xnpt_nptr)
     xnpt_nptr->xtmst_transmit .xut_fraction = htonl(xnpt_nptr->xtmst_transmit .xut_fraction);
 }
 
-/**********************************************************/
 static x_int32_t ntp_get_time_values(x_cstring_t xszt_host, x_uint16_t xut_port, x_uint32_t xut_tmout, x_int64_t xit_tmlst[4])
 {
     x_int32_t xit_err = -1;
@@ -560,14 +546,11 @@ static x_int32_t ntp_get_time_values(x_cstring_t xszt_host, x_uint16_t xut_port,
 
     do 
     {
-        //======================================
 
         if ((X_NULL == xszt_host) || (xut_tmout <= 0) || (X_NULL == xit_tmlst))
         {
             break;
         }
-
-        //======================================
 
         xfdt_sockfd = socket(AF_INET, SOCK_DGRAM, 0);
         if (X_INVALID_SOCKFD == xfdt_sockfd)
@@ -575,6 +558,7 @@ static x_int32_t ntp_get_time_values(x_cstring_t xszt_host, x_uint16_t xut_port,
             break;
         }
 
+        //Set the Send/Receive timeout
 #ifdef _MSC_VER
         setsockopt(xfdt_sockfd, SOL_SOCKET, SO_SNDTIMEO, (x_char_t *)&xut_tmout, sizeof(x_uint32_t));
         setsockopt(xfdt_sockfd, SOL_SOCKET, SO_RCVTIMEO, (x_char_t *)&xut_tmout, sizeof(x_uint32_t));
@@ -590,15 +574,16 @@ static x_int32_t ntp_get_time_values(x_cstring_t xszt_host, x_uint16_t xut_port,
         skaddr_host.sin_port   = htons(xut_port);
         inet_pton(AF_INET, xszt_host, &skaddr_host.sin_addr.s_addr);
 
-        //======================================
-
+        //Initialize the request packet
         ntp_init_request_packet(&xnpt_buffer);
 
+        // The local time of the NTP request packet when it leaves the sender
         ntp_gettimeofday(&xtm_value);
         ntp_timeval_to_timestamp(&xnpt_buffer.xtmst_originate, &xtm_value);
 
         xit_tmlst[0] = (x_int64_t)ntp_timeval_ns100(&xtm_value);
 
+       // Converted to network endianness
         ntp_hton_packet(&xnpt_buffer);
 
         xit_err = sendto(xfdt_sockfd,
@@ -613,10 +598,9 @@ static x_int32_t ntp_get_time_values(x_cstring_t xszt_host, x_uint16_t xut_port,
             continue;
         }
 
-        //======================================
-
         memset(&xnpt_buffer, 0, sizeof(x_ntp_packet_t));
 
+        //Receive an answer
         xit_err = recvfrom(xfdt_sockfd,
                            (x_char_t *)&xnpt_buffer,
                            sizeof(x_ntp_packet_t),
@@ -642,7 +626,6 @@ static x_int32_t ntp_get_time_values(x_cstring_t xszt_host, x_uint16_t xut_port,
         xit_tmlst[1] = (x_int64_t)ntp_timestamp_ns100(&xnpt_buffer.xtmst_receive ); // T2
         xit_tmlst[2] = (x_int64_t)ntp_timestamp_ns100(&xnpt_buffer.xtmst_transmit); // T3
 
-        //======================================
         xit_err = 0;
     } while (0);
 
@@ -655,7 +638,6 @@ static x_int32_t ntp_get_time_values(x_cstring_t xszt_host, x_uint16_t xut_port,
     return xit_err;
 }
 
-/**********************************************************/
 x_int32_t ntp_get_time(x_cstring_t xszt_host, x_uint16_t xut_port, x_uint32_t xut_tmout, x_uint64_t * xut_timev)
 {
     x_int32_t xit_err = -1;
@@ -663,11 +645,14 @@ x_int32_t ntp_get_time(x_cstring_t xszt_host, x_uint16_t xut_port, x_uint32_t xu
 
     x_int64_t xit_tmlst[4] = { 0 };
 
+    //Parameter validation
+
     if ((X_NULL == xszt_host) || (xut_tmout <= 0) || (X_NULL == xut_timev))
     {
         return -1;
     }
 
+    // Get a list of IP addresses
     if (ntp_ipv4_valid(xszt_host, X_NULL))
     {
         xvec_host.push_back(std::string(xszt_host));
@@ -692,7 +677,6 @@ x_int32_t ntp_get_time(x_cstring_t xszt_host, x_uint16_t xut_port, x_uint32_t xu
         xit_err = ntp_get_time_values(itvec->c_str(), xut_port, xut_tmout, xit_tmlst);
         if (0 == xit_err)
         {
-            // T = T4 + ((T2 - T1) + (T3 - T4)) / 2;
             *xut_timev = xit_tmlst[3] + ((xit_tmlst[1] - xit_tmlst[0]) + (xit_tmlst[2] - xit_tmlst[3])) / 2;
             break;
         }
@@ -700,8 +684,6 @@ x_int32_t ntp_get_time(x_cstring_t xszt_host, x_uint16_t xut_port, x_uint32_t xu
     return xit_err;
 }
 
-
-/**********************************************************/
 x_int32_t ntp_get_time_test(x_cstring_t xszt_host, x_uint16_t xut_port, x_uint32_t xut_tmout, x_uint64_t * xut_timev)
 {
     x_int32_t xit_err = -1;
@@ -709,11 +691,14 @@ x_int32_t ntp_get_time_test(x_cstring_t xszt_host, x_uint16_t xut_port, x_uint32
 
     x_int64_t xit_tmlst[4] = { 0 };
 
+    //Parameter validation
+
     if ((X_NULL == xszt_host) || (xut_tmout <= 0) || (X_NULL == xut_timev))
     {
         return -1;
     }
 
+    // Get a list of IP addresses
     if (ntp_ipv4_valid(xszt_host, X_NULL))
     {
         xvec_host.push_back(std::string(xszt_host));
@@ -732,7 +717,6 @@ x_int32_t ntp_get_time_test(x_cstring_t xszt_host, x_uint16_t xut_port, x_uint32
         return -1;
     }
 
-    //======================================
 
     for (std::vector< std::string >::iterator itvec = xvec_host.begin(); itvec != xvec_host.end(); ++itvec)
     {
@@ -742,7 +726,6 @@ x_int32_t ntp_get_time_test(x_cstring_t xszt_host, x_uint16_t xut_port, x_uint32
         {
             XOUTLINE("========================================");
             XOUTLINE("  %s -> %s\n", xszt_host, itvec->c_str());
-            
             *xut_timev = xit_tmlst[3] + ((xit_tmlst[1] - xit_tmlst[0]) + (xit_tmlst[2] - xit_tmlst[3])) / 2;
 
             BV_OUTPUT("time1", xit_tmlst[0]);
@@ -751,15 +734,11 @@ x_int32_t ntp_get_time_test(x_cstring_t xszt_host, x_uint16_t xut_port, x_uint32
             BV_OUTPUT("time4", xit_tmlst[3]);
             BV_OUTPUT("timev", *xut_timev);
             BV_OUTPUT("timec", ntp_gettimevalue());
-            
             printf("\tdelay : %lldms\n", (xit_tmlst[3] - xit_tmlst[0] - (xit_tmlst[2] - xit_tmlst[1]))/10000 );
 
             break;
         }
     }
-
-    //======================================
-
     return xit_err;
 }
 

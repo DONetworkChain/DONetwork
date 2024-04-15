@@ -26,7 +26,7 @@ public:
         return str;
     }
 
-    static void SplitString(const std::string& s, std::vector<std::string>& v, const std::string& c);
+    static void SplitString(const std::string& s,  const std::string& c, std::vector<std::string>& v );
 	
 };
 

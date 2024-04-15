@@ -5,10 +5,8 @@
 #include <string.h>
 #include <regex>
 #include "./ip_port.h"
-#include "../utils/singleton.h"
 #include "./peer_node.h"
 #include "../../include/logging.h"
-#include "../../common/config.h"
 #include <netdb.h> 
 #include <stdlib.h>
 #include <unistd.h>
@@ -16,7 +14,7 @@
 
 char g_localhost_ip[16];
 char g_public_net_ip[16];
-char g_publicIP[30];             
+char g_publicIP[30];  
 int g_my_port;
 
 
@@ -46,7 +44,7 @@ bool IpPort::get_localhost_ip(char* g_localhost_ip)
 	return false;
 }
 
-bool IpPort::get_localhost_ip()
+bool IpPort::get_localhost_ip(std::string & localhost_ip)
 {
 	struct ifaddrs* if_addr_ptr = NULL;
 	struct ifaddrs* if_addr_ptr_copy = NULL;
@@ -71,12 +69,10 @@ bool IpPort::get_localhost_ip()
 				&& IpPort::is_local_ip(local_ip)
 				)
 			{
-				Singleton<PeerNode>::get_instance()->set_self_ip_l(local_ip);
-				Singleton<PeerNode>::get_instance()->set_self_port_l(SERVERMAINPORT);
-	
-				INFOLOG("Belong local IP");
 				INFOLOG("==========={}==============", local_ip_str);
-				Singleton<Config>::get_instance()->SetLocalIP(local_ip_str);
+				INFOLOG("Belong local IP");
+
+				localhost_ip = local_ip_str;
 				freeifaddrs(if_addr_ptr_copy);
 				return true;
 			}
@@ -100,6 +96,7 @@ int IpPort::check_localhost_ip(const char* usr_ip)
 }
 
 
+// ���� IP
 u32 IpPort::ipnum(const char* sz_ip)
 {
 	u32 num_ip = inet_addr(sz_ip);
@@ -111,6 +108,7 @@ u32 IpPort::ipnum(const string& sz_ip)
 	return num_ip;
 }
 
+// �ַ� IP
 const char* IpPort::ipsz(const u32 num_ip)
 {
 	struct in_addr addr = {0};
@@ -119,6 +117,7 @@ const char* IpPort::ipsz(const u32 num_ip)
 	return sz_ip;
 }
 
+// IP �Ϸ�
 bool IpPort::is_valid_ip(std::string const& str_ip)
 {
 	try
@@ -135,13 +134,14 @@ bool IpPort::is_valid_ip(std::string const& str_ip)
 	return false;
 }
 
-
+// IP �Ϸ�
 bool IpPort::is_valid_ip(u32 u32_ip)
 {
 	string str_ip = ipsz(u32_ip);
 	return is_valid_ip(str_ip);
 }
 
+// ���� IP
 bool IpPort::is_local_ip(std::string const& str_ip)
 {
 	if (false == is_valid_ip(str_ip))
@@ -161,12 +161,14 @@ bool IpPort::is_local_ip(std::string const& str_ip)
 	return false;
 }
 
+// ���� IP
 bool IpPort::is_local_ip(u32 u32_ip)
 {
 	string str_ip = ipsz(u32_ip);
 	return is_local_ip(str_ip);
 }
 
+// ���� IP
 bool IpPort::is_public_ip(std::string const& str_ip)
 {
 	if (false == is_valid_ip(str_ip))
@@ -175,17 +177,20 @@ bool IpPort::is_public_ip(std::string const& str_ip)
 	return false == is_local_ip(str_ip);
 }
 
+// ���� IP
 bool IpPort::is_public_ip(u32 u32_ip)
 {
 	string str_ip = ipsz(u32_ip);
 	return is_public_ip(str_ip);
 }
 
+// �˿ںϷ�
 bool IpPort::is_valid_port(u16 u16_port)
 {
 	return u16_port > 0 && u16_port <= 65535;
 }
 
+// ��ȡ IP
 char* IpPort::get_peer_ip(int sockconn)
 {
 	struct sockaddr_in sa { 0 };
@@ -198,6 +203,7 @@ char* IpPort::get_peer_ip(int sockconn)
 	return NULL;
 }
 
+// ��ȡ IP
 u32 IpPort::get_peer_nip(int sockconn)
 {
 	struct sockaddr_in sa { 0 };
@@ -210,6 +216,7 @@ u32 IpPort::get_peer_nip(int sockconn)
 	return 0;
 }
 
+// ��ȡ�˿�
 u16 IpPort::get_peer_port(int sockconn)
 {
 	struct sockaddr_in sa { 0 };
@@ -222,9 +229,25 @@ u16 IpPort::get_peer_port(int sockconn)
 	return 0;
 }
 
+//Gets the local address on the connection represented by sockfd
+u16 IpPort::get_connect_port(int confd)
+{
+	struct sockaddr_in clientAddr;
+    socklen_t clientAddrLen = sizeof(clientAddr);
+	if(!getsockname(confd, (struct sockaddr*)&clientAddr, &clientAddrLen))
+	{
+		return ntohs(clientAddr.sin_port);
+	}
+	else
+	{
+		DEBUGLOG("get_connect_port getsockname fail.");
+	} 
+	return 0;
+}
 
 bool IpPort::isLAN(std::string const& ipString)
 {
+	#if PRIMARYCHAIN || TESTCHAIN
 	istringstream st(ipString);
 	int ip[2];
 	for(int i = 0; i < 2; i++)
@@ -237,7 +260,9 @@ bool IpPort::isLAN(std::string const& ipString)
 	if((ip[0]==10) || (ip[0]==172 && ip[1]>=16 && ip[1]<=31) || (ip[0]==192 && ip[1]==168))
 	{
 		return true;
-	}else{
-		return false;
 	}
+	return false;
+	# endif   
+
+	return false;
 }

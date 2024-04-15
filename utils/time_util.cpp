@@ -7,7 +7,7 @@
 #include <chrono>
 #include "./time_util.h"
 #include "../include/logging.h"
-
+#include "../ca/ca_global.h"
 
 void Trim(std::string& str, bool bLeft, bool bRight)
 {
@@ -28,11 +28,17 @@ TimeUtil::~TimeUtil()
     
 }
 
-x_uint64_t TimeUtil::getlocalTimestamp()
+x_uint64_t TimeUtil::getUTCTimestamp()
 {
     struct timeval tv;
     gettimeofday( &tv, NULL );
     return tv.tv_sec * 1000000 + tv.tv_usec;
+}
+
+x_uint64_t TimeUtil::GetTheTimestampPerUnitOfTime(const x_uint64_t& utcTime)
+{
+    x_uint64_t minutes = utcTime / 10000000;  // Convert timestamp
+    return minutes * 10000000;
 }
 
 x_uint64_t TimeUtil::getTimestamp()
@@ -40,7 +46,7 @@ x_uint64_t TimeUtil::getTimestamp()
     x_uint64_t time = getNtpTimestamp();
     if(time == 0)
     {
-        time = getlocalTimestamp();
+        time = getUTCTimestamp();
     }
     return time;
 }
@@ -136,6 +142,7 @@ void TimeUtil::testNtpDelay()
 
     x_uint64_t xut_timev = 0ULL;
 
+    //A list of commonly used NTP server addresses
     std::vector< std::string > ntp_host;
     ntp_host.push_back(std::string("ntp1.aliyun.com"));
     ntp_host.push_back(std::string("ntp2.aliyun.com"));
@@ -169,11 +176,45 @@ std::string TimeUtil::formatTimestamp(x_uint64_t timestamp)
     ss << std::put_time(localtime(&s), "%F %T");
     return ss.str();
 }
+std::string TimeUtil::formatUTCTimestamp(x_uint64_t timestamp)
+{
+    char buffer [128];
+    time_t s = (time_t)(timestamp / 1000000);
+    struct tm *p;
+    p=gmtime(&s);
+    strftime (buffer,sizeof(buffer),"%Y/%m/%d %H:%M:%S",p);
+    return buffer;
+}
 uint64_t TimeUtil::getMorningTime(time_t t) 
 {  
-    struct tm * tm= localtime(&t);  
-    tm->tm_hour = 0;  
-    tm->tm_min = 0;  
-    tm->tm_sec = 0;  
-    return  mktime(tm);  
+    //setenv("TZ","Asia/Shanghai",1);
+    //setenv("TZ","Universal",1);
+    //tzset();
+	t = t/1000000;
+    struct tm * tm= gmtime(&t);
+    tm->tm_hour = 0;
+    tm->tm_min = 0;
+    tm->tm_sec = 0;
+    uint64_t zero_time=mktime(tm);
+    //setenv("TZ","Asia/Shanghai",1);
+    //tzset();
+    return  zero_time;
+    //return  mktime(tm) + 28800;
 }  
+uint64_t TimeUtil::getPeriod(uint64_t TxTime)
+{
+    return ((TxTime/1000000) - (global::ca::kGenesisTime/1000000)) / (24  *60 * 60);
+}
+std::string TimeUtil::GetDate(int d)
+{
+    uint64_t cur_time=getNtpTimestamp();
+		
+	struct timeval tv;
+	tv.tv_sec = cur_time/1000000;
+	time_t now = tv.tv_sec-24*60*60*d;
+	tm* p = gmtime(&now);
+    std::string date=std::to_string(1900+p->tm_year)+"."+std::to_string(1+p->tm_mon)+"."+std::to_string(p->tm_mday);
+    return date;
+}
+
+

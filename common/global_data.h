@@ -6,6 +6,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <map>
 
 struct GlobalData;
 class GlobalDataManager
@@ -14,8 +15,13 @@ public:
     bool CreateWait(uint32_t time_out_sec, uint32_t ret_num,
                     std::string &out_msg_id);
     bool AddWaitData(const std::string &msg_id, const std::string &data);
+    bool AddResNode(const std::string &msg_id, const std::string &res_id);
     bool WaitData(const std::string &msg_id, std::vector<std::string> &ret_data);
+    bool NewAddWaitData(const std::string &msgId, const std::string &resId, const std::string &data);
+
     static GlobalDataManager &GetGlobalDataManager();
+    static GlobalDataManager &GetGlobalDataManager2();
+    static GlobalDataManager &GetGlobalDataManager3();
 
 private:
     GlobalDataManager() = default;
@@ -25,9 +31,10 @@ private:
     GlobalDataManager &operator=(GlobalDataManager &&) = delete;
     GlobalDataManager &operator=(const GlobalDataManager &) = delete;
     std::mutex global_data_mutex_;
-    std::unordered_map<std::string, std::shared_ptr<GlobalData>> global_data_;
+    std::map<std::string, std::shared_ptr<GlobalData>> global_data_;
 };
 
 #define GLOBALDATAMGRPTR GlobalDataManager::GetGlobalDataManager()
-
+#define GLOBALDATAMGRPTR2 GlobalDataManager::GetGlobalDataManager2()
+#define GLOBALDATAMGRPTR3 GlobalDataManager::GetGlobalDataManager3()
 #endif
