@@ -132,9 +132,33 @@ extern GetStakeListAckDefaultTypeInternal _GetStakeListAck_default_instance_;
 class GetStakeListReq;
 struct GetStakeListReqDefaultTypeInternal;
 extern GetStakeListReqDefaultTypeInternal _GetStakeListReq_default_instance_;
+class GetTransactionStatusListAck;
+struct GetTransactionStatusListAckDefaultTypeInternal;
+extern GetTransactionStatusListAckDefaultTypeInternal _GetTransactionStatusListAck_default_instance_;
+class GetTransactionStatusListReq;
+struct GetTransactionStatusListReqDefaultTypeInternal;
+extern GetTransactionStatusListReqDefaultTypeInternal _GetTransactionStatusListReq_default_instance_;
+class GetTxFailureListAck;
+struct GetTxFailureListAckDefaultTypeInternal;
+extern GetTxFailureListAckDefaultTypeInternal _GetTxFailureListAck_default_instance_;
+class GetTxFailureListReq;
+struct GetTxFailureListReqDefaultTypeInternal;
+extern GetTxFailureListReqDefaultTypeInternal _GetTxFailureListReq_default_instance_;
+class GetTxPendingListAck;
+struct GetTxPendingListAckDefaultTypeInternal;
+extern GetTxPendingListAckDefaultTypeInternal _GetTxPendingListAck_default_instance_;
+class GetTxPendingListReq;
+struct GetTxPendingListReqDefaultTypeInternal;
+extern GetTxPendingListReqDefaultTypeInternal _GetTxPendingListReq_default_instance_;
 class GetUtxoAck;
 struct GetUtxoAckDefaultTypeInternal;
 extern GetUtxoAckDefaultTypeInternal _GetUtxoAck_default_instance_;
+class GetUtxoHashAck;
+struct GetUtxoHashAckDefaultTypeInternal;
+extern GetUtxoHashAckDefaultTypeInternal _GetUtxoHashAck_default_instance_;
+class GetUtxoHashReq;
+struct GetUtxoHashReqDefaultTypeInternal;
+extern GetUtxoHashReqDefaultTypeInternal _GetUtxoHashReq_default_instance_;
 class GetUtxoReq;
 struct GetUtxoReqDefaultTypeInternal;
 extern GetUtxoReqDefaultTypeInternal _GetUtxoReq_default_instance_;
@@ -144,18 +168,18 @@ extern InvestAddressItemDefaultTypeInternal _InvestAddressItem_default_instance_
 class InvestItem;
 struct InvestItemDefaultTypeInternal;
 extern InvestItemDefaultTypeInternal _InvestItem_default_instance_;
-class IsOnChainAck;
-struct IsOnChainAckDefaultTypeInternal;
-extern IsOnChainAckDefaultTypeInternal _IsOnChainAck_default_instance_;
-class IsOnChainReq;
-struct IsOnChainReqDefaultTypeInternal;
-extern IsOnChainReqDefaultTypeInternal _IsOnChainReq_default_instance_;
 class MultiSignTxAck;
 struct MultiSignTxAckDefaultTypeInternal;
 extern MultiSignTxAckDefaultTypeInternal _MultiSignTxAck_default_instance_;
 class MultiSignTxReq;
 struct MultiSignTxReqDefaultTypeInternal;
 extern MultiSignTxReqDefaultTypeInternal _MultiSignTxReq_default_instance_;
+class OtherStatusItem;
+struct OtherStatusItemDefaultTypeInternal;
+extern OtherStatusItemDefaultTypeInternal _OtherStatusItem_default_instance_;
+class SelfVerifyStatusItem;
+struct SelfVerifyStatusItemDefaultTypeInternal;
+extern SelfVerifyStatusItemDefaultTypeInternal _SelfVerifyStatusItem_default_instance_;
 class SignCount;
 struct SignCountDefaultTypeInternal;
 extern SignCountDefaultTypeInternal _SignCount_default_instance_;
@@ -168,6 +192,15 @@ extern StakeNodeDefaultTypeInternal _StakeNode_default_instance_;
 class SuccessRate;
 struct SuccessRateDefaultTypeInternal;
 extern SuccessRateDefaultTypeInternal _SuccessRate_default_instance_;
+class TransactionStatusItem;
+struct TransactionStatusItemDefaultTypeInternal;
+extern TransactionStatusItemDefaultTypeInternal _TransactionStatusItem_default_instance_;
+class TxFailureItem;
+struct TxFailureItemDefaultTypeInternal;
+extern TxFailureItemDefaultTypeInternal _TxFailureItem_default_instance_;
+class TxPendingItem;
+struct TxPendingItemDefaultTypeInternal;
+extern TxPendingItemDefaultTypeInternal _TxPendingItem_default_instance_;
 class Utxo;
 struct UtxoDefaultTypeInternal;
 extern UtxoDefaultTypeInternal _Utxo_default_instance_;
@@ -201,18 +234,29 @@ template<> ::GetSignCountListAck* Arena::CreateMaybeMessage<::GetSignCountListAc
 template<> ::GetSignCountListReq* Arena::CreateMaybeMessage<::GetSignCountListReq>(Arena*);
 template<> ::GetStakeListAck* Arena::CreateMaybeMessage<::GetStakeListAck>(Arena*);
 template<> ::GetStakeListReq* Arena::CreateMaybeMessage<::GetStakeListReq>(Arena*);
+template<> ::GetTransactionStatusListAck* Arena::CreateMaybeMessage<::GetTransactionStatusListAck>(Arena*);
+template<> ::GetTransactionStatusListReq* Arena::CreateMaybeMessage<::GetTransactionStatusListReq>(Arena*);
+template<> ::GetTxFailureListAck* Arena::CreateMaybeMessage<::GetTxFailureListAck>(Arena*);
+template<> ::GetTxFailureListReq* Arena::CreateMaybeMessage<::GetTxFailureListReq>(Arena*);
+template<> ::GetTxPendingListAck* Arena::CreateMaybeMessage<::GetTxPendingListAck>(Arena*);
+template<> ::GetTxPendingListReq* Arena::CreateMaybeMessage<::GetTxPendingListReq>(Arena*);
 template<> ::GetUtxoAck* Arena::CreateMaybeMessage<::GetUtxoAck>(Arena*);
+template<> ::GetUtxoHashAck* Arena::CreateMaybeMessage<::GetUtxoHashAck>(Arena*);
+template<> ::GetUtxoHashReq* Arena::CreateMaybeMessage<::GetUtxoHashReq>(Arena*);
 template<> ::GetUtxoReq* Arena::CreateMaybeMessage<::GetUtxoReq>(Arena*);
 template<> ::InvestAddressItem* Arena::CreateMaybeMessage<::InvestAddressItem>(Arena*);
 template<> ::InvestItem* Arena::CreateMaybeMessage<::InvestItem>(Arena*);
-template<> ::IsOnChainAck* Arena::CreateMaybeMessage<::IsOnChainAck>(Arena*);
-template<> ::IsOnChainReq* Arena::CreateMaybeMessage<::IsOnChainReq>(Arena*);
 template<> ::MultiSignTxAck* Arena::CreateMaybeMessage<::MultiSignTxAck>(Arena*);
 template<> ::MultiSignTxReq* Arena::CreateMaybeMessage<::MultiSignTxReq>(Arena*);
+template<> ::OtherStatusItem* Arena::CreateMaybeMessage<::OtherStatusItem>(Arena*);
+template<> ::SelfVerifyStatusItem* Arena::CreateMaybeMessage<::SelfVerifyStatusItem>(Arena*);
 template<> ::SignCount* Arena::CreateMaybeMessage<::SignCount>(Arena*);
 template<> ::StakeItem* Arena::CreateMaybeMessage<::StakeItem>(Arena*);
 template<> ::StakeNode* Arena::CreateMaybeMessage<::StakeNode>(Arena*);
 template<> ::SuccessRate* Arena::CreateMaybeMessage<::SuccessRate>(Arena*);
+template<> ::TransactionStatusItem* Arena::CreateMaybeMessage<::TransactionStatusItem>(Arena*);
+template<> ::TxFailureItem* Arena::CreateMaybeMessage<::TxFailureItem>(Arena*);
+template<> ::TxPendingItem* Arena::CreateMaybeMessage<::TxPendingItem>(Arena*);
 template<> ::Utxo* Arena::CreateMaybeMessage<::Utxo>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
@@ -1107,6 +1151,7 @@ class GetBalanceAck final :
     kMessageFieldNumber = 3,
     kAddressFieldNumber = 4,
     kBalanceFieldNumber = 5,
+    kHeightFieldNumber = 6,
     kCodeFieldNumber = 2,
   };
   // string version = 1;
@@ -1160,6 +1205,15 @@ class GetBalanceAck final :
   void _internal_set_balance(uint64_t value);
   public:
 
+  // uint64 height = 6;
+  void clear_height();
+  uint64_t height() const;
+  void set_height(uint64_t value);
+  private:
+  uint64_t _internal_height() const;
+  void _internal_set_height(uint64_t value);
+  public:
+
   // sint32 code = 2;
   void clear_code();
   int32_t code() const;
@@ -1181,6 +1235,7 @@ class GetBalanceAck final :
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
     uint64_t balance_;
+    uint64_t height_;
     int32_t code_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -2830,6 +2885,1466 @@ class GetInvestListAck final :
 };
 // -------------------------------------------------------------------
 
+class GetTxPendingListReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetTxPendingListReq) */ {
+ public:
+  inline GetTxPendingListReq() : GetTxPendingListReq(nullptr) {}
+  ~GetTxPendingListReq() override;
+  explicit PROTOBUF_CONSTEXPR GetTxPendingListReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetTxPendingListReq(const GetTxPendingListReq& from);
+  GetTxPendingListReq(GetTxPendingListReq&& from) noexcept
+    : GetTxPendingListReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetTxPendingListReq& operator=(const GetTxPendingListReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetTxPendingListReq& operator=(GetTxPendingListReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetTxPendingListReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetTxPendingListReq* internal_default_instance() {
+    return reinterpret_cast<const GetTxPendingListReq*>(
+               &_GetTxPendingListReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    13;
+
+  friend void swap(GetTxPendingListReq& a, GetTxPendingListReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetTxPendingListReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetTxPendingListReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetTxPendingListReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetTxPendingListReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetTxPendingListReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetTxPendingListReq& from) {
+    GetTxPendingListReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetTxPendingListReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetTxPendingListReq";
+  }
+  protected:
+  explicit GetTxPendingListReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAddrFieldNumber = 2,
+    kVersionFieldNumber = 1,
+  };
+  // repeated string addr = 2;
+  int addr_size() const;
+  private:
+  int _internal_addr_size() const;
+  public:
+  void clear_addr();
+  const std::string& addr(int index) const;
+  std::string* mutable_addr(int index);
+  void set_addr(int index, const std::string& value);
+  void set_addr(int index, std::string&& value);
+  void set_addr(int index, const char* value);
+  void set_addr(int index, const char* value, size_t size);
+  std::string* add_addr();
+  void add_addr(const std::string& value);
+  void add_addr(std::string&& value);
+  void add_addr(const char* value);
+  void add_addr(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& addr() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_addr();
+  private:
+  const std::string& _internal_addr(int index) const;
+  std::string* _internal_add_addr();
+  public:
+
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetTxPendingListReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> addr_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class TxPendingItem final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:TxPendingItem) */ {
+ public:
+  inline TxPendingItem() : TxPendingItem(nullptr) {}
+  ~TxPendingItem() override;
+  explicit PROTOBUF_CONSTEXPR TxPendingItem(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  TxPendingItem(const TxPendingItem& from);
+  TxPendingItem(TxPendingItem&& from) noexcept
+    : TxPendingItem() {
+    *this = ::std::move(from);
+  }
+
+  inline TxPendingItem& operator=(const TxPendingItem& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TxPendingItem& operator=(TxPendingItem&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TxPendingItem& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TxPendingItem* internal_default_instance() {
+    return reinterpret_cast<const TxPendingItem*>(
+               &_TxPendingItem_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    14;
+
+  friend void swap(TxPendingItem& a, TxPendingItem& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TxPendingItem* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TxPendingItem* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  TxPendingItem* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<TxPendingItem>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const TxPendingItem& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const TxPendingItem& from) {
+    TxPendingItem::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TxPendingItem* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "TxPendingItem";
+  }
+  protected:
+  explicit TxPendingItem(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVinsFieldNumber = 2,
+    kFromaddrFieldNumber = 3,
+    kToaddrFieldNumber = 4,
+    kToAmountFieldNumber = 9,
+    kTxHashFieldNumber = 1,
+    kDetailFieldNumber = 7,
+    kAmountFieldNumber = 5,
+    kTimeFieldNumber = 6,
+    kGasFieldNumber = 8,
+    kTypeFieldNumber = 10,
+  };
+  // repeated string vins = 2;
+  int vins_size() const;
+  private:
+  int _internal_vins_size() const;
+  public:
+  void clear_vins();
+  const std::string& vins(int index) const;
+  std::string* mutable_vins(int index);
+  void set_vins(int index, const std::string& value);
+  void set_vins(int index, std::string&& value);
+  void set_vins(int index, const char* value);
+  void set_vins(int index, const char* value, size_t size);
+  std::string* add_vins();
+  void add_vins(const std::string& value);
+  void add_vins(std::string&& value);
+  void add_vins(const char* value);
+  void add_vins(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& vins() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_vins();
+  private:
+  const std::string& _internal_vins(int index) const;
+  std::string* _internal_add_vins();
+  public:
+
+  // repeated string fromaddr = 3;
+  int fromaddr_size() const;
+  private:
+  int _internal_fromaddr_size() const;
+  public:
+  void clear_fromaddr();
+  const std::string& fromaddr(int index) const;
+  std::string* mutable_fromaddr(int index);
+  void set_fromaddr(int index, const std::string& value);
+  void set_fromaddr(int index, std::string&& value);
+  void set_fromaddr(int index, const char* value);
+  void set_fromaddr(int index, const char* value, size_t size);
+  std::string* add_fromaddr();
+  void add_fromaddr(const std::string& value);
+  void add_fromaddr(std::string&& value);
+  void add_fromaddr(const char* value);
+  void add_fromaddr(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& fromaddr() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_fromaddr();
+  private:
+  const std::string& _internal_fromaddr(int index) const;
+  std::string* _internal_add_fromaddr();
+  public:
+
+  // repeated string toaddr = 4;
+  int toaddr_size() const;
+  private:
+  int _internal_toaddr_size() const;
+  public:
+  void clear_toaddr();
+  const std::string& toaddr(int index) const;
+  std::string* mutable_toaddr(int index);
+  void set_toaddr(int index, const std::string& value);
+  void set_toaddr(int index, std::string&& value);
+  void set_toaddr(int index, const char* value);
+  void set_toaddr(int index, const char* value, size_t size);
+  std::string* add_toaddr();
+  void add_toaddr(const std::string& value);
+  void add_toaddr(std::string&& value);
+  void add_toaddr(const char* value);
+  void add_toaddr(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& toaddr() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_toaddr();
+  private:
+  const std::string& _internal_toaddr(int index) const;
+  std::string* _internal_add_toaddr();
+  public:
+
+  // repeated uint64 toAmount = 9;
+  int toamount_size() const;
+  private:
+  int _internal_toamount_size() const;
+  public:
+  void clear_toamount();
+  private:
+  uint64_t _internal_toamount(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >&
+      _internal_toamount() const;
+  void _internal_add_toamount(uint64_t value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >*
+      _internal_mutable_toamount();
+  public:
+  uint64_t toamount(int index) const;
+  void set_toamount(int index, uint64_t value);
+  void add_toamount(uint64_t value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >&
+      toamount() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >*
+      mutable_toamount();
+
+  // string txHash = 1;
+  void clear_txhash();
+  const std::string& txhash() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_txhash(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_txhash();
+  PROTOBUF_NODISCARD std::string* release_txhash();
+  void set_allocated_txhash(std::string* txhash);
+  private:
+  const std::string& _internal_txhash() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_txhash(const std::string& value);
+  std::string* _internal_mutable_txhash();
+  public:
+
+  // string detail = 7;
+  void clear_detail();
+  const std::string& detail() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_detail(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_detail();
+  PROTOBUF_NODISCARD std::string* release_detail();
+  void set_allocated_detail(std::string* detail);
+  private:
+  const std::string& _internal_detail() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_detail(const std::string& value);
+  std::string* _internal_mutable_detail();
+  public:
+
+  // uint64 amount = 5;
+  void clear_amount();
+  uint64_t amount() const;
+  void set_amount(uint64_t value);
+  private:
+  uint64_t _internal_amount() const;
+  void _internal_set_amount(uint64_t value);
+  public:
+
+  // uint64 time = 6;
+  void clear_time();
+  uint64_t time() const;
+  void set_time(uint64_t value);
+  private:
+  uint64_t _internal_time() const;
+  void _internal_set_time(uint64_t value);
+  public:
+
+  // uint64 gas = 8;
+  void clear_gas();
+  uint64_t gas() const;
+  void set_gas(uint64_t value);
+  private:
+  uint64_t _internal_gas() const;
+  void _internal_set_gas(uint64_t value);
+  public:
+
+  // .TxType type = 10;
+  void clear_type();
+  ::TxType type() const;
+  void set_type(::TxType value);
+  private:
+  ::TxType _internal_type() const;
+  void _internal_set_type(::TxType value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:TxPendingItem)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> vins_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> fromaddr_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> toaddr_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t > toamount_;
+    mutable std::atomic<int> _toamount_cached_byte_size_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr txhash_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr detail_;
+    uint64_t amount_;
+    uint64_t time_;
+    uint64_t gas_;
+    int type_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetTxPendingListAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetTxPendingListAck) */ {
+ public:
+  inline GetTxPendingListAck() : GetTxPendingListAck(nullptr) {}
+  ~GetTxPendingListAck() override;
+  explicit PROTOBUF_CONSTEXPR GetTxPendingListAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetTxPendingListAck(const GetTxPendingListAck& from);
+  GetTxPendingListAck(GetTxPendingListAck&& from) noexcept
+    : GetTxPendingListAck() {
+    *this = ::std::move(from);
+  }
+
+  inline GetTxPendingListAck& operator=(const GetTxPendingListAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetTxPendingListAck& operator=(GetTxPendingListAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetTxPendingListAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetTxPendingListAck* internal_default_instance() {
+    return reinterpret_cast<const GetTxPendingListAck*>(
+               &_GetTxPendingListAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    15;
+
+  friend void swap(GetTxPendingListAck& a, GetTxPendingListAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetTxPendingListAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetTxPendingListAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetTxPendingListAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetTxPendingListAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetTxPendingListAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetTxPendingListAck& from) {
+    GetTxPendingListAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetTxPendingListAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetTxPendingListAck";
+  }
+  protected:
+  explicit GetTxPendingListAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAddrFieldNumber = 4,
+    kListFieldNumber = 5,
+    kVersionFieldNumber = 1,
+    kMessageFieldNumber = 3,
+    kCodeFieldNumber = 2,
+  };
+  // repeated string addr = 4;
+  int addr_size() const;
+  private:
+  int _internal_addr_size() const;
+  public:
+  void clear_addr();
+  const std::string& addr(int index) const;
+  std::string* mutable_addr(int index);
+  void set_addr(int index, const std::string& value);
+  void set_addr(int index, std::string&& value);
+  void set_addr(int index, const char* value);
+  void set_addr(int index, const char* value, size_t size);
+  std::string* add_addr();
+  void add_addr(const std::string& value);
+  void add_addr(std::string&& value);
+  void add_addr(const char* value);
+  void add_addr(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& addr() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_addr();
+  private:
+  const std::string& _internal_addr(int index) const;
+  std::string* _internal_add_addr();
+  public:
+
+  // repeated .TxPendingItem list = 5;
+  int list_size() const;
+  private:
+  int _internal_list_size() const;
+  public:
+  void clear_list();
+  ::TxPendingItem* mutable_list(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TxPendingItem >*
+      mutable_list();
+  private:
+  const ::TxPendingItem& _internal_list(int index) const;
+  ::TxPendingItem* _internal_add_list();
+  public:
+  const ::TxPendingItem& list(int index) const;
+  ::TxPendingItem* add_list();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TxPendingItem >&
+      list() const;
+
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string message = 3;
+  void clear_message();
+  const std::string& message() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_message(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_message();
+  PROTOBUF_NODISCARD std::string* release_message();
+  void set_allocated_message(std::string* message);
+  private:
+  const std::string& _internal_message() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
+  std::string* _internal_mutable_message();
+  public:
+
+  // int32 code = 2;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetTxPendingListAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> addr_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TxPendingItem > list_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+    int32_t code_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetTxFailureListReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetTxFailureListReq) */ {
+ public:
+  inline GetTxFailureListReq() : GetTxFailureListReq(nullptr) {}
+  ~GetTxFailureListReq() override;
+  explicit PROTOBUF_CONSTEXPR GetTxFailureListReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetTxFailureListReq(const GetTxFailureListReq& from);
+  GetTxFailureListReq(GetTxFailureListReq&& from) noexcept
+    : GetTxFailureListReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetTxFailureListReq& operator=(const GetTxFailureListReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetTxFailureListReq& operator=(GetTxFailureListReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetTxFailureListReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetTxFailureListReq* internal_default_instance() {
+    return reinterpret_cast<const GetTxFailureListReq*>(
+               &_GetTxFailureListReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    16;
+
+  friend void swap(GetTxFailureListReq& a, GetTxFailureListReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetTxFailureListReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetTxFailureListReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetTxFailureListReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetTxFailureListReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetTxFailureListReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetTxFailureListReq& from) {
+    GetTxFailureListReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetTxFailureListReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetTxFailureListReq";
+  }
+  protected:
+  explicit GetTxFailureListReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVersionFieldNumber = 1,
+    kAddrFieldNumber = 2,
+    kTxhashFieldNumber = 3,
+    kCountFieldNumber = 4,
+  };
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string addr = 2;
+  void clear_addr();
+  const std::string& addr() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_addr(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_addr();
+  PROTOBUF_NODISCARD std::string* release_addr();
+  void set_allocated_addr(std::string* addr);
+  private:
+  const std::string& _internal_addr() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_addr(const std::string& value);
+  std::string* _internal_mutable_addr();
+  public:
+
+  // string txhash = 3;
+  void clear_txhash();
+  const std::string& txhash() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_txhash(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_txhash();
+  PROTOBUF_NODISCARD std::string* release_txhash();
+  void set_allocated_txhash(std::string* txhash);
+  private:
+  const std::string& _internal_txhash() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_txhash(const std::string& value);
+  std::string* _internal_mutable_txhash();
+  public:
+
+  // uint32 count = 4;
+  void clear_count();
+  uint32_t count() const;
+  void set_count(uint32_t value);
+  private:
+  uint32_t _internal_count() const;
+  void _internal_set_count(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetTxFailureListReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr addr_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr txhash_;
+    uint32_t count_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class TxFailureItem final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:TxFailureItem) */ {
+ public:
+  inline TxFailureItem() : TxFailureItem(nullptr) {}
+  ~TxFailureItem() override;
+  explicit PROTOBUF_CONSTEXPR TxFailureItem(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  TxFailureItem(const TxFailureItem& from);
+  TxFailureItem(TxFailureItem&& from) noexcept
+    : TxFailureItem() {
+    *this = ::std::move(from);
+  }
+
+  inline TxFailureItem& operator=(const TxFailureItem& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TxFailureItem& operator=(TxFailureItem&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TxFailureItem& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TxFailureItem* internal_default_instance() {
+    return reinterpret_cast<const TxFailureItem*>(
+               &_TxFailureItem_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    17;
+
+  friend void swap(TxFailureItem& a, TxFailureItem& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TxFailureItem* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TxFailureItem* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  TxFailureItem* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<TxFailureItem>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const TxFailureItem& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const TxFailureItem& from) {
+    TxFailureItem::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TxFailureItem* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "TxFailureItem";
+  }
+  protected:
+  explicit TxFailureItem(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVinsFieldNumber = 2,
+    kFromaddrFieldNumber = 3,
+    kToaddrFieldNumber = 4,
+    kToAmountFieldNumber = 9,
+    kTxHashFieldNumber = 1,
+    kDetailFieldNumber = 7,
+    kAmountFieldNumber = 5,
+    kTimeFieldNumber = 6,
+    kGasFieldNumber = 8,
+    kTypeFieldNumber = 10,
+  };
+  // repeated string vins = 2;
+  int vins_size() const;
+  private:
+  int _internal_vins_size() const;
+  public:
+  void clear_vins();
+  const std::string& vins(int index) const;
+  std::string* mutable_vins(int index);
+  void set_vins(int index, const std::string& value);
+  void set_vins(int index, std::string&& value);
+  void set_vins(int index, const char* value);
+  void set_vins(int index, const char* value, size_t size);
+  std::string* add_vins();
+  void add_vins(const std::string& value);
+  void add_vins(std::string&& value);
+  void add_vins(const char* value);
+  void add_vins(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& vins() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_vins();
+  private:
+  const std::string& _internal_vins(int index) const;
+  std::string* _internal_add_vins();
+  public:
+
+  // repeated string fromaddr = 3;
+  int fromaddr_size() const;
+  private:
+  int _internal_fromaddr_size() const;
+  public:
+  void clear_fromaddr();
+  const std::string& fromaddr(int index) const;
+  std::string* mutable_fromaddr(int index);
+  void set_fromaddr(int index, const std::string& value);
+  void set_fromaddr(int index, std::string&& value);
+  void set_fromaddr(int index, const char* value);
+  void set_fromaddr(int index, const char* value, size_t size);
+  std::string* add_fromaddr();
+  void add_fromaddr(const std::string& value);
+  void add_fromaddr(std::string&& value);
+  void add_fromaddr(const char* value);
+  void add_fromaddr(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& fromaddr() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_fromaddr();
+  private:
+  const std::string& _internal_fromaddr(int index) const;
+  std::string* _internal_add_fromaddr();
+  public:
+
+  // repeated string toaddr = 4;
+  int toaddr_size() const;
+  private:
+  int _internal_toaddr_size() const;
+  public:
+  void clear_toaddr();
+  const std::string& toaddr(int index) const;
+  std::string* mutable_toaddr(int index);
+  void set_toaddr(int index, const std::string& value);
+  void set_toaddr(int index, std::string&& value);
+  void set_toaddr(int index, const char* value);
+  void set_toaddr(int index, const char* value, size_t size);
+  std::string* add_toaddr();
+  void add_toaddr(const std::string& value);
+  void add_toaddr(std::string&& value);
+  void add_toaddr(const char* value);
+  void add_toaddr(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& toaddr() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_toaddr();
+  private:
+  const std::string& _internal_toaddr(int index) const;
+  std::string* _internal_add_toaddr();
+  public:
+
+  // repeated uint64 toAmount = 9;
+  int toamount_size() const;
+  private:
+  int _internal_toamount_size() const;
+  public:
+  void clear_toamount();
+  private:
+  uint64_t _internal_toamount(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >&
+      _internal_toamount() const;
+  void _internal_add_toamount(uint64_t value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >*
+      _internal_mutable_toamount();
+  public:
+  uint64_t toamount(int index) const;
+  void set_toamount(int index, uint64_t value);
+  void add_toamount(uint64_t value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >&
+      toamount() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >*
+      mutable_toamount();
+
+  // string txHash = 1;
+  void clear_txhash();
+  const std::string& txhash() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_txhash(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_txhash();
+  PROTOBUF_NODISCARD std::string* release_txhash();
+  void set_allocated_txhash(std::string* txhash);
+  private:
+  const std::string& _internal_txhash() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_txhash(const std::string& value);
+  std::string* _internal_mutable_txhash();
+  public:
+
+  // string detail = 7;
+  void clear_detail();
+  const std::string& detail() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_detail(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_detail();
+  PROTOBUF_NODISCARD std::string* release_detail();
+  void set_allocated_detail(std::string* detail);
+  private:
+  const std::string& _internal_detail() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_detail(const std::string& value);
+  std::string* _internal_mutable_detail();
+  public:
+
+  // uint64 amount = 5;
+  void clear_amount();
+  uint64_t amount() const;
+  void set_amount(uint64_t value);
+  private:
+  uint64_t _internal_amount() const;
+  void _internal_set_amount(uint64_t value);
+  public:
+
+  // uint64 time = 6;
+  void clear_time();
+  uint64_t time() const;
+  void set_time(uint64_t value);
+  private:
+  uint64_t _internal_time() const;
+  void _internal_set_time(uint64_t value);
+  public:
+
+  // uint64 gas = 8;
+  void clear_gas();
+  uint64_t gas() const;
+  void set_gas(uint64_t value);
+  private:
+  uint64_t _internal_gas() const;
+  void _internal_set_gas(uint64_t value);
+  public:
+
+  // .TxType type = 10;
+  void clear_type();
+  ::TxType type() const;
+  void set_type(::TxType value);
+  private:
+  ::TxType _internal_type() const;
+  void _internal_set_type(::TxType value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:TxFailureItem)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> vins_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> fromaddr_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> toaddr_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t > toamount_;
+    mutable std::atomic<int> _toamount_cached_byte_size_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr txhash_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr detail_;
+    uint64_t amount_;
+    uint64_t time_;
+    uint64_t gas_;
+    int type_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetTxFailureListAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetTxFailureListAck) */ {
+ public:
+  inline GetTxFailureListAck() : GetTxFailureListAck(nullptr) {}
+  ~GetTxFailureListAck() override;
+  explicit PROTOBUF_CONSTEXPR GetTxFailureListAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetTxFailureListAck(const GetTxFailureListAck& from);
+  GetTxFailureListAck(GetTxFailureListAck&& from) noexcept
+    : GetTxFailureListAck() {
+    *this = ::std::move(from);
+  }
+
+  inline GetTxFailureListAck& operator=(const GetTxFailureListAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetTxFailureListAck& operator=(GetTxFailureListAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetTxFailureListAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetTxFailureListAck* internal_default_instance() {
+    return reinterpret_cast<const GetTxFailureListAck*>(
+               &_GetTxFailureListAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    18;
+
+  friend void swap(GetTxFailureListAck& a, GetTxFailureListAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetTxFailureListAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetTxFailureListAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetTxFailureListAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetTxFailureListAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetTxFailureListAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetTxFailureListAck& from) {
+    GetTxFailureListAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetTxFailureListAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetTxFailureListAck";
+  }
+  protected:
+  explicit GetTxFailureListAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kListFieldNumber = 5,
+    kVersionFieldNumber = 1,
+    kMessageFieldNumber = 3,
+    kLasthashFieldNumber = 6,
+    kCodeFieldNumber = 2,
+    kTotalFieldNumber = 4,
+  };
+  // repeated .TxFailureItem list = 5;
+  int list_size() const;
+  private:
+  int _internal_list_size() const;
+  public:
+  void clear_list();
+  ::TxFailureItem* mutable_list(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TxFailureItem >*
+      mutable_list();
+  private:
+  const ::TxFailureItem& _internal_list(int index) const;
+  ::TxFailureItem* _internal_add_list();
+  public:
+  const ::TxFailureItem& list(int index) const;
+  ::TxFailureItem* add_list();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TxFailureItem >&
+      list() const;
+
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string message = 3;
+  void clear_message();
+  const std::string& message() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_message(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_message();
+  PROTOBUF_NODISCARD std::string* release_message();
+  void set_allocated_message(std::string* message);
+  private:
+  const std::string& _internal_message() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
+  std::string* _internal_mutable_message();
+  public:
+
+  // string lasthash = 6;
+  void clear_lasthash();
+  const std::string& lasthash() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_lasthash(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_lasthash();
+  PROTOBUF_NODISCARD std::string* release_lasthash();
+  void set_allocated_lasthash(std::string* lasthash);
+  private:
+  const std::string& _internal_lasthash() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_lasthash(const std::string& value);
+  std::string* _internal_mutable_lasthash();
+  public:
+
+  // int32 code = 2;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // uint32 total = 4;
+  void clear_total();
+  uint32_t total() const;
+  void set_total(uint32_t value);
+  private:
+  uint32_t _internal_total() const;
+  void _internal_set_total(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetTxFailureListAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TxFailureItem > list_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr lasthash_;
+    int32_t code_;
+    uint32_t total_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
 class GetUtxoReq final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetUtxoReq) */ {
  public:
@@ -2878,7 +4393,7 @@ class GetUtxoReq final :
                &_GetUtxoReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    19;
 
   friend void swap(GetUtxoReq& a, GetUtxoReq& b) {
     a.Swap(&b);
@@ -3047,7 +4562,7 @@ class Utxo final :
                &_Utxo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    20;
 
   friend void swap(Utxo& a, Utxo& b) {
     a.Swap(&b);
@@ -3222,7 +4737,7 @@ class GetUtxoAck final :
                &_GetUtxoAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    21;
 
   friend void swap(GetUtxoAck& a, GetUtxoAck& b) {
     a.Swap(&b);
@@ -3438,7 +4953,7 @@ class GetAllInvestAddressReq final :
                &_GetAllInvestAddressReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    22;
 
   friend void swap(GetAllInvestAddressReq& a, GetAllInvestAddressReq& b) {
     a.Swap(&b);
@@ -3607,7 +5122,7 @@ class InvestAddressItem final :
                &_InvestAddressItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    23;
 
   friend void swap(InvestAddressItem& a, InvestAddressItem& b) {
     a.Swap(&b);
@@ -3771,7 +5286,7 @@ class GetAllInvestAddressAck final :
                &_GetAllInvestAddressAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    24;
 
   friend void swap(GetAllInvestAddressAck& a, GetAllInvestAddressAck& b) {
     a.Swap(&b);
@@ -3987,7 +5502,7 @@ class GetAllStakeNodeListReq final :
                &_GetAllStakeNodeListReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    25;
 
   friend void swap(GetAllStakeNodeListReq& a, GetAllStakeNodeListReq& b) {
     a.Swap(&b);
@@ -4140,7 +5655,7 @@ class StakeNode final :
                &_StakeNode_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    26;
 
   friend void swap(StakeNode& a, StakeNode& b) {
     a.Swap(&b);
@@ -4384,7 +5899,7 @@ class GetAllStakeNodeListAck final :
                &_GetAllStakeNodeListAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    27;
 
   friend void swap(GetAllStakeNodeListAck& a, GetAllStakeNodeListAck& b) {
     a.Swap(&b);
@@ -4584,7 +6099,7 @@ class GetSignCountListReq final :
                &_GetSignCountListReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    28;
 
   friend void swap(GetSignCountListReq& a, GetSignCountListReq& b) {
     a.Swap(&b);
@@ -4737,7 +6252,7 @@ class SignCount final :
                &_SignCount_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    29;
 
   friend void swap(SignCount& a, SignCount& b) {
     a.Swap(&b);
@@ -4901,7 +6416,7 @@ class GetSignCountListAck final :
                &_GetSignCountListAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    30;
 
   friend void swap(GetSignCountListAck& a, GetSignCountListAck& b) {
     a.Swap(&b);
@@ -5101,7 +6616,7 @@ class GetHeightReq final :
                &_GetHeightReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    31;
 
   friend void swap(GetHeightReq& a, GetHeightReq& b) {
     a.Swap(&b);
@@ -5254,7 +6769,7 @@ class GetHeightAck final :
                &_GetHeightAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    26;
+    32;
 
   friend void swap(GetHeightAck& a, GetHeightAck& b) {
     a.Swap(&b);
@@ -5445,7 +6960,7 @@ class GetBonusListReq final :
                &_GetBonusListReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    27;
+    33;
 
   friend void swap(GetBonusListReq& a, GetBonusListReq& b) {
     a.Swap(&b);
@@ -5614,7 +7129,7 @@ class BonusItem final :
                &_BonusItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    28;
+    34;
 
   friend void swap(BonusItem& a, BonusItem& b) {
     a.Swap(&b);
@@ -5778,7 +7293,7 @@ class GetBonusListAck final :
                &_GetBonusListAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    29;
+    35;
 
   friend void swap(GetBonusListAck& a, GetBonusListAck& b) {
     a.Swap(&b);
@@ -5994,7 +7509,7 @@ class MultiSignTxReq final :
                &_MultiSignTxReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    30;
+    36;
 
   friend void swap(MultiSignTxReq& a, MultiSignTxReq& b) {
     a.Swap(&b);
@@ -6174,7 +7689,7 @@ class MultiSignTxAck final :
                &_MultiSignTxAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    31;
+    37;
 
   friend void swap(MultiSignTxAck& a, MultiSignTxAck& b) {
     a.Swap(&b);
@@ -6322,6 +7837,1019 @@ class MultiSignTxAck final :
 };
 // -------------------------------------------------------------------
 
+class GetTransactionStatusListReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetTransactionStatusListReq) */ {
+ public:
+  inline GetTransactionStatusListReq() : GetTransactionStatusListReq(nullptr) {}
+  ~GetTransactionStatusListReq() override;
+  explicit PROTOBUF_CONSTEXPR GetTransactionStatusListReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetTransactionStatusListReq(const GetTransactionStatusListReq& from);
+  GetTransactionStatusListReq(GetTransactionStatusListReq&& from) noexcept
+    : GetTransactionStatusListReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetTransactionStatusListReq& operator=(const GetTransactionStatusListReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetTransactionStatusListReq& operator=(GetTransactionStatusListReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetTransactionStatusListReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetTransactionStatusListReq* internal_default_instance() {
+    return reinterpret_cast<const GetTransactionStatusListReq*>(
+               &_GetTransactionStatusListReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    38;
+
+  friend void swap(GetTransactionStatusListReq& a, GetTransactionStatusListReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetTransactionStatusListReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetTransactionStatusListReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetTransactionStatusListReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetTransactionStatusListReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetTransactionStatusListReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetTransactionStatusListReq& from) {
+    GetTransactionStatusListReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetTransactionStatusListReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetTransactionStatusListReq";
+  }
+  protected:
+  explicit GetTransactionStatusListReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVersionFieldNumber = 1,
+    kTxhashFieldNumber = 2,
+  };
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string txhash = 2;
+  void clear_txhash();
+  const std::string& txhash() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_txhash(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_txhash();
+  PROTOBUF_NODISCARD std::string* release_txhash();
+  void set_allocated_txhash(std::string* txhash);
+  private:
+  const std::string& _internal_txhash() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_txhash(const std::string& value);
+  std::string* _internal_mutable_txhash();
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetTransactionStatusListReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr txhash_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class OtherStatusItem final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:OtherStatusItem) */ {
+ public:
+  inline OtherStatusItem() : OtherStatusItem(nullptr) {}
+  ~OtherStatusItem() override;
+  explicit PROTOBUF_CONSTEXPR OtherStatusItem(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  OtherStatusItem(const OtherStatusItem& from);
+  OtherStatusItem(OtherStatusItem&& from) noexcept
+    : OtherStatusItem() {
+    *this = ::std::move(from);
+  }
+
+  inline OtherStatusItem& operator=(const OtherStatusItem& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline OtherStatusItem& operator=(OtherStatusItem&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const OtherStatusItem& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const OtherStatusItem* internal_default_instance() {
+    return reinterpret_cast<const OtherStatusItem*>(
+               &_OtherStatusItem_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    39;
+
+  friend void swap(OtherStatusItem& a, OtherStatusItem& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(OtherStatusItem* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(OtherStatusItem* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  OtherStatusItem* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<OtherStatusItem>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const OtherStatusItem& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const OtherStatusItem& from) {
+    OtherStatusItem::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(OtherStatusItem* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "OtherStatusItem";
+  }
+  protected:
+  explicit OtherStatusItem(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kOthernodetimeFieldNumber = 1,
+    kOthernodemessageFieldNumber = 3,
+    kOthernodecodeFieldNumber = 2,
+  };
+  // string othernodetime = 1;
+  void clear_othernodetime();
+  const std::string& othernodetime() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_othernodetime(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_othernodetime();
+  PROTOBUF_NODISCARD std::string* release_othernodetime();
+  void set_allocated_othernodetime(std::string* othernodetime);
+  private:
+  const std::string& _internal_othernodetime() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_othernodetime(const std::string& value);
+  std::string* _internal_mutable_othernodetime();
+  public:
+
+  // string othernodemessage = 3;
+  void clear_othernodemessage();
+  const std::string& othernodemessage() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_othernodemessage(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_othernodemessage();
+  PROTOBUF_NODISCARD std::string* release_othernodemessage();
+  void set_allocated_othernodemessage(std::string* othernodemessage);
+  private:
+  const std::string& _internal_othernodemessage() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_othernodemessage(const std::string& value);
+  std::string* _internal_mutable_othernodemessage();
+  public:
+
+  // int32 othernodecode = 2;
+  void clear_othernodecode();
+  int32_t othernodecode() const;
+  void set_othernodecode(int32_t value);
+  private:
+  int32_t _internal_othernodecode() const;
+  void _internal_set_othernodecode(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:OtherStatusItem)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr othernodetime_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr othernodemessage_;
+    int32_t othernodecode_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SelfVerifyStatusItem final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SelfVerifyStatusItem) */ {
+ public:
+  inline SelfVerifyStatusItem() : SelfVerifyStatusItem(nullptr) {}
+  ~SelfVerifyStatusItem() override;
+  explicit PROTOBUF_CONSTEXPR SelfVerifyStatusItem(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SelfVerifyStatusItem(const SelfVerifyStatusItem& from);
+  SelfVerifyStatusItem(SelfVerifyStatusItem&& from) noexcept
+    : SelfVerifyStatusItem() {
+    *this = ::std::move(from);
+  }
+
+  inline SelfVerifyStatusItem& operator=(const SelfVerifyStatusItem& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SelfVerifyStatusItem& operator=(SelfVerifyStatusItem&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SelfVerifyStatusItem& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SelfVerifyStatusItem* internal_default_instance() {
+    return reinterpret_cast<const SelfVerifyStatusItem*>(
+               &_SelfVerifyStatusItem_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    40;
+
+  friend void swap(SelfVerifyStatusItem& a, SelfVerifyStatusItem& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SelfVerifyStatusItem* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SelfVerifyStatusItem* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SelfVerifyStatusItem* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SelfVerifyStatusItem>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SelfVerifyStatusItem& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SelfVerifyStatusItem& from) {
+    SelfVerifyStatusItem::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SelfVerifyStatusItem* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "SelfVerifyStatusItem";
+  }
+  protected:
+  explicit SelfVerifyStatusItem(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVerifyothernodetimeFieldNumber = 1,
+    kVerifyothernodemessageFieldNumber = 3,
+    kVerifyothernodecodeFieldNumber = 2,
+  };
+  // string verifyothernodetime = 1;
+  void clear_verifyothernodetime();
+  const std::string& verifyothernodetime() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_verifyothernodetime(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_verifyothernodetime();
+  PROTOBUF_NODISCARD std::string* release_verifyothernodetime();
+  void set_allocated_verifyothernodetime(std::string* verifyothernodetime);
+  private:
+  const std::string& _internal_verifyothernodetime() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_verifyothernodetime(const std::string& value);
+  std::string* _internal_mutable_verifyothernodetime();
+  public:
+
+  // string verifyothernodemessage = 3;
+  void clear_verifyothernodemessage();
+  const std::string& verifyothernodemessage() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_verifyothernodemessage(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_verifyothernodemessage();
+  PROTOBUF_NODISCARD std::string* release_verifyothernodemessage();
+  void set_allocated_verifyothernodemessage(std::string* verifyothernodemessage);
+  private:
+  const std::string& _internal_verifyothernodemessage() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_verifyothernodemessage(const std::string& value);
+  std::string* _internal_mutable_verifyothernodemessage();
+  public:
+
+  // int32 verifyothernodecode = 2;
+  void clear_verifyothernodecode();
+  int32_t verifyothernodecode() const;
+  void set_verifyothernodecode(int32_t value);
+  private:
+  int32_t _internal_verifyothernodecode() const;
+  void _internal_set_verifyothernodecode(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:SelfVerifyStatusItem)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr verifyothernodetime_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr verifyothernodemessage_;
+    int32_t verifyothernodecode_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class TransactionStatusItem final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:TransactionStatusItem) */ {
+ public:
+  inline TransactionStatusItem() : TransactionStatusItem(nullptr) {}
+  ~TransactionStatusItem() override;
+  explicit PROTOBUF_CONSTEXPR TransactionStatusItem(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  TransactionStatusItem(const TransactionStatusItem& from);
+  TransactionStatusItem(TransactionStatusItem&& from) noexcept
+    : TransactionStatusItem() {
+    *this = ::std::move(from);
+  }
+
+  inline TransactionStatusItem& operator=(const TransactionStatusItem& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline TransactionStatusItem& operator=(TransactionStatusItem&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const TransactionStatusItem& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const TransactionStatusItem* internal_default_instance() {
+    return reinterpret_cast<const TransactionStatusItem*>(
+               &_TransactionStatusItem_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    41;
+
+  friend void swap(TransactionStatusItem& a, TransactionStatusItem& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(TransactionStatusItem* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(TransactionStatusItem* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  TransactionStatusItem* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<TransactionStatusItem>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const TransactionStatusItem& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const TransactionStatusItem& from) {
+    TransactionStatusItem::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(TransactionStatusItem* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "TransactionStatusItem";
+  }
+  protected:
+  explicit TransactionStatusItem(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kOthernodeFieldNumber = 4,
+    kVerifyothernodeFieldNumber = 5,
+    kInitiatortimeFieldNumber = 1,
+    kInitiatormessageFieldNumber = 3,
+    kComposetimeFieldNumber = 6,
+    kSelfaddblocktimeFieldNumber = 7,
+    kSelfeaddblockmessageFieldNumber = 8,
+    kRemovependingtimeFieldNumber = 9,
+    kSelfcodeFieldNumber = 2,
+  };
+  // repeated .OtherStatusItem Othernode = 4;
+  int othernode_size() const;
+  private:
+  int _internal_othernode_size() const;
+  public:
+  void clear_othernode();
+  ::OtherStatusItem* mutable_othernode(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::OtherStatusItem >*
+      mutable_othernode();
+  private:
+  const ::OtherStatusItem& _internal_othernode(int index) const;
+  ::OtherStatusItem* _internal_add_othernode();
+  public:
+  const ::OtherStatusItem& othernode(int index) const;
+  ::OtherStatusItem* add_othernode();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::OtherStatusItem >&
+      othernode() const;
+
+  // repeated .SelfVerifyStatusItem verifyothernode = 5;
+  int verifyothernode_size() const;
+  private:
+  int _internal_verifyothernode_size() const;
+  public:
+  void clear_verifyothernode();
+  ::SelfVerifyStatusItem* mutable_verifyothernode(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SelfVerifyStatusItem >*
+      mutable_verifyothernode();
+  private:
+  const ::SelfVerifyStatusItem& _internal_verifyothernode(int index) const;
+  ::SelfVerifyStatusItem* _internal_add_verifyothernode();
+  public:
+  const ::SelfVerifyStatusItem& verifyothernode(int index) const;
+  ::SelfVerifyStatusItem* add_verifyothernode();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SelfVerifyStatusItem >&
+      verifyothernode() const;
+
+  // string initiatortime = 1;
+  void clear_initiatortime();
+  const std::string& initiatortime() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_initiatortime(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_initiatortime();
+  PROTOBUF_NODISCARD std::string* release_initiatortime();
+  void set_allocated_initiatortime(std::string* initiatortime);
+  private:
+  const std::string& _internal_initiatortime() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_initiatortime(const std::string& value);
+  std::string* _internal_mutable_initiatortime();
+  public:
+
+  // string initiatormessage = 3;
+  void clear_initiatormessage();
+  const std::string& initiatormessage() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_initiatormessage(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_initiatormessage();
+  PROTOBUF_NODISCARD std::string* release_initiatormessage();
+  void set_allocated_initiatormessage(std::string* initiatormessage);
+  private:
+  const std::string& _internal_initiatormessage() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_initiatormessage(const std::string& value);
+  std::string* _internal_mutable_initiatormessage();
+  public:
+
+  // string composetime = 6;
+  void clear_composetime();
+  const std::string& composetime() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_composetime(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_composetime();
+  PROTOBUF_NODISCARD std::string* release_composetime();
+  void set_allocated_composetime(std::string* composetime);
+  private:
+  const std::string& _internal_composetime() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_composetime(const std::string& value);
+  std::string* _internal_mutable_composetime();
+  public:
+
+  // string selfaddblocktime = 7;
+  void clear_selfaddblocktime();
+  const std::string& selfaddblocktime() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_selfaddblocktime(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_selfaddblocktime();
+  PROTOBUF_NODISCARD std::string* release_selfaddblocktime();
+  void set_allocated_selfaddblocktime(std::string* selfaddblocktime);
+  private:
+  const std::string& _internal_selfaddblocktime() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_selfaddblocktime(const std::string& value);
+  std::string* _internal_mutable_selfaddblocktime();
+  public:
+
+  // string selfeaddblockmessage = 8;
+  void clear_selfeaddblockmessage();
+  const std::string& selfeaddblockmessage() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_selfeaddblockmessage(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_selfeaddblockmessage();
+  PROTOBUF_NODISCARD std::string* release_selfeaddblockmessage();
+  void set_allocated_selfeaddblockmessage(std::string* selfeaddblockmessage);
+  private:
+  const std::string& _internal_selfeaddblockmessage() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_selfeaddblockmessage(const std::string& value);
+  std::string* _internal_mutable_selfeaddblockmessage();
+  public:
+
+  // string removependingtime = 9;
+  void clear_removependingtime();
+  const std::string& removependingtime() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_removependingtime(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_removependingtime();
+  PROTOBUF_NODISCARD std::string* release_removependingtime();
+  void set_allocated_removependingtime(std::string* removependingtime);
+  private:
+  const std::string& _internal_removependingtime() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_removependingtime(const std::string& value);
+  std::string* _internal_mutable_removependingtime();
+  public:
+
+  // int32 selfcode = 2;
+  void clear_selfcode();
+  int32_t selfcode() const;
+  void set_selfcode(int32_t value);
+  private:
+  int32_t _internal_selfcode() const;
+  void _internal_set_selfcode(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:TransactionStatusItem)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::OtherStatusItem > othernode_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SelfVerifyStatusItem > verifyothernode_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr initiatortime_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr initiatormessage_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr composetime_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr selfaddblocktime_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr selfeaddblockmessage_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr removependingtime_;
+    int32_t selfcode_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetTransactionStatusListAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetTransactionStatusListAck) */ {
+ public:
+  inline GetTransactionStatusListAck() : GetTransactionStatusListAck(nullptr) {}
+  ~GetTransactionStatusListAck() override;
+  explicit PROTOBUF_CONSTEXPR GetTransactionStatusListAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetTransactionStatusListAck(const GetTransactionStatusListAck& from);
+  GetTransactionStatusListAck(GetTransactionStatusListAck&& from) noexcept
+    : GetTransactionStatusListAck() {
+    *this = ::std::move(from);
+  }
+
+  inline GetTransactionStatusListAck& operator=(const GetTransactionStatusListAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetTransactionStatusListAck& operator=(GetTransactionStatusListAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetTransactionStatusListAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetTransactionStatusListAck* internal_default_instance() {
+    return reinterpret_cast<const GetTransactionStatusListAck*>(
+               &_GetTransactionStatusListAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    42;
+
+  friend void swap(GetTransactionStatusListAck& a, GetTransactionStatusListAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetTransactionStatusListAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetTransactionStatusListAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetTransactionStatusListAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetTransactionStatusListAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetTransactionStatusListAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetTransactionStatusListAck& from) {
+    GetTransactionStatusListAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetTransactionStatusListAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetTransactionStatusListAck";
+  }
+  protected:
+  explicit GetTransactionStatusListAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVersionFieldNumber = 1,
+    kMessageFieldNumber = 3,
+    kListFieldNumber = 5,
+    kCodeFieldNumber = 2,
+  };
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string message = 3;
+  void clear_message();
+  const std::string& message() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_message(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_message();
+  PROTOBUF_NODISCARD std::string* release_message();
+  void set_allocated_message(std::string* message);
+  private:
+  const std::string& _internal_message() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
+  std::string* _internal_mutable_message();
+  public:
+
+  // .TransactionStatusItem list = 5;
+  bool has_list() const;
+  private:
+  bool _internal_has_list() const;
+  public:
+  void clear_list();
+  const ::TransactionStatusItem& list() const;
+  PROTOBUF_NODISCARD ::TransactionStatusItem* release_list();
+  ::TransactionStatusItem* mutable_list();
+  void set_allocated_list(::TransactionStatusItem* list);
+  private:
+  const ::TransactionStatusItem& _internal_list() const;
+  ::TransactionStatusItem* _internal_mutable_list();
+  public:
+  void unsafe_arena_set_allocated_list(
+      ::TransactionStatusItem* list);
+  ::TransactionStatusItem* unsafe_arena_release_list();
+
+  // int32 code = 2;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetTransactionStatusListAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+    ::TransactionStatusItem* list_;
+    int32_t code_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
 class SuccessRate final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SuccessRate) */ {
  public:
@@ -6370,7 +8898,7 @@ class SuccessRate final :
                &_SuccessRate_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    32;
+    43;
 
   friend void swap(SuccessRate& a, SuccessRate& b) {
     a.Swap(&b);
@@ -6486,1347 +9014,6 @@ class SuccessRate final :
 };
 // -------------------------------------------------------------------
 
-class IsOnChainReq final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:IsOnChainReq) */ {
- public:
-  inline IsOnChainReq() : IsOnChainReq(nullptr) {}
-  ~IsOnChainReq() override;
-  explicit PROTOBUF_CONSTEXPR IsOnChainReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  IsOnChainReq(const IsOnChainReq& from);
-  IsOnChainReq(IsOnChainReq&& from) noexcept
-    : IsOnChainReq() {
-    *this = ::std::move(from);
-  }
-
-  inline IsOnChainReq& operator=(const IsOnChainReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline IsOnChainReq& operator=(IsOnChainReq&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const IsOnChainReq& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const IsOnChainReq* internal_default_instance() {
-    return reinterpret_cast<const IsOnChainReq*>(
-               &_IsOnChainReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    33;
-
-  friend void swap(IsOnChainReq& a, IsOnChainReq& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(IsOnChainReq* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(IsOnChainReq* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  IsOnChainReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<IsOnChainReq>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const IsOnChainReq& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const IsOnChainReq& from) {
-    IsOnChainReq::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(IsOnChainReq* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "IsOnChainReq";
-  }
-  protected:
-  explicit IsOnChainReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kTxhashFieldNumber = 2,
-    kVersionFieldNumber = 1,
-    kTimeFieldNumber = 3,
-  };
-  // repeated string txhash = 2;
-  int txhash_size() const;
-  private:
-  int _internal_txhash_size() const;
-  public:
-  void clear_txhash();
-  const std::string& txhash(int index) const;
-  std::string* mutable_txhash(int index);
-  void set_txhash(int index, const std::string& value);
-  void set_txhash(int index, std::string&& value);
-  void set_txhash(int index, const char* value);
-  void set_txhash(int index, const char* value, size_t size);
-  std::string* add_txhash();
-  void add_txhash(const std::string& value);
-  void add_txhash(std::string&& value);
-  void add_txhash(const char* value);
-  void add_txhash(const char* value, size_t size);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& txhash() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_txhash();
-  private:
-  const std::string& _internal_txhash(int index) const;
-  std::string* _internal_add_txhash();
-  public:
-
-  // string version = 1;
-  void clear_version();
-  const std::string& version() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_version(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_version();
-  PROTOBUF_NODISCARD std::string* release_version();
-  void set_allocated_version(std::string* version);
-  private:
-  const std::string& _internal_version() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
-  std::string* _internal_mutable_version();
-  public:
-
-  // uint64 time = 3;
-  void clear_time();
-  uint64_t time() const;
-  void set_time(uint64_t value);
-  private:
-  uint64_t _internal_time() const;
-  void _internal_set_time(uint64_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:IsOnChainReq)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> txhash_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
-    uint64_t time_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_interface_2eproto;
-};
-// -------------------------------------------------------------------
-
-class IsOnChainAck final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:IsOnChainAck) */ {
- public:
-  inline IsOnChainAck() : IsOnChainAck(nullptr) {}
-  ~IsOnChainAck() override;
-  explicit PROTOBUF_CONSTEXPR IsOnChainAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  IsOnChainAck(const IsOnChainAck& from);
-  IsOnChainAck(IsOnChainAck&& from) noexcept
-    : IsOnChainAck() {
-    *this = ::std::move(from);
-  }
-
-  inline IsOnChainAck& operator=(const IsOnChainAck& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline IsOnChainAck& operator=(IsOnChainAck&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const IsOnChainAck& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const IsOnChainAck* internal_default_instance() {
-    return reinterpret_cast<const IsOnChainAck*>(
-               &_IsOnChainAck_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    34;
-
-  friend void swap(IsOnChainAck& a, IsOnChainAck& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(IsOnChainAck* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(IsOnChainAck* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  IsOnChainAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<IsOnChainAck>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const IsOnChainAck& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const IsOnChainAck& from) {
-    IsOnChainAck::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(IsOnChainAck* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "IsOnChainAck";
-  }
-  protected:
-  explicit IsOnChainAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kPercentageFieldNumber = 5,
-    kVersionFieldNumber = 1,
-    kMessageFieldNumber = 3,
-    kTimeFieldNumber = 4,
-    kCodeFieldNumber = 2,
-  };
-  // repeated .SuccessRate percentage = 5;
-  int percentage_size() const;
-  private:
-  int _internal_percentage_size() const;
-  public:
-  void clear_percentage();
-  ::SuccessRate* mutable_percentage(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SuccessRate >*
-      mutable_percentage();
-  private:
-  const ::SuccessRate& _internal_percentage(int index) const;
-  ::SuccessRate* _internal_add_percentage();
-  public:
-  const ::SuccessRate& percentage(int index) const;
-  ::SuccessRate* add_percentage();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SuccessRate >&
-      percentage() const;
-
-  // string version = 1;
-  void clear_version();
-  const std::string& version() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_version(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_version();
-  PROTOBUF_NODISCARD std::string* release_version();
-  void set_allocated_version(std::string* version);
-  private:
-  const std::string& _internal_version() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
-  std::string* _internal_mutable_version();
-  public:
-
-  // string message = 3;
-  void clear_message();
-  const std::string& message() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_message(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_message();
-  PROTOBUF_NODISCARD std::string* release_message();
-  void set_allocated_message(std::string* message);
-  private:
-  const std::string& _internal_message() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
-  std::string* _internal_mutable_message();
-  public:
-
-  // uint64 time = 4;
-  void clear_time();
-  uint64_t time() const;
-  void set_time(uint64_t value);
-  private:
-  uint64_t _internal_time() const;
-  void _internal_set_time(uint64_t value);
-  public:
-
-  // int32 code = 2;
-  void clear_code();
-  int32_t code() const;
-  void set_code(int32_t value);
-  private:
-  int32_t _internal_code() const;
-  void _internal_set_code(int32_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:IsOnChainAck)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SuccessRate > percentage_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
-    uint64_t time_;
-    int32_t code_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_interface_2eproto;
-};
-// -------------------------------------------------------------------
-
-class CorresHash final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CorresHash) */ {
- public:
-  inline CorresHash() : CorresHash(nullptr) {}
-  ~CorresHash() override;
-  explicit PROTOBUF_CONSTEXPR CorresHash(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  CorresHash(const CorresHash& from);
-  CorresHash(CorresHash&& from) noexcept
-    : CorresHash() {
-    *this = ::std::move(from);
-  }
-
-  inline CorresHash& operator=(const CorresHash& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline CorresHash& operator=(CorresHash&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const CorresHash& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const CorresHash* internal_default_instance() {
-    return reinterpret_cast<const CorresHash*>(
-               &_CorresHash_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    35;
-
-  friend void swap(CorresHash& a, CorresHash& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(CorresHash* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(CorresHash* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  CorresHash* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<CorresHash>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const CorresHash& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const CorresHash& from) {
-    CorresHash::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(CorresHash* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "CorresHash";
-  }
-  protected:
-  explicit CorresHash(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kHashFieldNumber = 1,
-    kFlagFieldNumber = 2,
-  };
-  // string hash = 1;
-  void clear_hash();
-  const std::string& hash() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_hash(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_hash();
-  PROTOBUF_NODISCARD std::string* release_hash();
-  void set_allocated_hash(std::string* hash);
-  private:
-  const std::string& _internal_hash() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_hash(const std::string& value);
-  std::string* _internal_mutable_hash();
-  public:
-
-  // uint32 flag = 2;
-  void clear_flag();
-  uint32_t flag() const;
-  void set_flag(uint32_t value);
-  private:
-  uint32_t _internal_flag() const;
-  void _internal_set_flag(uint32_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:CorresHash)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr hash_;
-    uint32_t flag_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_interface_2eproto;
-};
-// -------------------------------------------------------------------
-
-class CheckTxReq final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CheckTxReq) */ {
- public:
-  inline CheckTxReq() : CheckTxReq(nullptr) {}
-  ~CheckTxReq() override;
-  explicit PROTOBUF_CONSTEXPR CheckTxReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  CheckTxReq(const CheckTxReq& from);
-  CheckTxReq(CheckTxReq&& from) noexcept
-    : CheckTxReq() {
-    *this = ::std::move(from);
-  }
-
-  inline CheckTxReq& operator=(const CheckTxReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline CheckTxReq& operator=(CheckTxReq&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const CheckTxReq& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const CheckTxReq* internal_default_instance() {
-    return reinterpret_cast<const CheckTxReq*>(
-               &_CheckTxReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    36;
-
-  friend void swap(CheckTxReq& a, CheckTxReq& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(CheckTxReq* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(CheckTxReq* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  CheckTxReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<CheckTxReq>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const CheckTxReq& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const CheckTxReq& from) {
-    CheckTxReq::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(CheckTxReq* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "CheckTxReq";
-  }
-  protected:
-  explicit CheckTxReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kTxhashFieldNumber = 2,
-    kVersionFieldNumber = 1,
-    kMsgIdFieldNumber = 3,
-  };
-  // repeated string txhash = 2;
-  int txhash_size() const;
-  private:
-  int _internal_txhash_size() const;
-  public:
-  void clear_txhash();
-  const std::string& txhash(int index) const;
-  std::string* mutable_txhash(int index);
-  void set_txhash(int index, const std::string& value);
-  void set_txhash(int index, std::string&& value);
-  void set_txhash(int index, const char* value);
-  void set_txhash(int index, const char* value, size_t size);
-  std::string* add_txhash();
-  void add_txhash(const std::string& value);
-  void add_txhash(std::string&& value);
-  void add_txhash(const char* value);
-  void add_txhash(const char* value, size_t size);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& txhash() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_txhash();
-  private:
-  const std::string& _internal_txhash(int index) const;
-  std::string* _internal_add_txhash();
-  public:
-
-  // string version = 1;
-  void clear_version();
-  const std::string& version() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_version(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_version();
-  PROTOBUF_NODISCARD std::string* release_version();
-  void set_allocated_version(std::string* version);
-  private:
-  const std::string& _internal_version() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
-  std::string* _internal_mutable_version();
-  public:
-
-  // string msg_id = 3;
-  void clear_msg_id();
-  const std::string& msg_id() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_msg_id(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_msg_id();
-  PROTOBUF_NODISCARD std::string* release_msg_id();
-  void set_allocated_msg_id(std::string* msg_id);
-  private:
-  const std::string& _internal_msg_id() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
-  std::string* _internal_mutable_msg_id();
-  public:
-
-  // @@protoc_insertion_point(class_scope:CheckTxReq)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> txhash_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_interface_2eproto;
-};
-// -------------------------------------------------------------------
-
-class CheckTxAck final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CheckTxAck) */ {
- public:
-  inline CheckTxAck() : CheckTxAck(nullptr) {}
-  ~CheckTxAck() override;
-  explicit PROTOBUF_CONSTEXPR CheckTxAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  CheckTxAck(const CheckTxAck& from);
-  CheckTxAck(CheckTxAck&& from) noexcept
-    : CheckTxAck() {
-    *this = ::std::move(from);
-  }
-
-  inline CheckTxAck& operator=(const CheckTxAck& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline CheckTxAck& operator=(CheckTxAck&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const CheckTxAck& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const CheckTxAck* internal_default_instance() {
-    return reinterpret_cast<const CheckTxAck*>(
-               &_CheckTxAck_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    37;
-
-  friend void swap(CheckTxAck& a, CheckTxAck& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(CheckTxAck* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(CheckTxAck* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  CheckTxAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<CheckTxAck>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const CheckTxAck& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const CheckTxAck& from) {
-    CheckTxAck::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(CheckTxAck* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "CheckTxAck";
-  }
-  protected:
-  explicit CheckTxAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kFlaghashFieldNumber = 2,
-    kVersionFieldNumber = 1,
-    kMsgIdFieldNumber = 3,
-    kBase58AddrFieldNumber = 4,
-  };
-  // repeated .CorresHash flaghash = 2;
-  int flaghash_size() const;
-  private:
-  int _internal_flaghash_size() const;
-  public:
-  void clear_flaghash();
-  ::CorresHash* mutable_flaghash(int index);
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash >*
-      mutable_flaghash();
-  private:
-  const ::CorresHash& _internal_flaghash(int index) const;
-  ::CorresHash* _internal_add_flaghash();
-  public:
-  const ::CorresHash& flaghash(int index) const;
-  ::CorresHash* add_flaghash();
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash >&
-      flaghash() const;
-
-  // string version = 1;
-  void clear_version();
-  const std::string& version() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_version(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_version();
-  PROTOBUF_NODISCARD std::string* release_version();
-  void set_allocated_version(std::string* version);
-  private:
-  const std::string& _internal_version() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
-  std::string* _internal_mutable_version();
-  public:
-
-  // string msg_id = 3;
-  void clear_msg_id();
-  const std::string& msg_id() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_msg_id(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_msg_id();
-  PROTOBUF_NODISCARD std::string* release_msg_id();
-  void set_allocated_msg_id(std::string* msg_id);
-  private:
-  const std::string& _internal_msg_id() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
-  std::string* _internal_mutable_msg_id();
-  public:
-
-  // string base58addr = 4;
-  void clear_base58addr();
-  const std::string& base58addr() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_base58addr(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_base58addr();
-  PROTOBUF_NODISCARD std::string* release_base58addr();
-  void set_allocated_base58addr(std::string* base58addr);
-  private:
-  const std::string& _internal_base58addr() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_base58addr(const std::string& value);
-  std::string* _internal_mutable_base58addr();
-  public:
-
-  // @@protoc_insertion_point(class_scope:CheckTxAck)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash > flaghash_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr base58addr_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_interface_2eproto;
-};
-// -------------------------------------------------------------------
-
-class GetRestInvestAmountReq final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetRestInvestAmountReq) */ {
- public:
-  inline GetRestInvestAmountReq() : GetRestInvestAmountReq(nullptr) {}
-  ~GetRestInvestAmountReq() override;
-  explicit PROTOBUF_CONSTEXPR GetRestInvestAmountReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  GetRestInvestAmountReq(const GetRestInvestAmountReq& from);
-  GetRestInvestAmountReq(GetRestInvestAmountReq&& from) noexcept
-    : GetRestInvestAmountReq() {
-    *this = ::std::move(from);
-  }
-
-  inline GetRestInvestAmountReq& operator=(const GetRestInvestAmountReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline GetRestInvestAmountReq& operator=(GetRestInvestAmountReq&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const GetRestInvestAmountReq& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const GetRestInvestAmountReq* internal_default_instance() {
-    return reinterpret_cast<const GetRestInvestAmountReq*>(
-               &_GetRestInvestAmountReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    38;
-
-  friend void swap(GetRestInvestAmountReq& a, GetRestInvestAmountReq& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(GetRestInvestAmountReq* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(GetRestInvestAmountReq* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  GetRestInvestAmountReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<GetRestInvestAmountReq>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const GetRestInvestAmountReq& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const GetRestInvestAmountReq& from) {
-    GetRestInvestAmountReq::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(GetRestInvestAmountReq* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "GetRestInvestAmountReq";
-  }
-  protected:
-  explicit GetRestInvestAmountReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kVersionFieldNumber = 1,
-    kBase58FieldNumber = 2,
-  };
-  // string version = 1;
-  void clear_version();
-  const std::string& version() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_version(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_version();
-  PROTOBUF_NODISCARD std::string* release_version();
-  void set_allocated_version(std::string* version);
-  private:
-  const std::string& _internal_version() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
-  std::string* _internal_mutable_version();
-  public:
-
-  // string base58 = 2;
-  void clear_base58();
-  const std::string& base58() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_base58(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_base58();
-  PROTOBUF_NODISCARD std::string* release_base58();
-  void set_allocated_base58(std::string* base58);
-  private:
-  const std::string& _internal_base58() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_base58(const std::string& value);
-  std::string* _internal_mutable_base58();
-  public:
-
-  // @@protoc_insertion_point(class_scope:GetRestInvestAmountReq)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr base58_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_interface_2eproto;
-};
-// -------------------------------------------------------------------
-
-class GetRestInvestAmountAck final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetRestInvestAmountAck) */ {
- public:
-  inline GetRestInvestAmountAck() : GetRestInvestAmountAck(nullptr) {}
-  ~GetRestInvestAmountAck() override;
-  explicit PROTOBUF_CONSTEXPR GetRestInvestAmountAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  GetRestInvestAmountAck(const GetRestInvestAmountAck& from);
-  GetRestInvestAmountAck(GetRestInvestAmountAck&& from) noexcept
-    : GetRestInvestAmountAck() {
-    *this = ::std::move(from);
-  }
-
-  inline GetRestInvestAmountAck& operator=(const GetRestInvestAmountAck& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline GetRestInvestAmountAck& operator=(GetRestInvestAmountAck&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const GetRestInvestAmountAck& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const GetRestInvestAmountAck* internal_default_instance() {
-    return reinterpret_cast<const GetRestInvestAmountAck*>(
-               &_GetRestInvestAmountAck_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    39;
-
-  friend void swap(GetRestInvestAmountAck& a, GetRestInvestAmountAck& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(GetRestInvestAmountAck* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(GetRestInvestAmountAck* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  GetRestInvestAmountAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<GetRestInvestAmountAck>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const GetRestInvestAmountAck& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const GetRestInvestAmountAck& from) {
-    GetRestInvestAmountAck::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(GetRestInvestAmountAck* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "GetRestInvestAmountAck";
-  }
-  protected:
-  explicit GetRestInvestAmountAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kVersionFieldNumber = 1,
-    kMessageFieldNumber = 3,
-    kBase58FieldNumber = 5,
-    kAmountFieldNumber = 4,
-    kCodeFieldNumber = 2,
-  };
-  // string version = 1;
-  void clear_version();
-  const std::string& version() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_version(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_version();
-  PROTOBUF_NODISCARD std::string* release_version();
-  void set_allocated_version(std::string* version);
-  private:
-  const std::string& _internal_version() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
-  std::string* _internal_mutable_version();
-  public:
-
-  // string message = 3;
-  void clear_message();
-  const std::string& message() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_message(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_message();
-  PROTOBUF_NODISCARD std::string* release_message();
-  void set_allocated_message(std::string* message);
-  private:
-  const std::string& _internal_message() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
-  std::string* _internal_mutable_message();
-  public:
-
-  // string base58 = 5;
-  void clear_base58();
-  const std::string& base58() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_base58(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_base58();
-  PROTOBUF_NODISCARD std::string* release_base58();
-  void set_allocated_base58(std::string* base58);
-  private:
-  const std::string& _internal_base58() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_base58(const std::string& value);
-  std::string* _internal_mutable_base58();
-  public:
-
-  // uint64 amount = 4;
-  void clear_amount();
-  uint64_t amount() const;
-  void set_amount(uint64_t value);
-  private:
-  uint64_t _internal_amount() const;
-  void _internal_set_amount(uint64_t value);
-  public:
-
-  // int32 code = 2;
-  void clear_code();
-  int32_t code() const;
-  void set_code(int32_t value);
-  private:
-  int32_t _internal_code() const;
-  void _internal_set_code(int32_t value);
-  public:
-
-  // @@protoc_insertion_point(class_scope:GetRestInvestAmountAck)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr base58_;
-    uint64_t amount_;
-    int32_t code_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_interface_2eproto;
-};
-// -------------------------------------------------------------------
-
 class ConfirmTransactionReq final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:ConfirmTransactionReq) */ {
  public:
@@ -7875,7 +9062,7 @@ class ConfirmTransactionReq final :
                &_ConfirmTransactionReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    40;
+    44;
 
   friend void swap(ConfirmTransactionReq& a, ConfirmTransactionReq& b) {
     a.Swap(&b);
@@ -8076,7 +9263,7 @@ class ConfirmTransactionAck final :
                &_ConfirmTransactionAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    41;
+    45;
 
   friend void swap(ConfirmTransactionAck& a, ConfirmTransactionAck& b) {
     a.Swap(&b);
@@ -8152,6 +9339,7 @@ class ConfirmTransactionAck final :
     kPercentageFieldNumber = 5,
     kVersionFieldNumber = 1,
     kMessageFieldNumber = 3,
+    kTxFieldNumber = 8,
     kTimeFieldNumber = 4,
     kCodeFieldNumber = 2,
     kSendSizeFieldNumber = 6,
@@ -8203,6 +9391,20 @@ class ConfirmTransactionAck final :
   std::string* _internal_mutable_message();
   public:
 
+  // bytes tx = 8;
+  void clear_tx();
+  const std::string& tx() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_tx(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_tx();
+  PROTOBUF_NODISCARD std::string* release_tx();
+  void set_allocated_tx(std::string* tx);
+  private:
+  const std::string& _internal_tx() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_tx(const std::string& value);
+  std::string* _internal_mutable_tx();
+  public:
+
   // uint64 time = 4;
   void clear_time();
   uint64_t time() const;
@@ -8250,10 +9452,1378 @@ class ConfirmTransactionAck final :
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SuccessRate > percentage_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr tx_;
     uint64_t time_;
     int32_t code_;
     uint32_t send_size_;
     uint32_t received_size_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CorresHash final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CorresHash) */ {
+ public:
+  inline CorresHash() : CorresHash(nullptr) {}
+  ~CorresHash() override;
+  explicit PROTOBUF_CONSTEXPR CorresHash(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  CorresHash(const CorresHash& from);
+  CorresHash(CorresHash&& from) noexcept
+    : CorresHash() {
+    *this = ::std::move(from);
+  }
+
+  inline CorresHash& operator=(const CorresHash& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CorresHash& operator=(CorresHash&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CorresHash& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const CorresHash* internal_default_instance() {
+    return reinterpret_cast<const CorresHash*>(
+               &_CorresHash_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    46;
+
+  friend void swap(CorresHash& a, CorresHash& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CorresHash* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CorresHash* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  CorresHash* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CorresHash>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CorresHash& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const CorresHash& from) {
+    CorresHash::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CorresHash* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "CorresHash";
+  }
+  protected:
+  explicit CorresHash(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kHashFieldNumber = 1,
+    kFlagFieldNumber = 2,
+  };
+  // string hash = 1;
+  void clear_hash();
+  const std::string& hash() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_hash(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_hash();
+  PROTOBUF_NODISCARD std::string* release_hash();
+  void set_allocated_hash(std::string* hash);
+  private:
+  const std::string& _internal_hash() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_hash(const std::string& value);
+  std::string* _internal_mutable_hash();
+  public:
+
+  // uint32 flag = 2;
+  void clear_flag();
+  uint32_t flag() const;
+  void set_flag(uint32_t value);
+  private:
+  uint32_t _internal_flag() const;
+  void _internal_set_flag(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:CorresHash)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr hash_;
+    uint32_t flag_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CheckTxReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CheckTxReq) */ {
+ public:
+  inline CheckTxReq() : CheckTxReq(nullptr) {}
+  ~CheckTxReq() override;
+  explicit PROTOBUF_CONSTEXPR CheckTxReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  CheckTxReq(const CheckTxReq& from);
+  CheckTxReq(CheckTxReq&& from) noexcept
+    : CheckTxReq() {
+    *this = ::std::move(from);
+  }
+
+  inline CheckTxReq& operator=(const CheckTxReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CheckTxReq& operator=(CheckTxReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CheckTxReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const CheckTxReq* internal_default_instance() {
+    return reinterpret_cast<const CheckTxReq*>(
+               &_CheckTxReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    47;
+
+  friend void swap(CheckTxReq& a, CheckTxReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CheckTxReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CheckTxReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  CheckTxReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CheckTxReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CheckTxReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const CheckTxReq& from) {
+    CheckTxReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CheckTxReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "CheckTxReq";
+  }
+  protected:
+  explicit CheckTxReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kTxhashFieldNumber = 2,
+    kVersionFieldNumber = 1,
+    kMsgIdFieldNumber = 3,
+    kIsresponseFieldNumber = 4,
+  };
+  // repeated string txhash = 2;
+  int txhash_size() const;
+  private:
+  int _internal_txhash_size() const;
+  public:
+  void clear_txhash();
+  const std::string& txhash(int index) const;
+  std::string* mutable_txhash(int index);
+  void set_txhash(int index, const std::string& value);
+  void set_txhash(int index, std::string&& value);
+  void set_txhash(int index, const char* value);
+  void set_txhash(int index, const char* value, size_t size);
+  std::string* add_txhash();
+  void add_txhash(const std::string& value);
+  void add_txhash(std::string&& value);
+  void add_txhash(const char* value);
+  void add_txhash(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& txhash() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_txhash();
+  private:
+  const std::string& _internal_txhash(int index) const;
+  std::string* _internal_add_txhash();
+  public:
+
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string msg_id = 3;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // uint32 isresponse = 4;
+  void clear_isresponse();
+  uint32_t isresponse() const;
+  void set_isresponse(uint32_t value);
+  private:
+  uint32_t _internal_isresponse() const;
+  void _internal_set_isresponse(uint32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:CheckTxReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> txhash_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    uint32_t isresponse_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetUtxoHashReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetUtxoHashReq) */ {
+ public:
+  inline GetUtxoHashReq() : GetUtxoHashReq(nullptr) {}
+  ~GetUtxoHashReq() override;
+  explicit PROTOBUF_CONSTEXPR GetUtxoHashReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetUtxoHashReq(const GetUtxoHashReq& from);
+  GetUtxoHashReq(GetUtxoHashReq&& from) noexcept
+    : GetUtxoHashReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetUtxoHashReq& operator=(const GetUtxoHashReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetUtxoHashReq& operator=(GetUtxoHashReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetUtxoHashReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetUtxoHashReq* internal_default_instance() {
+    return reinterpret_cast<const GetUtxoHashReq*>(
+               &_GetUtxoHashReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    48;
+
+  friend void swap(GetUtxoHashReq& a, GetUtxoHashReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetUtxoHashReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetUtxoHashReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetUtxoHashReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetUtxoHashReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetUtxoHashReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetUtxoHashReq& from) {
+    GetUtxoHashReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetUtxoHashReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetUtxoHashReq";
+  }
+  protected:
+  explicit GetUtxoHashReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUtxoHashFieldNumber = 2,
+    kVersionFieldNumber = 1,
+    kMsgIdFieldNumber = 3,
+  };
+  // repeated string utxoHash = 2;
+  int utxohash_size() const;
+  private:
+  int _internal_utxohash_size() const;
+  public:
+  void clear_utxohash();
+  const std::string& utxohash(int index) const;
+  std::string* mutable_utxohash(int index);
+  void set_utxohash(int index, const std::string& value);
+  void set_utxohash(int index, std::string&& value);
+  void set_utxohash(int index, const char* value);
+  void set_utxohash(int index, const char* value, size_t size);
+  std::string* add_utxohash();
+  void add_utxohash(const std::string& value);
+  void add_utxohash(std::string&& value);
+  void add_utxohash(const char* value);
+  void add_utxohash(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& utxohash() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_utxohash();
+  private:
+  const std::string& _internal_utxohash(int index) const;
+  std::string* _internal_add_utxohash();
+  public:
+
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string msg_id = 3;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetUtxoHashReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> utxohash_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetUtxoHashAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetUtxoHashAck) */ {
+ public:
+  inline GetUtxoHashAck() : GetUtxoHashAck(nullptr) {}
+  ~GetUtxoHashAck() override;
+  explicit PROTOBUF_CONSTEXPR GetUtxoHashAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetUtxoHashAck(const GetUtxoHashAck& from);
+  GetUtxoHashAck(GetUtxoHashAck&& from) noexcept
+    : GetUtxoHashAck() {
+    *this = ::std::move(from);
+  }
+
+  inline GetUtxoHashAck& operator=(const GetUtxoHashAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetUtxoHashAck& operator=(GetUtxoHashAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetUtxoHashAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetUtxoHashAck* internal_default_instance() {
+    return reinterpret_cast<const GetUtxoHashAck*>(
+               &_GetUtxoHashAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    49;
+
+  friend void swap(GetUtxoHashAck& a, GetUtxoHashAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetUtxoHashAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetUtxoHashAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetUtxoHashAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetUtxoHashAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetUtxoHashAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetUtxoHashAck& from) {
+    GetUtxoHashAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetUtxoHashAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetUtxoHashAck";
+  }
+  protected:
+  explicit GetUtxoHashAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFlaghashFieldNumber = 2,
+    kVersionFieldNumber = 1,
+    kMsgIdFieldNumber = 3,
+    kBase58AddrFieldNumber = 4,
+  };
+  // repeated .CorresHash flaghash = 2;
+  int flaghash_size() const;
+  private:
+  int _internal_flaghash_size() const;
+  public:
+  void clear_flaghash();
+  ::CorresHash* mutable_flaghash(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash >*
+      mutable_flaghash();
+  private:
+  const ::CorresHash& _internal_flaghash(int index) const;
+  ::CorresHash* _internal_add_flaghash();
+  public:
+  const ::CorresHash& flaghash(int index) const;
+  ::CorresHash* add_flaghash();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash >&
+      flaghash() const;
+
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string msg_id = 3;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // string base58addr = 4;
+  void clear_base58addr();
+  const std::string& base58addr() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_base58addr(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_base58addr();
+  PROTOBUF_NODISCARD std::string* release_base58addr();
+  void set_allocated_base58addr(std::string* base58addr);
+  private:
+  const std::string& _internal_base58addr() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_base58addr(const std::string& value);
+  std::string* _internal_mutable_base58addr();
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetUtxoHashAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash > flaghash_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr base58addr_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class CheckTxAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:CheckTxAck) */ {
+ public:
+  inline CheckTxAck() : CheckTxAck(nullptr) {}
+  ~CheckTxAck() override;
+  explicit PROTOBUF_CONSTEXPR CheckTxAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  CheckTxAck(const CheckTxAck& from);
+  CheckTxAck(CheckTxAck&& from) noexcept
+    : CheckTxAck() {
+    *this = ::std::move(from);
+  }
+
+  inline CheckTxAck& operator=(const CheckTxAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline CheckTxAck& operator=(CheckTxAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const CheckTxAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const CheckTxAck* internal_default_instance() {
+    return reinterpret_cast<const CheckTxAck*>(
+               &_CheckTxAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    50;
+
+  friend void swap(CheckTxAck& a, CheckTxAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(CheckTxAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(CheckTxAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  CheckTxAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<CheckTxAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const CheckTxAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const CheckTxAck& from) {
+    CheckTxAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(CheckTxAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "CheckTxAck";
+  }
+  protected:
+  explicit CheckTxAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kFlaghashFieldNumber = 2,
+    kVersionFieldNumber = 1,
+    kMsgIdFieldNumber = 3,
+    kAddrFieldNumber = 4,
+    kTxFieldNumber = 5,
+  };
+  // repeated .CorresHash flaghash = 2;
+  int flaghash_size() const;
+  private:
+  int _internal_flaghash_size() const;
+  public:
+  void clear_flaghash();
+  ::CorresHash* mutable_flaghash(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash >*
+      mutable_flaghash();
+  private:
+  const ::CorresHash& _internal_flaghash(int index) const;
+  ::CorresHash* _internal_add_flaghash();
+  public:
+  const ::CorresHash& flaghash(int index) const;
+  ::CorresHash* add_flaghash();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash >&
+      flaghash() const;
+
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string msg_id = 3;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // string addr = 4;
+  void clear_addr();
+  const std::string& addr() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_addr(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_addr();
+  PROTOBUF_NODISCARD std::string* release_addr();
+  void set_allocated_addr(std::string* addr);
+  private:
+  const std::string& _internal_addr() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_addr(const std::string& value);
+  std::string* _internal_mutable_addr();
+  public:
+
+  // bytes tx = 5;
+  void clear_tx();
+  const std::string& tx() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_tx(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_tx();
+  PROTOBUF_NODISCARD std::string* release_tx();
+  void set_allocated_tx(std::string* tx);
+  private:
+  const std::string& _internal_tx() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_tx(const std::string& value);
+  std::string* _internal_mutable_tx();
+  public:
+
+  // @@protoc_insertion_point(class_scope:CheckTxAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash > flaghash_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr addr_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr tx_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRestInvestAmountReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetRestInvestAmountReq) */ {
+ public:
+  inline GetRestInvestAmountReq() : GetRestInvestAmountReq(nullptr) {}
+  ~GetRestInvestAmountReq() override;
+  explicit PROTOBUF_CONSTEXPR GetRestInvestAmountReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRestInvestAmountReq(const GetRestInvestAmountReq& from);
+  GetRestInvestAmountReq(GetRestInvestAmountReq&& from) noexcept
+    : GetRestInvestAmountReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRestInvestAmountReq& operator=(const GetRestInvestAmountReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRestInvestAmountReq& operator=(GetRestInvestAmountReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRestInvestAmountReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRestInvestAmountReq* internal_default_instance() {
+    return reinterpret_cast<const GetRestInvestAmountReq*>(
+               &_GetRestInvestAmountReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    51;
+
+  friend void swap(GetRestInvestAmountReq& a, GetRestInvestAmountReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRestInvestAmountReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRestInvestAmountReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRestInvestAmountReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRestInvestAmountReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRestInvestAmountReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetRestInvestAmountReq& from) {
+    GetRestInvestAmountReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRestInvestAmountReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetRestInvestAmountReq";
+  }
+  protected:
+  explicit GetRestInvestAmountReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVersionFieldNumber = 1,
+    kAddrFieldNumber = 2,
+  };
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string addr = 2;
+  void clear_addr();
+  const std::string& addr() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_addr(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_addr();
+  PROTOBUF_NODISCARD std::string* release_addr();
+  void set_allocated_addr(std::string* addr);
+  private:
+  const std::string& _internal_addr() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_addr(const std::string& value);
+  std::string* _internal_mutable_addr();
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetRestInvestAmountReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr addr_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_interface_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRestInvestAmountAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetRestInvestAmountAck) */ {
+ public:
+  inline GetRestInvestAmountAck() : GetRestInvestAmountAck(nullptr) {}
+  ~GetRestInvestAmountAck() override;
+  explicit PROTOBUF_CONSTEXPR GetRestInvestAmountAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRestInvestAmountAck(const GetRestInvestAmountAck& from);
+  GetRestInvestAmountAck(GetRestInvestAmountAck&& from) noexcept
+    : GetRestInvestAmountAck() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRestInvestAmountAck& operator=(const GetRestInvestAmountAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRestInvestAmountAck& operator=(GetRestInvestAmountAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRestInvestAmountAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRestInvestAmountAck* internal_default_instance() {
+    return reinterpret_cast<const GetRestInvestAmountAck*>(
+               &_GetRestInvestAmountAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    52;
+
+  friend void swap(GetRestInvestAmountAck& a, GetRestInvestAmountAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRestInvestAmountAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRestInvestAmountAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRestInvestAmountAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRestInvestAmountAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRestInvestAmountAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetRestInvestAmountAck& from) {
+    GetRestInvestAmountAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRestInvestAmountAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetRestInvestAmountAck";
+  }
+  protected:
+  explicit GetRestInvestAmountAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVersionFieldNumber = 1,
+    kMessageFieldNumber = 3,
+    kAddrFieldNumber = 5,
+    kAmountFieldNumber = 4,
+    kCodeFieldNumber = 2,
+  };
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string message = 3;
+  void clear_message();
+  const std::string& message() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_message(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_message();
+  PROTOBUF_NODISCARD std::string* release_message();
+  void set_allocated_message(std::string* message);
+  private:
+  const std::string& _internal_message() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
+  std::string* _internal_mutable_message();
+  public:
+
+  // string addr = 5;
+  void clear_addr();
+  const std::string& addr() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_addr(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_addr();
+  PROTOBUF_NODISCARD std::string* release_addr();
+  void set_allocated_addr(std::string* addr);
+  private:
+  const std::string& _internal_addr() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_addr(const std::string& value);
+  std::string* _internal_mutable_addr();
+  public:
+
+  // uint64 amount = 4;
+  void clear_amount();
+  uint64_t amount() const;
+  void set_amount(uint64_t value);
+  private:
+  uint64_t _internal_amount() const;
+  void _internal_set_amount(uint64_t value);
+  public:
+
+  // int32 code = 2;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetRestInvestAmountAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr addr_;
+    uint64_t amount_;
+    int32_t code_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -8969,6 +11539,26 @@ inline void GetBalanceAck::_internal_set_balance(uint64_t value) {
 inline void GetBalanceAck::set_balance(uint64_t value) {
   _internal_set_balance(value);
   // @@protoc_insertion_point(field_set:GetBalanceAck.balance)
+}
+
+// uint64 height = 6;
+inline void GetBalanceAck::clear_height() {
+  _impl_.height_ = uint64_t{0u};
+}
+inline uint64_t GetBalanceAck::_internal_height() const {
+  return _impl_.height_;
+}
+inline uint64_t GetBalanceAck::height() const {
+  // @@protoc_insertion_point(field_get:GetBalanceAck.height)
+  return _internal_height();
+}
+inline void GetBalanceAck::_internal_set_height(uint64_t value) {
+  
+  _impl_.height_ = value;
+}
+inline void GetBalanceAck::set_height(uint64_t value) {
+  _internal_set_height(value);
+  // @@protoc_insertion_point(field_set:GetBalanceAck.height)
 }
 
 // -------------------------------------------------------------------
@@ -10501,6 +13091,1694 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::InvestItem >&
 GetInvestListAck::list() const {
   // @@protoc_insertion_point(field_list:GetInvestListAck.list)
   return _impl_.list_;
+}
+
+// -------------------------------------------------------------------
+
+// GetTxPendingListReq
+
+// string version = 1;
+inline void GetTxPendingListReq::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& GetTxPendingListReq::version() const {
+  // @@protoc_insertion_point(field_get:GetTxPendingListReq.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTxPendingListReq::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTxPendingListReq.version)
+}
+inline std::string* GetTxPendingListReq::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:GetTxPendingListReq.version)
+  return _s;
+}
+inline const std::string& GetTxPendingListReq::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void GetTxPendingListReq::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTxPendingListReq::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTxPendingListReq::release_version() {
+  // @@protoc_insertion_point(field_release:GetTxPendingListReq.version)
+  return _impl_.version_.Release();
+}
+inline void GetTxPendingListReq::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTxPendingListReq.version)
+}
+
+// repeated string addr = 2;
+inline int GetTxPendingListReq::_internal_addr_size() const {
+  return _impl_.addr_.size();
+}
+inline int GetTxPendingListReq::addr_size() const {
+  return _internal_addr_size();
+}
+inline void GetTxPendingListReq::clear_addr() {
+  _impl_.addr_.Clear();
+}
+inline std::string* GetTxPendingListReq::add_addr() {
+  std::string* _s = _internal_add_addr();
+  // @@protoc_insertion_point(field_add_mutable:GetTxPendingListReq.addr)
+  return _s;
+}
+inline const std::string& GetTxPendingListReq::_internal_addr(int index) const {
+  return _impl_.addr_.Get(index);
+}
+inline const std::string& GetTxPendingListReq::addr(int index) const {
+  // @@protoc_insertion_point(field_get:GetTxPendingListReq.addr)
+  return _internal_addr(index);
+}
+inline std::string* GetTxPendingListReq::mutable_addr(int index) {
+  // @@protoc_insertion_point(field_mutable:GetTxPendingListReq.addr)
+  return _impl_.addr_.Mutable(index);
+}
+inline void GetTxPendingListReq::set_addr(int index, const std::string& value) {
+  _impl_.addr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:GetTxPendingListReq.addr)
+}
+inline void GetTxPendingListReq::set_addr(int index, std::string&& value) {
+  _impl_.addr_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:GetTxPendingListReq.addr)
+}
+inline void GetTxPendingListReq::set_addr(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.addr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:GetTxPendingListReq.addr)
+}
+inline void GetTxPendingListReq::set_addr(int index, const char* value, size_t size) {
+  _impl_.addr_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:GetTxPendingListReq.addr)
+}
+inline std::string* GetTxPendingListReq::_internal_add_addr() {
+  return _impl_.addr_.Add();
+}
+inline void GetTxPendingListReq::add_addr(const std::string& value) {
+  _impl_.addr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:GetTxPendingListReq.addr)
+}
+inline void GetTxPendingListReq::add_addr(std::string&& value) {
+  _impl_.addr_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:GetTxPendingListReq.addr)
+}
+inline void GetTxPendingListReq::add_addr(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.addr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:GetTxPendingListReq.addr)
+}
+inline void GetTxPendingListReq::add_addr(const char* value, size_t size) {
+  _impl_.addr_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:GetTxPendingListReq.addr)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+GetTxPendingListReq::addr() const {
+  // @@protoc_insertion_point(field_list:GetTxPendingListReq.addr)
+  return _impl_.addr_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+GetTxPendingListReq::mutable_addr() {
+  // @@protoc_insertion_point(field_mutable_list:GetTxPendingListReq.addr)
+  return &_impl_.addr_;
+}
+
+// -------------------------------------------------------------------
+
+// TxPendingItem
+
+// string txHash = 1;
+inline void TxPendingItem::clear_txhash() {
+  _impl_.txhash_.ClearToEmpty();
+}
+inline const std::string& TxPendingItem::txhash() const {
+  // @@protoc_insertion_point(field_get:TxPendingItem.txHash)
+  return _internal_txhash();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TxPendingItem::set_txhash(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.txhash_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:TxPendingItem.txHash)
+}
+inline std::string* TxPendingItem::mutable_txhash() {
+  std::string* _s = _internal_mutable_txhash();
+  // @@protoc_insertion_point(field_mutable:TxPendingItem.txHash)
+  return _s;
+}
+inline const std::string& TxPendingItem::_internal_txhash() const {
+  return _impl_.txhash_.Get();
+}
+inline void TxPendingItem::_internal_set_txhash(const std::string& value) {
+  
+  _impl_.txhash_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TxPendingItem::_internal_mutable_txhash() {
+  
+  return _impl_.txhash_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TxPendingItem::release_txhash() {
+  // @@protoc_insertion_point(field_release:TxPendingItem.txHash)
+  return _impl_.txhash_.Release();
+}
+inline void TxPendingItem::set_allocated_txhash(std::string* txhash) {
+  if (txhash != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.txhash_.SetAllocated(txhash, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.txhash_.IsDefault()) {
+    _impl_.txhash_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:TxPendingItem.txHash)
+}
+
+// repeated string vins = 2;
+inline int TxPendingItem::_internal_vins_size() const {
+  return _impl_.vins_.size();
+}
+inline int TxPendingItem::vins_size() const {
+  return _internal_vins_size();
+}
+inline void TxPendingItem::clear_vins() {
+  _impl_.vins_.Clear();
+}
+inline std::string* TxPendingItem::add_vins() {
+  std::string* _s = _internal_add_vins();
+  // @@protoc_insertion_point(field_add_mutable:TxPendingItem.vins)
+  return _s;
+}
+inline const std::string& TxPendingItem::_internal_vins(int index) const {
+  return _impl_.vins_.Get(index);
+}
+inline const std::string& TxPendingItem::vins(int index) const {
+  // @@protoc_insertion_point(field_get:TxPendingItem.vins)
+  return _internal_vins(index);
+}
+inline std::string* TxPendingItem::mutable_vins(int index) {
+  // @@protoc_insertion_point(field_mutable:TxPendingItem.vins)
+  return _impl_.vins_.Mutable(index);
+}
+inline void TxPendingItem::set_vins(int index, const std::string& value) {
+  _impl_.vins_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:TxPendingItem.vins)
+}
+inline void TxPendingItem::set_vins(int index, std::string&& value) {
+  _impl_.vins_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:TxPendingItem.vins)
+}
+inline void TxPendingItem::set_vins(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.vins_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:TxPendingItem.vins)
+}
+inline void TxPendingItem::set_vins(int index, const char* value, size_t size) {
+  _impl_.vins_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:TxPendingItem.vins)
+}
+inline std::string* TxPendingItem::_internal_add_vins() {
+  return _impl_.vins_.Add();
+}
+inline void TxPendingItem::add_vins(const std::string& value) {
+  _impl_.vins_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:TxPendingItem.vins)
+}
+inline void TxPendingItem::add_vins(std::string&& value) {
+  _impl_.vins_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:TxPendingItem.vins)
+}
+inline void TxPendingItem::add_vins(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.vins_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:TxPendingItem.vins)
+}
+inline void TxPendingItem::add_vins(const char* value, size_t size) {
+  _impl_.vins_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:TxPendingItem.vins)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+TxPendingItem::vins() const {
+  // @@protoc_insertion_point(field_list:TxPendingItem.vins)
+  return _impl_.vins_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+TxPendingItem::mutable_vins() {
+  // @@protoc_insertion_point(field_mutable_list:TxPendingItem.vins)
+  return &_impl_.vins_;
+}
+
+// repeated string fromaddr = 3;
+inline int TxPendingItem::_internal_fromaddr_size() const {
+  return _impl_.fromaddr_.size();
+}
+inline int TxPendingItem::fromaddr_size() const {
+  return _internal_fromaddr_size();
+}
+inline void TxPendingItem::clear_fromaddr() {
+  _impl_.fromaddr_.Clear();
+}
+inline std::string* TxPendingItem::add_fromaddr() {
+  std::string* _s = _internal_add_fromaddr();
+  // @@protoc_insertion_point(field_add_mutable:TxPendingItem.fromaddr)
+  return _s;
+}
+inline const std::string& TxPendingItem::_internal_fromaddr(int index) const {
+  return _impl_.fromaddr_.Get(index);
+}
+inline const std::string& TxPendingItem::fromaddr(int index) const {
+  // @@protoc_insertion_point(field_get:TxPendingItem.fromaddr)
+  return _internal_fromaddr(index);
+}
+inline std::string* TxPendingItem::mutable_fromaddr(int index) {
+  // @@protoc_insertion_point(field_mutable:TxPendingItem.fromaddr)
+  return _impl_.fromaddr_.Mutable(index);
+}
+inline void TxPendingItem::set_fromaddr(int index, const std::string& value) {
+  _impl_.fromaddr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:TxPendingItem.fromaddr)
+}
+inline void TxPendingItem::set_fromaddr(int index, std::string&& value) {
+  _impl_.fromaddr_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:TxPendingItem.fromaddr)
+}
+inline void TxPendingItem::set_fromaddr(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.fromaddr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:TxPendingItem.fromaddr)
+}
+inline void TxPendingItem::set_fromaddr(int index, const char* value, size_t size) {
+  _impl_.fromaddr_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:TxPendingItem.fromaddr)
+}
+inline std::string* TxPendingItem::_internal_add_fromaddr() {
+  return _impl_.fromaddr_.Add();
+}
+inline void TxPendingItem::add_fromaddr(const std::string& value) {
+  _impl_.fromaddr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:TxPendingItem.fromaddr)
+}
+inline void TxPendingItem::add_fromaddr(std::string&& value) {
+  _impl_.fromaddr_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:TxPendingItem.fromaddr)
+}
+inline void TxPendingItem::add_fromaddr(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.fromaddr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:TxPendingItem.fromaddr)
+}
+inline void TxPendingItem::add_fromaddr(const char* value, size_t size) {
+  _impl_.fromaddr_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:TxPendingItem.fromaddr)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+TxPendingItem::fromaddr() const {
+  // @@protoc_insertion_point(field_list:TxPendingItem.fromaddr)
+  return _impl_.fromaddr_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+TxPendingItem::mutable_fromaddr() {
+  // @@protoc_insertion_point(field_mutable_list:TxPendingItem.fromaddr)
+  return &_impl_.fromaddr_;
+}
+
+// repeated string toaddr = 4;
+inline int TxPendingItem::_internal_toaddr_size() const {
+  return _impl_.toaddr_.size();
+}
+inline int TxPendingItem::toaddr_size() const {
+  return _internal_toaddr_size();
+}
+inline void TxPendingItem::clear_toaddr() {
+  _impl_.toaddr_.Clear();
+}
+inline std::string* TxPendingItem::add_toaddr() {
+  std::string* _s = _internal_add_toaddr();
+  // @@protoc_insertion_point(field_add_mutable:TxPendingItem.toaddr)
+  return _s;
+}
+inline const std::string& TxPendingItem::_internal_toaddr(int index) const {
+  return _impl_.toaddr_.Get(index);
+}
+inline const std::string& TxPendingItem::toaddr(int index) const {
+  // @@protoc_insertion_point(field_get:TxPendingItem.toaddr)
+  return _internal_toaddr(index);
+}
+inline std::string* TxPendingItem::mutable_toaddr(int index) {
+  // @@protoc_insertion_point(field_mutable:TxPendingItem.toaddr)
+  return _impl_.toaddr_.Mutable(index);
+}
+inline void TxPendingItem::set_toaddr(int index, const std::string& value) {
+  _impl_.toaddr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:TxPendingItem.toaddr)
+}
+inline void TxPendingItem::set_toaddr(int index, std::string&& value) {
+  _impl_.toaddr_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:TxPendingItem.toaddr)
+}
+inline void TxPendingItem::set_toaddr(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.toaddr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:TxPendingItem.toaddr)
+}
+inline void TxPendingItem::set_toaddr(int index, const char* value, size_t size) {
+  _impl_.toaddr_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:TxPendingItem.toaddr)
+}
+inline std::string* TxPendingItem::_internal_add_toaddr() {
+  return _impl_.toaddr_.Add();
+}
+inline void TxPendingItem::add_toaddr(const std::string& value) {
+  _impl_.toaddr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:TxPendingItem.toaddr)
+}
+inline void TxPendingItem::add_toaddr(std::string&& value) {
+  _impl_.toaddr_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:TxPendingItem.toaddr)
+}
+inline void TxPendingItem::add_toaddr(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.toaddr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:TxPendingItem.toaddr)
+}
+inline void TxPendingItem::add_toaddr(const char* value, size_t size) {
+  _impl_.toaddr_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:TxPendingItem.toaddr)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+TxPendingItem::toaddr() const {
+  // @@protoc_insertion_point(field_list:TxPendingItem.toaddr)
+  return _impl_.toaddr_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+TxPendingItem::mutable_toaddr() {
+  // @@protoc_insertion_point(field_mutable_list:TxPendingItem.toaddr)
+  return &_impl_.toaddr_;
+}
+
+// uint64 amount = 5;
+inline void TxPendingItem::clear_amount() {
+  _impl_.amount_ = uint64_t{0u};
+}
+inline uint64_t TxPendingItem::_internal_amount() const {
+  return _impl_.amount_;
+}
+inline uint64_t TxPendingItem::amount() const {
+  // @@protoc_insertion_point(field_get:TxPendingItem.amount)
+  return _internal_amount();
+}
+inline void TxPendingItem::_internal_set_amount(uint64_t value) {
+  
+  _impl_.amount_ = value;
+}
+inline void TxPendingItem::set_amount(uint64_t value) {
+  _internal_set_amount(value);
+  // @@protoc_insertion_point(field_set:TxPendingItem.amount)
+}
+
+// uint64 time = 6;
+inline void TxPendingItem::clear_time() {
+  _impl_.time_ = uint64_t{0u};
+}
+inline uint64_t TxPendingItem::_internal_time() const {
+  return _impl_.time_;
+}
+inline uint64_t TxPendingItem::time() const {
+  // @@protoc_insertion_point(field_get:TxPendingItem.time)
+  return _internal_time();
+}
+inline void TxPendingItem::_internal_set_time(uint64_t value) {
+  
+  _impl_.time_ = value;
+}
+inline void TxPendingItem::set_time(uint64_t value) {
+  _internal_set_time(value);
+  // @@protoc_insertion_point(field_set:TxPendingItem.time)
+}
+
+// string detail = 7;
+inline void TxPendingItem::clear_detail() {
+  _impl_.detail_.ClearToEmpty();
+}
+inline const std::string& TxPendingItem::detail() const {
+  // @@protoc_insertion_point(field_get:TxPendingItem.detail)
+  return _internal_detail();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TxPendingItem::set_detail(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.detail_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:TxPendingItem.detail)
+}
+inline std::string* TxPendingItem::mutable_detail() {
+  std::string* _s = _internal_mutable_detail();
+  // @@protoc_insertion_point(field_mutable:TxPendingItem.detail)
+  return _s;
+}
+inline const std::string& TxPendingItem::_internal_detail() const {
+  return _impl_.detail_.Get();
+}
+inline void TxPendingItem::_internal_set_detail(const std::string& value) {
+  
+  _impl_.detail_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TxPendingItem::_internal_mutable_detail() {
+  
+  return _impl_.detail_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TxPendingItem::release_detail() {
+  // @@protoc_insertion_point(field_release:TxPendingItem.detail)
+  return _impl_.detail_.Release();
+}
+inline void TxPendingItem::set_allocated_detail(std::string* detail) {
+  if (detail != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.detail_.SetAllocated(detail, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.detail_.IsDefault()) {
+    _impl_.detail_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:TxPendingItem.detail)
+}
+
+// uint64 gas = 8;
+inline void TxPendingItem::clear_gas() {
+  _impl_.gas_ = uint64_t{0u};
+}
+inline uint64_t TxPendingItem::_internal_gas() const {
+  return _impl_.gas_;
+}
+inline uint64_t TxPendingItem::gas() const {
+  // @@protoc_insertion_point(field_get:TxPendingItem.gas)
+  return _internal_gas();
+}
+inline void TxPendingItem::_internal_set_gas(uint64_t value) {
+  
+  _impl_.gas_ = value;
+}
+inline void TxPendingItem::set_gas(uint64_t value) {
+  _internal_set_gas(value);
+  // @@protoc_insertion_point(field_set:TxPendingItem.gas)
+}
+
+// repeated uint64 toAmount = 9;
+inline int TxPendingItem::_internal_toamount_size() const {
+  return _impl_.toamount_.size();
+}
+inline int TxPendingItem::toamount_size() const {
+  return _internal_toamount_size();
+}
+inline void TxPendingItem::clear_toamount() {
+  _impl_.toamount_.Clear();
+}
+inline uint64_t TxPendingItem::_internal_toamount(int index) const {
+  return _impl_.toamount_.Get(index);
+}
+inline uint64_t TxPendingItem::toamount(int index) const {
+  // @@protoc_insertion_point(field_get:TxPendingItem.toAmount)
+  return _internal_toamount(index);
+}
+inline void TxPendingItem::set_toamount(int index, uint64_t value) {
+  _impl_.toamount_.Set(index, value);
+  // @@protoc_insertion_point(field_set:TxPendingItem.toAmount)
+}
+inline void TxPendingItem::_internal_add_toamount(uint64_t value) {
+  _impl_.toamount_.Add(value);
+}
+inline void TxPendingItem::add_toamount(uint64_t value) {
+  _internal_add_toamount(value);
+  // @@protoc_insertion_point(field_add:TxPendingItem.toAmount)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >&
+TxPendingItem::_internal_toamount() const {
+  return _impl_.toamount_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >&
+TxPendingItem::toamount() const {
+  // @@protoc_insertion_point(field_list:TxPendingItem.toAmount)
+  return _internal_toamount();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >*
+TxPendingItem::_internal_mutable_toamount() {
+  return &_impl_.toamount_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >*
+TxPendingItem::mutable_toamount() {
+  // @@protoc_insertion_point(field_mutable_list:TxPendingItem.toAmount)
+  return _internal_mutable_toamount();
+}
+
+// .TxType type = 10;
+inline void TxPendingItem::clear_type() {
+  _impl_.type_ = 0;
+}
+inline ::TxType TxPendingItem::_internal_type() const {
+  return static_cast< ::TxType >(_impl_.type_);
+}
+inline ::TxType TxPendingItem::type() const {
+  // @@protoc_insertion_point(field_get:TxPendingItem.type)
+  return _internal_type();
+}
+inline void TxPendingItem::_internal_set_type(::TxType value) {
+  
+  _impl_.type_ = value;
+}
+inline void TxPendingItem::set_type(::TxType value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:TxPendingItem.type)
+}
+
+// -------------------------------------------------------------------
+
+// GetTxPendingListAck
+
+// string version = 1;
+inline void GetTxPendingListAck::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& GetTxPendingListAck::version() const {
+  // @@protoc_insertion_point(field_get:GetTxPendingListAck.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTxPendingListAck::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTxPendingListAck.version)
+}
+inline std::string* GetTxPendingListAck::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:GetTxPendingListAck.version)
+  return _s;
+}
+inline const std::string& GetTxPendingListAck::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void GetTxPendingListAck::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTxPendingListAck::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTxPendingListAck::release_version() {
+  // @@protoc_insertion_point(field_release:GetTxPendingListAck.version)
+  return _impl_.version_.Release();
+}
+inline void GetTxPendingListAck::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTxPendingListAck.version)
+}
+
+// int32 code = 2;
+inline void GetTxPendingListAck::clear_code() {
+  _impl_.code_ = 0;
+}
+inline int32_t GetTxPendingListAck::_internal_code() const {
+  return _impl_.code_;
+}
+inline int32_t GetTxPendingListAck::code() const {
+  // @@protoc_insertion_point(field_get:GetTxPendingListAck.code)
+  return _internal_code();
+}
+inline void GetTxPendingListAck::_internal_set_code(int32_t value) {
+  
+  _impl_.code_ = value;
+}
+inline void GetTxPendingListAck::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:GetTxPendingListAck.code)
+}
+
+// string message = 3;
+inline void GetTxPendingListAck::clear_message() {
+  _impl_.message_.ClearToEmpty();
+}
+inline const std::string& GetTxPendingListAck::message() const {
+  // @@protoc_insertion_point(field_get:GetTxPendingListAck.message)
+  return _internal_message();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTxPendingListAck::set_message(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTxPendingListAck.message)
+}
+inline std::string* GetTxPendingListAck::mutable_message() {
+  std::string* _s = _internal_mutable_message();
+  // @@protoc_insertion_point(field_mutable:GetTxPendingListAck.message)
+  return _s;
+}
+inline const std::string& GetTxPendingListAck::_internal_message() const {
+  return _impl_.message_.Get();
+}
+inline void GetTxPendingListAck::_internal_set_message(const std::string& value) {
+  
+  _impl_.message_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTxPendingListAck::_internal_mutable_message() {
+  
+  return _impl_.message_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTxPendingListAck::release_message() {
+  // @@protoc_insertion_point(field_release:GetTxPendingListAck.message)
+  return _impl_.message_.Release();
+}
+inline void GetTxPendingListAck::set_allocated_message(std::string* message) {
+  if (message != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.message_.SetAllocated(message, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.message_.IsDefault()) {
+    _impl_.message_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTxPendingListAck.message)
+}
+
+// repeated string addr = 4;
+inline int GetTxPendingListAck::_internal_addr_size() const {
+  return _impl_.addr_.size();
+}
+inline int GetTxPendingListAck::addr_size() const {
+  return _internal_addr_size();
+}
+inline void GetTxPendingListAck::clear_addr() {
+  _impl_.addr_.Clear();
+}
+inline std::string* GetTxPendingListAck::add_addr() {
+  std::string* _s = _internal_add_addr();
+  // @@protoc_insertion_point(field_add_mutable:GetTxPendingListAck.addr)
+  return _s;
+}
+inline const std::string& GetTxPendingListAck::_internal_addr(int index) const {
+  return _impl_.addr_.Get(index);
+}
+inline const std::string& GetTxPendingListAck::addr(int index) const {
+  // @@protoc_insertion_point(field_get:GetTxPendingListAck.addr)
+  return _internal_addr(index);
+}
+inline std::string* GetTxPendingListAck::mutable_addr(int index) {
+  // @@protoc_insertion_point(field_mutable:GetTxPendingListAck.addr)
+  return _impl_.addr_.Mutable(index);
+}
+inline void GetTxPendingListAck::set_addr(int index, const std::string& value) {
+  _impl_.addr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:GetTxPendingListAck.addr)
+}
+inline void GetTxPendingListAck::set_addr(int index, std::string&& value) {
+  _impl_.addr_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:GetTxPendingListAck.addr)
+}
+inline void GetTxPendingListAck::set_addr(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.addr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:GetTxPendingListAck.addr)
+}
+inline void GetTxPendingListAck::set_addr(int index, const char* value, size_t size) {
+  _impl_.addr_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:GetTxPendingListAck.addr)
+}
+inline std::string* GetTxPendingListAck::_internal_add_addr() {
+  return _impl_.addr_.Add();
+}
+inline void GetTxPendingListAck::add_addr(const std::string& value) {
+  _impl_.addr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:GetTxPendingListAck.addr)
+}
+inline void GetTxPendingListAck::add_addr(std::string&& value) {
+  _impl_.addr_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:GetTxPendingListAck.addr)
+}
+inline void GetTxPendingListAck::add_addr(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.addr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:GetTxPendingListAck.addr)
+}
+inline void GetTxPendingListAck::add_addr(const char* value, size_t size) {
+  _impl_.addr_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:GetTxPendingListAck.addr)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+GetTxPendingListAck::addr() const {
+  // @@protoc_insertion_point(field_list:GetTxPendingListAck.addr)
+  return _impl_.addr_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+GetTxPendingListAck::mutable_addr() {
+  // @@protoc_insertion_point(field_mutable_list:GetTxPendingListAck.addr)
+  return &_impl_.addr_;
+}
+
+// repeated .TxPendingItem list = 5;
+inline int GetTxPendingListAck::_internal_list_size() const {
+  return _impl_.list_.size();
+}
+inline int GetTxPendingListAck::list_size() const {
+  return _internal_list_size();
+}
+inline void GetTxPendingListAck::clear_list() {
+  _impl_.list_.Clear();
+}
+inline ::TxPendingItem* GetTxPendingListAck::mutable_list(int index) {
+  // @@protoc_insertion_point(field_mutable:GetTxPendingListAck.list)
+  return _impl_.list_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TxPendingItem >*
+GetTxPendingListAck::mutable_list() {
+  // @@protoc_insertion_point(field_mutable_list:GetTxPendingListAck.list)
+  return &_impl_.list_;
+}
+inline const ::TxPendingItem& GetTxPendingListAck::_internal_list(int index) const {
+  return _impl_.list_.Get(index);
+}
+inline const ::TxPendingItem& GetTxPendingListAck::list(int index) const {
+  // @@protoc_insertion_point(field_get:GetTxPendingListAck.list)
+  return _internal_list(index);
+}
+inline ::TxPendingItem* GetTxPendingListAck::_internal_add_list() {
+  return _impl_.list_.Add();
+}
+inline ::TxPendingItem* GetTxPendingListAck::add_list() {
+  ::TxPendingItem* _add = _internal_add_list();
+  // @@protoc_insertion_point(field_add:GetTxPendingListAck.list)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TxPendingItem >&
+GetTxPendingListAck::list() const {
+  // @@protoc_insertion_point(field_list:GetTxPendingListAck.list)
+  return _impl_.list_;
+}
+
+// -------------------------------------------------------------------
+
+// GetTxFailureListReq
+
+// string version = 1;
+inline void GetTxFailureListReq::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& GetTxFailureListReq::version() const {
+  // @@protoc_insertion_point(field_get:GetTxFailureListReq.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTxFailureListReq::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTxFailureListReq.version)
+}
+inline std::string* GetTxFailureListReq::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:GetTxFailureListReq.version)
+  return _s;
+}
+inline const std::string& GetTxFailureListReq::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void GetTxFailureListReq::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTxFailureListReq::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTxFailureListReq::release_version() {
+  // @@protoc_insertion_point(field_release:GetTxFailureListReq.version)
+  return _impl_.version_.Release();
+}
+inline void GetTxFailureListReq::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTxFailureListReq.version)
+}
+
+// string addr = 2;
+inline void GetTxFailureListReq::clear_addr() {
+  _impl_.addr_.ClearToEmpty();
+}
+inline const std::string& GetTxFailureListReq::addr() const {
+  // @@protoc_insertion_point(field_get:GetTxFailureListReq.addr)
+  return _internal_addr();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTxFailureListReq::set_addr(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.addr_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTxFailureListReq.addr)
+}
+inline std::string* GetTxFailureListReq::mutable_addr() {
+  std::string* _s = _internal_mutable_addr();
+  // @@protoc_insertion_point(field_mutable:GetTxFailureListReq.addr)
+  return _s;
+}
+inline const std::string& GetTxFailureListReq::_internal_addr() const {
+  return _impl_.addr_.Get();
+}
+inline void GetTxFailureListReq::_internal_set_addr(const std::string& value) {
+  
+  _impl_.addr_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTxFailureListReq::_internal_mutable_addr() {
+  
+  return _impl_.addr_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTxFailureListReq::release_addr() {
+  // @@protoc_insertion_point(field_release:GetTxFailureListReq.addr)
+  return _impl_.addr_.Release();
+}
+inline void GetTxFailureListReq::set_allocated_addr(std::string* addr) {
+  if (addr != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.addr_.SetAllocated(addr, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.addr_.IsDefault()) {
+    _impl_.addr_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTxFailureListReq.addr)
+}
+
+// string txhash = 3;
+inline void GetTxFailureListReq::clear_txhash() {
+  _impl_.txhash_.ClearToEmpty();
+}
+inline const std::string& GetTxFailureListReq::txhash() const {
+  // @@protoc_insertion_point(field_get:GetTxFailureListReq.txhash)
+  return _internal_txhash();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTxFailureListReq::set_txhash(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.txhash_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTxFailureListReq.txhash)
+}
+inline std::string* GetTxFailureListReq::mutable_txhash() {
+  std::string* _s = _internal_mutable_txhash();
+  // @@protoc_insertion_point(field_mutable:GetTxFailureListReq.txhash)
+  return _s;
+}
+inline const std::string& GetTxFailureListReq::_internal_txhash() const {
+  return _impl_.txhash_.Get();
+}
+inline void GetTxFailureListReq::_internal_set_txhash(const std::string& value) {
+  
+  _impl_.txhash_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTxFailureListReq::_internal_mutable_txhash() {
+  
+  return _impl_.txhash_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTxFailureListReq::release_txhash() {
+  // @@protoc_insertion_point(field_release:GetTxFailureListReq.txhash)
+  return _impl_.txhash_.Release();
+}
+inline void GetTxFailureListReq::set_allocated_txhash(std::string* txhash) {
+  if (txhash != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.txhash_.SetAllocated(txhash, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.txhash_.IsDefault()) {
+    _impl_.txhash_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTxFailureListReq.txhash)
+}
+
+// uint32 count = 4;
+inline void GetTxFailureListReq::clear_count() {
+  _impl_.count_ = 0u;
+}
+inline uint32_t GetTxFailureListReq::_internal_count() const {
+  return _impl_.count_;
+}
+inline uint32_t GetTxFailureListReq::count() const {
+  // @@protoc_insertion_point(field_get:GetTxFailureListReq.count)
+  return _internal_count();
+}
+inline void GetTxFailureListReq::_internal_set_count(uint32_t value) {
+  
+  _impl_.count_ = value;
+}
+inline void GetTxFailureListReq::set_count(uint32_t value) {
+  _internal_set_count(value);
+  // @@protoc_insertion_point(field_set:GetTxFailureListReq.count)
+}
+
+// -------------------------------------------------------------------
+
+// TxFailureItem
+
+// string txHash = 1;
+inline void TxFailureItem::clear_txhash() {
+  _impl_.txhash_.ClearToEmpty();
+}
+inline const std::string& TxFailureItem::txhash() const {
+  // @@protoc_insertion_point(field_get:TxFailureItem.txHash)
+  return _internal_txhash();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TxFailureItem::set_txhash(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.txhash_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:TxFailureItem.txHash)
+}
+inline std::string* TxFailureItem::mutable_txhash() {
+  std::string* _s = _internal_mutable_txhash();
+  // @@protoc_insertion_point(field_mutable:TxFailureItem.txHash)
+  return _s;
+}
+inline const std::string& TxFailureItem::_internal_txhash() const {
+  return _impl_.txhash_.Get();
+}
+inline void TxFailureItem::_internal_set_txhash(const std::string& value) {
+  
+  _impl_.txhash_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TxFailureItem::_internal_mutable_txhash() {
+  
+  return _impl_.txhash_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TxFailureItem::release_txhash() {
+  // @@protoc_insertion_point(field_release:TxFailureItem.txHash)
+  return _impl_.txhash_.Release();
+}
+inline void TxFailureItem::set_allocated_txhash(std::string* txhash) {
+  if (txhash != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.txhash_.SetAllocated(txhash, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.txhash_.IsDefault()) {
+    _impl_.txhash_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:TxFailureItem.txHash)
+}
+
+// repeated string vins = 2;
+inline int TxFailureItem::_internal_vins_size() const {
+  return _impl_.vins_.size();
+}
+inline int TxFailureItem::vins_size() const {
+  return _internal_vins_size();
+}
+inline void TxFailureItem::clear_vins() {
+  _impl_.vins_.Clear();
+}
+inline std::string* TxFailureItem::add_vins() {
+  std::string* _s = _internal_add_vins();
+  // @@protoc_insertion_point(field_add_mutable:TxFailureItem.vins)
+  return _s;
+}
+inline const std::string& TxFailureItem::_internal_vins(int index) const {
+  return _impl_.vins_.Get(index);
+}
+inline const std::string& TxFailureItem::vins(int index) const {
+  // @@protoc_insertion_point(field_get:TxFailureItem.vins)
+  return _internal_vins(index);
+}
+inline std::string* TxFailureItem::mutable_vins(int index) {
+  // @@protoc_insertion_point(field_mutable:TxFailureItem.vins)
+  return _impl_.vins_.Mutable(index);
+}
+inline void TxFailureItem::set_vins(int index, const std::string& value) {
+  _impl_.vins_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:TxFailureItem.vins)
+}
+inline void TxFailureItem::set_vins(int index, std::string&& value) {
+  _impl_.vins_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:TxFailureItem.vins)
+}
+inline void TxFailureItem::set_vins(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.vins_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:TxFailureItem.vins)
+}
+inline void TxFailureItem::set_vins(int index, const char* value, size_t size) {
+  _impl_.vins_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:TxFailureItem.vins)
+}
+inline std::string* TxFailureItem::_internal_add_vins() {
+  return _impl_.vins_.Add();
+}
+inline void TxFailureItem::add_vins(const std::string& value) {
+  _impl_.vins_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:TxFailureItem.vins)
+}
+inline void TxFailureItem::add_vins(std::string&& value) {
+  _impl_.vins_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:TxFailureItem.vins)
+}
+inline void TxFailureItem::add_vins(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.vins_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:TxFailureItem.vins)
+}
+inline void TxFailureItem::add_vins(const char* value, size_t size) {
+  _impl_.vins_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:TxFailureItem.vins)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+TxFailureItem::vins() const {
+  // @@protoc_insertion_point(field_list:TxFailureItem.vins)
+  return _impl_.vins_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+TxFailureItem::mutable_vins() {
+  // @@protoc_insertion_point(field_mutable_list:TxFailureItem.vins)
+  return &_impl_.vins_;
+}
+
+// repeated string fromaddr = 3;
+inline int TxFailureItem::_internal_fromaddr_size() const {
+  return _impl_.fromaddr_.size();
+}
+inline int TxFailureItem::fromaddr_size() const {
+  return _internal_fromaddr_size();
+}
+inline void TxFailureItem::clear_fromaddr() {
+  _impl_.fromaddr_.Clear();
+}
+inline std::string* TxFailureItem::add_fromaddr() {
+  std::string* _s = _internal_add_fromaddr();
+  // @@protoc_insertion_point(field_add_mutable:TxFailureItem.fromaddr)
+  return _s;
+}
+inline const std::string& TxFailureItem::_internal_fromaddr(int index) const {
+  return _impl_.fromaddr_.Get(index);
+}
+inline const std::string& TxFailureItem::fromaddr(int index) const {
+  // @@protoc_insertion_point(field_get:TxFailureItem.fromaddr)
+  return _internal_fromaddr(index);
+}
+inline std::string* TxFailureItem::mutable_fromaddr(int index) {
+  // @@protoc_insertion_point(field_mutable:TxFailureItem.fromaddr)
+  return _impl_.fromaddr_.Mutable(index);
+}
+inline void TxFailureItem::set_fromaddr(int index, const std::string& value) {
+  _impl_.fromaddr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:TxFailureItem.fromaddr)
+}
+inline void TxFailureItem::set_fromaddr(int index, std::string&& value) {
+  _impl_.fromaddr_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:TxFailureItem.fromaddr)
+}
+inline void TxFailureItem::set_fromaddr(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.fromaddr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:TxFailureItem.fromaddr)
+}
+inline void TxFailureItem::set_fromaddr(int index, const char* value, size_t size) {
+  _impl_.fromaddr_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:TxFailureItem.fromaddr)
+}
+inline std::string* TxFailureItem::_internal_add_fromaddr() {
+  return _impl_.fromaddr_.Add();
+}
+inline void TxFailureItem::add_fromaddr(const std::string& value) {
+  _impl_.fromaddr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:TxFailureItem.fromaddr)
+}
+inline void TxFailureItem::add_fromaddr(std::string&& value) {
+  _impl_.fromaddr_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:TxFailureItem.fromaddr)
+}
+inline void TxFailureItem::add_fromaddr(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.fromaddr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:TxFailureItem.fromaddr)
+}
+inline void TxFailureItem::add_fromaddr(const char* value, size_t size) {
+  _impl_.fromaddr_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:TxFailureItem.fromaddr)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+TxFailureItem::fromaddr() const {
+  // @@protoc_insertion_point(field_list:TxFailureItem.fromaddr)
+  return _impl_.fromaddr_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+TxFailureItem::mutable_fromaddr() {
+  // @@protoc_insertion_point(field_mutable_list:TxFailureItem.fromaddr)
+  return &_impl_.fromaddr_;
+}
+
+// repeated string toaddr = 4;
+inline int TxFailureItem::_internal_toaddr_size() const {
+  return _impl_.toaddr_.size();
+}
+inline int TxFailureItem::toaddr_size() const {
+  return _internal_toaddr_size();
+}
+inline void TxFailureItem::clear_toaddr() {
+  _impl_.toaddr_.Clear();
+}
+inline std::string* TxFailureItem::add_toaddr() {
+  std::string* _s = _internal_add_toaddr();
+  // @@protoc_insertion_point(field_add_mutable:TxFailureItem.toaddr)
+  return _s;
+}
+inline const std::string& TxFailureItem::_internal_toaddr(int index) const {
+  return _impl_.toaddr_.Get(index);
+}
+inline const std::string& TxFailureItem::toaddr(int index) const {
+  // @@protoc_insertion_point(field_get:TxFailureItem.toaddr)
+  return _internal_toaddr(index);
+}
+inline std::string* TxFailureItem::mutable_toaddr(int index) {
+  // @@protoc_insertion_point(field_mutable:TxFailureItem.toaddr)
+  return _impl_.toaddr_.Mutable(index);
+}
+inline void TxFailureItem::set_toaddr(int index, const std::string& value) {
+  _impl_.toaddr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:TxFailureItem.toaddr)
+}
+inline void TxFailureItem::set_toaddr(int index, std::string&& value) {
+  _impl_.toaddr_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:TxFailureItem.toaddr)
+}
+inline void TxFailureItem::set_toaddr(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.toaddr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:TxFailureItem.toaddr)
+}
+inline void TxFailureItem::set_toaddr(int index, const char* value, size_t size) {
+  _impl_.toaddr_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:TxFailureItem.toaddr)
+}
+inline std::string* TxFailureItem::_internal_add_toaddr() {
+  return _impl_.toaddr_.Add();
+}
+inline void TxFailureItem::add_toaddr(const std::string& value) {
+  _impl_.toaddr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:TxFailureItem.toaddr)
+}
+inline void TxFailureItem::add_toaddr(std::string&& value) {
+  _impl_.toaddr_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:TxFailureItem.toaddr)
+}
+inline void TxFailureItem::add_toaddr(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.toaddr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:TxFailureItem.toaddr)
+}
+inline void TxFailureItem::add_toaddr(const char* value, size_t size) {
+  _impl_.toaddr_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:TxFailureItem.toaddr)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+TxFailureItem::toaddr() const {
+  // @@protoc_insertion_point(field_list:TxFailureItem.toaddr)
+  return _impl_.toaddr_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+TxFailureItem::mutable_toaddr() {
+  // @@protoc_insertion_point(field_mutable_list:TxFailureItem.toaddr)
+  return &_impl_.toaddr_;
+}
+
+// uint64 amount = 5;
+inline void TxFailureItem::clear_amount() {
+  _impl_.amount_ = uint64_t{0u};
+}
+inline uint64_t TxFailureItem::_internal_amount() const {
+  return _impl_.amount_;
+}
+inline uint64_t TxFailureItem::amount() const {
+  // @@protoc_insertion_point(field_get:TxFailureItem.amount)
+  return _internal_amount();
+}
+inline void TxFailureItem::_internal_set_amount(uint64_t value) {
+  
+  _impl_.amount_ = value;
+}
+inline void TxFailureItem::set_amount(uint64_t value) {
+  _internal_set_amount(value);
+  // @@protoc_insertion_point(field_set:TxFailureItem.amount)
+}
+
+// uint64 time = 6;
+inline void TxFailureItem::clear_time() {
+  _impl_.time_ = uint64_t{0u};
+}
+inline uint64_t TxFailureItem::_internal_time() const {
+  return _impl_.time_;
+}
+inline uint64_t TxFailureItem::time() const {
+  // @@protoc_insertion_point(field_get:TxFailureItem.time)
+  return _internal_time();
+}
+inline void TxFailureItem::_internal_set_time(uint64_t value) {
+  
+  _impl_.time_ = value;
+}
+inline void TxFailureItem::set_time(uint64_t value) {
+  _internal_set_time(value);
+  // @@protoc_insertion_point(field_set:TxFailureItem.time)
+}
+
+// string detail = 7;
+inline void TxFailureItem::clear_detail() {
+  _impl_.detail_.ClearToEmpty();
+}
+inline const std::string& TxFailureItem::detail() const {
+  // @@protoc_insertion_point(field_get:TxFailureItem.detail)
+  return _internal_detail();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TxFailureItem::set_detail(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.detail_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:TxFailureItem.detail)
+}
+inline std::string* TxFailureItem::mutable_detail() {
+  std::string* _s = _internal_mutable_detail();
+  // @@protoc_insertion_point(field_mutable:TxFailureItem.detail)
+  return _s;
+}
+inline const std::string& TxFailureItem::_internal_detail() const {
+  return _impl_.detail_.Get();
+}
+inline void TxFailureItem::_internal_set_detail(const std::string& value) {
+  
+  _impl_.detail_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TxFailureItem::_internal_mutable_detail() {
+  
+  return _impl_.detail_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TxFailureItem::release_detail() {
+  // @@protoc_insertion_point(field_release:TxFailureItem.detail)
+  return _impl_.detail_.Release();
+}
+inline void TxFailureItem::set_allocated_detail(std::string* detail) {
+  if (detail != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.detail_.SetAllocated(detail, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.detail_.IsDefault()) {
+    _impl_.detail_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:TxFailureItem.detail)
+}
+
+// uint64 gas = 8;
+inline void TxFailureItem::clear_gas() {
+  _impl_.gas_ = uint64_t{0u};
+}
+inline uint64_t TxFailureItem::_internal_gas() const {
+  return _impl_.gas_;
+}
+inline uint64_t TxFailureItem::gas() const {
+  // @@protoc_insertion_point(field_get:TxFailureItem.gas)
+  return _internal_gas();
+}
+inline void TxFailureItem::_internal_set_gas(uint64_t value) {
+  
+  _impl_.gas_ = value;
+}
+inline void TxFailureItem::set_gas(uint64_t value) {
+  _internal_set_gas(value);
+  // @@protoc_insertion_point(field_set:TxFailureItem.gas)
+}
+
+// repeated uint64 toAmount = 9;
+inline int TxFailureItem::_internal_toamount_size() const {
+  return _impl_.toamount_.size();
+}
+inline int TxFailureItem::toamount_size() const {
+  return _internal_toamount_size();
+}
+inline void TxFailureItem::clear_toamount() {
+  _impl_.toamount_.Clear();
+}
+inline uint64_t TxFailureItem::_internal_toamount(int index) const {
+  return _impl_.toamount_.Get(index);
+}
+inline uint64_t TxFailureItem::toamount(int index) const {
+  // @@protoc_insertion_point(field_get:TxFailureItem.toAmount)
+  return _internal_toamount(index);
+}
+inline void TxFailureItem::set_toamount(int index, uint64_t value) {
+  _impl_.toamount_.Set(index, value);
+  // @@protoc_insertion_point(field_set:TxFailureItem.toAmount)
+}
+inline void TxFailureItem::_internal_add_toamount(uint64_t value) {
+  _impl_.toamount_.Add(value);
+}
+inline void TxFailureItem::add_toamount(uint64_t value) {
+  _internal_add_toamount(value);
+  // @@protoc_insertion_point(field_add:TxFailureItem.toAmount)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >&
+TxFailureItem::_internal_toamount() const {
+  return _impl_.toamount_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >&
+TxFailureItem::toamount() const {
+  // @@protoc_insertion_point(field_list:TxFailureItem.toAmount)
+  return _internal_toamount();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >*
+TxFailureItem::_internal_mutable_toamount() {
+  return &_impl_.toamount_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< uint64_t >*
+TxFailureItem::mutable_toamount() {
+  // @@protoc_insertion_point(field_mutable_list:TxFailureItem.toAmount)
+  return _internal_mutable_toamount();
+}
+
+// .TxType type = 10;
+inline void TxFailureItem::clear_type() {
+  _impl_.type_ = 0;
+}
+inline ::TxType TxFailureItem::_internal_type() const {
+  return static_cast< ::TxType >(_impl_.type_);
+}
+inline ::TxType TxFailureItem::type() const {
+  // @@protoc_insertion_point(field_get:TxFailureItem.type)
+  return _internal_type();
+}
+inline void TxFailureItem::_internal_set_type(::TxType value) {
+  
+  _impl_.type_ = value;
+}
+inline void TxFailureItem::set_type(::TxType value) {
+  _internal_set_type(value);
+  // @@protoc_insertion_point(field_set:TxFailureItem.type)
+}
+
+// -------------------------------------------------------------------
+
+// GetTxFailureListAck
+
+// string version = 1;
+inline void GetTxFailureListAck::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& GetTxFailureListAck::version() const {
+  // @@protoc_insertion_point(field_get:GetTxFailureListAck.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTxFailureListAck::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTxFailureListAck.version)
+}
+inline std::string* GetTxFailureListAck::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:GetTxFailureListAck.version)
+  return _s;
+}
+inline const std::string& GetTxFailureListAck::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void GetTxFailureListAck::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTxFailureListAck::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTxFailureListAck::release_version() {
+  // @@protoc_insertion_point(field_release:GetTxFailureListAck.version)
+  return _impl_.version_.Release();
+}
+inline void GetTxFailureListAck::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTxFailureListAck.version)
+}
+
+// int32 code = 2;
+inline void GetTxFailureListAck::clear_code() {
+  _impl_.code_ = 0;
+}
+inline int32_t GetTxFailureListAck::_internal_code() const {
+  return _impl_.code_;
+}
+inline int32_t GetTxFailureListAck::code() const {
+  // @@protoc_insertion_point(field_get:GetTxFailureListAck.code)
+  return _internal_code();
+}
+inline void GetTxFailureListAck::_internal_set_code(int32_t value) {
+  
+  _impl_.code_ = value;
+}
+inline void GetTxFailureListAck::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:GetTxFailureListAck.code)
+}
+
+// string message = 3;
+inline void GetTxFailureListAck::clear_message() {
+  _impl_.message_.ClearToEmpty();
+}
+inline const std::string& GetTxFailureListAck::message() const {
+  // @@protoc_insertion_point(field_get:GetTxFailureListAck.message)
+  return _internal_message();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTxFailureListAck::set_message(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTxFailureListAck.message)
+}
+inline std::string* GetTxFailureListAck::mutable_message() {
+  std::string* _s = _internal_mutable_message();
+  // @@protoc_insertion_point(field_mutable:GetTxFailureListAck.message)
+  return _s;
+}
+inline const std::string& GetTxFailureListAck::_internal_message() const {
+  return _impl_.message_.Get();
+}
+inline void GetTxFailureListAck::_internal_set_message(const std::string& value) {
+  
+  _impl_.message_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTxFailureListAck::_internal_mutable_message() {
+  
+  return _impl_.message_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTxFailureListAck::release_message() {
+  // @@protoc_insertion_point(field_release:GetTxFailureListAck.message)
+  return _impl_.message_.Release();
+}
+inline void GetTxFailureListAck::set_allocated_message(std::string* message) {
+  if (message != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.message_.SetAllocated(message, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.message_.IsDefault()) {
+    _impl_.message_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTxFailureListAck.message)
+}
+
+// uint32 total = 4;
+inline void GetTxFailureListAck::clear_total() {
+  _impl_.total_ = 0u;
+}
+inline uint32_t GetTxFailureListAck::_internal_total() const {
+  return _impl_.total_;
+}
+inline uint32_t GetTxFailureListAck::total() const {
+  // @@protoc_insertion_point(field_get:GetTxFailureListAck.total)
+  return _internal_total();
+}
+inline void GetTxFailureListAck::_internal_set_total(uint32_t value) {
+  
+  _impl_.total_ = value;
+}
+inline void GetTxFailureListAck::set_total(uint32_t value) {
+  _internal_set_total(value);
+  // @@protoc_insertion_point(field_set:GetTxFailureListAck.total)
+}
+
+// repeated .TxFailureItem list = 5;
+inline int GetTxFailureListAck::_internal_list_size() const {
+  return _impl_.list_.size();
+}
+inline int GetTxFailureListAck::list_size() const {
+  return _internal_list_size();
+}
+inline void GetTxFailureListAck::clear_list() {
+  _impl_.list_.Clear();
+}
+inline ::TxFailureItem* GetTxFailureListAck::mutable_list(int index) {
+  // @@protoc_insertion_point(field_mutable:GetTxFailureListAck.list)
+  return _impl_.list_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TxFailureItem >*
+GetTxFailureListAck::mutable_list() {
+  // @@protoc_insertion_point(field_mutable_list:GetTxFailureListAck.list)
+  return &_impl_.list_;
+}
+inline const ::TxFailureItem& GetTxFailureListAck::_internal_list(int index) const {
+  return _impl_.list_.Get(index);
+}
+inline const ::TxFailureItem& GetTxFailureListAck::list(int index) const {
+  // @@protoc_insertion_point(field_get:GetTxFailureListAck.list)
+  return _internal_list(index);
+}
+inline ::TxFailureItem* GetTxFailureListAck::_internal_add_list() {
+  return _impl_.list_.Add();
+}
+inline ::TxFailureItem* GetTxFailureListAck::add_list() {
+  ::TxFailureItem* _add = _internal_add_list();
+  // @@protoc_insertion_point(field_add:GetTxFailureListAck.list)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::TxFailureItem >&
+GetTxFailureListAck::list() const {
+  // @@protoc_insertion_point(field_list:GetTxFailureListAck.list)
+  return _impl_.list_;
+}
+
+// string lasthash = 6;
+inline void GetTxFailureListAck::clear_lasthash() {
+  _impl_.lasthash_.ClearToEmpty();
+}
+inline const std::string& GetTxFailureListAck::lasthash() const {
+  // @@protoc_insertion_point(field_get:GetTxFailureListAck.lasthash)
+  return _internal_lasthash();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTxFailureListAck::set_lasthash(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.lasthash_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTxFailureListAck.lasthash)
+}
+inline std::string* GetTxFailureListAck::mutable_lasthash() {
+  std::string* _s = _internal_mutable_lasthash();
+  // @@protoc_insertion_point(field_mutable:GetTxFailureListAck.lasthash)
+  return _s;
+}
+inline const std::string& GetTxFailureListAck::_internal_lasthash() const {
+  return _impl_.lasthash_.Get();
+}
+inline void GetTxFailureListAck::_internal_set_lasthash(const std::string& value) {
+  
+  _impl_.lasthash_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTxFailureListAck::_internal_mutable_lasthash() {
+  
+  return _impl_.lasthash_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTxFailureListAck::release_lasthash() {
+  // @@protoc_insertion_point(field_release:GetTxFailureListAck.lasthash)
+  return _impl_.lasthash_.Release();
+}
+inline void GetTxFailureListAck::set_allocated_lasthash(std::string* lasthash) {
+  if (lasthash != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.lasthash_.SetAllocated(lasthash, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.lasthash_.IsDefault()) {
+    _impl_.lasthash_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTxFailureListAck.lasthash)
 }
 
 // -------------------------------------------------------------------
@@ -13031,6 +17309,976 @@ inline void MultiSignTxAck::set_allocated_txraw(std::string* txraw) {
 
 // -------------------------------------------------------------------
 
+// GetTransactionStatusListReq
+
+// string version = 1;
+inline void GetTransactionStatusListReq::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& GetTransactionStatusListReq::version() const {
+  // @@protoc_insertion_point(field_get:GetTransactionStatusListReq.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTransactionStatusListReq::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTransactionStatusListReq.version)
+}
+inline std::string* GetTransactionStatusListReq::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:GetTransactionStatusListReq.version)
+  return _s;
+}
+inline const std::string& GetTransactionStatusListReq::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void GetTransactionStatusListReq::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTransactionStatusListReq::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTransactionStatusListReq::release_version() {
+  // @@protoc_insertion_point(field_release:GetTransactionStatusListReq.version)
+  return _impl_.version_.Release();
+}
+inline void GetTransactionStatusListReq::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTransactionStatusListReq.version)
+}
+
+// string txhash = 2;
+inline void GetTransactionStatusListReq::clear_txhash() {
+  _impl_.txhash_.ClearToEmpty();
+}
+inline const std::string& GetTransactionStatusListReq::txhash() const {
+  // @@protoc_insertion_point(field_get:GetTransactionStatusListReq.txhash)
+  return _internal_txhash();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTransactionStatusListReq::set_txhash(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.txhash_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTransactionStatusListReq.txhash)
+}
+inline std::string* GetTransactionStatusListReq::mutable_txhash() {
+  std::string* _s = _internal_mutable_txhash();
+  // @@protoc_insertion_point(field_mutable:GetTransactionStatusListReq.txhash)
+  return _s;
+}
+inline const std::string& GetTransactionStatusListReq::_internal_txhash() const {
+  return _impl_.txhash_.Get();
+}
+inline void GetTransactionStatusListReq::_internal_set_txhash(const std::string& value) {
+  
+  _impl_.txhash_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTransactionStatusListReq::_internal_mutable_txhash() {
+  
+  return _impl_.txhash_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTransactionStatusListReq::release_txhash() {
+  // @@protoc_insertion_point(field_release:GetTransactionStatusListReq.txhash)
+  return _impl_.txhash_.Release();
+}
+inline void GetTransactionStatusListReq::set_allocated_txhash(std::string* txhash) {
+  if (txhash != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.txhash_.SetAllocated(txhash, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.txhash_.IsDefault()) {
+    _impl_.txhash_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTransactionStatusListReq.txhash)
+}
+
+// -------------------------------------------------------------------
+
+// OtherStatusItem
+
+// string othernodetime = 1;
+inline void OtherStatusItem::clear_othernodetime() {
+  _impl_.othernodetime_.ClearToEmpty();
+}
+inline const std::string& OtherStatusItem::othernodetime() const {
+  // @@protoc_insertion_point(field_get:OtherStatusItem.othernodetime)
+  return _internal_othernodetime();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void OtherStatusItem::set_othernodetime(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.othernodetime_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:OtherStatusItem.othernodetime)
+}
+inline std::string* OtherStatusItem::mutable_othernodetime() {
+  std::string* _s = _internal_mutable_othernodetime();
+  // @@protoc_insertion_point(field_mutable:OtherStatusItem.othernodetime)
+  return _s;
+}
+inline const std::string& OtherStatusItem::_internal_othernodetime() const {
+  return _impl_.othernodetime_.Get();
+}
+inline void OtherStatusItem::_internal_set_othernodetime(const std::string& value) {
+  
+  _impl_.othernodetime_.Set(value, GetArenaForAllocation());
+}
+inline std::string* OtherStatusItem::_internal_mutable_othernodetime() {
+  
+  return _impl_.othernodetime_.Mutable(GetArenaForAllocation());
+}
+inline std::string* OtherStatusItem::release_othernodetime() {
+  // @@protoc_insertion_point(field_release:OtherStatusItem.othernodetime)
+  return _impl_.othernodetime_.Release();
+}
+inline void OtherStatusItem::set_allocated_othernodetime(std::string* othernodetime) {
+  if (othernodetime != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.othernodetime_.SetAllocated(othernodetime, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.othernodetime_.IsDefault()) {
+    _impl_.othernodetime_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:OtherStatusItem.othernodetime)
+}
+
+// int32 othernodecode = 2;
+inline void OtherStatusItem::clear_othernodecode() {
+  _impl_.othernodecode_ = 0;
+}
+inline int32_t OtherStatusItem::_internal_othernodecode() const {
+  return _impl_.othernodecode_;
+}
+inline int32_t OtherStatusItem::othernodecode() const {
+  // @@protoc_insertion_point(field_get:OtherStatusItem.othernodecode)
+  return _internal_othernodecode();
+}
+inline void OtherStatusItem::_internal_set_othernodecode(int32_t value) {
+  
+  _impl_.othernodecode_ = value;
+}
+inline void OtherStatusItem::set_othernodecode(int32_t value) {
+  _internal_set_othernodecode(value);
+  // @@protoc_insertion_point(field_set:OtherStatusItem.othernodecode)
+}
+
+// string othernodemessage = 3;
+inline void OtherStatusItem::clear_othernodemessage() {
+  _impl_.othernodemessage_.ClearToEmpty();
+}
+inline const std::string& OtherStatusItem::othernodemessage() const {
+  // @@protoc_insertion_point(field_get:OtherStatusItem.othernodemessage)
+  return _internal_othernodemessage();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void OtherStatusItem::set_othernodemessage(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.othernodemessage_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:OtherStatusItem.othernodemessage)
+}
+inline std::string* OtherStatusItem::mutable_othernodemessage() {
+  std::string* _s = _internal_mutable_othernodemessage();
+  // @@protoc_insertion_point(field_mutable:OtherStatusItem.othernodemessage)
+  return _s;
+}
+inline const std::string& OtherStatusItem::_internal_othernodemessage() const {
+  return _impl_.othernodemessage_.Get();
+}
+inline void OtherStatusItem::_internal_set_othernodemessage(const std::string& value) {
+  
+  _impl_.othernodemessage_.Set(value, GetArenaForAllocation());
+}
+inline std::string* OtherStatusItem::_internal_mutable_othernodemessage() {
+  
+  return _impl_.othernodemessage_.Mutable(GetArenaForAllocation());
+}
+inline std::string* OtherStatusItem::release_othernodemessage() {
+  // @@protoc_insertion_point(field_release:OtherStatusItem.othernodemessage)
+  return _impl_.othernodemessage_.Release();
+}
+inline void OtherStatusItem::set_allocated_othernodemessage(std::string* othernodemessage) {
+  if (othernodemessage != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.othernodemessage_.SetAllocated(othernodemessage, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.othernodemessage_.IsDefault()) {
+    _impl_.othernodemessage_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:OtherStatusItem.othernodemessage)
+}
+
+// -------------------------------------------------------------------
+
+// SelfVerifyStatusItem
+
+// string verifyothernodetime = 1;
+inline void SelfVerifyStatusItem::clear_verifyothernodetime() {
+  _impl_.verifyothernodetime_.ClearToEmpty();
+}
+inline const std::string& SelfVerifyStatusItem::verifyothernodetime() const {
+  // @@protoc_insertion_point(field_get:SelfVerifyStatusItem.verifyothernodetime)
+  return _internal_verifyothernodetime();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SelfVerifyStatusItem::set_verifyothernodetime(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.verifyothernodetime_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SelfVerifyStatusItem.verifyothernodetime)
+}
+inline std::string* SelfVerifyStatusItem::mutable_verifyothernodetime() {
+  std::string* _s = _internal_mutable_verifyothernodetime();
+  // @@protoc_insertion_point(field_mutable:SelfVerifyStatusItem.verifyothernodetime)
+  return _s;
+}
+inline const std::string& SelfVerifyStatusItem::_internal_verifyothernodetime() const {
+  return _impl_.verifyothernodetime_.Get();
+}
+inline void SelfVerifyStatusItem::_internal_set_verifyothernodetime(const std::string& value) {
+  
+  _impl_.verifyothernodetime_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SelfVerifyStatusItem::_internal_mutable_verifyothernodetime() {
+  
+  return _impl_.verifyothernodetime_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SelfVerifyStatusItem::release_verifyothernodetime() {
+  // @@protoc_insertion_point(field_release:SelfVerifyStatusItem.verifyothernodetime)
+  return _impl_.verifyothernodetime_.Release();
+}
+inline void SelfVerifyStatusItem::set_allocated_verifyothernodetime(std::string* verifyothernodetime) {
+  if (verifyothernodetime != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.verifyothernodetime_.SetAllocated(verifyothernodetime, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.verifyothernodetime_.IsDefault()) {
+    _impl_.verifyothernodetime_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:SelfVerifyStatusItem.verifyothernodetime)
+}
+
+// int32 verifyothernodecode = 2;
+inline void SelfVerifyStatusItem::clear_verifyothernodecode() {
+  _impl_.verifyothernodecode_ = 0;
+}
+inline int32_t SelfVerifyStatusItem::_internal_verifyothernodecode() const {
+  return _impl_.verifyothernodecode_;
+}
+inline int32_t SelfVerifyStatusItem::verifyothernodecode() const {
+  // @@protoc_insertion_point(field_get:SelfVerifyStatusItem.verifyothernodecode)
+  return _internal_verifyothernodecode();
+}
+inline void SelfVerifyStatusItem::_internal_set_verifyothernodecode(int32_t value) {
+  
+  _impl_.verifyothernodecode_ = value;
+}
+inline void SelfVerifyStatusItem::set_verifyothernodecode(int32_t value) {
+  _internal_set_verifyothernodecode(value);
+  // @@protoc_insertion_point(field_set:SelfVerifyStatusItem.verifyothernodecode)
+}
+
+// string verifyothernodemessage = 3;
+inline void SelfVerifyStatusItem::clear_verifyothernodemessage() {
+  _impl_.verifyothernodemessage_.ClearToEmpty();
+}
+inline const std::string& SelfVerifyStatusItem::verifyothernodemessage() const {
+  // @@protoc_insertion_point(field_get:SelfVerifyStatusItem.verifyothernodemessage)
+  return _internal_verifyothernodemessage();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SelfVerifyStatusItem::set_verifyothernodemessage(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.verifyothernodemessage_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SelfVerifyStatusItem.verifyothernodemessage)
+}
+inline std::string* SelfVerifyStatusItem::mutable_verifyothernodemessage() {
+  std::string* _s = _internal_mutable_verifyothernodemessage();
+  // @@protoc_insertion_point(field_mutable:SelfVerifyStatusItem.verifyothernodemessage)
+  return _s;
+}
+inline const std::string& SelfVerifyStatusItem::_internal_verifyothernodemessage() const {
+  return _impl_.verifyothernodemessage_.Get();
+}
+inline void SelfVerifyStatusItem::_internal_set_verifyothernodemessage(const std::string& value) {
+  
+  _impl_.verifyothernodemessage_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SelfVerifyStatusItem::_internal_mutable_verifyothernodemessage() {
+  
+  return _impl_.verifyothernodemessage_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SelfVerifyStatusItem::release_verifyothernodemessage() {
+  // @@protoc_insertion_point(field_release:SelfVerifyStatusItem.verifyothernodemessage)
+  return _impl_.verifyothernodemessage_.Release();
+}
+inline void SelfVerifyStatusItem::set_allocated_verifyothernodemessage(std::string* verifyothernodemessage) {
+  if (verifyothernodemessage != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.verifyothernodemessage_.SetAllocated(verifyothernodemessage, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.verifyothernodemessage_.IsDefault()) {
+    _impl_.verifyothernodemessage_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:SelfVerifyStatusItem.verifyothernodemessage)
+}
+
+// -------------------------------------------------------------------
+
+// TransactionStatusItem
+
+// string initiatortime = 1;
+inline void TransactionStatusItem::clear_initiatortime() {
+  _impl_.initiatortime_.ClearToEmpty();
+}
+inline const std::string& TransactionStatusItem::initiatortime() const {
+  // @@protoc_insertion_point(field_get:TransactionStatusItem.initiatortime)
+  return _internal_initiatortime();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TransactionStatusItem::set_initiatortime(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.initiatortime_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:TransactionStatusItem.initiatortime)
+}
+inline std::string* TransactionStatusItem::mutable_initiatortime() {
+  std::string* _s = _internal_mutable_initiatortime();
+  // @@protoc_insertion_point(field_mutable:TransactionStatusItem.initiatortime)
+  return _s;
+}
+inline const std::string& TransactionStatusItem::_internal_initiatortime() const {
+  return _impl_.initiatortime_.Get();
+}
+inline void TransactionStatusItem::_internal_set_initiatortime(const std::string& value) {
+  
+  _impl_.initiatortime_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TransactionStatusItem::_internal_mutable_initiatortime() {
+  
+  return _impl_.initiatortime_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TransactionStatusItem::release_initiatortime() {
+  // @@protoc_insertion_point(field_release:TransactionStatusItem.initiatortime)
+  return _impl_.initiatortime_.Release();
+}
+inline void TransactionStatusItem::set_allocated_initiatortime(std::string* initiatortime) {
+  if (initiatortime != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.initiatortime_.SetAllocated(initiatortime, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.initiatortime_.IsDefault()) {
+    _impl_.initiatortime_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:TransactionStatusItem.initiatortime)
+}
+
+// int32 selfcode = 2;
+inline void TransactionStatusItem::clear_selfcode() {
+  _impl_.selfcode_ = 0;
+}
+inline int32_t TransactionStatusItem::_internal_selfcode() const {
+  return _impl_.selfcode_;
+}
+inline int32_t TransactionStatusItem::selfcode() const {
+  // @@protoc_insertion_point(field_get:TransactionStatusItem.selfcode)
+  return _internal_selfcode();
+}
+inline void TransactionStatusItem::_internal_set_selfcode(int32_t value) {
+  
+  _impl_.selfcode_ = value;
+}
+inline void TransactionStatusItem::set_selfcode(int32_t value) {
+  _internal_set_selfcode(value);
+  // @@protoc_insertion_point(field_set:TransactionStatusItem.selfcode)
+}
+
+// string initiatormessage = 3;
+inline void TransactionStatusItem::clear_initiatormessage() {
+  _impl_.initiatormessage_.ClearToEmpty();
+}
+inline const std::string& TransactionStatusItem::initiatormessage() const {
+  // @@protoc_insertion_point(field_get:TransactionStatusItem.initiatormessage)
+  return _internal_initiatormessage();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TransactionStatusItem::set_initiatormessage(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.initiatormessage_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:TransactionStatusItem.initiatormessage)
+}
+inline std::string* TransactionStatusItem::mutable_initiatormessage() {
+  std::string* _s = _internal_mutable_initiatormessage();
+  // @@protoc_insertion_point(field_mutable:TransactionStatusItem.initiatormessage)
+  return _s;
+}
+inline const std::string& TransactionStatusItem::_internal_initiatormessage() const {
+  return _impl_.initiatormessage_.Get();
+}
+inline void TransactionStatusItem::_internal_set_initiatormessage(const std::string& value) {
+  
+  _impl_.initiatormessage_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TransactionStatusItem::_internal_mutable_initiatormessage() {
+  
+  return _impl_.initiatormessage_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TransactionStatusItem::release_initiatormessage() {
+  // @@protoc_insertion_point(field_release:TransactionStatusItem.initiatormessage)
+  return _impl_.initiatormessage_.Release();
+}
+inline void TransactionStatusItem::set_allocated_initiatormessage(std::string* initiatormessage) {
+  if (initiatormessage != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.initiatormessage_.SetAllocated(initiatormessage, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.initiatormessage_.IsDefault()) {
+    _impl_.initiatormessage_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:TransactionStatusItem.initiatormessage)
+}
+
+// repeated .OtherStatusItem Othernode = 4;
+inline int TransactionStatusItem::_internal_othernode_size() const {
+  return _impl_.othernode_.size();
+}
+inline int TransactionStatusItem::othernode_size() const {
+  return _internal_othernode_size();
+}
+inline void TransactionStatusItem::clear_othernode() {
+  _impl_.othernode_.Clear();
+}
+inline ::OtherStatusItem* TransactionStatusItem::mutable_othernode(int index) {
+  // @@protoc_insertion_point(field_mutable:TransactionStatusItem.Othernode)
+  return _impl_.othernode_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::OtherStatusItem >*
+TransactionStatusItem::mutable_othernode() {
+  // @@protoc_insertion_point(field_mutable_list:TransactionStatusItem.Othernode)
+  return &_impl_.othernode_;
+}
+inline const ::OtherStatusItem& TransactionStatusItem::_internal_othernode(int index) const {
+  return _impl_.othernode_.Get(index);
+}
+inline const ::OtherStatusItem& TransactionStatusItem::othernode(int index) const {
+  // @@protoc_insertion_point(field_get:TransactionStatusItem.Othernode)
+  return _internal_othernode(index);
+}
+inline ::OtherStatusItem* TransactionStatusItem::_internal_add_othernode() {
+  return _impl_.othernode_.Add();
+}
+inline ::OtherStatusItem* TransactionStatusItem::add_othernode() {
+  ::OtherStatusItem* _add = _internal_add_othernode();
+  // @@protoc_insertion_point(field_add:TransactionStatusItem.Othernode)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::OtherStatusItem >&
+TransactionStatusItem::othernode() const {
+  // @@protoc_insertion_point(field_list:TransactionStatusItem.Othernode)
+  return _impl_.othernode_;
+}
+
+// repeated .SelfVerifyStatusItem verifyothernode = 5;
+inline int TransactionStatusItem::_internal_verifyothernode_size() const {
+  return _impl_.verifyothernode_.size();
+}
+inline int TransactionStatusItem::verifyothernode_size() const {
+  return _internal_verifyothernode_size();
+}
+inline void TransactionStatusItem::clear_verifyothernode() {
+  _impl_.verifyothernode_.Clear();
+}
+inline ::SelfVerifyStatusItem* TransactionStatusItem::mutable_verifyothernode(int index) {
+  // @@protoc_insertion_point(field_mutable:TransactionStatusItem.verifyothernode)
+  return _impl_.verifyothernode_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SelfVerifyStatusItem >*
+TransactionStatusItem::mutable_verifyothernode() {
+  // @@protoc_insertion_point(field_mutable_list:TransactionStatusItem.verifyothernode)
+  return &_impl_.verifyothernode_;
+}
+inline const ::SelfVerifyStatusItem& TransactionStatusItem::_internal_verifyothernode(int index) const {
+  return _impl_.verifyothernode_.Get(index);
+}
+inline const ::SelfVerifyStatusItem& TransactionStatusItem::verifyothernode(int index) const {
+  // @@protoc_insertion_point(field_get:TransactionStatusItem.verifyothernode)
+  return _internal_verifyothernode(index);
+}
+inline ::SelfVerifyStatusItem* TransactionStatusItem::_internal_add_verifyothernode() {
+  return _impl_.verifyothernode_.Add();
+}
+inline ::SelfVerifyStatusItem* TransactionStatusItem::add_verifyothernode() {
+  ::SelfVerifyStatusItem* _add = _internal_add_verifyothernode();
+  // @@protoc_insertion_point(field_add:TransactionStatusItem.verifyothernode)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SelfVerifyStatusItem >&
+TransactionStatusItem::verifyothernode() const {
+  // @@protoc_insertion_point(field_list:TransactionStatusItem.verifyothernode)
+  return _impl_.verifyothernode_;
+}
+
+// string composetime = 6;
+inline void TransactionStatusItem::clear_composetime() {
+  _impl_.composetime_.ClearToEmpty();
+}
+inline const std::string& TransactionStatusItem::composetime() const {
+  // @@protoc_insertion_point(field_get:TransactionStatusItem.composetime)
+  return _internal_composetime();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TransactionStatusItem::set_composetime(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.composetime_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:TransactionStatusItem.composetime)
+}
+inline std::string* TransactionStatusItem::mutable_composetime() {
+  std::string* _s = _internal_mutable_composetime();
+  // @@protoc_insertion_point(field_mutable:TransactionStatusItem.composetime)
+  return _s;
+}
+inline const std::string& TransactionStatusItem::_internal_composetime() const {
+  return _impl_.composetime_.Get();
+}
+inline void TransactionStatusItem::_internal_set_composetime(const std::string& value) {
+  
+  _impl_.composetime_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TransactionStatusItem::_internal_mutable_composetime() {
+  
+  return _impl_.composetime_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TransactionStatusItem::release_composetime() {
+  // @@protoc_insertion_point(field_release:TransactionStatusItem.composetime)
+  return _impl_.composetime_.Release();
+}
+inline void TransactionStatusItem::set_allocated_composetime(std::string* composetime) {
+  if (composetime != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.composetime_.SetAllocated(composetime, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.composetime_.IsDefault()) {
+    _impl_.composetime_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:TransactionStatusItem.composetime)
+}
+
+// string selfaddblocktime = 7;
+inline void TransactionStatusItem::clear_selfaddblocktime() {
+  _impl_.selfaddblocktime_.ClearToEmpty();
+}
+inline const std::string& TransactionStatusItem::selfaddblocktime() const {
+  // @@protoc_insertion_point(field_get:TransactionStatusItem.selfaddblocktime)
+  return _internal_selfaddblocktime();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TransactionStatusItem::set_selfaddblocktime(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.selfaddblocktime_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:TransactionStatusItem.selfaddblocktime)
+}
+inline std::string* TransactionStatusItem::mutable_selfaddblocktime() {
+  std::string* _s = _internal_mutable_selfaddblocktime();
+  // @@protoc_insertion_point(field_mutable:TransactionStatusItem.selfaddblocktime)
+  return _s;
+}
+inline const std::string& TransactionStatusItem::_internal_selfaddblocktime() const {
+  return _impl_.selfaddblocktime_.Get();
+}
+inline void TransactionStatusItem::_internal_set_selfaddblocktime(const std::string& value) {
+  
+  _impl_.selfaddblocktime_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TransactionStatusItem::_internal_mutable_selfaddblocktime() {
+  
+  return _impl_.selfaddblocktime_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TransactionStatusItem::release_selfaddblocktime() {
+  // @@protoc_insertion_point(field_release:TransactionStatusItem.selfaddblocktime)
+  return _impl_.selfaddblocktime_.Release();
+}
+inline void TransactionStatusItem::set_allocated_selfaddblocktime(std::string* selfaddblocktime) {
+  if (selfaddblocktime != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.selfaddblocktime_.SetAllocated(selfaddblocktime, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.selfaddblocktime_.IsDefault()) {
+    _impl_.selfaddblocktime_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:TransactionStatusItem.selfaddblocktime)
+}
+
+// string selfeaddblockmessage = 8;
+inline void TransactionStatusItem::clear_selfeaddblockmessage() {
+  _impl_.selfeaddblockmessage_.ClearToEmpty();
+}
+inline const std::string& TransactionStatusItem::selfeaddblockmessage() const {
+  // @@protoc_insertion_point(field_get:TransactionStatusItem.selfeaddblockmessage)
+  return _internal_selfeaddblockmessage();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TransactionStatusItem::set_selfeaddblockmessage(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.selfeaddblockmessage_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:TransactionStatusItem.selfeaddblockmessage)
+}
+inline std::string* TransactionStatusItem::mutable_selfeaddblockmessage() {
+  std::string* _s = _internal_mutable_selfeaddblockmessage();
+  // @@protoc_insertion_point(field_mutable:TransactionStatusItem.selfeaddblockmessage)
+  return _s;
+}
+inline const std::string& TransactionStatusItem::_internal_selfeaddblockmessage() const {
+  return _impl_.selfeaddblockmessage_.Get();
+}
+inline void TransactionStatusItem::_internal_set_selfeaddblockmessage(const std::string& value) {
+  
+  _impl_.selfeaddblockmessage_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TransactionStatusItem::_internal_mutable_selfeaddblockmessage() {
+  
+  return _impl_.selfeaddblockmessage_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TransactionStatusItem::release_selfeaddblockmessage() {
+  // @@protoc_insertion_point(field_release:TransactionStatusItem.selfeaddblockmessage)
+  return _impl_.selfeaddblockmessage_.Release();
+}
+inline void TransactionStatusItem::set_allocated_selfeaddblockmessage(std::string* selfeaddblockmessage) {
+  if (selfeaddblockmessage != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.selfeaddblockmessage_.SetAllocated(selfeaddblockmessage, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.selfeaddblockmessage_.IsDefault()) {
+    _impl_.selfeaddblockmessage_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:TransactionStatusItem.selfeaddblockmessage)
+}
+
+// string removependingtime = 9;
+inline void TransactionStatusItem::clear_removependingtime() {
+  _impl_.removependingtime_.ClearToEmpty();
+}
+inline const std::string& TransactionStatusItem::removependingtime() const {
+  // @@protoc_insertion_point(field_get:TransactionStatusItem.removependingtime)
+  return _internal_removependingtime();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void TransactionStatusItem::set_removependingtime(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.removependingtime_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:TransactionStatusItem.removependingtime)
+}
+inline std::string* TransactionStatusItem::mutable_removependingtime() {
+  std::string* _s = _internal_mutable_removependingtime();
+  // @@protoc_insertion_point(field_mutable:TransactionStatusItem.removependingtime)
+  return _s;
+}
+inline const std::string& TransactionStatusItem::_internal_removependingtime() const {
+  return _impl_.removependingtime_.Get();
+}
+inline void TransactionStatusItem::_internal_set_removependingtime(const std::string& value) {
+  
+  _impl_.removependingtime_.Set(value, GetArenaForAllocation());
+}
+inline std::string* TransactionStatusItem::_internal_mutable_removependingtime() {
+  
+  return _impl_.removependingtime_.Mutable(GetArenaForAllocation());
+}
+inline std::string* TransactionStatusItem::release_removependingtime() {
+  // @@protoc_insertion_point(field_release:TransactionStatusItem.removependingtime)
+  return _impl_.removependingtime_.Release();
+}
+inline void TransactionStatusItem::set_allocated_removependingtime(std::string* removependingtime) {
+  if (removependingtime != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.removependingtime_.SetAllocated(removependingtime, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.removependingtime_.IsDefault()) {
+    _impl_.removependingtime_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:TransactionStatusItem.removependingtime)
+}
+
+// -------------------------------------------------------------------
+
+// GetTransactionStatusListAck
+
+// string version = 1;
+inline void GetTransactionStatusListAck::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& GetTransactionStatusListAck::version() const {
+  // @@protoc_insertion_point(field_get:GetTransactionStatusListAck.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTransactionStatusListAck::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTransactionStatusListAck.version)
+}
+inline std::string* GetTransactionStatusListAck::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:GetTransactionStatusListAck.version)
+  return _s;
+}
+inline const std::string& GetTransactionStatusListAck::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void GetTransactionStatusListAck::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTransactionStatusListAck::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTransactionStatusListAck::release_version() {
+  // @@protoc_insertion_point(field_release:GetTransactionStatusListAck.version)
+  return _impl_.version_.Release();
+}
+inline void GetTransactionStatusListAck::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTransactionStatusListAck.version)
+}
+
+// int32 code = 2;
+inline void GetTransactionStatusListAck::clear_code() {
+  _impl_.code_ = 0;
+}
+inline int32_t GetTransactionStatusListAck::_internal_code() const {
+  return _impl_.code_;
+}
+inline int32_t GetTransactionStatusListAck::code() const {
+  // @@protoc_insertion_point(field_get:GetTransactionStatusListAck.code)
+  return _internal_code();
+}
+inline void GetTransactionStatusListAck::_internal_set_code(int32_t value) {
+  
+  _impl_.code_ = value;
+}
+inline void GetTransactionStatusListAck::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:GetTransactionStatusListAck.code)
+}
+
+// string message = 3;
+inline void GetTransactionStatusListAck::clear_message() {
+  _impl_.message_.ClearToEmpty();
+}
+inline const std::string& GetTransactionStatusListAck::message() const {
+  // @@protoc_insertion_point(field_get:GetTransactionStatusListAck.message)
+  return _internal_message();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetTransactionStatusListAck::set_message(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetTransactionStatusListAck.message)
+}
+inline std::string* GetTransactionStatusListAck::mutable_message() {
+  std::string* _s = _internal_mutable_message();
+  // @@protoc_insertion_point(field_mutable:GetTransactionStatusListAck.message)
+  return _s;
+}
+inline const std::string& GetTransactionStatusListAck::_internal_message() const {
+  return _impl_.message_.Get();
+}
+inline void GetTransactionStatusListAck::_internal_set_message(const std::string& value) {
+  
+  _impl_.message_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetTransactionStatusListAck::_internal_mutable_message() {
+  
+  return _impl_.message_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetTransactionStatusListAck::release_message() {
+  // @@protoc_insertion_point(field_release:GetTransactionStatusListAck.message)
+  return _impl_.message_.Release();
+}
+inline void GetTransactionStatusListAck::set_allocated_message(std::string* message) {
+  if (message != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.message_.SetAllocated(message, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.message_.IsDefault()) {
+    _impl_.message_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetTransactionStatusListAck.message)
+}
+
+// .TransactionStatusItem list = 5;
+inline bool GetTransactionStatusListAck::_internal_has_list() const {
+  return this != internal_default_instance() && _impl_.list_ != nullptr;
+}
+inline bool GetTransactionStatusListAck::has_list() const {
+  return _internal_has_list();
+}
+inline void GetTransactionStatusListAck::clear_list() {
+  if (GetArenaForAllocation() == nullptr && _impl_.list_ != nullptr) {
+    delete _impl_.list_;
+  }
+  _impl_.list_ = nullptr;
+}
+inline const ::TransactionStatusItem& GetTransactionStatusListAck::_internal_list() const {
+  const ::TransactionStatusItem* p = _impl_.list_;
+  return p != nullptr ? *p : reinterpret_cast<const ::TransactionStatusItem&>(
+      ::_TransactionStatusItem_default_instance_);
+}
+inline const ::TransactionStatusItem& GetTransactionStatusListAck::list() const {
+  // @@protoc_insertion_point(field_get:GetTransactionStatusListAck.list)
+  return _internal_list();
+}
+inline void GetTransactionStatusListAck::unsafe_arena_set_allocated_list(
+    ::TransactionStatusItem* list) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.list_);
+  }
+  _impl_.list_ = list;
+  if (list) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:GetTransactionStatusListAck.list)
+}
+inline ::TransactionStatusItem* GetTransactionStatusListAck::release_list() {
+  
+  ::TransactionStatusItem* temp = _impl_.list_;
+  _impl_.list_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::TransactionStatusItem* GetTransactionStatusListAck::unsafe_arena_release_list() {
+  // @@protoc_insertion_point(field_release:GetTransactionStatusListAck.list)
+  
+  ::TransactionStatusItem* temp = _impl_.list_;
+  _impl_.list_ = nullptr;
+  return temp;
+}
+inline ::TransactionStatusItem* GetTransactionStatusListAck::_internal_mutable_list() {
+  
+  if (_impl_.list_ == nullptr) {
+    auto* p = CreateMaybeMessage<::TransactionStatusItem>(GetArenaForAllocation());
+    _impl_.list_ = p;
+  }
+  return _impl_.list_;
+}
+inline ::TransactionStatusItem* GetTransactionStatusListAck::mutable_list() {
+  ::TransactionStatusItem* _msg = _internal_mutable_list();
+  // @@protoc_insertion_point(field_mutable:GetTransactionStatusListAck.list)
+  return _msg;
+}
+inline void GetTransactionStatusListAck::set_allocated_list(::TransactionStatusItem* list) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete _impl_.list_;
+  }
+  if (list) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(list);
+    if (message_arena != submessage_arena) {
+      list = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, list, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  _impl_.list_ = list;
+  // @@protoc_insertion_point(field_set_allocated:GetTransactionStatusListAck.list)
+}
+
+// -------------------------------------------------------------------
+
 // SuccessRate
 
 // string hash = 1;
@@ -13101,1084 +18349,6 @@ inline void SuccessRate::_internal_set_rate(double value) {
 inline void SuccessRate::set_rate(double value) {
   _internal_set_rate(value);
   // @@protoc_insertion_point(field_set:SuccessRate.rate)
-}
-
-// -------------------------------------------------------------------
-
-// IsOnChainReq
-
-// string version = 1;
-inline void IsOnChainReq::clear_version() {
-  _impl_.version_.ClearToEmpty();
-}
-inline const std::string& IsOnChainReq::version() const {
-  // @@protoc_insertion_point(field_get:IsOnChainReq.version)
-  return _internal_version();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void IsOnChainReq::set_version(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:IsOnChainReq.version)
-}
-inline std::string* IsOnChainReq::mutable_version() {
-  std::string* _s = _internal_mutable_version();
-  // @@protoc_insertion_point(field_mutable:IsOnChainReq.version)
-  return _s;
-}
-inline const std::string& IsOnChainReq::_internal_version() const {
-  return _impl_.version_.Get();
-}
-inline void IsOnChainReq::_internal_set_version(const std::string& value) {
-  
-  _impl_.version_.Set(value, GetArenaForAllocation());
-}
-inline std::string* IsOnChainReq::_internal_mutable_version() {
-  
-  return _impl_.version_.Mutable(GetArenaForAllocation());
-}
-inline std::string* IsOnChainReq::release_version() {
-  // @@protoc_insertion_point(field_release:IsOnChainReq.version)
-  return _impl_.version_.Release();
-}
-inline void IsOnChainReq::set_allocated_version(std::string* version) {
-  if (version != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.version_.IsDefault()) {
-    _impl_.version_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:IsOnChainReq.version)
-}
-
-// repeated string txhash = 2;
-inline int IsOnChainReq::_internal_txhash_size() const {
-  return _impl_.txhash_.size();
-}
-inline int IsOnChainReq::txhash_size() const {
-  return _internal_txhash_size();
-}
-inline void IsOnChainReq::clear_txhash() {
-  _impl_.txhash_.Clear();
-}
-inline std::string* IsOnChainReq::add_txhash() {
-  std::string* _s = _internal_add_txhash();
-  // @@protoc_insertion_point(field_add_mutable:IsOnChainReq.txhash)
-  return _s;
-}
-inline const std::string& IsOnChainReq::_internal_txhash(int index) const {
-  return _impl_.txhash_.Get(index);
-}
-inline const std::string& IsOnChainReq::txhash(int index) const {
-  // @@protoc_insertion_point(field_get:IsOnChainReq.txhash)
-  return _internal_txhash(index);
-}
-inline std::string* IsOnChainReq::mutable_txhash(int index) {
-  // @@protoc_insertion_point(field_mutable:IsOnChainReq.txhash)
-  return _impl_.txhash_.Mutable(index);
-}
-inline void IsOnChainReq::set_txhash(int index, const std::string& value) {
-  _impl_.txhash_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:IsOnChainReq.txhash)
-}
-inline void IsOnChainReq::set_txhash(int index, std::string&& value) {
-  _impl_.txhash_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:IsOnChainReq.txhash)
-}
-inline void IsOnChainReq::set_txhash(int index, const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  _impl_.txhash_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:IsOnChainReq.txhash)
-}
-inline void IsOnChainReq::set_txhash(int index, const char* value, size_t size) {
-  _impl_.txhash_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:IsOnChainReq.txhash)
-}
-inline std::string* IsOnChainReq::_internal_add_txhash() {
-  return _impl_.txhash_.Add();
-}
-inline void IsOnChainReq::add_txhash(const std::string& value) {
-  _impl_.txhash_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:IsOnChainReq.txhash)
-}
-inline void IsOnChainReq::add_txhash(std::string&& value) {
-  _impl_.txhash_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:IsOnChainReq.txhash)
-}
-inline void IsOnChainReq::add_txhash(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  _impl_.txhash_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:IsOnChainReq.txhash)
-}
-inline void IsOnChainReq::add_txhash(const char* value, size_t size) {
-  _impl_.txhash_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:IsOnChainReq.txhash)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
-IsOnChainReq::txhash() const {
-  // @@protoc_insertion_point(field_list:IsOnChainReq.txhash)
-  return _impl_.txhash_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
-IsOnChainReq::mutable_txhash() {
-  // @@protoc_insertion_point(field_mutable_list:IsOnChainReq.txhash)
-  return &_impl_.txhash_;
-}
-
-// uint64 time = 3;
-inline void IsOnChainReq::clear_time() {
-  _impl_.time_ = uint64_t{0u};
-}
-inline uint64_t IsOnChainReq::_internal_time() const {
-  return _impl_.time_;
-}
-inline uint64_t IsOnChainReq::time() const {
-  // @@protoc_insertion_point(field_get:IsOnChainReq.time)
-  return _internal_time();
-}
-inline void IsOnChainReq::_internal_set_time(uint64_t value) {
-  
-  _impl_.time_ = value;
-}
-inline void IsOnChainReq::set_time(uint64_t value) {
-  _internal_set_time(value);
-  // @@protoc_insertion_point(field_set:IsOnChainReq.time)
-}
-
-// -------------------------------------------------------------------
-
-// IsOnChainAck
-
-// string version = 1;
-inline void IsOnChainAck::clear_version() {
-  _impl_.version_.ClearToEmpty();
-}
-inline const std::string& IsOnChainAck::version() const {
-  // @@protoc_insertion_point(field_get:IsOnChainAck.version)
-  return _internal_version();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void IsOnChainAck::set_version(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:IsOnChainAck.version)
-}
-inline std::string* IsOnChainAck::mutable_version() {
-  std::string* _s = _internal_mutable_version();
-  // @@protoc_insertion_point(field_mutable:IsOnChainAck.version)
-  return _s;
-}
-inline const std::string& IsOnChainAck::_internal_version() const {
-  return _impl_.version_.Get();
-}
-inline void IsOnChainAck::_internal_set_version(const std::string& value) {
-  
-  _impl_.version_.Set(value, GetArenaForAllocation());
-}
-inline std::string* IsOnChainAck::_internal_mutable_version() {
-  
-  return _impl_.version_.Mutable(GetArenaForAllocation());
-}
-inline std::string* IsOnChainAck::release_version() {
-  // @@protoc_insertion_point(field_release:IsOnChainAck.version)
-  return _impl_.version_.Release();
-}
-inline void IsOnChainAck::set_allocated_version(std::string* version) {
-  if (version != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.version_.IsDefault()) {
-    _impl_.version_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:IsOnChainAck.version)
-}
-
-// int32 code = 2;
-inline void IsOnChainAck::clear_code() {
-  _impl_.code_ = 0;
-}
-inline int32_t IsOnChainAck::_internal_code() const {
-  return _impl_.code_;
-}
-inline int32_t IsOnChainAck::code() const {
-  // @@protoc_insertion_point(field_get:IsOnChainAck.code)
-  return _internal_code();
-}
-inline void IsOnChainAck::_internal_set_code(int32_t value) {
-  
-  _impl_.code_ = value;
-}
-inline void IsOnChainAck::set_code(int32_t value) {
-  _internal_set_code(value);
-  // @@protoc_insertion_point(field_set:IsOnChainAck.code)
-}
-
-// string message = 3;
-inline void IsOnChainAck::clear_message() {
-  _impl_.message_.ClearToEmpty();
-}
-inline const std::string& IsOnChainAck::message() const {
-  // @@protoc_insertion_point(field_get:IsOnChainAck.message)
-  return _internal_message();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void IsOnChainAck::set_message(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:IsOnChainAck.message)
-}
-inline std::string* IsOnChainAck::mutable_message() {
-  std::string* _s = _internal_mutable_message();
-  // @@protoc_insertion_point(field_mutable:IsOnChainAck.message)
-  return _s;
-}
-inline const std::string& IsOnChainAck::_internal_message() const {
-  return _impl_.message_.Get();
-}
-inline void IsOnChainAck::_internal_set_message(const std::string& value) {
-  
-  _impl_.message_.Set(value, GetArenaForAllocation());
-}
-inline std::string* IsOnChainAck::_internal_mutable_message() {
-  
-  return _impl_.message_.Mutable(GetArenaForAllocation());
-}
-inline std::string* IsOnChainAck::release_message() {
-  // @@protoc_insertion_point(field_release:IsOnChainAck.message)
-  return _impl_.message_.Release();
-}
-inline void IsOnChainAck::set_allocated_message(std::string* message) {
-  if (message != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.message_.SetAllocated(message, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.message_.IsDefault()) {
-    _impl_.message_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:IsOnChainAck.message)
-}
-
-// uint64 time = 4;
-inline void IsOnChainAck::clear_time() {
-  _impl_.time_ = uint64_t{0u};
-}
-inline uint64_t IsOnChainAck::_internal_time() const {
-  return _impl_.time_;
-}
-inline uint64_t IsOnChainAck::time() const {
-  // @@protoc_insertion_point(field_get:IsOnChainAck.time)
-  return _internal_time();
-}
-inline void IsOnChainAck::_internal_set_time(uint64_t value) {
-  
-  _impl_.time_ = value;
-}
-inline void IsOnChainAck::set_time(uint64_t value) {
-  _internal_set_time(value);
-  // @@protoc_insertion_point(field_set:IsOnChainAck.time)
-}
-
-// repeated .SuccessRate percentage = 5;
-inline int IsOnChainAck::_internal_percentage_size() const {
-  return _impl_.percentage_.size();
-}
-inline int IsOnChainAck::percentage_size() const {
-  return _internal_percentage_size();
-}
-inline void IsOnChainAck::clear_percentage() {
-  _impl_.percentage_.Clear();
-}
-inline ::SuccessRate* IsOnChainAck::mutable_percentage(int index) {
-  // @@protoc_insertion_point(field_mutable:IsOnChainAck.percentage)
-  return _impl_.percentage_.Mutable(index);
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SuccessRate >*
-IsOnChainAck::mutable_percentage() {
-  // @@protoc_insertion_point(field_mutable_list:IsOnChainAck.percentage)
-  return &_impl_.percentage_;
-}
-inline const ::SuccessRate& IsOnChainAck::_internal_percentage(int index) const {
-  return _impl_.percentage_.Get(index);
-}
-inline const ::SuccessRate& IsOnChainAck::percentage(int index) const {
-  // @@protoc_insertion_point(field_get:IsOnChainAck.percentage)
-  return _internal_percentage(index);
-}
-inline ::SuccessRate* IsOnChainAck::_internal_add_percentage() {
-  return _impl_.percentage_.Add();
-}
-inline ::SuccessRate* IsOnChainAck::add_percentage() {
-  ::SuccessRate* _add = _internal_add_percentage();
-  // @@protoc_insertion_point(field_add:IsOnChainAck.percentage)
-  return _add;
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SuccessRate >&
-IsOnChainAck::percentage() const {
-  // @@protoc_insertion_point(field_list:IsOnChainAck.percentage)
-  return _impl_.percentage_;
-}
-
-// -------------------------------------------------------------------
-
-// CorresHash
-
-// string hash = 1;
-inline void CorresHash::clear_hash() {
-  _impl_.hash_.ClearToEmpty();
-}
-inline const std::string& CorresHash::hash() const {
-  // @@protoc_insertion_point(field_get:CorresHash.hash)
-  return _internal_hash();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void CorresHash::set_hash(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.hash_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:CorresHash.hash)
-}
-inline std::string* CorresHash::mutable_hash() {
-  std::string* _s = _internal_mutable_hash();
-  // @@protoc_insertion_point(field_mutable:CorresHash.hash)
-  return _s;
-}
-inline const std::string& CorresHash::_internal_hash() const {
-  return _impl_.hash_.Get();
-}
-inline void CorresHash::_internal_set_hash(const std::string& value) {
-  
-  _impl_.hash_.Set(value, GetArenaForAllocation());
-}
-inline std::string* CorresHash::_internal_mutable_hash() {
-  
-  return _impl_.hash_.Mutable(GetArenaForAllocation());
-}
-inline std::string* CorresHash::release_hash() {
-  // @@protoc_insertion_point(field_release:CorresHash.hash)
-  return _impl_.hash_.Release();
-}
-inline void CorresHash::set_allocated_hash(std::string* hash) {
-  if (hash != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.hash_.SetAllocated(hash, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.hash_.IsDefault()) {
-    _impl_.hash_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:CorresHash.hash)
-}
-
-// uint32 flag = 2;
-inline void CorresHash::clear_flag() {
-  _impl_.flag_ = 0u;
-}
-inline uint32_t CorresHash::_internal_flag() const {
-  return _impl_.flag_;
-}
-inline uint32_t CorresHash::flag() const {
-  // @@protoc_insertion_point(field_get:CorresHash.flag)
-  return _internal_flag();
-}
-inline void CorresHash::_internal_set_flag(uint32_t value) {
-  
-  _impl_.flag_ = value;
-}
-inline void CorresHash::set_flag(uint32_t value) {
-  _internal_set_flag(value);
-  // @@protoc_insertion_point(field_set:CorresHash.flag)
-}
-
-// -------------------------------------------------------------------
-
-// CheckTxReq
-
-// string version = 1;
-inline void CheckTxReq::clear_version() {
-  _impl_.version_.ClearToEmpty();
-}
-inline const std::string& CheckTxReq::version() const {
-  // @@protoc_insertion_point(field_get:CheckTxReq.version)
-  return _internal_version();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void CheckTxReq::set_version(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:CheckTxReq.version)
-}
-inline std::string* CheckTxReq::mutable_version() {
-  std::string* _s = _internal_mutable_version();
-  // @@protoc_insertion_point(field_mutable:CheckTxReq.version)
-  return _s;
-}
-inline const std::string& CheckTxReq::_internal_version() const {
-  return _impl_.version_.Get();
-}
-inline void CheckTxReq::_internal_set_version(const std::string& value) {
-  
-  _impl_.version_.Set(value, GetArenaForAllocation());
-}
-inline std::string* CheckTxReq::_internal_mutable_version() {
-  
-  return _impl_.version_.Mutable(GetArenaForAllocation());
-}
-inline std::string* CheckTxReq::release_version() {
-  // @@protoc_insertion_point(field_release:CheckTxReq.version)
-  return _impl_.version_.Release();
-}
-inline void CheckTxReq::set_allocated_version(std::string* version) {
-  if (version != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.version_.IsDefault()) {
-    _impl_.version_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:CheckTxReq.version)
-}
-
-// repeated string txhash = 2;
-inline int CheckTxReq::_internal_txhash_size() const {
-  return _impl_.txhash_.size();
-}
-inline int CheckTxReq::txhash_size() const {
-  return _internal_txhash_size();
-}
-inline void CheckTxReq::clear_txhash() {
-  _impl_.txhash_.Clear();
-}
-inline std::string* CheckTxReq::add_txhash() {
-  std::string* _s = _internal_add_txhash();
-  // @@protoc_insertion_point(field_add_mutable:CheckTxReq.txhash)
-  return _s;
-}
-inline const std::string& CheckTxReq::_internal_txhash(int index) const {
-  return _impl_.txhash_.Get(index);
-}
-inline const std::string& CheckTxReq::txhash(int index) const {
-  // @@protoc_insertion_point(field_get:CheckTxReq.txhash)
-  return _internal_txhash(index);
-}
-inline std::string* CheckTxReq::mutable_txhash(int index) {
-  // @@protoc_insertion_point(field_mutable:CheckTxReq.txhash)
-  return _impl_.txhash_.Mutable(index);
-}
-inline void CheckTxReq::set_txhash(int index, const std::string& value) {
-  _impl_.txhash_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set:CheckTxReq.txhash)
-}
-inline void CheckTxReq::set_txhash(int index, std::string&& value) {
-  _impl_.txhash_.Mutable(index)->assign(std::move(value));
-  // @@protoc_insertion_point(field_set:CheckTxReq.txhash)
-}
-inline void CheckTxReq::set_txhash(int index, const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  _impl_.txhash_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:CheckTxReq.txhash)
-}
-inline void CheckTxReq::set_txhash(int index, const char* value, size_t size) {
-  _impl_.txhash_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:CheckTxReq.txhash)
-}
-inline std::string* CheckTxReq::_internal_add_txhash() {
-  return _impl_.txhash_.Add();
-}
-inline void CheckTxReq::add_txhash(const std::string& value) {
-  _impl_.txhash_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:CheckTxReq.txhash)
-}
-inline void CheckTxReq::add_txhash(std::string&& value) {
-  _impl_.txhash_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:CheckTxReq.txhash)
-}
-inline void CheckTxReq::add_txhash(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  _impl_.txhash_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:CheckTxReq.txhash)
-}
-inline void CheckTxReq::add_txhash(const char* value, size_t size) {
-  _impl_.txhash_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:CheckTxReq.txhash)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
-CheckTxReq::txhash() const {
-  // @@protoc_insertion_point(field_list:CheckTxReq.txhash)
-  return _impl_.txhash_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
-CheckTxReq::mutable_txhash() {
-  // @@protoc_insertion_point(field_mutable_list:CheckTxReq.txhash)
-  return &_impl_.txhash_;
-}
-
-// string msg_id = 3;
-inline void CheckTxReq::clear_msg_id() {
-  _impl_.msg_id_.ClearToEmpty();
-}
-inline const std::string& CheckTxReq::msg_id() const {
-  // @@protoc_insertion_point(field_get:CheckTxReq.msg_id)
-  return _internal_msg_id();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void CheckTxReq::set_msg_id(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:CheckTxReq.msg_id)
-}
-inline std::string* CheckTxReq::mutable_msg_id() {
-  std::string* _s = _internal_mutable_msg_id();
-  // @@protoc_insertion_point(field_mutable:CheckTxReq.msg_id)
-  return _s;
-}
-inline const std::string& CheckTxReq::_internal_msg_id() const {
-  return _impl_.msg_id_.Get();
-}
-inline void CheckTxReq::_internal_set_msg_id(const std::string& value) {
-  
-  _impl_.msg_id_.Set(value, GetArenaForAllocation());
-}
-inline std::string* CheckTxReq::_internal_mutable_msg_id() {
-  
-  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
-}
-inline std::string* CheckTxReq::release_msg_id() {
-  // @@protoc_insertion_point(field_release:CheckTxReq.msg_id)
-  return _impl_.msg_id_.Release();
-}
-inline void CheckTxReq::set_allocated_msg_id(std::string* msg_id) {
-  if (msg_id != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.msg_id_.IsDefault()) {
-    _impl_.msg_id_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:CheckTxReq.msg_id)
-}
-
-// -------------------------------------------------------------------
-
-// CheckTxAck
-
-// string version = 1;
-inline void CheckTxAck::clear_version() {
-  _impl_.version_.ClearToEmpty();
-}
-inline const std::string& CheckTxAck::version() const {
-  // @@protoc_insertion_point(field_get:CheckTxAck.version)
-  return _internal_version();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void CheckTxAck::set_version(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:CheckTxAck.version)
-}
-inline std::string* CheckTxAck::mutable_version() {
-  std::string* _s = _internal_mutable_version();
-  // @@protoc_insertion_point(field_mutable:CheckTxAck.version)
-  return _s;
-}
-inline const std::string& CheckTxAck::_internal_version() const {
-  return _impl_.version_.Get();
-}
-inline void CheckTxAck::_internal_set_version(const std::string& value) {
-  
-  _impl_.version_.Set(value, GetArenaForAllocation());
-}
-inline std::string* CheckTxAck::_internal_mutable_version() {
-  
-  return _impl_.version_.Mutable(GetArenaForAllocation());
-}
-inline std::string* CheckTxAck::release_version() {
-  // @@protoc_insertion_point(field_release:CheckTxAck.version)
-  return _impl_.version_.Release();
-}
-inline void CheckTxAck::set_allocated_version(std::string* version) {
-  if (version != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.version_.IsDefault()) {
-    _impl_.version_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:CheckTxAck.version)
-}
-
-// repeated .CorresHash flaghash = 2;
-inline int CheckTxAck::_internal_flaghash_size() const {
-  return _impl_.flaghash_.size();
-}
-inline int CheckTxAck::flaghash_size() const {
-  return _internal_flaghash_size();
-}
-inline void CheckTxAck::clear_flaghash() {
-  _impl_.flaghash_.Clear();
-}
-inline ::CorresHash* CheckTxAck::mutable_flaghash(int index) {
-  // @@protoc_insertion_point(field_mutable:CheckTxAck.flaghash)
-  return _impl_.flaghash_.Mutable(index);
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash >*
-CheckTxAck::mutable_flaghash() {
-  // @@protoc_insertion_point(field_mutable_list:CheckTxAck.flaghash)
-  return &_impl_.flaghash_;
-}
-inline const ::CorresHash& CheckTxAck::_internal_flaghash(int index) const {
-  return _impl_.flaghash_.Get(index);
-}
-inline const ::CorresHash& CheckTxAck::flaghash(int index) const {
-  // @@protoc_insertion_point(field_get:CheckTxAck.flaghash)
-  return _internal_flaghash(index);
-}
-inline ::CorresHash* CheckTxAck::_internal_add_flaghash() {
-  return _impl_.flaghash_.Add();
-}
-inline ::CorresHash* CheckTxAck::add_flaghash() {
-  ::CorresHash* _add = _internal_add_flaghash();
-  // @@protoc_insertion_point(field_add:CheckTxAck.flaghash)
-  return _add;
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash >&
-CheckTxAck::flaghash() const {
-  // @@protoc_insertion_point(field_list:CheckTxAck.flaghash)
-  return _impl_.flaghash_;
-}
-
-// string msg_id = 3;
-inline void CheckTxAck::clear_msg_id() {
-  _impl_.msg_id_.ClearToEmpty();
-}
-inline const std::string& CheckTxAck::msg_id() const {
-  // @@protoc_insertion_point(field_get:CheckTxAck.msg_id)
-  return _internal_msg_id();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void CheckTxAck::set_msg_id(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:CheckTxAck.msg_id)
-}
-inline std::string* CheckTxAck::mutable_msg_id() {
-  std::string* _s = _internal_mutable_msg_id();
-  // @@protoc_insertion_point(field_mutable:CheckTxAck.msg_id)
-  return _s;
-}
-inline const std::string& CheckTxAck::_internal_msg_id() const {
-  return _impl_.msg_id_.Get();
-}
-inline void CheckTxAck::_internal_set_msg_id(const std::string& value) {
-  
-  _impl_.msg_id_.Set(value, GetArenaForAllocation());
-}
-inline std::string* CheckTxAck::_internal_mutable_msg_id() {
-  
-  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
-}
-inline std::string* CheckTxAck::release_msg_id() {
-  // @@protoc_insertion_point(field_release:CheckTxAck.msg_id)
-  return _impl_.msg_id_.Release();
-}
-inline void CheckTxAck::set_allocated_msg_id(std::string* msg_id) {
-  if (msg_id != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.msg_id_.IsDefault()) {
-    _impl_.msg_id_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:CheckTxAck.msg_id)
-}
-
-// string base58addr = 4;
-inline void CheckTxAck::clear_base58addr() {
-  _impl_.base58addr_.ClearToEmpty();
-}
-inline const std::string& CheckTxAck::base58addr() const {
-  // @@protoc_insertion_point(field_get:CheckTxAck.base58addr)
-  return _internal_base58addr();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void CheckTxAck::set_base58addr(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.base58addr_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:CheckTxAck.base58addr)
-}
-inline std::string* CheckTxAck::mutable_base58addr() {
-  std::string* _s = _internal_mutable_base58addr();
-  // @@protoc_insertion_point(field_mutable:CheckTxAck.base58addr)
-  return _s;
-}
-inline const std::string& CheckTxAck::_internal_base58addr() const {
-  return _impl_.base58addr_.Get();
-}
-inline void CheckTxAck::_internal_set_base58addr(const std::string& value) {
-  
-  _impl_.base58addr_.Set(value, GetArenaForAllocation());
-}
-inline std::string* CheckTxAck::_internal_mutable_base58addr() {
-  
-  return _impl_.base58addr_.Mutable(GetArenaForAllocation());
-}
-inline std::string* CheckTxAck::release_base58addr() {
-  // @@protoc_insertion_point(field_release:CheckTxAck.base58addr)
-  return _impl_.base58addr_.Release();
-}
-inline void CheckTxAck::set_allocated_base58addr(std::string* base58addr) {
-  if (base58addr != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.base58addr_.SetAllocated(base58addr, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.base58addr_.IsDefault()) {
-    _impl_.base58addr_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:CheckTxAck.base58addr)
-}
-
-// -------------------------------------------------------------------
-
-// GetRestInvestAmountReq
-
-// string version = 1;
-inline void GetRestInvestAmountReq::clear_version() {
-  _impl_.version_.ClearToEmpty();
-}
-inline const std::string& GetRestInvestAmountReq::version() const {
-  // @@protoc_insertion_point(field_get:GetRestInvestAmountReq.version)
-  return _internal_version();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void GetRestInvestAmountReq::set_version(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:GetRestInvestAmountReq.version)
-}
-inline std::string* GetRestInvestAmountReq::mutable_version() {
-  std::string* _s = _internal_mutable_version();
-  // @@protoc_insertion_point(field_mutable:GetRestInvestAmountReq.version)
-  return _s;
-}
-inline const std::string& GetRestInvestAmountReq::_internal_version() const {
-  return _impl_.version_.Get();
-}
-inline void GetRestInvestAmountReq::_internal_set_version(const std::string& value) {
-  
-  _impl_.version_.Set(value, GetArenaForAllocation());
-}
-inline std::string* GetRestInvestAmountReq::_internal_mutable_version() {
-  
-  return _impl_.version_.Mutable(GetArenaForAllocation());
-}
-inline std::string* GetRestInvestAmountReq::release_version() {
-  // @@protoc_insertion_point(field_release:GetRestInvestAmountReq.version)
-  return _impl_.version_.Release();
-}
-inline void GetRestInvestAmountReq::set_allocated_version(std::string* version) {
-  if (version != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.version_.IsDefault()) {
-    _impl_.version_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:GetRestInvestAmountReq.version)
-}
-
-// string base58 = 2;
-inline void GetRestInvestAmountReq::clear_base58() {
-  _impl_.base58_.ClearToEmpty();
-}
-inline const std::string& GetRestInvestAmountReq::base58() const {
-  // @@protoc_insertion_point(field_get:GetRestInvestAmountReq.base58)
-  return _internal_base58();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void GetRestInvestAmountReq::set_base58(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.base58_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:GetRestInvestAmountReq.base58)
-}
-inline std::string* GetRestInvestAmountReq::mutable_base58() {
-  std::string* _s = _internal_mutable_base58();
-  // @@protoc_insertion_point(field_mutable:GetRestInvestAmountReq.base58)
-  return _s;
-}
-inline const std::string& GetRestInvestAmountReq::_internal_base58() const {
-  return _impl_.base58_.Get();
-}
-inline void GetRestInvestAmountReq::_internal_set_base58(const std::string& value) {
-  
-  _impl_.base58_.Set(value, GetArenaForAllocation());
-}
-inline std::string* GetRestInvestAmountReq::_internal_mutable_base58() {
-  
-  return _impl_.base58_.Mutable(GetArenaForAllocation());
-}
-inline std::string* GetRestInvestAmountReq::release_base58() {
-  // @@protoc_insertion_point(field_release:GetRestInvestAmountReq.base58)
-  return _impl_.base58_.Release();
-}
-inline void GetRestInvestAmountReq::set_allocated_base58(std::string* base58) {
-  if (base58 != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.base58_.SetAllocated(base58, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.base58_.IsDefault()) {
-    _impl_.base58_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:GetRestInvestAmountReq.base58)
-}
-
-// -------------------------------------------------------------------
-
-// GetRestInvestAmountAck
-
-// string version = 1;
-inline void GetRestInvestAmountAck::clear_version() {
-  _impl_.version_.ClearToEmpty();
-}
-inline const std::string& GetRestInvestAmountAck::version() const {
-  // @@protoc_insertion_point(field_get:GetRestInvestAmountAck.version)
-  return _internal_version();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void GetRestInvestAmountAck::set_version(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:GetRestInvestAmountAck.version)
-}
-inline std::string* GetRestInvestAmountAck::mutable_version() {
-  std::string* _s = _internal_mutable_version();
-  // @@protoc_insertion_point(field_mutable:GetRestInvestAmountAck.version)
-  return _s;
-}
-inline const std::string& GetRestInvestAmountAck::_internal_version() const {
-  return _impl_.version_.Get();
-}
-inline void GetRestInvestAmountAck::_internal_set_version(const std::string& value) {
-  
-  _impl_.version_.Set(value, GetArenaForAllocation());
-}
-inline std::string* GetRestInvestAmountAck::_internal_mutable_version() {
-  
-  return _impl_.version_.Mutable(GetArenaForAllocation());
-}
-inline std::string* GetRestInvestAmountAck::release_version() {
-  // @@protoc_insertion_point(field_release:GetRestInvestAmountAck.version)
-  return _impl_.version_.Release();
-}
-inline void GetRestInvestAmountAck::set_allocated_version(std::string* version) {
-  if (version != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.version_.IsDefault()) {
-    _impl_.version_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:GetRestInvestAmountAck.version)
-}
-
-// int32 code = 2;
-inline void GetRestInvestAmountAck::clear_code() {
-  _impl_.code_ = 0;
-}
-inline int32_t GetRestInvestAmountAck::_internal_code() const {
-  return _impl_.code_;
-}
-inline int32_t GetRestInvestAmountAck::code() const {
-  // @@protoc_insertion_point(field_get:GetRestInvestAmountAck.code)
-  return _internal_code();
-}
-inline void GetRestInvestAmountAck::_internal_set_code(int32_t value) {
-  
-  _impl_.code_ = value;
-}
-inline void GetRestInvestAmountAck::set_code(int32_t value) {
-  _internal_set_code(value);
-  // @@protoc_insertion_point(field_set:GetRestInvestAmountAck.code)
-}
-
-// string message = 3;
-inline void GetRestInvestAmountAck::clear_message() {
-  _impl_.message_.ClearToEmpty();
-}
-inline const std::string& GetRestInvestAmountAck::message() const {
-  // @@protoc_insertion_point(field_get:GetRestInvestAmountAck.message)
-  return _internal_message();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void GetRestInvestAmountAck::set_message(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:GetRestInvestAmountAck.message)
-}
-inline std::string* GetRestInvestAmountAck::mutable_message() {
-  std::string* _s = _internal_mutable_message();
-  // @@protoc_insertion_point(field_mutable:GetRestInvestAmountAck.message)
-  return _s;
-}
-inline const std::string& GetRestInvestAmountAck::_internal_message() const {
-  return _impl_.message_.Get();
-}
-inline void GetRestInvestAmountAck::_internal_set_message(const std::string& value) {
-  
-  _impl_.message_.Set(value, GetArenaForAllocation());
-}
-inline std::string* GetRestInvestAmountAck::_internal_mutable_message() {
-  
-  return _impl_.message_.Mutable(GetArenaForAllocation());
-}
-inline std::string* GetRestInvestAmountAck::release_message() {
-  // @@protoc_insertion_point(field_release:GetRestInvestAmountAck.message)
-  return _impl_.message_.Release();
-}
-inline void GetRestInvestAmountAck::set_allocated_message(std::string* message) {
-  if (message != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.message_.SetAllocated(message, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.message_.IsDefault()) {
-    _impl_.message_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:GetRestInvestAmountAck.message)
-}
-
-// uint64 amount = 4;
-inline void GetRestInvestAmountAck::clear_amount() {
-  _impl_.amount_ = uint64_t{0u};
-}
-inline uint64_t GetRestInvestAmountAck::_internal_amount() const {
-  return _impl_.amount_;
-}
-inline uint64_t GetRestInvestAmountAck::amount() const {
-  // @@protoc_insertion_point(field_get:GetRestInvestAmountAck.amount)
-  return _internal_amount();
-}
-inline void GetRestInvestAmountAck::_internal_set_amount(uint64_t value) {
-  
-  _impl_.amount_ = value;
-}
-inline void GetRestInvestAmountAck::set_amount(uint64_t value) {
-  _internal_set_amount(value);
-  // @@protoc_insertion_point(field_set:GetRestInvestAmountAck.amount)
-}
-
-// string base58 = 5;
-inline void GetRestInvestAmountAck::clear_base58() {
-  _impl_.base58_.ClearToEmpty();
-}
-inline const std::string& GetRestInvestAmountAck::base58() const {
-  // @@protoc_insertion_point(field_get:GetRestInvestAmountAck.base58)
-  return _internal_base58();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void GetRestInvestAmountAck::set_base58(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.base58_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:GetRestInvestAmountAck.base58)
-}
-inline std::string* GetRestInvestAmountAck::mutable_base58() {
-  std::string* _s = _internal_mutable_base58();
-  // @@protoc_insertion_point(field_mutable:GetRestInvestAmountAck.base58)
-  return _s;
-}
-inline const std::string& GetRestInvestAmountAck::_internal_base58() const {
-  return _impl_.base58_.Get();
-}
-inline void GetRestInvestAmountAck::_internal_set_base58(const std::string& value) {
-  
-  _impl_.base58_.Set(value, GetArenaForAllocation());
-}
-inline std::string* GetRestInvestAmountAck::_internal_mutable_base58() {
-  
-  return _impl_.base58_.Mutable(GetArenaForAllocation());
-}
-inline std::string* GetRestInvestAmountAck::release_base58() {
-  // @@protoc_insertion_point(field_release:GetRestInvestAmountAck.base58)
-  return _impl_.base58_.Release();
-}
-inline void GetRestInvestAmountAck::set_allocated_base58(std::string* base58) {
-  if (base58 != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.base58_.SetAllocated(base58, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.base58_.IsDefault()) {
-    _impl_.base58_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:GetRestInvestAmountAck.base58)
 }
 
 // -------------------------------------------------------------------
@@ -14574,9 +18744,1269 @@ inline void ConfirmTransactionAck::set_received_size(uint32_t value) {
   // @@protoc_insertion_point(field_set:ConfirmTransactionAck.received_size)
 }
 
+// bytes tx = 8;
+inline void ConfirmTransactionAck::clear_tx() {
+  _impl_.tx_.ClearToEmpty();
+}
+inline const std::string& ConfirmTransactionAck::tx() const {
+  // @@protoc_insertion_point(field_get:ConfirmTransactionAck.tx)
+  return _internal_tx();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void ConfirmTransactionAck::set_tx(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.tx_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:ConfirmTransactionAck.tx)
+}
+inline std::string* ConfirmTransactionAck::mutable_tx() {
+  std::string* _s = _internal_mutable_tx();
+  // @@protoc_insertion_point(field_mutable:ConfirmTransactionAck.tx)
+  return _s;
+}
+inline const std::string& ConfirmTransactionAck::_internal_tx() const {
+  return _impl_.tx_.Get();
+}
+inline void ConfirmTransactionAck::_internal_set_tx(const std::string& value) {
+  
+  _impl_.tx_.Set(value, GetArenaForAllocation());
+}
+inline std::string* ConfirmTransactionAck::_internal_mutable_tx() {
+  
+  return _impl_.tx_.Mutable(GetArenaForAllocation());
+}
+inline std::string* ConfirmTransactionAck::release_tx() {
+  // @@protoc_insertion_point(field_release:ConfirmTransactionAck.tx)
+  return _impl_.tx_.Release();
+}
+inline void ConfirmTransactionAck::set_allocated_tx(std::string* tx) {
+  if (tx != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.tx_.SetAllocated(tx, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.tx_.IsDefault()) {
+    _impl_.tx_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:ConfirmTransactionAck.tx)
+}
+
+// -------------------------------------------------------------------
+
+// CorresHash
+
+// string hash = 1;
+inline void CorresHash::clear_hash() {
+  _impl_.hash_.ClearToEmpty();
+}
+inline const std::string& CorresHash::hash() const {
+  // @@protoc_insertion_point(field_get:CorresHash.hash)
+  return _internal_hash();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CorresHash::set_hash(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.hash_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:CorresHash.hash)
+}
+inline std::string* CorresHash::mutable_hash() {
+  std::string* _s = _internal_mutable_hash();
+  // @@protoc_insertion_point(field_mutable:CorresHash.hash)
+  return _s;
+}
+inline const std::string& CorresHash::_internal_hash() const {
+  return _impl_.hash_.Get();
+}
+inline void CorresHash::_internal_set_hash(const std::string& value) {
+  
+  _impl_.hash_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CorresHash::_internal_mutable_hash() {
+  
+  return _impl_.hash_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CorresHash::release_hash() {
+  // @@protoc_insertion_point(field_release:CorresHash.hash)
+  return _impl_.hash_.Release();
+}
+inline void CorresHash::set_allocated_hash(std::string* hash) {
+  if (hash != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.hash_.SetAllocated(hash, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.hash_.IsDefault()) {
+    _impl_.hash_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:CorresHash.hash)
+}
+
+// uint32 flag = 2;
+inline void CorresHash::clear_flag() {
+  _impl_.flag_ = 0u;
+}
+inline uint32_t CorresHash::_internal_flag() const {
+  return _impl_.flag_;
+}
+inline uint32_t CorresHash::flag() const {
+  // @@protoc_insertion_point(field_get:CorresHash.flag)
+  return _internal_flag();
+}
+inline void CorresHash::_internal_set_flag(uint32_t value) {
+  
+  _impl_.flag_ = value;
+}
+inline void CorresHash::set_flag(uint32_t value) {
+  _internal_set_flag(value);
+  // @@protoc_insertion_point(field_set:CorresHash.flag)
+}
+
+// -------------------------------------------------------------------
+
+// CheckTxReq
+
+// string version = 1;
+inline void CheckTxReq::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& CheckTxReq::version() const {
+  // @@protoc_insertion_point(field_get:CheckTxReq.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CheckTxReq::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:CheckTxReq.version)
+}
+inline std::string* CheckTxReq::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:CheckTxReq.version)
+  return _s;
+}
+inline const std::string& CheckTxReq::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void CheckTxReq::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CheckTxReq::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CheckTxReq::release_version() {
+  // @@protoc_insertion_point(field_release:CheckTxReq.version)
+  return _impl_.version_.Release();
+}
+inline void CheckTxReq::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:CheckTxReq.version)
+}
+
+// repeated string txhash = 2;
+inline int CheckTxReq::_internal_txhash_size() const {
+  return _impl_.txhash_.size();
+}
+inline int CheckTxReq::txhash_size() const {
+  return _internal_txhash_size();
+}
+inline void CheckTxReq::clear_txhash() {
+  _impl_.txhash_.Clear();
+}
+inline std::string* CheckTxReq::add_txhash() {
+  std::string* _s = _internal_add_txhash();
+  // @@protoc_insertion_point(field_add_mutable:CheckTxReq.txhash)
+  return _s;
+}
+inline const std::string& CheckTxReq::_internal_txhash(int index) const {
+  return _impl_.txhash_.Get(index);
+}
+inline const std::string& CheckTxReq::txhash(int index) const {
+  // @@protoc_insertion_point(field_get:CheckTxReq.txhash)
+  return _internal_txhash(index);
+}
+inline std::string* CheckTxReq::mutable_txhash(int index) {
+  // @@protoc_insertion_point(field_mutable:CheckTxReq.txhash)
+  return _impl_.txhash_.Mutable(index);
+}
+inline void CheckTxReq::set_txhash(int index, const std::string& value) {
+  _impl_.txhash_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:CheckTxReq.txhash)
+}
+inline void CheckTxReq::set_txhash(int index, std::string&& value) {
+  _impl_.txhash_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:CheckTxReq.txhash)
+}
+inline void CheckTxReq::set_txhash(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.txhash_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:CheckTxReq.txhash)
+}
+inline void CheckTxReq::set_txhash(int index, const char* value, size_t size) {
+  _impl_.txhash_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:CheckTxReq.txhash)
+}
+inline std::string* CheckTxReq::_internal_add_txhash() {
+  return _impl_.txhash_.Add();
+}
+inline void CheckTxReq::add_txhash(const std::string& value) {
+  _impl_.txhash_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:CheckTxReq.txhash)
+}
+inline void CheckTxReq::add_txhash(std::string&& value) {
+  _impl_.txhash_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:CheckTxReq.txhash)
+}
+inline void CheckTxReq::add_txhash(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.txhash_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:CheckTxReq.txhash)
+}
+inline void CheckTxReq::add_txhash(const char* value, size_t size) {
+  _impl_.txhash_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:CheckTxReq.txhash)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+CheckTxReq::txhash() const {
+  // @@protoc_insertion_point(field_list:CheckTxReq.txhash)
+  return _impl_.txhash_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+CheckTxReq::mutable_txhash() {
+  // @@protoc_insertion_point(field_mutable_list:CheckTxReq.txhash)
+  return &_impl_.txhash_;
+}
+
+// string msg_id = 3;
+inline void CheckTxReq::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& CheckTxReq::msg_id() const {
+  // @@protoc_insertion_point(field_get:CheckTxReq.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CheckTxReq::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:CheckTxReq.msg_id)
+}
+inline std::string* CheckTxReq::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:CheckTxReq.msg_id)
+  return _s;
+}
+inline const std::string& CheckTxReq::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void CheckTxReq::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CheckTxReq::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CheckTxReq::release_msg_id() {
+  // @@protoc_insertion_point(field_release:CheckTxReq.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void CheckTxReq::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:CheckTxReq.msg_id)
+}
+
+// uint32 isresponse = 4;
+inline void CheckTxReq::clear_isresponse() {
+  _impl_.isresponse_ = 0u;
+}
+inline uint32_t CheckTxReq::_internal_isresponse() const {
+  return _impl_.isresponse_;
+}
+inline uint32_t CheckTxReq::isresponse() const {
+  // @@protoc_insertion_point(field_get:CheckTxReq.isresponse)
+  return _internal_isresponse();
+}
+inline void CheckTxReq::_internal_set_isresponse(uint32_t value) {
+  
+  _impl_.isresponse_ = value;
+}
+inline void CheckTxReq::set_isresponse(uint32_t value) {
+  _internal_set_isresponse(value);
+  // @@protoc_insertion_point(field_set:CheckTxReq.isresponse)
+}
+
+// -------------------------------------------------------------------
+
+// GetUtxoHashReq
+
+// string version = 1;
+inline void GetUtxoHashReq::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& GetUtxoHashReq::version() const {
+  // @@protoc_insertion_point(field_get:GetUtxoHashReq.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetUtxoHashReq::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetUtxoHashReq.version)
+}
+inline std::string* GetUtxoHashReq::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:GetUtxoHashReq.version)
+  return _s;
+}
+inline const std::string& GetUtxoHashReq::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void GetUtxoHashReq::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetUtxoHashReq::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetUtxoHashReq::release_version() {
+  // @@protoc_insertion_point(field_release:GetUtxoHashReq.version)
+  return _impl_.version_.Release();
+}
+inline void GetUtxoHashReq::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetUtxoHashReq.version)
+}
+
+// repeated string utxoHash = 2;
+inline int GetUtxoHashReq::_internal_utxohash_size() const {
+  return _impl_.utxohash_.size();
+}
+inline int GetUtxoHashReq::utxohash_size() const {
+  return _internal_utxohash_size();
+}
+inline void GetUtxoHashReq::clear_utxohash() {
+  _impl_.utxohash_.Clear();
+}
+inline std::string* GetUtxoHashReq::add_utxohash() {
+  std::string* _s = _internal_add_utxohash();
+  // @@protoc_insertion_point(field_add_mutable:GetUtxoHashReq.utxoHash)
+  return _s;
+}
+inline const std::string& GetUtxoHashReq::_internal_utxohash(int index) const {
+  return _impl_.utxohash_.Get(index);
+}
+inline const std::string& GetUtxoHashReq::utxohash(int index) const {
+  // @@protoc_insertion_point(field_get:GetUtxoHashReq.utxoHash)
+  return _internal_utxohash(index);
+}
+inline std::string* GetUtxoHashReq::mutable_utxohash(int index) {
+  // @@protoc_insertion_point(field_mutable:GetUtxoHashReq.utxoHash)
+  return _impl_.utxohash_.Mutable(index);
+}
+inline void GetUtxoHashReq::set_utxohash(int index, const std::string& value) {
+  _impl_.utxohash_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:GetUtxoHashReq.utxoHash)
+}
+inline void GetUtxoHashReq::set_utxohash(int index, std::string&& value) {
+  _impl_.utxohash_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:GetUtxoHashReq.utxoHash)
+}
+inline void GetUtxoHashReq::set_utxohash(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.utxohash_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:GetUtxoHashReq.utxoHash)
+}
+inline void GetUtxoHashReq::set_utxohash(int index, const char* value, size_t size) {
+  _impl_.utxohash_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:GetUtxoHashReq.utxoHash)
+}
+inline std::string* GetUtxoHashReq::_internal_add_utxohash() {
+  return _impl_.utxohash_.Add();
+}
+inline void GetUtxoHashReq::add_utxohash(const std::string& value) {
+  _impl_.utxohash_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:GetUtxoHashReq.utxoHash)
+}
+inline void GetUtxoHashReq::add_utxohash(std::string&& value) {
+  _impl_.utxohash_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:GetUtxoHashReq.utxoHash)
+}
+inline void GetUtxoHashReq::add_utxohash(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.utxohash_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:GetUtxoHashReq.utxoHash)
+}
+inline void GetUtxoHashReq::add_utxohash(const char* value, size_t size) {
+  _impl_.utxohash_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:GetUtxoHashReq.utxoHash)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+GetUtxoHashReq::utxohash() const {
+  // @@protoc_insertion_point(field_list:GetUtxoHashReq.utxoHash)
+  return _impl_.utxohash_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+GetUtxoHashReq::mutable_utxohash() {
+  // @@protoc_insertion_point(field_mutable_list:GetUtxoHashReq.utxoHash)
+  return &_impl_.utxohash_;
+}
+
+// string msg_id = 3;
+inline void GetUtxoHashReq::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& GetUtxoHashReq::msg_id() const {
+  // @@protoc_insertion_point(field_get:GetUtxoHashReq.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetUtxoHashReq::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetUtxoHashReq.msg_id)
+}
+inline std::string* GetUtxoHashReq::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:GetUtxoHashReq.msg_id)
+  return _s;
+}
+inline const std::string& GetUtxoHashReq::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void GetUtxoHashReq::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetUtxoHashReq::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetUtxoHashReq::release_msg_id() {
+  // @@protoc_insertion_point(field_release:GetUtxoHashReq.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void GetUtxoHashReq::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetUtxoHashReq.msg_id)
+}
+
+// -------------------------------------------------------------------
+
+// GetUtxoHashAck
+
+// string version = 1;
+inline void GetUtxoHashAck::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& GetUtxoHashAck::version() const {
+  // @@protoc_insertion_point(field_get:GetUtxoHashAck.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetUtxoHashAck::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetUtxoHashAck.version)
+}
+inline std::string* GetUtxoHashAck::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:GetUtxoHashAck.version)
+  return _s;
+}
+inline const std::string& GetUtxoHashAck::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void GetUtxoHashAck::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetUtxoHashAck::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetUtxoHashAck::release_version() {
+  // @@protoc_insertion_point(field_release:GetUtxoHashAck.version)
+  return _impl_.version_.Release();
+}
+inline void GetUtxoHashAck::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetUtxoHashAck.version)
+}
+
+// repeated .CorresHash flaghash = 2;
+inline int GetUtxoHashAck::_internal_flaghash_size() const {
+  return _impl_.flaghash_.size();
+}
+inline int GetUtxoHashAck::flaghash_size() const {
+  return _internal_flaghash_size();
+}
+inline void GetUtxoHashAck::clear_flaghash() {
+  _impl_.flaghash_.Clear();
+}
+inline ::CorresHash* GetUtxoHashAck::mutable_flaghash(int index) {
+  // @@protoc_insertion_point(field_mutable:GetUtxoHashAck.flaghash)
+  return _impl_.flaghash_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash >*
+GetUtxoHashAck::mutable_flaghash() {
+  // @@protoc_insertion_point(field_mutable_list:GetUtxoHashAck.flaghash)
+  return &_impl_.flaghash_;
+}
+inline const ::CorresHash& GetUtxoHashAck::_internal_flaghash(int index) const {
+  return _impl_.flaghash_.Get(index);
+}
+inline const ::CorresHash& GetUtxoHashAck::flaghash(int index) const {
+  // @@protoc_insertion_point(field_get:GetUtxoHashAck.flaghash)
+  return _internal_flaghash(index);
+}
+inline ::CorresHash* GetUtxoHashAck::_internal_add_flaghash() {
+  return _impl_.flaghash_.Add();
+}
+inline ::CorresHash* GetUtxoHashAck::add_flaghash() {
+  ::CorresHash* _add = _internal_add_flaghash();
+  // @@protoc_insertion_point(field_add:GetUtxoHashAck.flaghash)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash >&
+GetUtxoHashAck::flaghash() const {
+  // @@protoc_insertion_point(field_list:GetUtxoHashAck.flaghash)
+  return _impl_.flaghash_;
+}
+
+// string msg_id = 3;
+inline void GetUtxoHashAck::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& GetUtxoHashAck::msg_id() const {
+  // @@protoc_insertion_point(field_get:GetUtxoHashAck.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetUtxoHashAck::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetUtxoHashAck.msg_id)
+}
+inline std::string* GetUtxoHashAck::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:GetUtxoHashAck.msg_id)
+  return _s;
+}
+inline const std::string& GetUtxoHashAck::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void GetUtxoHashAck::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetUtxoHashAck::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetUtxoHashAck::release_msg_id() {
+  // @@protoc_insertion_point(field_release:GetUtxoHashAck.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void GetUtxoHashAck::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetUtxoHashAck.msg_id)
+}
+
+// string base58addr = 4;
+inline void GetUtxoHashAck::clear_base58addr() {
+  _impl_.base58addr_.ClearToEmpty();
+}
+inline const std::string& GetUtxoHashAck::base58addr() const {
+  // @@protoc_insertion_point(field_get:GetUtxoHashAck.base58addr)
+  return _internal_base58addr();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetUtxoHashAck::set_base58addr(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.base58addr_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetUtxoHashAck.base58addr)
+}
+inline std::string* GetUtxoHashAck::mutable_base58addr() {
+  std::string* _s = _internal_mutable_base58addr();
+  // @@protoc_insertion_point(field_mutable:GetUtxoHashAck.base58addr)
+  return _s;
+}
+inline const std::string& GetUtxoHashAck::_internal_base58addr() const {
+  return _impl_.base58addr_.Get();
+}
+inline void GetUtxoHashAck::_internal_set_base58addr(const std::string& value) {
+  
+  _impl_.base58addr_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetUtxoHashAck::_internal_mutable_base58addr() {
+  
+  return _impl_.base58addr_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetUtxoHashAck::release_base58addr() {
+  // @@protoc_insertion_point(field_release:GetUtxoHashAck.base58addr)
+  return _impl_.base58addr_.Release();
+}
+inline void GetUtxoHashAck::set_allocated_base58addr(std::string* base58addr) {
+  if (base58addr != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.base58addr_.SetAllocated(base58addr, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.base58addr_.IsDefault()) {
+    _impl_.base58addr_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetUtxoHashAck.base58addr)
+}
+
+// -------------------------------------------------------------------
+
+// CheckTxAck
+
+// string version = 1;
+inline void CheckTxAck::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& CheckTxAck::version() const {
+  // @@protoc_insertion_point(field_get:CheckTxAck.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CheckTxAck::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:CheckTxAck.version)
+}
+inline std::string* CheckTxAck::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:CheckTxAck.version)
+  return _s;
+}
+inline const std::string& CheckTxAck::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void CheckTxAck::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CheckTxAck::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CheckTxAck::release_version() {
+  // @@protoc_insertion_point(field_release:CheckTxAck.version)
+  return _impl_.version_.Release();
+}
+inline void CheckTxAck::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:CheckTxAck.version)
+}
+
+// repeated .CorresHash flaghash = 2;
+inline int CheckTxAck::_internal_flaghash_size() const {
+  return _impl_.flaghash_.size();
+}
+inline int CheckTxAck::flaghash_size() const {
+  return _internal_flaghash_size();
+}
+inline void CheckTxAck::clear_flaghash() {
+  _impl_.flaghash_.Clear();
+}
+inline ::CorresHash* CheckTxAck::mutable_flaghash(int index) {
+  // @@protoc_insertion_point(field_mutable:CheckTxAck.flaghash)
+  return _impl_.flaghash_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash >*
+CheckTxAck::mutable_flaghash() {
+  // @@protoc_insertion_point(field_mutable_list:CheckTxAck.flaghash)
+  return &_impl_.flaghash_;
+}
+inline const ::CorresHash& CheckTxAck::_internal_flaghash(int index) const {
+  return _impl_.flaghash_.Get(index);
+}
+inline const ::CorresHash& CheckTxAck::flaghash(int index) const {
+  // @@protoc_insertion_point(field_get:CheckTxAck.flaghash)
+  return _internal_flaghash(index);
+}
+inline ::CorresHash* CheckTxAck::_internal_add_flaghash() {
+  return _impl_.flaghash_.Add();
+}
+inline ::CorresHash* CheckTxAck::add_flaghash() {
+  ::CorresHash* _add = _internal_add_flaghash();
+  // @@protoc_insertion_point(field_add:CheckTxAck.flaghash)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::CorresHash >&
+CheckTxAck::flaghash() const {
+  // @@protoc_insertion_point(field_list:CheckTxAck.flaghash)
+  return _impl_.flaghash_;
+}
+
+// string msg_id = 3;
+inline void CheckTxAck::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& CheckTxAck::msg_id() const {
+  // @@protoc_insertion_point(field_get:CheckTxAck.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CheckTxAck::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:CheckTxAck.msg_id)
+}
+inline std::string* CheckTxAck::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:CheckTxAck.msg_id)
+  return _s;
+}
+inline const std::string& CheckTxAck::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void CheckTxAck::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CheckTxAck::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CheckTxAck::release_msg_id() {
+  // @@protoc_insertion_point(field_release:CheckTxAck.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void CheckTxAck::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:CheckTxAck.msg_id)
+}
+
+// string addr = 4;
+inline void CheckTxAck::clear_addr() {
+  _impl_.addr_.ClearToEmpty();
+}
+inline const std::string& CheckTxAck::addr() const {
+  // @@protoc_insertion_point(field_get:CheckTxAck.addr)
+  return _internal_addr();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CheckTxAck::set_addr(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.addr_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:CheckTxAck.addr)
+}
+inline std::string* CheckTxAck::mutable_addr() {
+  std::string* _s = _internal_mutable_addr();
+  // @@protoc_insertion_point(field_mutable:CheckTxAck.addr)
+  return _s;
+}
+inline const std::string& CheckTxAck::_internal_addr() const {
+  return _impl_.addr_.Get();
+}
+inline void CheckTxAck::_internal_set_addr(const std::string& value) {
+  
+  _impl_.addr_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CheckTxAck::_internal_mutable_addr() {
+  
+  return _impl_.addr_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CheckTxAck::release_addr() {
+  // @@protoc_insertion_point(field_release:CheckTxAck.addr)
+  return _impl_.addr_.Release();
+}
+inline void CheckTxAck::set_allocated_addr(std::string* addr) {
+  if (addr != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.addr_.SetAllocated(addr, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.addr_.IsDefault()) {
+    _impl_.addr_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:CheckTxAck.addr)
+}
+
+// bytes tx = 5;
+inline void CheckTxAck::clear_tx() {
+  _impl_.tx_.ClearToEmpty();
+}
+inline const std::string& CheckTxAck::tx() const {
+  // @@protoc_insertion_point(field_get:CheckTxAck.tx)
+  return _internal_tx();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void CheckTxAck::set_tx(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.tx_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:CheckTxAck.tx)
+}
+inline std::string* CheckTxAck::mutable_tx() {
+  std::string* _s = _internal_mutable_tx();
+  // @@protoc_insertion_point(field_mutable:CheckTxAck.tx)
+  return _s;
+}
+inline const std::string& CheckTxAck::_internal_tx() const {
+  return _impl_.tx_.Get();
+}
+inline void CheckTxAck::_internal_set_tx(const std::string& value) {
+  
+  _impl_.tx_.Set(value, GetArenaForAllocation());
+}
+inline std::string* CheckTxAck::_internal_mutable_tx() {
+  
+  return _impl_.tx_.Mutable(GetArenaForAllocation());
+}
+inline std::string* CheckTxAck::release_tx() {
+  // @@protoc_insertion_point(field_release:CheckTxAck.tx)
+  return _impl_.tx_.Release();
+}
+inline void CheckTxAck::set_allocated_tx(std::string* tx) {
+  if (tx != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.tx_.SetAllocated(tx, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.tx_.IsDefault()) {
+    _impl_.tx_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:CheckTxAck.tx)
+}
+
+// -------------------------------------------------------------------
+
+// GetRestInvestAmountReq
+
+// string version = 1;
+inline void GetRestInvestAmountReq::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& GetRestInvestAmountReq::version() const {
+  // @@protoc_insertion_point(field_get:GetRestInvestAmountReq.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRestInvestAmountReq::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRestInvestAmountReq.version)
+}
+inline std::string* GetRestInvestAmountReq::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:GetRestInvestAmountReq.version)
+  return _s;
+}
+inline const std::string& GetRestInvestAmountReq::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void GetRestInvestAmountReq::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRestInvestAmountReq::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRestInvestAmountReq::release_version() {
+  // @@protoc_insertion_point(field_release:GetRestInvestAmountReq.version)
+  return _impl_.version_.Release();
+}
+inline void GetRestInvestAmountReq::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRestInvestAmountReq.version)
+}
+
+// string addr = 2;
+inline void GetRestInvestAmountReq::clear_addr() {
+  _impl_.addr_.ClearToEmpty();
+}
+inline const std::string& GetRestInvestAmountReq::addr() const {
+  // @@protoc_insertion_point(field_get:GetRestInvestAmountReq.addr)
+  return _internal_addr();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRestInvestAmountReq::set_addr(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.addr_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRestInvestAmountReq.addr)
+}
+inline std::string* GetRestInvestAmountReq::mutable_addr() {
+  std::string* _s = _internal_mutable_addr();
+  // @@protoc_insertion_point(field_mutable:GetRestInvestAmountReq.addr)
+  return _s;
+}
+inline const std::string& GetRestInvestAmountReq::_internal_addr() const {
+  return _impl_.addr_.Get();
+}
+inline void GetRestInvestAmountReq::_internal_set_addr(const std::string& value) {
+  
+  _impl_.addr_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRestInvestAmountReq::_internal_mutable_addr() {
+  
+  return _impl_.addr_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRestInvestAmountReq::release_addr() {
+  // @@protoc_insertion_point(field_release:GetRestInvestAmountReq.addr)
+  return _impl_.addr_.Release();
+}
+inline void GetRestInvestAmountReq::set_allocated_addr(std::string* addr) {
+  if (addr != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.addr_.SetAllocated(addr, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.addr_.IsDefault()) {
+    _impl_.addr_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRestInvestAmountReq.addr)
+}
+
+// -------------------------------------------------------------------
+
+// GetRestInvestAmountAck
+
+// string version = 1;
+inline void GetRestInvestAmountAck::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& GetRestInvestAmountAck::version() const {
+  // @@protoc_insertion_point(field_get:GetRestInvestAmountAck.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRestInvestAmountAck::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRestInvestAmountAck.version)
+}
+inline std::string* GetRestInvestAmountAck::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:GetRestInvestAmountAck.version)
+  return _s;
+}
+inline const std::string& GetRestInvestAmountAck::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void GetRestInvestAmountAck::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRestInvestAmountAck::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRestInvestAmountAck::release_version() {
+  // @@protoc_insertion_point(field_release:GetRestInvestAmountAck.version)
+  return _impl_.version_.Release();
+}
+inline void GetRestInvestAmountAck::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRestInvestAmountAck.version)
+}
+
+// int32 code = 2;
+inline void GetRestInvestAmountAck::clear_code() {
+  _impl_.code_ = 0;
+}
+inline int32_t GetRestInvestAmountAck::_internal_code() const {
+  return _impl_.code_;
+}
+inline int32_t GetRestInvestAmountAck::code() const {
+  // @@protoc_insertion_point(field_get:GetRestInvestAmountAck.code)
+  return _internal_code();
+}
+inline void GetRestInvestAmountAck::_internal_set_code(int32_t value) {
+  
+  _impl_.code_ = value;
+}
+inline void GetRestInvestAmountAck::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:GetRestInvestAmountAck.code)
+}
+
+// string message = 3;
+inline void GetRestInvestAmountAck::clear_message() {
+  _impl_.message_.ClearToEmpty();
+}
+inline const std::string& GetRestInvestAmountAck::message() const {
+  // @@protoc_insertion_point(field_get:GetRestInvestAmountAck.message)
+  return _internal_message();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRestInvestAmountAck::set_message(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRestInvestAmountAck.message)
+}
+inline std::string* GetRestInvestAmountAck::mutable_message() {
+  std::string* _s = _internal_mutable_message();
+  // @@protoc_insertion_point(field_mutable:GetRestInvestAmountAck.message)
+  return _s;
+}
+inline const std::string& GetRestInvestAmountAck::_internal_message() const {
+  return _impl_.message_.Get();
+}
+inline void GetRestInvestAmountAck::_internal_set_message(const std::string& value) {
+  
+  _impl_.message_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRestInvestAmountAck::_internal_mutable_message() {
+  
+  return _impl_.message_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRestInvestAmountAck::release_message() {
+  // @@protoc_insertion_point(field_release:GetRestInvestAmountAck.message)
+  return _impl_.message_.Release();
+}
+inline void GetRestInvestAmountAck::set_allocated_message(std::string* message) {
+  if (message != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.message_.SetAllocated(message, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.message_.IsDefault()) {
+    _impl_.message_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRestInvestAmountAck.message)
+}
+
+// uint64 amount = 4;
+inline void GetRestInvestAmountAck::clear_amount() {
+  _impl_.amount_ = uint64_t{0u};
+}
+inline uint64_t GetRestInvestAmountAck::_internal_amount() const {
+  return _impl_.amount_;
+}
+inline uint64_t GetRestInvestAmountAck::amount() const {
+  // @@protoc_insertion_point(field_get:GetRestInvestAmountAck.amount)
+  return _internal_amount();
+}
+inline void GetRestInvestAmountAck::_internal_set_amount(uint64_t value) {
+  
+  _impl_.amount_ = value;
+}
+inline void GetRestInvestAmountAck::set_amount(uint64_t value) {
+  _internal_set_amount(value);
+  // @@protoc_insertion_point(field_set:GetRestInvestAmountAck.amount)
+}
+
+// string addr = 5;
+inline void GetRestInvestAmountAck::clear_addr() {
+  _impl_.addr_.ClearToEmpty();
+}
+inline const std::string& GetRestInvestAmountAck::addr() const {
+  // @@protoc_insertion_point(field_get:GetRestInvestAmountAck.addr)
+  return _internal_addr();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRestInvestAmountAck::set_addr(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.addr_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRestInvestAmountAck.addr)
+}
+inline std::string* GetRestInvestAmountAck::mutable_addr() {
+  std::string* _s = _internal_mutable_addr();
+  // @@protoc_insertion_point(field_mutable:GetRestInvestAmountAck.addr)
+  return _s;
+}
+inline const std::string& GetRestInvestAmountAck::_internal_addr() const {
+  return _impl_.addr_.Get();
+}
+inline void GetRestInvestAmountAck::_internal_set_addr(const std::string& value) {
+  
+  _impl_.addr_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRestInvestAmountAck::_internal_mutable_addr() {
+  
+  return _impl_.addr_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRestInvestAmountAck::release_addr() {
+  // @@protoc_insertion_point(field_release:GetRestInvestAmountAck.addr)
+  return _impl_.addr_.Release();
+}
+inline void GetRestInvestAmountAck::set_allocated_addr(std::string* addr) {
+  if (addr != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.addr_.SetAllocated(addr, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.addr_.IsDefault()) {
+    _impl_.addr_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRestInvestAmountAck.addr)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

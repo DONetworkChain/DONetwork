@@ -1,38 +1,38 @@
 #include "dispatcher.h"
-#include <string>
-#include "../include/logging.h"
-#include "net.pb.h"
-#include "common.pb.h"
-#include "handle_event.h"
-#include "./peer_node.h"
-#include "utils/compress.h"
-#include <utility>
-#include "global.h"
-#include "common/global.h"
-#include "logging.h"
-#include "common/task_pool.h"
-//#include "utils/MagicSingleton.h"
 
-int ProtobufDispatcher::handle(const MsgData &data)
+#include <utility>
+#include <string>
+
+#include "./global.h"
+#include "./key_exchange.h"
+#include "../utils/magic_singleton.h"
+
+#include "../common/global.h"
+#include "../common/task_pool.h"
+#include "../include/logging.h"
+#include "../proto/common.pb.h"
+#include "../utils/compress.h"
+
+int ProtobufDispatcher::Handle(const MsgData &data)
 {
-    CommonMsg common_msg;
-    int r = common_msg.ParseFromString(data.pack.data);
-    if (!r)
+    CommonMsg commonMsg;
+    int ret = commonMsg.ParseFromString(data.pack.data);
+    if (!ret)
     {
         ERRORLOG("parse CommonMsg error");
         return -1;
     }
 
-    std::string type = common_msg.type();
+    std::string type = commonMsg.type();
     {
-        std::lock_guard<std::mutex> lock(global::g_mutex_req_cnt_map);
-        global::reqCntMap[type].first += 1;
-        global::reqCntMap[type].second += common_msg.data().size();
+        std::lock_guard<std::mutex> lock(global::g_mutexReqCntMap);
+        global::g_reqCntMap[type].first += 1;
+        global::g_reqCntMap[type].second += commonMsg.data().size();
     }
     
-    if (common_msg.version() != global::kNetVersion)
+    if (commonMsg.version() != global::kNetVersion)
     {
-        ERRORLOG("common_msg.version() {}", common_msg.version());
+        ERRORLOG("commonMsg.version() {}", commonMsg.version());
         return -2;
     }
 
@@ -56,136 +56,141 @@ int ProtobufDispatcher::handle(const MsgData &data)
         return -5;
     }
 
-    string sub_serialize_msg;
-    if (common_msg.compress())
+    std::string subSerializeMsg;
+    if (commonMsg.compress())
     {
-        Compress uncpr(std::move(common_msg.data()), common_msg.data().size() * 10);
-        sub_serialize_msg = uncpr.m_raw_data;
+        Compress uncpr(std::move(commonMsg.data()), commonMsg.data().size() * 10);
+        subSerializeMsg = uncpr._rawData;
     }
     else
     {
-        sub_serialize_msg = std::move(common_msg.data());
+        subSerializeMsg = std::move(commonMsg.data());
     }
+      std::string str_plaintext;
+    if(type != "KeyExchangeRequest" && type != "KeyExchangeResponse")
+    {
+        Ciphertext ciphertext;
+        if(!ciphertext.ParseFromString(subSerializeMsg))
+        {
+            ERRORLOG("ParseFromString Ciphertext fail!!!");
+            return -6;
+        }
+        if ((ciphertext.aes_iv_12bytes().size() != CRYPTO_AES_IV_LEN)
+                || (ciphertext.aes_tag_16bytes().size() != CRYPTO_AES_TAG_LEN))
+            {
+                ERRORLOG("the length of aes iv or tag does not match.");
+                return -7;
+            }
 
-    MessagePtr sub_msg(proto->New());
-    r = sub_msg->ParseFromString(sub_serialize_msg);
-    if (!r)
+            auto key = MagicSingleton<KeyExchangeManager>::GetInstance()->getKey(data.fd);
+            if(key == nullptr)
+            {
+                ERRORLOG("null key");
+                return -8;
+            }
+
+            if (!verify_token(key->peer_key.ec_pub_key, ciphertext.token()))
+            {
+                ERRORLOG("token check failed.");
+                return -9;
+            }
+
+            if (!decrypt_ciphertext(key->peer_key, ciphertext, str_plaintext))
+            {
+                ERRORLOG("aes decryption error.");
+                return -10;
+            }
+    }
+    else
+    {
+        str_plaintext = std::move(subSerializeMsg);
+    }
+    MessagePtr subMsg(proto->New());
+    ret = subMsg->ParseFromString(str_plaintext);
+    if (!ret)
     {
         ERRORLOG("bad msg for protobuf for {}", type.c_str());
-        return -6;
+        return -11;
     }
 
-    auto task_pool = MagicSingleton<taskPool>::GetInstance();
-    std::string name = sub_msg->GetDescriptor()->name();
+    auto taskPool = MagicSingleton<TaskPool>::GetInstance();
+    std::string name = subMsg->GetDescriptor()->name();
 
-    auto saveBlock_map = saveBlock_protocbs_.find(name);
-    if (saveBlock_map != saveBlock_protocbs_.end())
+    auto blockMap = _blockProtocbs.find(name);
+    if (blockMap != _blockProtocbs.end())
     {
-        DEBUGLOG("saveBlock_protocbs_ message type {}", sub_msg->GetDescriptor()->name().c_str());
-        task_pool->commit_saveBlock_task(saveBlock_map->second, sub_msg, data);
-        //return 0;
-    }
-
-    auto broadcast_map= broadcast_protocbs_.find(name);
-    if (broadcast_map != broadcast_protocbs_.end())
-    {
-        DEBUGLOG("broadcast_protocbs_ message type {}", sub_msg->GetDescriptor()->name().c_str());
-        task_pool->commit_broadcast_task(broadcast_map->second, sub_msg, data);
+        taskPool->CommitBlockTask(blockMap->second, subMsg, data);
         return 0;
     }
 
-    auto ca_map = ca_protocbs_.find(name);
-    if (ca_map != ca_protocbs_.end())
+    auto saveBlockmap = _saveBlockProtocbs.find(name);
+    if (saveBlockmap != _saveBlockProtocbs.end())
     {
-        DEBUGLOG("ca_protocbs_ message type {}", sub_msg->GetDescriptor()->name().c_str());
-        task_pool->commit_ca_task(ca_map->second, sub_msg, data);
+        taskPool->CommitSaveBlockTask(saveBlockmap->second, subMsg, data);
+    }
+
+    auto broadcastMap= _broadcastProtocbs.find(name);
+    if (broadcastMap != _broadcastProtocbs.end())
+    {
+        taskPool->CommitBroadcastTask(broadcastMap->second, subMsg, data);
         return 0;
     }
 
-    auto net_map = net_protocbs_.find(name);
-    if (net_map != net_protocbs_.end())
+    auto caMap = _caProtocbs.find(name);
+    if (caMap != _caProtocbs.end())
     {
-        DEBUGLOG("net_protocbs_ message type {}", sub_msg->GetDescriptor()->name().c_str());
-        task_pool->commit_net_task(net_map->second, sub_msg, data);
+        taskPool->CommitCaTask(caMap->second, subMsg, data);
         return 0;
     }
-    auto tx_map = tx_protocbs_.find(name);
-    if (tx_map != tx_protocbs_.end())
-    {
-        
-        task_pool->commit_tx_task(tx_map->second, sub_msg, data);
-        return 0;
-    }
-    auto syncBlock_map = syncBlock_protocbs_.find(name);
-    if (syncBlock_map != syncBlock_protocbs_.end())
-    {
-        DEBUGLOG("syncBlock_protocbs_ message type {}", sub_msg->GetDescriptor()->name().c_str());
-        task_pool->commit_syncBlock_task(syncBlock_map->second, sub_msg, data);
-        return 0;
-    }
-    auto block_map = blockProtocbs.find(name);
-    if (block_map != blockProtocbs.end())
-    {
-        DEBUGLOG("Block_protocbs_ message type {}", sub_msg->GetDescriptor()->name().c_str());
-        task_pool->commit_syncBlock_task(block_map->second, sub_msg, data);
-        return 0;
-    }    
-    
 
-    return -7;
+    auto netMap = _netProtocbs.find(name);
+    if (netMap != _netProtocbs.end())
+    {
+        taskPool->CommitNetTask(netMap->second, subMsg, data);
+        return 0;
+    }
+    auto txMap = _txProtocbs.find(name);
+    if (txMap != _txProtocbs.end())
+    {
+        taskPool->CommitTxTask(txMap->second, subMsg, data);
+        return 0;
+    }
+    auto syncBlockMap = _syncBlockProtocbs.find(name);
+    if (syncBlockMap != _syncBlockProtocbs.end())
+    {
+        taskPool->CommitSyncBlockTask(syncBlockMap->second, subMsg, data);
+        return 0;
+    }
+
+    return -12;
 }
 
-void ProtobufDispatcher::registerAll()
+void ProtobufDispatcher::TaskInfo(std::ostringstream& oss)
 {
-    MagicSingleton<taskPool>::GetInstance()->taskPool_init();
-    
-    net_registerCallback<RegisterNodeReq>(handleRegisterNodeReq);
-    net_registerCallback<RegisterNodeAck>(handleRegisterNodeAck);
-    net_registerCallback<SyncNodeReq>(handleSyncNodeReq);
-    net_registerCallback<SyncNodeAck>(handleSyncNodeAck);
-    
-    net_registerCallback<BroadcastMsgReq>(handleBroadcastMsgReq);
-    
-    net_registerCallback<PrintMsgReq>(handlePrintMsgReq);
-    net_registerCallback<PingReq>(handlePingReq);
-    net_registerCallback<PongReq>(handlePongReq);
-    net_registerCallback<EchoReq>(handleEchoReq);
-    net_registerCallback<EchoAck>(handleEchoAck);
-    net_registerCallback<NodeHeightChangedReq>(handleNodeHeightChangedReq);
-    net_registerCallback<NodeBase58AddrChangedReq>(handleNodeBase58AddrChangedReq);
-
-    net_registerCallback<CheckTxReq>(handleCheckTxReq);
-    net_registerCallback<CheckTxAck>(handleCheckTxAck);
-
-
-
-    broadcast_registerCallback<BuildBlockBroadcastMsg>(handleBroadcastMsg);
-    //broadcast_registerCallback<BuildContractBlockBroadcastMsg>(handleContractBroadcastMsg);
-}
-
-void ProtobufDispatcher::task_info(std::ostringstream& oss)
-{
-    auto task_pool = MagicSingleton<taskPool>::GetInstance();
-    oss << "ca_active_task:" << task_pool->ca_active() << std::endl;
-    oss << "ca_pending_task:" << task_pool->ca_pending() << std::endl;
+    auto taskPool = MagicSingleton<TaskPool>::GetInstance();
+    oss << "ca_active_task:" << taskPool->CaActive() << std::endl;
+    oss << "ca_pending_task:" << taskPool->CaPending() << std::endl;
     oss << "==================================" << std::endl;
-    oss << "net_active_task:" << task_pool->net_active() << std::endl;
-    oss << "net_pending_task:" << task_pool->net_pending() << std::endl;
+    oss << "net_active_task:" << taskPool->NetActive() << std::endl;
+    oss << "net_pending_task:" << taskPool->NetPending() << std::endl;
     oss << "==================================" << std::endl;
-    oss << "broadcast_active_task:" << task_pool->broadcast_active() << std::endl;
-    oss << "broadcast_pending_task:" << task_pool->broadcast_pending() << std::endl;
+    oss << "broadcast_active_task:" << taskPool->BroadcastActive() << std::endl;
+    oss << "broadcast_pending_task:" << taskPool->BroadcastPending() << std::endl;
     oss << "==================================" << std::endl;
-    oss << "tx_active_task:" << task_pool->tx_active() << std::endl;
-    oss << "tx_pending_task:" << task_pool->tx_pending() << std::endl;
+    oss << "tx_active_task:" << taskPool->TxActive() << std::endl;
+    oss << "tx_pending_task:" << taskPool->TxPending() << std::endl;
     oss << "==================================" << std::endl;
-    oss << "syncBlock_active_task:" << task_pool->syncBlock_active() << std::endl;
-    oss << "syncBlock_pending_task:" << task_pool->syncBlock_pending() << std::endl;
+    oss << "syncBlock_active_task:" << taskPool->SyncBlockActive() << std::endl;
+    oss << "syncBlock_pending_task:" << taskPool->SyncBlockPending() << std::endl;
     oss << "==================================" << std::endl;
-    oss << "saveBlock_active_task:" << task_pool->saveBlock_active() << std::endl;
-    oss << "saveBlock_pending_task:" << task_pool->saveBlock_pending() << std::endl;
+    oss << "saveBlock_active_task:" << taskPool->SaveBlockActive() << std::endl;
+    oss << "saveBlock_pending_task:" << taskPool->SaveBlockPending() << std::endl;
     oss << "==================================" << std::endl;
-    oss << "work_active_task:" << task_pool->work_active() << std::endl;
-    oss << "work_pending_task:" << task_pool->work_pending() << std::endl;
+    oss << "block_active_task:" << taskPool->BlockActive() << std::endl;
+    oss << "block_pending_task:" << taskPool->BlockPending() << std::endl;
+    oss << "==================================" << std::endl;
+    oss << "work_active_task:" << taskPool->WorkActive() << std::endl;
+    oss << "work_pending_task:" << taskPool->WorkPending() << std::endl;
     oss << "==================================" << std::endl;
 
 }

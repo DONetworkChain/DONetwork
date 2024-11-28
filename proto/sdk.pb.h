@@ -82,6 +82,12 @@ extern SDKContractDeployReqDefaultTypeInternal _SDKContractDeployReq_default_ins
 class SDKNodeInfo;
 struct SDKNodeInfoDefaultTypeInternal;
 extern SDKNodeInfoDefaultTypeInternal _SDKNodeInfo_default_instance_;
+class SDKNormalTransactionAck;
+struct SDKNormalTransactionAckDefaultTypeInternal;
+extern SDKNormalTransactionAckDefaultTypeInternal _SDKNormalTransactionAck_default_instance_;
+class SDKNormalTransactionReq;
+struct SDKNormalTransactionReqDefaultTypeInternal;
+extern SDKNormalTransactionReqDefaultTypeInternal _SDKNormalTransactionReq_default_instance_;
 class SDKPledgeTx;
 struct SDKPledgeTxDefaultTypeInternal;
 extern SDKPledgeTxDefaultTypeInternal _SDKPledgeTx_default_instance_;
@@ -101,6 +107,8 @@ template<> ::SDKContractCallReq* Arena::CreateMaybeMessage<::SDKContractCallReq>
 template<> ::SDKContractDeployAck* Arena::CreateMaybeMessage<::SDKContractDeployAck>(Arena*);
 template<> ::SDKContractDeployReq* Arena::CreateMaybeMessage<::SDKContractDeployReq>(Arena*);
 template<> ::SDKNodeInfo* Arena::CreateMaybeMessage<::SDKNodeInfo>(Arena*);
+template<> ::SDKNormalTransactionAck* Arena::CreateMaybeMessage<::SDKNormalTransactionAck>(Arena*);
+template<> ::SDKNormalTransactionReq* Arena::CreateMaybeMessage<::SDKNormalTransactionReq>(Arena*);
 template<> ::SDKPledgeTx* Arena::CreateMaybeMessage<::SDKPledgeTx>(Arena*);
 template<> ::SDKUtxo* Arena::CreateMaybeMessage<::SDKUtxo>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
@@ -1734,8 +1742,8 @@ class SDKNodeInfo final :
     kPubFieldNumber = 1,
     kSignFieldNumber = 2,
     kIdentityFieldNumber = 3,
-    kBase58AddrFieldNumber = 4,
-    kPublicBase58AddrFieldNumber = 5,
+    kAddrFieldNumber = 4,
+    kPublicAddrFieldNumber = 5,
     kNameFieldNumber = 6,
     kLogoFieldNumber = 7,
     kVersionFieldNumber = 14,
@@ -1788,32 +1796,32 @@ class SDKNodeInfo final :
   std::string* _internal_mutable_identity();
   public:
 
-  // string base58addr = 4;
-  void clear_base58addr();
-  const std::string& base58addr() const;
+  // string addr = 4;
+  void clear_addr();
+  const std::string& addr() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_base58addr(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_base58addr();
-  PROTOBUF_NODISCARD std::string* release_base58addr();
-  void set_allocated_base58addr(std::string* base58addr);
+  void set_addr(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_addr();
+  PROTOBUF_NODISCARD std::string* release_addr();
+  void set_allocated_addr(std::string* addr);
   private:
-  const std::string& _internal_base58addr() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_base58addr(const std::string& value);
-  std::string* _internal_mutable_base58addr();
+  const std::string& _internal_addr() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_addr(const std::string& value);
+  std::string* _internal_mutable_addr();
   public:
 
-  // string public_base58addr = 5;
-  void clear_public_base58addr();
-  const std::string& public_base58addr() const;
+  // string public_addr = 5;
+  void clear_public_addr();
+  const std::string& public_addr() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_public_base58addr(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_public_base58addr();
-  PROTOBUF_NODISCARD std::string* release_public_base58addr();
-  void set_allocated_public_base58addr(std::string* public_base58addr);
+  void set_public_addr(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_public_addr();
+  PROTOBUF_NODISCARD std::string* release_public_addr();
+  void set_allocated_public_addr(std::string* public_addr);
   private:
-  const std::string& _internal_public_base58addr() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_public_base58addr(const std::string& value);
-  std::string* _internal_mutable_public_base58addr();
+  const std::string& _internal_public_addr() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_public_addr(const std::string& value);
+  std::string* _internal_mutable_public_addr();
   public:
 
   // string name = 6;
@@ -1923,8 +1931,8 @@ class SDKNodeInfo final :
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr pub_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr sign_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr identity_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr base58addr_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr public_base58addr_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr addr_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr public_addr_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr logo_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
@@ -2544,6 +2552,534 @@ class GetSDKAck final :
 };
 // -------------------------------------------------------------------
 
+class SDKNormalTransactionReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SDKNormalTransactionReq) */ {
+ public:
+  inline SDKNormalTransactionReq() : SDKNormalTransactionReq(nullptr) {}
+  ~SDKNormalTransactionReq() override;
+  explicit PROTOBUF_CONSTEXPR SDKNormalTransactionReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SDKNormalTransactionReq(const SDKNormalTransactionReq& from);
+  SDKNormalTransactionReq(SDKNormalTransactionReq&& from) noexcept
+    : SDKNormalTransactionReq() {
+    *this = ::std::move(from);
+  }
+
+  inline SDKNormalTransactionReq& operator=(const SDKNormalTransactionReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SDKNormalTransactionReq& operator=(SDKNormalTransactionReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SDKNormalTransactionReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SDKNormalTransactionReq* internal_default_instance() {
+    return reinterpret_cast<const SDKNormalTransactionReq*>(
+               &_SDKNormalTransactionReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    10;
+
+  friend void swap(SDKNormalTransactionReq& a, SDKNormalTransactionReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SDKNormalTransactionReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SDKNormalTransactionReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SDKNormalTransactionReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SDKNormalTransactionReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SDKNormalTransactionReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SDKNormalTransactionReq& from) {
+    SDKNormalTransactionReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SDKNormalTransactionReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "SDKNormalTransactionReq";
+  }
+  protected:
+  explicit SDKNormalTransactionReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAddressFieldNumber = 2,
+    kVersionFieldNumber = 1,
+  };
+  // repeated string address = 2;
+  int address_size() const;
+  private:
+  int _internal_address_size() const;
+  public:
+  void clear_address();
+  const std::string& address(int index) const;
+  std::string* mutable_address(int index);
+  void set_address(int index, const std::string& value);
+  void set_address(int index, std::string&& value);
+  void set_address(int index, const char* value);
+  void set_address(int index, const char* value, size_t size);
+  std::string* add_address();
+  void add_address(const std::string& value);
+  void add_address(std::string&& value);
+  void add_address(const char* value);
+  void add_address(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& address() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_address();
+  private:
+  const std::string& _internal_address(int index) const;
+  std::string* _internal_add_address();
+  public:
+
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // @@protoc_insertion_point(class_scope:SDKNormalTransactionReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sdk_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SDKNormalTransactionAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SDKNormalTransactionAck) */ {
+ public:
+  inline SDKNormalTransactionAck() : SDKNormalTransactionAck(nullptr) {}
+  ~SDKNormalTransactionAck() override;
+  explicit PROTOBUF_CONSTEXPR SDKNormalTransactionAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SDKNormalTransactionAck(const SDKNormalTransactionAck& from);
+  SDKNormalTransactionAck(SDKNormalTransactionAck&& from) noexcept
+    : SDKNormalTransactionAck() {
+    *this = ::std::move(from);
+  }
+
+  inline SDKNormalTransactionAck& operator=(const SDKNormalTransactionAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SDKNormalTransactionAck& operator=(SDKNormalTransactionAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SDKNormalTransactionAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SDKNormalTransactionAck* internal_default_instance() {
+    return reinterpret_cast<const SDKNormalTransactionAck*>(
+               &_SDKNormalTransactionAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  friend void swap(SDKNormalTransactionAck& a, SDKNormalTransactionAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SDKNormalTransactionAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SDKNormalTransactionAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SDKNormalTransactionAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SDKNormalTransactionAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SDKNormalTransactionAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SDKNormalTransactionAck& from) {
+    SDKNormalTransactionAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SDKNormalTransactionAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "SDKNormalTransactionAck";
+  }
+  protected:
+  explicit SDKNormalTransactionAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUtxosFieldNumber = 5,
+    kBlocksFieldNumber = 6,
+    kBonusamountFieldNumber = 7,
+    kPledgetxFieldNumber = 8,
+    kPledgeaddrFieldNumber = 9,
+    kPledgeutxoFieldNumber = 10,
+    kNodeinfoFieldNumber = 11,
+    kVersionFieldNumber = 1,
+    kMessageFieldNumber = 3,
+    kHeightFieldNumber = 4,
+    kCodeFieldNumber = 2,
+  };
+  // repeated .SDKUtxo utxos = 5;
+  int utxos_size() const;
+  private:
+  int _internal_utxos_size() const;
+  public:
+  void clear_utxos();
+  ::SDKUtxo* mutable_utxos(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKUtxo >*
+      mutable_utxos();
+  private:
+  const ::SDKUtxo& _internal_utxos(int index) const;
+  ::SDKUtxo* _internal_add_utxos();
+  public:
+  const ::SDKUtxo& utxos(int index) const;
+  ::SDKUtxo* add_utxos();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKUtxo >&
+      utxos() const;
+
+  // repeated bytes blocks = 6;
+  int blocks_size() const;
+  private:
+  int _internal_blocks_size() const;
+  public:
+  void clear_blocks();
+  const std::string& blocks(int index) const;
+  std::string* mutable_blocks(int index);
+  void set_blocks(int index, const std::string& value);
+  void set_blocks(int index, std::string&& value);
+  void set_blocks(int index, const char* value);
+  void set_blocks(int index, const void* value, size_t size);
+  std::string* add_blocks();
+  void add_blocks(const std::string& value);
+  void add_blocks(std::string&& value);
+  void add_blocks(const char* value);
+  void add_blocks(const void* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& blocks() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_blocks();
+  private:
+  const std::string& _internal_blocks(int index) const;
+  std::string* _internal_add_blocks();
+  public:
+
+  // repeated .SDKBonusamout bonusamount = 7;
+  int bonusamount_size() const;
+  private:
+  int _internal_bonusamount_size() const;
+  public:
+  void clear_bonusamount();
+  ::SDKBonusamout* mutable_bonusamount(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKBonusamout >*
+      mutable_bonusamount();
+  private:
+  const ::SDKBonusamout& _internal_bonusamount(int index) const;
+  ::SDKBonusamout* _internal_add_bonusamount();
+  public:
+  const ::SDKBonusamout& bonusamount(int index) const;
+  ::SDKBonusamout* add_bonusamount();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKBonusamout >&
+      bonusamount() const;
+
+  // repeated .SDKPledgeTx pledgetx = 8;
+  int pledgetx_size() const;
+  private:
+  int _internal_pledgetx_size() const;
+  public:
+  void clear_pledgetx();
+  ::SDKPledgeTx* mutable_pledgetx(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKPledgeTx >*
+      mutable_pledgetx();
+  private:
+  const ::SDKPledgeTx& _internal_pledgetx(int index) const;
+  ::SDKPledgeTx* _internal_add_pledgetx();
+  public:
+  const ::SDKPledgeTx& pledgetx(int index) const;
+  ::SDKPledgeTx* add_pledgetx();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKPledgeTx >&
+      pledgetx() const;
+
+  // repeated string pledgeaddr = 9;
+  int pledgeaddr_size() const;
+  private:
+  int _internal_pledgeaddr_size() const;
+  public:
+  void clear_pledgeaddr();
+  const std::string& pledgeaddr(int index) const;
+  std::string* mutable_pledgeaddr(int index);
+  void set_pledgeaddr(int index, const std::string& value);
+  void set_pledgeaddr(int index, std::string&& value);
+  void set_pledgeaddr(int index, const char* value);
+  void set_pledgeaddr(int index, const char* value, size_t size);
+  std::string* add_pledgeaddr();
+  void add_pledgeaddr(const std::string& value);
+  void add_pledgeaddr(std::string&& value);
+  void add_pledgeaddr(const char* value);
+  void add_pledgeaddr(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& pledgeaddr() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_pledgeaddr();
+  private:
+  const std::string& _internal_pledgeaddr(int index) const;
+  std::string* _internal_add_pledgeaddr();
+  public:
+
+  // repeated string pledgeutxo = 10;
+  int pledgeutxo_size() const;
+  private:
+  int _internal_pledgeutxo_size() const;
+  public:
+  void clear_pledgeutxo();
+  const std::string& pledgeutxo(int index) const;
+  std::string* mutable_pledgeutxo(int index);
+  void set_pledgeutxo(int index, const std::string& value);
+  void set_pledgeutxo(int index, std::string&& value);
+  void set_pledgeutxo(int index, const char* value);
+  void set_pledgeutxo(int index, const char* value, size_t size);
+  std::string* add_pledgeutxo();
+  void add_pledgeutxo(const std::string& value);
+  void add_pledgeutxo(std::string&& value);
+  void add_pledgeutxo(const char* value);
+  void add_pledgeutxo(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& pledgeutxo() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_pledgeutxo();
+  private:
+  const std::string& _internal_pledgeutxo(int index) const;
+  std::string* _internal_add_pledgeutxo();
+  public:
+
+  // repeated .SDKNodeInfo nodeinfo = 11;
+  int nodeinfo_size() const;
+  private:
+  int _internal_nodeinfo_size() const;
+  public:
+  void clear_nodeinfo();
+  ::SDKNodeInfo* mutable_nodeinfo(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKNodeInfo >*
+      mutable_nodeinfo();
+  private:
+  const ::SDKNodeInfo& _internal_nodeinfo(int index) const;
+  ::SDKNodeInfo* _internal_add_nodeinfo();
+  public:
+  const ::SDKNodeInfo& nodeinfo(int index) const;
+  ::SDKNodeInfo* add_nodeinfo();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKNodeInfo >&
+      nodeinfo() const;
+
+  // string version = 1;
+  void clear_version();
+  const std::string& version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_version();
+  PROTOBUF_NODISCARD std::string* release_version();
+  void set_allocated_version(std::string* version);
+  private:
+  const std::string& _internal_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_version(const std::string& value);
+  std::string* _internal_mutable_version();
+  public:
+
+  // string message = 3;
+  void clear_message();
+  const std::string& message() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_message(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_message();
+  PROTOBUF_NODISCARD std::string* release_message();
+  void set_allocated_message(std::string* message);
+  private:
+  const std::string& _internal_message() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(const std::string& value);
+  std::string* _internal_mutable_message();
+  public:
+
+  // uint64 height = 4;
+  void clear_height();
+  uint64_t height() const;
+  void set_height(uint64_t value);
+  private:
+  uint64_t _internal_height() const;
+  void _internal_set_height(uint64_t value);
+  public:
+
+  // int32 code = 2;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:SDKNormalTransactionAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKUtxo > utxos_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> blocks_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKBonusamout > bonusamount_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKPledgeTx > pledgetx_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> pledgeaddr_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> pledgeutxo_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKNodeInfo > nodeinfo_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr message_;
+    uint64_t height_;
+    int32_t code_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sdk_2eproto;
+};
+// -------------------------------------------------------------------
+
 class SDKContractDeployReq final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SDKContractDeployReq) */ {
  public:
@@ -2592,7 +3128,7 @@ class SDKContractDeployReq final :
                &_SDKContractDeployReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    12;
 
   friend void swap(SDKContractDeployReq& a, SDKContractDeployReq& b) {
     a.Swap(&b);
@@ -2804,7 +3340,7 @@ class SDKContractDeployAck final :
                &_SDKContractDeployAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    13;
 
   friend void swap(SDKContractDeployAck& a, SDKContractDeployAck& b) {
     a.Swap(&b);
@@ -2884,6 +3420,8 @@ class SDKContractDeployAck final :
     kTopFieldNumber = 5,
     kCodeFieldNumber = 2,
     kIsNeedAgentFlagFieldNumber = 8,
+    kIpFieldNumber = 6,
+    kPortFieldNumber = 7,
   };
   // string version = 1;
   void clear_version();
@@ -2972,6 +3510,24 @@ class SDKContractDeployAck final :
   void _internal_set_isneedagent_flag(::vrfAgentType value);
   public:
 
+  // uint64 ip = 6;
+  void clear_ip();
+  uint64_t ip() const;
+  void set_ip(uint64_t value);
+  private:
+  uint64_t _internal_ip() const;
+  void _internal_set_ip(uint64_t value);
+  public:
+
+  // uint64 port = 7;
+  void clear_port();
+  uint64_t port() const;
+  void set_port(uint64_t value);
+  private:
+  uint64_t _internal_port() const;
+  void _internal_set_port(uint64_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:SDKContractDeployAck)
  private:
   class _Internal;
@@ -2987,6 +3543,8 @@ class SDKContractDeployAck final :
     uint64_t top_;
     int32_t code_;
     int isneedagent_flag_;
+    uint64_t ip_;
+    uint64_t port_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -3042,7 +3600,7 @@ class SDKContractCallReq final :
                &_SDKContractCallReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    14;
 
   friend void swap(SDKContractCallReq& a, SDKContractCallReq& b) {
     a.Swap(&b);
@@ -3162,18 +3720,13 @@ class SDKContractCallReq final :
   std::string* _internal_mutable_toaddr();
   public:
 
-  // string deploy_strTxHash = 4;
+  // uint64 deploy_strTxHash = 4;
   void clear_deploy_strtxhash();
-  const std::string& deploy_strtxhash() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_deploy_strtxhash(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_deploy_strtxhash();
-  PROTOBUF_NODISCARD std::string* release_deploy_strtxhash();
-  void set_allocated_deploy_strtxhash(std::string* deploy_strtxhash);
+  uint64_t deploy_strtxhash() const;
+  void set_deploy_strtxhash(uint64_t value);
   private:
-  const std::string& _internal_deploy_strtxhash() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_deploy_strtxhash(const std::string& value);
-  std::string* _internal_mutable_deploy_strtxhash();
+  uint64_t _internal_deploy_strtxhash() const;
+  void _internal_set_deploy_strtxhash(uint64_t value);
   public:
 
   // @@protoc_insertion_point(class_scope:SDKContractCallReq)
@@ -3187,7 +3740,7 @@ class SDKContractCallReq final :
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr version_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr fromaddr_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr toaddr_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr deploy_strtxhash_;
+    uint64_t deploy_strtxhash_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -3243,7 +3796,7 @@ class SDKContractCallAck final :
                &_SDKContractCallAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    15;
 
   friend void swap(SDKContractCallAck& a, SDKContractCallAck& b) {
     a.Swap(&b);
@@ -3323,6 +3876,8 @@ class SDKContractCallAck final :
     kTopFieldNumber = 5,
     kCodeFieldNumber = 2,
     kIsNeedAgentFlagFieldNumber = 8,
+    kIpFieldNumber = 6,
+    kPortFieldNumber = 7,
   };
   // string version = 1;
   void clear_version();
@@ -3411,6 +3966,24 @@ class SDKContractCallAck final :
   void _internal_set_isneedagent_flag(::vrfAgentType value);
   public:
 
+  // uint64 ip = 6;
+  void clear_ip();
+  uint64_t ip() const;
+  void set_ip(uint64_t value);
+  private:
+  uint64_t _internal_ip() const;
+  void _internal_set_ip(uint64_t value);
+  public:
+
+  // uint64 port = 7;
+  void clear_port();
+  uint64_t port() const;
+  void set_port(uint64_t value);
+  private:
+  uint64_t _internal_port() const;
+  void _internal_set_port(uint64_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:SDKContractCallAck)
  private:
   class _Internal;
@@ -3426,6 +3999,8 @@ class SDKContractCallAck final :
     uint64_t top_;
     int32_t code_;
     int isneedagent_flag_;
+    uint64_t ip_;
+    uint64_t port_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -4719,104 +5294,104 @@ inline void SDKNodeInfo::set_allocated_identity(std::string* identity) {
   // @@protoc_insertion_point(field_set_allocated:SDKNodeInfo.identity)
 }
 
-// string base58addr = 4;
-inline void SDKNodeInfo::clear_base58addr() {
-  _impl_.base58addr_.ClearToEmpty();
+// string addr = 4;
+inline void SDKNodeInfo::clear_addr() {
+  _impl_.addr_.ClearToEmpty();
 }
-inline const std::string& SDKNodeInfo::base58addr() const {
-  // @@protoc_insertion_point(field_get:SDKNodeInfo.base58addr)
-  return _internal_base58addr();
+inline const std::string& SDKNodeInfo::addr() const {
+  // @@protoc_insertion_point(field_get:SDKNodeInfo.addr)
+  return _internal_addr();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void SDKNodeInfo::set_base58addr(ArgT0&& arg0, ArgT... args) {
+void SDKNodeInfo::set_addr(ArgT0&& arg0, ArgT... args) {
  
- _impl_.base58addr_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:SDKNodeInfo.base58addr)
+ _impl_.addr_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SDKNodeInfo.addr)
 }
-inline std::string* SDKNodeInfo::mutable_base58addr() {
-  std::string* _s = _internal_mutable_base58addr();
-  // @@protoc_insertion_point(field_mutable:SDKNodeInfo.base58addr)
+inline std::string* SDKNodeInfo::mutable_addr() {
+  std::string* _s = _internal_mutable_addr();
+  // @@protoc_insertion_point(field_mutable:SDKNodeInfo.addr)
   return _s;
 }
-inline const std::string& SDKNodeInfo::_internal_base58addr() const {
-  return _impl_.base58addr_.Get();
+inline const std::string& SDKNodeInfo::_internal_addr() const {
+  return _impl_.addr_.Get();
 }
-inline void SDKNodeInfo::_internal_set_base58addr(const std::string& value) {
+inline void SDKNodeInfo::_internal_set_addr(const std::string& value) {
   
-  _impl_.base58addr_.Set(value, GetArenaForAllocation());
+  _impl_.addr_.Set(value, GetArenaForAllocation());
 }
-inline std::string* SDKNodeInfo::_internal_mutable_base58addr() {
+inline std::string* SDKNodeInfo::_internal_mutable_addr() {
   
-  return _impl_.base58addr_.Mutable(GetArenaForAllocation());
+  return _impl_.addr_.Mutable(GetArenaForAllocation());
 }
-inline std::string* SDKNodeInfo::release_base58addr() {
-  // @@protoc_insertion_point(field_release:SDKNodeInfo.base58addr)
-  return _impl_.base58addr_.Release();
+inline std::string* SDKNodeInfo::release_addr() {
+  // @@protoc_insertion_point(field_release:SDKNodeInfo.addr)
+  return _impl_.addr_.Release();
 }
-inline void SDKNodeInfo::set_allocated_base58addr(std::string* base58addr) {
-  if (base58addr != nullptr) {
+inline void SDKNodeInfo::set_allocated_addr(std::string* addr) {
+  if (addr != nullptr) {
     
   } else {
     
   }
-  _impl_.base58addr_.SetAllocated(base58addr, GetArenaForAllocation());
+  _impl_.addr_.SetAllocated(addr, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.base58addr_.IsDefault()) {
-    _impl_.base58addr_.Set("", GetArenaForAllocation());
+  if (_impl_.addr_.IsDefault()) {
+    _impl_.addr_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:SDKNodeInfo.base58addr)
+  // @@protoc_insertion_point(field_set_allocated:SDKNodeInfo.addr)
 }
 
-// string public_base58addr = 5;
-inline void SDKNodeInfo::clear_public_base58addr() {
-  _impl_.public_base58addr_.ClearToEmpty();
+// string public_addr = 5;
+inline void SDKNodeInfo::clear_public_addr() {
+  _impl_.public_addr_.ClearToEmpty();
 }
-inline const std::string& SDKNodeInfo::public_base58addr() const {
-  // @@protoc_insertion_point(field_get:SDKNodeInfo.public_base58addr)
-  return _internal_public_base58addr();
+inline const std::string& SDKNodeInfo::public_addr() const {
+  // @@protoc_insertion_point(field_get:SDKNodeInfo.public_addr)
+  return _internal_public_addr();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void SDKNodeInfo::set_public_base58addr(ArgT0&& arg0, ArgT... args) {
+void SDKNodeInfo::set_public_addr(ArgT0&& arg0, ArgT... args) {
  
- _impl_.public_base58addr_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:SDKNodeInfo.public_base58addr)
+ _impl_.public_addr_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SDKNodeInfo.public_addr)
 }
-inline std::string* SDKNodeInfo::mutable_public_base58addr() {
-  std::string* _s = _internal_mutable_public_base58addr();
-  // @@protoc_insertion_point(field_mutable:SDKNodeInfo.public_base58addr)
+inline std::string* SDKNodeInfo::mutable_public_addr() {
+  std::string* _s = _internal_mutable_public_addr();
+  // @@protoc_insertion_point(field_mutable:SDKNodeInfo.public_addr)
   return _s;
 }
-inline const std::string& SDKNodeInfo::_internal_public_base58addr() const {
-  return _impl_.public_base58addr_.Get();
+inline const std::string& SDKNodeInfo::_internal_public_addr() const {
+  return _impl_.public_addr_.Get();
 }
-inline void SDKNodeInfo::_internal_set_public_base58addr(const std::string& value) {
+inline void SDKNodeInfo::_internal_set_public_addr(const std::string& value) {
   
-  _impl_.public_base58addr_.Set(value, GetArenaForAllocation());
+  _impl_.public_addr_.Set(value, GetArenaForAllocation());
 }
-inline std::string* SDKNodeInfo::_internal_mutable_public_base58addr() {
+inline std::string* SDKNodeInfo::_internal_mutable_public_addr() {
   
-  return _impl_.public_base58addr_.Mutable(GetArenaForAllocation());
+  return _impl_.public_addr_.Mutable(GetArenaForAllocation());
 }
-inline std::string* SDKNodeInfo::release_public_base58addr() {
-  // @@protoc_insertion_point(field_release:SDKNodeInfo.public_base58addr)
-  return _impl_.public_base58addr_.Release();
+inline std::string* SDKNodeInfo::release_public_addr() {
+  // @@protoc_insertion_point(field_release:SDKNodeInfo.public_addr)
+  return _impl_.public_addr_.Release();
 }
-inline void SDKNodeInfo::set_allocated_public_base58addr(std::string* public_base58addr) {
-  if (public_base58addr != nullptr) {
+inline void SDKNodeInfo::set_allocated_public_addr(std::string* public_addr) {
+  if (public_addr != nullptr) {
     
   } else {
     
   }
-  _impl_.public_base58addr_.SetAllocated(public_base58addr, GetArenaForAllocation());
+  _impl_.public_addr_.SetAllocated(public_addr, GetArenaForAllocation());
 #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.public_base58addr_.IsDefault()) {
-    _impl_.public_base58addr_.Set("", GetArenaForAllocation());
+  if (_impl_.public_addr_.IsDefault()) {
+    _impl_.public_addr_.Set("", GetArenaForAllocation());
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:SDKNodeInfo.public_base58addr)
+  // @@protoc_insertion_point(field_set_allocated:SDKNodeInfo.public_addr)
 }
 
 // string name = 6;
@@ -6235,6 +6810,664 @@ GetSDKAck::mutable_claimbonusaddrinvestutxos() {
 
 // -------------------------------------------------------------------
 
+// SDKNormalTransactionReq
+
+// string version = 1;
+inline void SDKNormalTransactionReq::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& SDKNormalTransactionReq::version() const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionReq.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SDKNormalTransactionReq::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionReq.version)
+}
+inline std::string* SDKNormalTransactionReq::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:SDKNormalTransactionReq.version)
+  return _s;
+}
+inline const std::string& SDKNormalTransactionReq::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void SDKNormalTransactionReq::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SDKNormalTransactionReq::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SDKNormalTransactionReq::release_version() {
+  // @@protoc_insertion_point(field_release:SDKNormalTransactionReq.version)
+  return _impl_.version_.Release();
+}
+inline void SDKNormalTransactionReq::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:SDKNormalTransactionReq.version)
+}
+
+// repeated string address = 2;
+inline int SDKNormalTransactionReq::_internal_address_size() const {
+  return _impl_.address_.size();
+}
+inline int SDKNormalTransactionReq::address_size() const {
+  return _internal_address_size();
+}
+inline void SDKNormalTransactionReq::clear_address() {
+  _impl_.address_.Clear();
+}
+inline std::string* SDKNormalTransactionReq::add_address() {
+  std::string* _s = _internal_add_address();
+  // @@protoc_insertion_point(field_add_mutable:SDKNormalTransactionReq.address)
+  return _s;
+}
+inline const std::string& SDKNormalTransactionReq::_internal_address(int index) const {
+  return _impl_.address_.Get(index);
+}
+inline const std::string& SDKNormalTransactionReq::address(int index) const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionReq.address)
+  return _internal_address(index);
+}
+inline std::string* SDKNormalTransactionReq::mutable_address(int index) {
+  // @@protoc_insertion_point(field_mutable:SDKNormalTransactionReq.address)
+  return _impl_.address_.Mutable(index);
+}
+inline void SDKNormalTransactionReq::set_address(int index, const std::string& value) {
+  _impl_.address_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionReq.address)
+}
+inline void SDKNormalTransactionReq::set_address(int index, std::string&& value) {
+  _impl_.address_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionReq.address)
+}
+inline void SDKNormalTransactionReq::set_address(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.address_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:SDKNormalTransactionReq.address)
+}
+inline void SDKNormalTransactionReq::set_address(int index, const char* value, size_t size) {
+  _impl_.address_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:SDKNormalTransactionReq.address)
+}
+inline std::string* SDKNormalTransactionReq::_internal_add_address() {
+  return _impl_.address_.Add();
+}
+inline void SDKNormalTransactionReq::add_address(const std::string& value) {
+  _impl_.address_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:SDKNormalTransactionReq.address)
+}
+inline void SDKNormalTransactionReq::add_address(std::string&& value) {
+  _impl_.address_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:SDKNormalTransactionReq.address)
+}
+inline void SDKNormalTransactionReq::add_address(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.address_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:SDKNormalTransactionReq.address)
+}
+inline void SDKNormalTransactionReq::add_address(const char* value, size_t size) {
+  _impl_.address_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:SDKNormalTransactionReq.address)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+SDKNormalTransactionReq::address() const {
+  // @@protoc_insertion_point(field_list:SDKNormalTransactionReq.address)
+  return _impl_.address_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+SDKNormalTransactionReq::mutable_address() {
+  // @@protoc_insertion_point(field_mutable_list:SDKNormalTransactionReq.address)
+  return &_impl_.address_;
+}
+
+// -------------------------------------------------------------------
+
+// SDKNormalTransactionAck
+
+// string version = 1;
+inline void SDKNormalTransactionAck::clear_version() {
+  _impl_.version_.ClearToEmpty();
+}
+inline const std::string& SDKNormalTransactionAck::version() const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionAck.version)
+  return _internal_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SDKNormalTransactionAck::set_version(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.version_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionAck.version)
+}
+inline std::string* SDKNormalTransactionAck::mutable_version() {
+  std::string* _s = _internal_mutable_version();
+  // @@protoc_insertion_point(field_mutable:SDKNormalTransactionAck.version)
+  return _s;
+}
+inline const std::string& SDKNormalTransactionAck::_internal_version() const {
+  return _impl_.version_.Get();
+}
+inline void SDKNormalTransactionAck::_internal_set_version(const std::string& value) {
+  
+  _impl_.version_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SDKNormalTransactionAck::_internal_mutable_version() {
+  
+  return _impl_.version_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SDKNormalTransactionAck::release_version() {
+  // @@protoc_insertion_point(field_release:SDKNormalTransactionAck.version)
+  return _impl_.version_.Release();
+}
+inline void SDKNormalTransactionAck::set_allocated_version(std::string* version) {
+  if (version != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.version_.SetAllocated(version, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.version_.IsDefault()) {
+    _impl_.version_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:SDKNormalTransactionAck.version)
+}
+
+// int32 code = 2;
+inline void SDKNormalTransactionAck::clear_code() {
+  _impl_.code_ = 0;
+}
+inline int32_t SDKNormalTransactionAck::_internal_code() const {
+  return _impl_.code_;
+}
+inline int32_t SDKNormalTransactionAck::code() const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionAck.code)
+  return _internal_code();
+}
+inline void SDKNormalTransactionAck::_internal_set_code(int32_t value) {
+  
+  _impl_.code_ = value;
+}
+inline void SDKNormalTransactionAck::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionAck.code)
+}
+
+// string message = 3;
+inline void SDKNormalTransactionAck::clear_message() {
+  _impl_.message_.ClearToEmpty();
+}
+inline const std::string& SDKNormalTransactionAck::message() const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionAck.message)
+  return _internal_message();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SDKNormalTransactionAck::set_message(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.message_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionAck.message)
+}
+inline std::string* SDKNormalTransactionAck::mutable_message() {
+  std::string* _s = _internal_mutable_message();
+  // @@protoc_insertion_point(field_mutable:SDKNormalTransactionAck.message)
+  return _s;
+}
+inline const std::string& SDKNormalTransactionAck::_internal_message() const {
+  return _impl_.message_.Get();
+}
+inline void SDKNormalTransactionAck::_internal_set_message(const std::string& value) {
+  
+  _impl_.message_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SDKNormalTransactionAck::_internal_mutable_message() {
+  
+  return _impl_.message_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SDKNormalTransactionAck::release_message() {
+  // @@protoc_insertion_point(field_release:SDKNormalTransactionAck.message)
+  return _impl_.message_.Release();
+}
+inline void SDKNormalTransactionAck::set_allocated_message(std::string* message) {
+  if (message != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.message_.SetAllocated(message, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.message_.IsDefault()) {
+    _impl_.message_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:SDKNormalTransactionAck.message)
+}
+
+// uint64 height = 4;
+inline void SDKNormalTransactionAck::clear_height() {
+  _impl_.height_ = uint64_t{0u};
+}
+inline uint64_t SDKNormalTransactionAck::_internal_height() const {
+  return _impl_.height_;
+}
+inline uint64_t SDKNormalTransactionAck::height() const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionAck.height)
+  return _internal_height();
+}
+inline void SDKNormalTransactionAck::_internal_set_height(uint64_t value) {
+  
+  _impl_.height_ = value;
+}
+inline void SDKNormalTransactionAck::set_height(uint64_t value) {
+  _internal_set_height(value);
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionAck.height)
+}
+
+// repeated .SDKUtxo utxos = 5;
+inline int SDKNormalTransactionAck::_internal_utxos_size() const {
+  return _impl_.utxos_.size();
+}
+inline int SDKNormalTransactionAck::utxos_size() const {
+  return _internal_utxos_size();
+}
+inline void SDKNormalTransactionAck::clear_utxos() {
+  _impl_.utxos_.Clear();
+}
+inline ::SDKUtxo* SDKNormalTransactionAck::mutable_utxos(int index) {
+  // @@protoc_insertion_point(field_mutable:SDKNormalTransactionAck.utxos)
+  return _impl_.utxos_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKUtxo >*
+SDKNormalTransactionAck::mutable_utxos() {
+  // @@protoc_insertion_point(field_mutable_list:SDKNormalTransactionAck.utxos)
+  return &_impl_.utxos_;
+}
+inline const ::SDKUtxo& SDKNormalTransactionAck::_internal_utxos(int index) const {
+  return _impl_.utxos_.Get(index);
+}
+inline const ::SDKUtxo& SDKNormalTransactionAck::utxos(int index) const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionAck.utxos)
+  return _internal_utxos(index);
+}
+inline ::SDKUtxo* SDKNormalTransactionAck::_internal_add_utxos() {
+  return _impl_.utxos_.Add();
+}
+inline ::SDKUtxo* SDKNormalTransactionAck::add_utxos() {
+  ::SDKUtxo* _add = _internal_add_utxos();
+  // @@protoc_insertion_point(field_add:SDKNormalTransactionAck.utxos)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKUtxo >&
+SDKNormalTransactionAck::utxos() const {
+  // @@protoc_insertion_point(field_list:SDKNormalTransactionAck.utxos)
+  return _impl_.utxos_;
+}
+
+// repeated bytes blocks = 6;
+inline int SDKNormalTransactionAck::_internal_blocks_size() const {
+  return _impl_.blocks_.size();
+}
+inline int SDKNormalTransactionAck::blocks_size() const {
+  return _internal_blocks_size();
+}
+inline void SDKNormalTransactionAck::clear_blocks() {
+  _impl_.blocks_.Clear();
+}
+inline std::string* SDKNormalTransactionAck::add_blocks() {
+  std::string* _s = _internal_add_blocks();
+  // @@protoc_insertion_point(field_add_mutable:SDKNormalTransactionAck.blocks)
+  return _s;
+}
+inline const std::string& SDKNormalTransactionAck::_internal_blocks(int index) const {
+  return _impl_.blocks_.Get(index);
+}
+inline const std::string& SDKNormalTransactionAck::blocks(int index) const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionAck.blocks)
+  return _internal_blocks(index);
+}
+inline std::string* SDKNormalTransactionAck::mutable_blocks(int index) {
+  // @@protoc_insertion_point(field_mutable:SDKNormalTransactionAck.blocks)
+  return _impl_.blocks_.Mutable(index);
+}
+inline void SDKNormalTransactionAck::set_blocks(int index, const std::string& value) {
+  _impl_.blocks_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionAck.blocks)
+}
+inline void SDKNormalTransactionAck::set_blocks(int index, std::string&& value) {
+  _impl_.blocks_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionAck.blocks)
+}
+inline void SDKNormalTransactionAck::set_blocks(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.blocks_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:SDKNormalTransactionAck.blocks)
+}
+inline void SDKNormalTransactionAck::set_blocks(int index, const void* value, size_t size) {
+  _impl_.blocks_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:SDKNormalTransactionAck.blocks)
+}
+inline std::string* SDKNormalTransactionAck::_internal_add_blocks() {
+  return _impl_.blocks_.Add();
+}
+inline void SDKNormalTransactionAck::add_blocks(const std::string& value) {
+  _impl_.blocks_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:SDKNormalTransactionAck.blocks)
+}
+inline void SDKNormalTransactionAck::add_blocks(std::string&& value) {
+  _impl_.blocks_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:SDKNormalTransactionAck.blocks)
+}
+inline void SDKNormalTransactionAck::add_blocks(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.blocks_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:SDKNormalTransactionAck.blocks)
+}
+inline void SDKNormalTransactionAck::add_blocks(const void* value, size_t size) {
+  _impl_.blocks_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:SDKNormalTransactionAck.blocks)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+SDKNormalTransactionAck::blocks() const {
+  // @@protoc_insertion_point(field_list:SDKNormalTransactionAck.blocks)
+  return _impl_.blocks_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+SDKNormalTransactionAck::mutable_blocks() {
+  // @@protoc_insertion_point(field_mutable_list:SDKNormalTransactionAck.blocks)
+  return &_impl_.blocks_;
+}
+
+// repeated .SDKBonusamout bonusamount = 7;
+inline int SDKNormalTransactionAck::_internal_bonusamount_size() const {
+  return _impl_.bonusamount_.size();
+}
+inline int SDKNormalTransactionAck::bonusamount_size() const {
+  return _internal_bonusamount_size();
+}
+inline void SDKNormalTransactionAck::clear_bonusamount() {
+  _impl_.bonusamount_.Clear();
+}
+inline ::SDKBonusamout* SDKNormalTransactionAck::mutable_bonusamount(int index) {
+  // @@protoc_insertion_point(field_mutable:SDKNormalTransactionAck.bonusamount)
+  return _impl_.bonusamount_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKBonusamout >*
+SDKNormalTransactionAck::mutable_bonusamount() {
+  // @@protoc_insertion_point(field_mutable_list:SDKNormalTransactionAck.bonusamount)
+  return &_impl_.bonusamount_;
+}
+inline const ::SDKBonusamout& SDKNormalTransactionAck::_internal_bonusamount(int index) const {
+  return _impl_.bonusamount_.Get(index);
+}
+inline const ::SDKBonusamout& SDKNormalTransactionAck::bonusamount(int index) const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionAck.bonusamount)
+  return _internal_bonusamount(index);
+}
+inline ::SDKBonusamout* SDKNormalTransactionAck::_internal_add_bonusamount() {
+  return _impl_.bonusamount_.Add();
+}
+inline ::SDKBonusamout* SDKNormalTransactionAck::add_bonusamount() {
+  ::SDKBonusamout* _add = _internal_add_bonusamount();
+  // @@protoc_insertion_point(field_add:SDKNormalTransactionAck.bonusamount)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKBonusamout >&
+SDKNormalTransactionAck::bonusamount() const {
+  // @@protoc_insertion_point(field_list:SDKNormalTransactionAck.bonusamount)
+  return _impl_.bonusamount_;
+}
+
+// repeated .SDKPledgeTx pledgetx = 8;
+inline int SDKNormalTransactionAck::_internal_pledgetx_size() const {
+  return _impl_.pledgetx_.size();
+}
+inline int SDKNormalTransactionAck::pledgetx_size() const {
+  return _internal_pledgetx_size();
+}
+inline void SDKNormalTransactionAck::clear_pledgetx() {
+  _impl_.pledgetx_.Clear();
+}
+inline ::SDKPledgeTx* SDKNormalTransactionAck::mutable_pledgetx(int index) {
+  // @@protoc_insertion_point(field_mutable:SDKNormalTransactionAck.pledgetx)
+  return _impl_.pledgetx_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKPledgeTx >*
+SDKNormalTransactionAck::mutable_pledgetx() {
+  // @@protoc_insertion_point(field_mutable_list:SDKNormalTransactionAck.pledgetx)
+  return &_impl_.pledgetx_;
+}
+inline const ::SDKPledgeTx& SDKNormalTransactionAck::_internal_pledgetx(int index) const {
+  return _impl_.pledgetx_.Get(index);
+}
+inline const ::SDKPledgeTx& SDKNormalTransactionAck::pledgetx(int index) const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionAck.pledgetx)
+  return _internal_pledgetx(index);
+}
+inline ::SDKPledgeTx* SDKNormalTransactionAck::_internal_add_pledgetx() {
+  return _impl_.pledgetx_.Add();
+}
+inline ::SDKPledgeTx* SDKNormalTransactionAck::add_pledgetx() {
+  ::SDKPledgeTx* _add = _internal_add_pledgetx();
+  // @@protoc_insertion_point(field_add:SDKNormalTransactionAck.pledgetx)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKPledgeTx >&
+SDKNormalTransactionAck::pledgetx() const {
+  // @@protoc_insertion_point(field_list:SDKNormalTransactionAck.pledgetx)
+  return _impl_.pledgetx_;
+}
+
+// repeated string pledgeaddr = 9;
+inline int SDKNormalTransactionAck::_internal_pledgeaddr_size() const {
+  return _impl_.pledgeaddr_.size();
+}
+inline int SDKNormalTransactionAck::pledgeaddr_size() const {
+  return _internal_pledgeaddr_size();
+}
+inline void SDKNormalTransactionAck::clear_pledgeaddr() {
+  _impl_.pledgeaddr_.Clear();
+}
+inline std::string* SDKNormalTransactionAck::add_pledgeaddr() {
+  std::string* _s = _internal_add_pledgeaddr();
+  // @@protoc_insertion_point(field_add_mutable:SDKNormalTransactionAck.pledgeaddr)
+  return _s;
+}
+inline const std::string& SDKNormalTransactionAck::_internal_pledgeaddr(int index) const {
+  return _impl_.pledgeaddr_.Get(index);
+}
+inline const std::string& SDKNormalTransactionAck::pledgeaddr(int index) const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionAck.pledgeaddr)
+  return _internal_pledgeaddr(index);
+}
+inline std::string* SDKNormalTransactionAck::mutable_pledgeaddr(int index) {
+  // @@protoc_insertion_point(field_mutable:SDKNormalTransactionAck.pledgeaddr)
+  return _impl_.pledgeaddr_.Mutable(index);
+}
+inline void SDKNormalTransactionAck::set_pledgeaddr(int index, const std::string& value) {
+  _impl_.pledgeaddr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionAck.pledgeaddr)
+}
+inline void SDKNormalTransactionAck::set_pledgeaddr(int index, std::string&& value) {
+  _impl_.pledgeaddr_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionAck.pledgeaddr)
+}
+inline void SDKNormalTransactionAck::set_pledgeaddr(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.pledgeaddr_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:SDKNormalTransactionAck.pledgeaddr)
+}
+inline void SDKNormalTransactionAck::set_pledgeaddr(int index, const char* value, size_t size) {
+  _impl_.pledgeaddr_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:SDKNormalTransactionAck.pledgeaddr)
+}
+inline std::string* SDKNormalTransactionAck::_internal_add_pledgeaddr() {
+  return _impl_.pledgeaddr_.Add();
+}
+inline void SDKNormalTransactionAck::add_pledgeaddr(const std::string& value) {
+  _impl_.pledgeaddr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:SDKNormalTransactionAck.pledgeaddr)
+}
+inline void SDKNormalTransactionAck::add_pledgeaddr(std::string&& value) {
+  _impl_.pledgeaddr_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:SDKNormalTransactionAck.pledgeaddr)
+}
+inline void SDKNormalTransactionAck::add_pledgeaddr(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.pledgeaddr_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:SDKNormalTransactionAck.pledgeaddr)
+}
+inline void SDKNormalTransactionAck::add_pledgeaddr(const char* value, size_t size) {
+  _impl_.pledgeaddr_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:SDKNormalTransactionAck.pledgeaddr)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+SDKNormalTransactionAck::pledgeaddr() const {
+  // @@protoc_insertion_point(field_list:SDKNormalTransactionAck.pledgeaddr)
+  return _impl_.pledgeaddr_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+SDKNormalTransactionAck::mutable_pledgeaddr() {
+  // @@protoc_insertion_point(field_mutable_list:SDKNormalTransactionAck.pledgeaddr)
+  return &_impl_.pledgeaddr_;
+}
+
+// repeated string pledgeutxo = 10;
+inline int SDKNormalTransactionAck::_internal_pledgeutxo_size() const {
+  return _impl_.pledgeutxo_.size();
+}
+inline int SDKNormalTransactionAck::pledgeutxo_size() const {
+  return _internal_pledgeutxo_size();
+}
+inline void SDKNormalTransactionAck::clear_pledgeutxo() {
+  _impl_.pledgeutxo_.Clear();
+}
+inline std::string* SDKNormalTransactionAck::add_pledgeutxo() {
+  std::string* _s = _internal_add_pledgeutxo();
+  // @@protoc_insertion_point(field_add_mutable:SDKNormalTransactionAck.pledgeutxo)
+  return _s;
+}
+inline const std::string& SDKNormalTransactionAck::_internal_pledgeutxo(int index) const {
+  return _impl_.pledgeutxo_.Get(index);
+}
+inline const std::string& SDKNormalTransactionAck::pledgeutxo(int index) const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionAck.pledgeutxo)
+  return _internal_pledgeutxo(index);
+}
+inline std::string* SDKNormalTransactionAck::mutable_pledgeutxo(int index) {
+  // @@protoc_insertion_point(field_mutable:SDKNormalTransactionAck.pledgeutxo)
+  return _impl_.pledgeutxo_.Mutable(index);
+}
+inline void SDKNormalTransactionAck::set_pledgeutxo(int index, const std::string& value) {
+  _impl_.pledgeutxo_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionAck.pledgeutxo)
+}
+inline void SDKNormalTransactionAck::set_pledgeutxo(int index, std::string&& value) {
+  _impl_.pledgeutxo_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:SDKNormalTransactionAck.pledgeutxo)
+}
+inline void SDKNormalTransactionAck::set_pledgeutxo(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.pledgeutxo_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:SDKNormalTransactionAck.pledgeutxo)
+}
+inline void SDKNormalTransactionAck::set_pledgeutxo(int index, const char* value, size_t size) {
+  _impl_.pledgeutxo_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:SDKNormalTransactionAck.pledgeutxo)
+}
+inline std::string* SDKNormalTransactionAck::_internal_add_pledgeutxo() {
+  return _impl_.pledgeutxo_.Add();
+}
+inline void SDKNormalTransactionAck::add_pledgeutxo(const std::string& value) {
+  _impl_.pledgeutxo_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:SDKNormalTransactionAck.pledgeutxo)
+}
+inline void SDKNormalTransactionAck::add_pledgeutxo(std::string&& value) {
+  _impl_.pledgeutxo_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:SDKNormalTransactionAck.pledgeutxo)
+}
+inline void SDKNormalTransactionAck::add_pledgeutxo(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.pledgeutxo_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:SDKNormalTransactionAck.pledgeutxo)
+}
+inline void SDKNormalTransactionAck::add_pledgeutxo(const char* value, size_t size) {
+  _impl_.pledgeutxo_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:SDKNormalTransactionAck.pledgeutxo)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+SDKNormalTransactionAck::pledgeutxo() const {
+  // @@protoc_insertion_point(field_list:SDKNormalTransactionAck.pledgeutxo)
+  return _impl_.pledgeutxo_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+SDKNormalTransactionAck::mutable_pledgeutxo() {
+  // @@protoc_insertion_point(field_mutable_list:SDKNormalTransactionAck.pledgeutxo)
+  return &_impl_.pledgeutxo_;
+}
+
+// repeated .SDKNodeInfo nodeinfo = 11;
+inline int SDKNormalTransactionAck::_internal_nodeinfo_size() const {
+  return _impl_.nodeinfo_.size();
+}
+inline int SDKNormalTransactionAck::nodeinfo_size() const {
+  return _internal_nodeinfo_size();
+}
+inline void SDKNormalTransactionAck::clear_nodeinfo() {
+  _impl_.nodeinfo_.Clear();
+}
+inline ::SDKNodeInfo* SDKNormalTransactionAck::mutable_nodeinfo(int index) {
+  // @@protoc_insertion_point(field_mutable:SDKNormalTransactionAck.nodeinfo)
+  return _impl_.nodeinfo_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKNodeInfo >*
+SDKNormalTransactionAck::mutable_nodeinfo() {
+  // @@protoc_insertion_point(field_mutable_list:SDKNormalTransactionAck.nodeinfo)
+  return &_impl_.nodeinfo_;
+}
+inline const ::SDKNodeInfo& SDKNormalTransactionAck::_internal_nodeinfo(int index) const {
+  return _impl_.nodeinfo_.Get(index);
+}
+inline const ::SDKNodeInfo& SDKNormalTransactionAck::nodeinfo(int index) const {
+  // @@protoc_insertion_point(field_get:SDKNormalTransactionAck.nodeinfo)
+  return _internal_nodeinfo(index);
+}
+inline ::SDKNodeInfo* SDKNormalTransactionAck::_internal_add_nodeinfo() {
+  return _impl_.nodeinfo_.Add();
+}
+inline ::SDKNodeInfo* SDKNormalTransactionAck::add_nodeinfo() {
+  ::SDKNodeInfo* _add = _internal_add_nodeinfo();
+  // @@protoc_insertion_point(field_add:SDKNormalTransactionAck.nodeinfo)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::SDKNodeInfo >&
+SDKNormalTransactionAck::nodeinfo() const {
+  // @@protoc_insertion_point(field_list:SDKNormalTransactionAck.nodeinfo)
+  return _impl_.nodeinfo_;
+}
+
+// -------------------------------------------------------------------
+
 // SDKContractDeployReq
 
 // string version = 1;
@@ -6651,6 +7884,46 @@ inline void SDKContractDeployAck::set_top(uint64_t value) {
   // @@protoc_insertion_point(field_set:SDKContractDeployAck.top)
 }
 
+// uint64 ip = 6;
+inline void SDKContractDeployAck::clear_ip() {
+  _impl_.ip_ = uint64_t{0u};
+}
+inline uint64_t SDKContractDeployAck::_internal_ip() const {
+  return _impl_.ip_;
+}
+inline uint64_t SDKContractDeployAck::ip() const {
+  // @@protoc_insertion_point(field_get:SDKContractDeployAck.ip)
+  return _internal_ip();
+}
+inline void SDKContractDeployAck::_internal_set_ip(uint64_t value) {
+  
+  _impl_.ip_ = value;
+}
+inline void SDKContractDeployAck::set_ip(uint64_t value) {
+  _internal_set_ip(value);
+  // @@protoc_insertion_point(field_set:SDKContractDeployAck.ip)
+}
+
+// uint64 port = 7;
+inline void SDKContractDeployAck::clear_port() {
+  _impl_.port_ = uint64_t{0u};
+}
+inline uint64_t SDKContractDeployAck::_internal_port() const {
+  return _impl_.port_;
+}
+inline uint64_t SDKContractDeployAck::port() const {
+  // @@protoc_insertion_point(field_get:SDKContractDeployAck.port)
+  return _internal_port();
+}
+inline void SDKContractDeployAck::_internal_set_port(uint64_t value) {
+  
+  _impl_.port_ = value;
+}
+inline void SDKContractDeployAck::set_port(uint64_t value) {
+  _internal_set_port(value);
+  // @@protoc_insertion_point(field_set:SDKContractDeployAck.port)
+}
+
 // .vrfAgentType isNeedAgent_flag = 8;
 inline void SDKContractDeployAck::clear_isneedagent_flag() {
   _impl_.isneedagent_flag_ = 0;
@@ -6910,54 +8183,24 @@ inline void SDKContractCallReq::set_allocated_toaddr(std::string* toaddr) {
   // @@protoc_insertion_point(field_set_allocated:SDKContractCallReq.toaddr)
 }
 
-// string deploy_strTxHash = 4;
+// uint64 deploy_strTxHash = 4;
 inline void SDKContractCallReq::clear_deploy_strtxhash() {
-  _impl_.deploy_strtxhash_.ClearToEmpty();
+  _impl_.deploy_strtxhash_ = uint64_t{0u};
 }
-inline const std::string& SDKContractCallReq::deploy_strtxhash() const {
+inline uint64_t SDKContractCallReq::_internal_deploy_strtxhash() const {
+  return _impl_.deploy_strtxhash_;
+}
+inline uint64_t SDKContractCallReq::deploy_strtxhash() const {
   // @@protoc_insertion_point(field_get:SDKContractCallReq.deploy_strTxHash)
   return _internal_deploy_strtxhash();
 }
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void SDKContractCallReq::set_deploy_strtxhash(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.deploy_strtxhash_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+inline void SDKContractCallReq::_internal_set_deploy_strtxhash(uint64_t value) {
+  
+  _impl_.deploy_strtxhash_ = value;
+}
+inline void SDKContractCallReq::set_deploy_strtxhash(uint64_t value) {
+  _internal_set_deploy_strtxhash(value);
   // @@protoc_insertion_point(field_set:SDKContractCallReq.deploy_strTxHash)
-}
-inline std::string* SDKContractCallReq::mutable_deploy_strtxhash() {
-  std::string* _s = _internal_mutable_deploy_strtxhash();
-  // @@protoc_insertion_point(field_mutable:SDKContractCallReq.deploy_strTxHash)
-  return _s;
-}
-inline const std::string& SDKContractCallReq::_internal_deploy_strtxhash() const {
-  return _impl_.deploy_strtxhash_.Get();
-}
-inline void SDKContractCallReq::_internal_set_deploy_strtxhash(const std::string& value) {
-  
-  _impl_.deploy_strtxhash_.Set(value, GetArenaForAllocation());
-}
-inline std::string* SDKContractCallReq::_internal_mutable_deploy_strtxhash() {
-  
-  return _impl_.deploy_strtxhash_.Mutable(GetArenaForAllocation());
-}
-inline std::string* SDKContractCallReq::release_deploy_strtxhash() {
-  // @@protoc_insertion_point(field_release:SDKContractCallReq.deploy_strTxHash)
-  return _impl_.deploy_strtxhash_.Release();
-}
-inline void SDKContractCallReq::set_allocated_deploy_strtxhash(std::string* deploy_strtxhash) {
-  if (deploy_strtxhash != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.deploy_strtxhash_.SetAllocated(deploy_strtxhash, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.deploy_strtxhash_.IsDefault()) {
-    _impl_.deploy_strtxhash_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:SDKContractCallReq.deploy_strTxHash)
 }
 
 // -------------------------------------------------------------------
@@ -7154,6 +8397,46 @@ inline void SDKContractCallAck::set_top(uint64_t value) {
   // @@protoc_insertion_point(field_set:SDKContractCallAck.top)
 }
 
+// uint64 ip = 6;
+inline void SDKContractCallAck::clear_ip() {
+  _impl_.ip_ = uint64_t{0u};
+}
+inline uint64_t SDKContractCallAck::_internal_ip() const {
+  return _impl_.ip_;
+}
+inline uint64_t SDKContractCallAck::ip() const {
+  // @@protoc_insertion_point(field_get:SDKContractCallAck.ip)
+  return _internal_ip();
+}
+inline void SDKContractCallAck::_internal_set_ip(uint64_t value) {
+  
+  _impl_.ip_ = value;
+}
+inline void SDKContractCallAck::set_ip(uint64_t value) {
+  _internal_set_ip(value);
+  // @@protoc_insertion_point(field_set:SDKContractCallAck.ip)
+}
+
+// uint64 port = 7;
+inline void SDKContractCallAck::clear_port() {
+  _impl_.port_ = uint64_t{0u};
+}
+inline uint64_t SDKContractCallAck::_internal_port() const {
+  return _impl_.port_;
+}
+inline uint64_t SDKContractCallAck::port() const {
+  // @@protoc_insertion_point(field_get:SDKContractCallAck.port)
+  return _internal_port();
+}
+inline void SDKContractCallAck::_internal_set_port(uint64_t value) {
+  
+  _impl_.port_ = value;
+}
+inline void SDKContractCallAck::set_port(uint64_t value) {
+  _internal_set_port(value);
+  // @@protoc_insertion_point(field_set:SDKContractCallAck.port)
+}
+
 // .vrfAgentType isNeedAgent_flag = 8;
 inline void SDKContractCallAck::clear_isneedagent_flag() {
   _impl_.isneedagent_flag_ = 0;
@@ -7262,6 +8545,10 @@ inline void SDKContractCallAck::set_allocated_vrfinfo(::Vrf* vrfinfo) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

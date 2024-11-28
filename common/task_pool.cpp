@@ -1,51 +1,50 @@
 #include "task_pool.h"
+#include "../common/bind_thread.h"
 
-std::mutex gettidMutex;
-std::set<boost::thread::id> thread_ids;
+std::mutex getTidMutex;
+std::set<boost::thread::id> threadIds;
 
 void Gettid()
 {
-    std::lock_guard<std::mutex> lock(gettidMutex);
-    //cout << "Gettid:";
+    std::lock_guard<std::mutex> lock(getTidMutex);
     boost::thread::id tid = boost::this_thread::get_id();
-    //cout << tid << "\n";
     for(int i=0;i<100000;i++){};
-    if((thread_ids.find(tid)) == thread_ids.end())
+    if((threadIds.find(tid)) == threadIds.end())
     {
-        thread_ids.insert(tid);
+        threadIds.insert(tid);
     }
 }
 
-void taskPool::taskPool_init()
+void TaskPool::TaskPoolInit()
 {
-    for(int i=0; i < global::ca_thread_number * 100; i++) ca_taskPool.schedule(&Gettid);
-    for(int i=0; i < global::net_thread_number * 100; i++) net_taskPool.schedule(&Gettid);
-    for(int i=0; i < global::broadcast_thread_number * 100; i++) broadcast_taskPool.schedule(&Gettid);
-    for(int i=0; i < global::tx_thread_number * 100; i++) tx_taskPool.schedule(&Gettid);
-    for(int i=0; i < global::syncBlock_thread_number * 100; i++) syncBlock_taskPool.schedule(&Gettid);
-    for(int i=0; i < global::saveBlock_thread_number * 100; i++) saveBlock_taskPool.schedule(&Gettid);
-    for(int i=0; i < global::work_thread_number * 100; i++) work_taskPool.schedule(&Gettid);
+    for(int i=0; i < global::kCaThreadNumber * 100; i++) _caTaskPool.schedule(&Gettid);
+    for(int i=0; i < global::kNetThreadNumber * 100; i++) _netTaskPool.schedule(&Gettid);
+    for(int i=0; i < global::kBroadcastThreadNumber * 100; i++) _broadcastTaskPool.schedule(&Gettid);
+    for(int i=0; i < global::kTxThreadNumber * 100; i++) _txTaskPool.schedule(&Gettid);
+    for(int i=0; i < global::kSyncBlockThreadNumber * 100; i++) _syncBlockTaskPool.schedule(&Gettid);
+    for(int i=0; i < global::kSaveBlockThreadNumber * 100; i++) _saveBlockTaskPool.schedule(&Gettid);
+    for(int i=0; i < global::kBlockThreadNumber * 100; i++) _blockTaskPool.schedule(&Gettid);
+    for(int i=0; i < global::kWorkThreadNumber * 100; i++) _workTaskPool.schedule(&Gettid);
 
-    ca_taskPool.wait();
-    net_taskPool.wait();
-    broadcast_taskPool.wait();
-    tx_taskPool.wait();
-    syncBlock_taskPool.wait();
-    saveBlock_taskPool.wait();
-    work_taskPool.wait();
+    _caTaskPool.wait();
+    _netTaskPool.wait();
+    _broadcastTaskPool.wait();
+    _txTaskPool.wait();
+    _syncBlockTaskPool.wait();
+    _saveBlockTaskPool.wait();
+    _blockTaskPool.wait();
+    _workTaskPool.wait();
 
-    std::cout << "ThreadNumber:" << thread_ids.size() << std::endl;
+    std::cout << "ThreadNumber:" << threadIds.size() << std::endl;
 
-    for(auto &it : thread_ids)
+    for(auto &it : threadIds)
     {
-        int index = get_cpu_index();
+        int index = GetCpuIndex();
         std::ostringstream tid;
         tid << it;
-        //std::cout<< tid.str() << std::endl;
         uint64_t Utid = std::stoul(tid.str(), nullptr, 16);
-        //std::cout<<"Utid: "<< Utid <<std::endl;
-        sys_thread_set_cpu(index, Utid);
+        SysThreadSetCpu(index, Utid);
     }
 
-    thread_ids.clear();
+    threadIds.clear();
 }

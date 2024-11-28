@@ -4,11 +4,11 @@
  * @brief       
  * @author  ()
  * @date        2023-09-28
- * @copyright   tfsc
+ * @copyright   don
  * *****************************************************************************
  */
-#ifndef TFS_MPT_TRIE_H_
-#define TFS_MPT_TRIE_H_
+#ifndef DON_MPT_TRIE_H_
+#define DON_MPT_TRIE_H_
 
 #include <memory>
 #include <iostream>
@@ -21,40 +21,29 @@
 #include <boost/uuid/detail/sha1.hpp>
 
 #include "node.h"
-#include "Common.h"
-#include "RLP.h"
+#include "common.h"
+#include "rlp.h"
 
 #include "utils/json.hpp"
 #include "utils/time_util.h"
-#include "utils/MagicSingleton.h"
+#include "utils/magic_singleton.h"
 struct ReturnVal 
 {
 public:
     bool dirty;
-    nodeptr node;
+    nodePtr node;
     int err;
 };
 struct ReturnNode 
 {
 public:
-    nodeptr valueNode;
-    nodeptr newNode;
+    nodePtr valueNode;
+    nodePtr newNode;
 };
 
 class ContractDataCache
 {
 public:
-
-    void lock()
-    {
-        Mutex.lock();
-    }
-
-    void unlock()
-    {
-        Mutex.unlock();
-    }
-
     void set(const nlohmann::json& jStorage)
     {
         std::unique_lock<std::shared_mutex> lck(contractDataMapMutex);
@@ -77,16 +66,9 @@ public:
         return false;
     }
 
-    void clear()
-    {
-        std::unique_lock<std::shared_mutex> lck(contractDataMapMutex);
-        contractDataMap.clear();
-    }
-
 private:
     std::unordered_map<std::string, std::string> contractDataMap;
     mutable std::shared_mutex contractDataMapMutex;
-    std::mutex Mutex;
 };
 
 class Trie
@@ -96,48 +78,65 @@ public:
     {
         root = NULL;
     }
+
     Trie(std::string ContractAddr) 
     {
         root = NULL;
         this->contractAddr = ContractAddr;
     }
+    
     Trie(std::string roothash, std::string ContractAddr) 
     {
         this->contractAddr = ContractAddr;
-        auto roothashnode = std::shared_ptr<packing<hashNode>>(
-            new packing<hashNode>(hashNode{ roothash }));
+        auto roothashnode = std::shared_ptr<packing<HashNode>>(
+            new packing<HashNode>(HashNode{ roothash }));
         root = ResolveHash(roothashnode, "");
     }
 
-    nodeFlag newFlag()
+    Trie(std::string ContractAddr, ContractDataCache* contractDataCache) 
     {
-        nodeFlag nf;
+        root = NULL;
+        this->contractAddr = ContractAddr;
+        this->contractDataCache = contractDataCache;
+    }
+    Trie(std::string roothash, std::string ContractAddr, ContractDataCache* contractDataCache) 
+    {
+        this->contractAddr = ContractAddr;
+        this->contractDataCache = contractDataCache;
+        auto roothashnode = std::shared_ptr<packing<HashNode>>(
+            new packing<HashNode>(HashNode{ roothash }));
+        root = ResolveHash(roothashnode, "");
+    }
+
+    NodeFlag newFlag()
+    {
+        NodeFlag nf;
         nf.dirty = true;
         return nf;
     }
-    nodeptr ResolveHash(nodeptr n, std::string prefix) const;
+    nodePtr ResolveHash(nodePtr n, std::string prefix) const;
     std::string Get(std::string& key) const;
-    ReturnNode Get(nodeptr n, std::string key, int pos) const;
+    ReturnNode Get(nodePtr n, std::string key, int pos) const;
 
-    ReturnVal Insert(nodeptr n, std::string prefix, std::string key, nodeptr value);
+    ReturnVal Insert(nodePtr n, std::string prefix, std::string key, nodePtr value);
 
-    nodeptr Update(std::string key, std::string value);
+    nodePtr Update(std::string key, std::string value);
 
-    nodeptr DescendKey(std::string key) const;
-    nodeptr DecodeShort(std::string hash, dev::RLP const& r) const;
-    nodeptr DecodeFull(std::string hash, dev::RLP const& r) const;
-    nodeptr DecodeRef(dev::RLP const& r) const;
-    nodeptr DecodeNode(std::string hash, dev::RLP const& r) const;
+    nodePtr DescendKey(std::string key) const;
+    nodePtr DecodeShort(std::string hash, dev::RLP const& r) const;
+    nodePtr DecodeFull(std::string hash, dev::RLP const& r) const;
+    nodePtr DecodeRef(dev::RLP const& r) const;
+    nodePtr DecodeNode(std::string hash, dev::RLP const& r) const;
 
-    nodeptr hash(nodeptr n);
-    nodeptr HashShortNodeChildren(nodeptr n);
-    nodeptr HashFullNodeChildren(nodeptr n);
-    nodeptr ToHash(nodeptr n);
-    dev::RLPStream Encode(nodeptr n);
+    nodePtr hash(nodePtr n);
+    nodePtr HashShortNodeChildren(nodePtr n);
+    nodePtr HashFullNodeChildren(nodePtr n);
+    nodePtr ToHash(nodePtr n);
+    dev::RLPStream Encode(nodePtr n);
 
-    nodeptr Store(nodeptr n);
-    nodeptr Commit(nodeptr n);
-    std::array<nodeptr, 17>commitChildren(nodeptr n);
+    nodePtr Store(nodePtr n);
+    nodePtr Commit(nodePtr n);
+    std::array<nodePtr, 17>commitChildren(nodePtr n);
 
     void Save();
 
@@ -149,9 +148,10 @@ public:
 
     void GetBlockStorage(std::pair<std::string, std::string>& rootHash, std::map<std::string, std::string>& dirtyHash);
 public:
-    mutable nodeptr root;
+    mutable nodePtr root;
     std::string contractAddr;
     std::map<std::string, std::string> dirtyHash;
+     mutable ContractDataCache* contractDataCache;
 };
 #endif
 

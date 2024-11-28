@@ -4,7 +4,7 @@
  * @brief       
  * @author  ()
  * @date        2023-09-28
- * @copyright   tfsc
+ * @copyright   don
  * *****************************************************************************
  */
 #ifndef _CONFIG_H_
@@ -22,9 +22,9 @@
 #include <thread>
 #include <functional>
 
-#include "../utils/CTimer.hpp"
+#include "../utils/timer.hpp"
 #include "../utils/json.hpp"
-#include "../utils/MagicSingleton.h"
+#include "../utils/magic_singleton.h"
 #define SERVERMAINPORT (MagicSingleton<Config>::GetInstance()->GetServerPort())
 
 class Node;
@@ -68,7 +68,7 @@ public:
     const std::string kCfgLogConsole = "console";
     const std::string kCfgServerPort = "server_port";
     const std::string kCfgKeyVersion = "version";
-    const std::string kNewConfigName = "1.0.14";
+
     nlohmann::json tmpJson ;
     int count = 0;
 
@@ -77,21 +77,22 @@ public:
     {
         InitFile();
         _thread = std::thread(std::bind(&Config::_Check, this));
-        _thread.detach();
     };
 
     Config(bool & flag)
     {
         int ret = InitFile();
-        _thread = std::thread(std::bind(&Config::_Check, this));
-        _thread.detach();
         if ( ret == 0 ) flag = true;
+        _thread = std::thread(std::bind(&Config::_Check, this));
     };
     
     ~Config()
     {  
         _exitThread = true;
-        _thread.~thread();
+        if (_thread.joinable())
+        {
+        _thread.join();
+    }
     };
 
     /**
@@ -177,6 +178,8 @@ public:
      */
     std::set<std::string> GetServer();
 
+    std::string GetVersion();
+
     /**
      * @brief       
      * 
@@ -250,9 +253,9 @@ public:
      */
     void GetAllServerAddress();
 
-//    int FilterVersion(std::string  & Version);
-   
+    std::string Get_RequestIp(const std::string& host, const std::string& path, int port);
 
+    std::string ExecuteBasedOnGlobalOptions();
 
 private:
     /**
@@ -282,7 +285,6 @@ private:
      * 
      */
     void _Check();
-
  
 private:
 
@@ -297,7 +299,15 @@ private:
     std::string _version;
     std::thread _thread;
     std::atomic<bool> _exitThread{false};
-
+    #if PRIMARYCHAIN
+    #define TRACKERIP {"36.154.216.186", "36.153.199.186"}
+    #elif TESTCHAIN
+    #define TRACKERIP {"54.176.251.137","54.177.31.10"}
+    #else 
+    #define TRACKERIP {}
+    #endif
+    std::vector<std::string> sentinelNode = TRACKERIP;
+    
 };
 
 #endif

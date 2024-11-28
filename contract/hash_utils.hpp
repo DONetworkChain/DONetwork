@@ -18,7 +18,6 @@ using evmc::bytes_view;
 using namespace evmc::literals;
 
 /// Default type for 256-bit hash.
-///
 /// Better than ethash::hash256 because has some additional handy constructors.
 using hash256 = bytes32;
 
@@ -31,7 +30,7 @@ inline hash256 keccak256(bytes_view data) noexcept
 {
     const auto eh = ethash::keccak256(data.data(), data.size());
     hash256 h;
-    std::memcpy(h.bytes, eh.bytes, sizeof(h));  // TODO: Use std::bit_cast.
+    std::memcpy(h.bytes, eh.bytes, sizeof(h));
     return h;
 }
 }  // namespace evmone

@@ -12,7 +12,7 @@
 class BackgroundErrorListener : public rocksdb::EventListener
 {
 public:
-    void OnBackgroundError(rocksdb::BackgroundErrorReason reason, rocksdb::Status* bg_error) override;
+    void OnBackgroundError(rocksdb::BackgroundErrorReason reason, rocksdb::Status* errorStatus) override;
 };
 
 class RocksDBReader;
@@ -26,11 +26,36 @@ public:
     RocksDB(const RocksDB &) = delete;
     RocksDB &operator=(RocksDB &&) = delete;
     RocksDB &operator=(const RocksDB &) = delete;
-
-    void SetDBPath(const std::string &db_path);
-    bool InitDB(rocksdb::Status &ret_status);
+    /**
+     * @brief
+     * 
+     * @param       dbPath: 
+     */
+    void SetDBPath(const std::string &dbPath);
+    /**
+     * @brief
+     * 
+     * @param       retStatus: 
+     * @return      true
+     * @return      false
+     */
+    bool InitDB(rocksdb::Status &retStatus);
+     /**
+     * @brief
+     */
     void DestoryDB();
+    /**
+     * @brief
+     * 
+     * @return      true
+     * @return      false
+     */
     bool IsInitSuccess();
+    /**
+     * @brief
+     * @param       info:
+     */
+    void GetDBMemoryUsage(std::string& info);
 
 private:
     friend class BackgroundErrorListener;
@@ -40,7 +65,6 @@ private:
     rocksdb::TransactionDB *db_;
     std::mutex is_init_success_mutex_;
     bool is_init_success_;
-    // std::mutex read_write_mutex_;
 };
 
 

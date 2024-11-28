@@ -1,14 +1,15 @@
 /*
- * @Author: lyw 15035612538@163.com
- * @Date: 2024-04-11 11:03:18
- * @LastEditors: lyw 15035612538@163.com
- * @LastEditTime: 2024-04-15 00:34:58
+ * @Author: HaoXuDong 2848973813@qq.com
+ * @Date: 2024-08-08 19:50:53
+ * @LastEditors: HaoXuDong 2848973813@qq.com
+ * @LastEditTime: 2024-09-04 09:20:43
  * @FilePath: /don/common/global.h
+ * @Description:https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 #ifndef _GLOBAL_H
 #define _GLOBAL_H
 #include <string>
-
+#include <atomic>
 namespace global{
 
     enum class BuildType
@@ -27,10 +28,14 @@ namespace global{
         static const BuildType kBuildType = BuildType::kBuildType_Dev;
     #endif
 
-    // version
-    static const std::string kNetVersion = "1.1";
-    static const std::string kLinuxCompatible = "1.1.0";
-    static const std::string kWindowsCompatible = "1.1.0";
+     
+    /*
+        @brief Version 
+        @brief Network version number depends on the first version number
+    */
+    static const std::string kNetVersion = "2.3";
+    static const std::string kLinuxCompatible = "2.3.0";
+    static const std::string kWindowsCompatible = "2.3.0";
     static const std::string kIOSCompatible = "4.0.4";
     static const std::string kAndroidCompatible = "3.1.0";
 
@@ -51,14 +56,15 @@ namespace global{
     #endif
 
     //thread pool 
-    static const int ca_thread_number = 8;
-    static const int net_thread_number = 50;
-    static const int broadcast_thread_number = 18;
-    static const int tx_thread_number = 512;
-    static const int syncBlock_thread_number = 10;
-    static const int saveBlock_thread_number = 512;
+    static const int kCaThreadNumber = 15;
+    static const int kNetThreadNumber = 15;
+    static const int kBroadcastThreadNumber = 10;
+    static const int kTxThreadNumber = 50;
+    static const int kSyncBlockThreadNumber = 25;
+    static const int kSaveBlockThreadNumber = 50;
 
-    static const int work_thread_number = 200;
+    static const int kBlockThreadNumber = 50;
+    static const int kWorkThreadNumber = 50;
 }
 
 #endif // !_GLOBAL_H

@@ -63,7 +63,6 @@ int Util::IsLinuxVersionCompatible(const std::vector<std::string> & vRecvVersion
 		return -5;
 	}
 
-	//Version number judgment
 	std::vector<std::string> vOwnerVersionNum;
 	StringUtil::SplitString(vOwnerVersion[1], ".", vOwnerVersionNum);
 	if (vOwnerVersionNum.size() == 0)
@@ -214,4 +213,29 @@ int Util::IsVersionCompatible( std::string recvVersion )
 		}
 	}
 	return 0;
+}
+
+int64_t Util::integerRound(int64_t number)
+{
+    int64_t floor = number / 10 * 10;
+    int64_t remainder = number % 10;
+    if (remainder < 5 )
+    {
+        return floor;
+    }
+    else
+    {
+        return floor + 10;
+    }
+}
+
+int64_t Util::Unsign64toSign64(uint64_t u)
+{
+    if (u > static_cast<size_t>((std::numeric_limits<int64_t>::max)()))
+    {
+        throw std::overflow_error(
+                "uint64_t value " +  std::to_string(u) + " cannot be stored in a variable of type int.");
+    }
+
+    return static_cast<int64_t>(u);
 }

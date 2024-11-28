@@ -4483,6 +4483,175 @@ class GetBlockByHashAck final :
 };
 // -------------------------------------------------------------------
 
+class SyncNodeHashReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SyncNodeHashReq) */ {
+ public:
+  inline SyncNodeHashReq() : SyncNodeHashReq(nullptr) {}
+  ~SyncNodeHashReq() override;
+  explicit PROTOBUF_CONSTEXPR SyncNodeHashReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SyncNodeHashReq(const SyncNodeHashReq& from);
+  SyncNodeHashReq(SyncNodeHashReq&& from) noexcept
+    : SyncNodeHashReq() {
+    *this = ::std::move(from);
+  }
+
+  inline SyncNodeHashReq& operator=(const SyncNodeHashReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SyncNodeHashReq& operator=(SyncNodeHashReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SyncNodeHashReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SyncNodeHashReq* internal_default_instance() {
+    return reinterpret_cast<const SyncNodeHashReq*>(
+               &_SyncNodeHashReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    23;
+
+  friend void swap(SyncNodeHashReq& a, SyncNodeHashReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SyncNodeHashReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SyncNodeHashReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SyncNodeHashReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SyncNodeHashReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SyncNodeHashReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SyncNodeHashReq& from) {
+    SyncNodeHashReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SyncNodeHashReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "SyncNodeHashReq";
+  }
+  protected:
+  explicit SyncNodeHashReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSelfNodeIdFieldNumber = 1,
+    kMsgIdFieldNumber = 2,
+  };
+  // string self_node_id = 1;
+  void clear_self_node_id();
+  const std::string& self_node_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_self_node_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_self_node_id();
+  PROTOBUF_NODISCARD std::string* release_self_node_id();
+  void set_allocated_self_node_id(std::string* self_node_id);
+  private:
+  const std::string& _internal_self_node_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_self_node_id(const std::string& value);
+  std::string* _internal_mutable_self_node_id();
+  public:
+
+  // string msg_id = 2;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // @@protoc_insertion_point(class_scope:SyncNodeHashReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr self_node_id_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
 class SyncNodeHashAck final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SyncNodeHashAck) */ {
  public:
@@ -4531,7 +4700,7 @@ class SyncNodeHashAck final :
                &_SyncNodeHashAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    24;
 
   friend void swap(SyncNodeHashAck& a, SyncNodeHashAck& b) {
     a.Swap(&b);
@@ -4661,175 +4830,6 @@ class SyncNodeHashAck final :
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr self_node_id_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr hash_;
-    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  };
-  union { Impl_ _impl_; };
-  friend struct ::TableStruct_sync_5fblock_2eproto;
-};
-// -------------------------------------------------------------------
-
-class SyncNodeHashReq final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SyncNodeHashReq) */ {
- public:
-  inline SyncNodeHashReq() : SyncNodeHashReq(nullptr) {}
-  ~SyncNodeHashReq() override;
-  explicit PROTOBUF_CONSTEXPR SyncNodeHashReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
-
-  SyncNodeHashReq(const SyncNodeHashReq& from);
-  SyncNodeHashReq(SyncNodeHashReq&& from) noexcept
-    : SyncNodeHashReq() {
-    *this = ::std::move(from);
-  }
-
-  inline SyncNodeHashReq& operator=(const SyncNodeHashReq& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline SyncNodeHashReq& operator=(SyncNodeHashReq&& from) noexcept {
-    if (this == &from) return *this;
-    if (GetOwningArena() == from.GetOwningArena()
-  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
-        && GetOwningArena() != nullptr
-  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
-    ) {
-      InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return default_instance().GetMetadata().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return default_instance().GetMetadata().reflection;
-  }
-  static const SyncNodeHashReq& default_instance() {
-    return *internal_default_instance();
-  }
-  static inline const SyncNodeHashReq* internal_default_instance() {
-    return reinterpret_cast<const SyncNodeHashReq*>(
-               &_SyncNodeHashReq_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    24;
-
-  friend void swap(SyncNodeHashReq& a, SyncNodeHashReq& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(SyncNodeHashReq* other) {
-    if (other == this) return;
-  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() != nullptr &&
-        GetOwningArena() == other->GetOwningArena()) {
-   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
-    if (GetOwningArena() == other->GetOwningArena()) {
-  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(SyncNodeHashReq* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  SyncNodeHashReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<SyncNodeHashReq>(arena);
-  }
-  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const SyncNodeHashReq& from);
-  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom( const SyncNodeHashReq& from) {
-    SyncNodeHashReq::MergeImpl(*this, from);
-  }
-  private:
-  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
-  public:
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  uint8_t* _InternalSerialize(
-      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
-
-  private:
-  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
-  void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(SyncNodeHashReq* other);
-
-  private:
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "SyncNodeHashReq";
-  }
-  protected:
-  explicit SyncNodeHashReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                       bool is_message_owned = false);
-  public:
-
-  static const ClassData _class_data_;
-  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kSelfNodeIdFieldNumber = 1,
-    kMsgIdFieldNumber = 2,
-  };
-  // string self_node_id = 1;
-  void clear_self_node_id();
-  const std::string& self_node_id() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_self_node_id(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_self_node_id();
-  PROTOBUF_NODISCARD std::string* release_self_node_id();
-  void set_allocated_self_node_id(std::string* self_node_id);
-  private:
-  const std::string& _internal_self_node_id() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_self_node_id(const std::string& value);
-  std::string* _internal_mutable_self_node_id();
-  public:
-
-  // string msg_id = 2;
-  void clear_msg_id();
-  const std::string& msg_id() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_msg_id(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_msg_id();
-  PROTOBUF_NODISCARD std::string* release_msg_id();
-  void set_allocated_msg_id(std::string* msg_id);
-  private:
-  const std::string& _internal_msg_id() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
-  std::string* _internal_mutable_msg_id();
-  public:
-
-  // @@protoc_insertion_point(class_scope:SyncNodeHashReq)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  struct Impl_ {
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr self_node_id_;
-    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -8510,6 +8510,110 @@ inline void GetBlockByHashAck::set_allocated_msg_id(std::string* msg_id) {
 
 // -------------------------------------------------------------------
 
+// SyncNodeHashReq
+
+// string self_node_id = 1;
+inline void SyncNodeHashReq::clear_self_node_id() {
+  _impl_.self_node_id_.ClearToEmpty();
+}
+inline const std::string& SyncNodeHashReq::self_node_id() const {
+  // @@protoc_insertion_point(field_get:SyncNodeHashReq.self_node_id)
+  return _internal_self_node_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SyncNodeHashReq::set_self_node_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.self_node_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SyncNodeHashReq.self_node_id)
+}
+inline std::string* SyncNodeHashReq::mutable_self_node_id() {
+  std::string* _s = _internal_mutable_self_node_id();
+  // @@protoc_insertion_point(field_mutable:SyncNodeHashReq.self_node_id)
+  return _s;
+}
+inline const std::string& SyncNodeHashReq::_internal_self_node_id() const {
+  return _impl_.self_node_id_.Get();
+}
+inline void SyncNodeHashReq::_internal_set_self_node_id(const std::string& value) {
+  
+  _impl_.self_node_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SyncNodeHashReq::_internal_mutable_self_node_id() {
+  
+  return _impl_.self_node_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SyncNodeHashReq::release_self_node_id() {
+  // @@protoc_insertion_point(field_release:SyncNodeHashReq.self_node_id)
+  return _impl_.self_node_id_.Release();
+}
+inline void SyncNodeHashReq::set_allocated_self_node_id(std::string* self_node_id) {
+  if (self_node_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.self_node_id_.SetAllocated(self_node_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.self_node_id_.IsDefault()) {
+    _impl_.self_node_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:SyncNodeHashReq.self_node_id)
+}
+
+// string msg_id = 2;
+inline void SyncNodeHashReq::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& SyncNodeHashReq::msg_id() const {
+  // @@protoc_insertion_point(field_get:SyncNodeHashReq.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SyncNodeHashReq::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SyncNodeHashReq.msg_id)
+}
+inline std::string* SyncNodeHashReq::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:SyncNodeHashReq.msg_id)
+  return _s;
+}
+inline const std::string& SyncNodeHashReq::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void SyncNodeHashReq::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SyncNodeHashReq::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SyncNodeHashReq::release_msg_id() {
+  // @@protoc_insertion_point(field_release:SyncNodeHashReq.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void SyncNodeHashReq::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:SyncNodeHashReq.msg_id)
+}
+
+// -------------------------------------------------------------------
+
 // SyncNodeHashAck
 
 // string self_node_id = 1;
@@ -8660,110 +8764,6 @@ inline void SyncNodeHashAck::set_allocated_hash(std::string* hash) {
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:SyncNodeHashAck.hash)
-}
-
-// -------------------------------------------------------------------
-
-// SyncNodeHashReq
-
-// string self_node_id = 1;
-inline void SyncNodeHashReq::clear_self_node_id() {
-  _impl_.self_node_id_.ClearToEmpty();
-}
-inline const std::string& SyncNodeHashReq::self_node_id() const {
-  // @@protoc_insertion_point(field_get:SyncNodeHashReq.self_node_id)
-  return _internal_self_node_id();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void SyncNodeHashReq::set_self_node_id(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.self_node_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:SyncNodeHashReq.self_node_id)
-}
-inline std::string* SyncNodeHashReq::mutable_self_node_id() {
-  std::string* _s = _internal_mutable_self_node_id();
-  // @@protoc_insertion_point(field_mutable:SyncNodeHashReq.self_node_id)
-  return _s;
-}
-inline const std::string& SyncNodeHashReq::_internal_self_node_id() const {
-  return _impl_.self_node_id_.Get();
-}
-inline void SyncNodeHashReq::_internal_set_self_node_id(const std::string& value) {
-  
-  _impl_.self_node_id_.Set(value, GetArenaForAllocation());
-}
-inline std::string* SyncNodeHashReq::_internal_mutable_self_node_id() {
-  
-  return _impl_.self_node_id_.Mutable(GetArenaForAllocation());
-}
-inline std::string* SyncNodeHashReq::release_self_node_id() {
-  // @@protoc_insertion_point(field_release:SyncNodeHashReq.self_node_id)
-  return _impl_.self_node_id_.Release();
-}
-inline void SyncNodeHashReq::set_allocated_self_node_id(std::string* self_node_id) {
-  if (self_node_id != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.self_node_id_.SetAllocated(self_node_id, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.self_node_id_.IsDefault()) {
-    _impl_.self_node_id_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:SyncNodeHashReq.self_node_id)
-}
-
-// string msg_id = 2;
-inline void SyncNodeHashReq::clear_msg_id() {
-  _impl_.msg_id_.ClearToEmpty();
-}
-inline const std::string& SyncNodeHashReq::msg_id() const {
-  // @@protoc_insertion_point(field_get:SyncNodeHashReq.msg_id)
-  return _internal_msg_id();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void SyncNodeHashReq::set_msg_id(ArgT0&& arg0, ArgT... args) {
- 
- _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:SyncNodeHashReq.msg_id)
-}
-inline std::string* SyncNodeHashReq::mutable_msg_id() {
-  std::string* _s = _internal_mutable_msg_id();
-  // @@protoc_insertion_point(field_mutable:SyncNodeHashReq.msg_id)
-  return _s;
-}
-inline const std::string& SyncNodeHashReq::_internal_msg_id() const {
-  return _impl_.msg_id_.Get();
-}
-inline void SyncNodeHashReq::_internal_set_msg_id(const std::string& value) {
-  
-  _impl_.msg_id_.Set(value, GetArenaForAllocation());
-}
-inline std::string* SyncNodeHashReq::_internal_mutable_msg_id() {
-  
-  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
-}
-inline std::string* SyncNodeHashReq::release_msg_id() {
-  // @@protoc_insertion_point(field_release:SyncNodeHashReq.msg_id)
-  return _impl_.msg_id_.Release();
-}
-inline void SyncNodeHashReq::set_allocated_msg_id(std::string* msg_id) {
-  if (msg_id != nullptr) {
-    
-  } else {
-    
-  }
-  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (_impl_.msg_id_.IsDefault()) {
-    _impl_.msg_id_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:SyncNodeHashReq.msg_id)
 }
 
 // -------------------------------------------------------------------

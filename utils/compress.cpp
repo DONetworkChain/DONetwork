@@ -1,46 +1,32 @@
 #include "compress.h"
 #include <zlib.h>
 #include <string.h>
-#include "include/logging.h"
-using namespace std;
+#include "include/logging.h"	
 
 void Compress::compressFunc()
 {   
-    uint64_t datalen = (m_raw_data.size() + 12) * 1.001 + 2;
+    uint64_t datalen = (_rawData.size() + 12) * 1.001 + 2;
     char * pressdata = new char[datalen]{0};
-    int err = compress((Bytef *)pressdata, &datalen, (const Bytef *)m_raw_data.c_str(), m_raw_data.size());
+    int err = compress((Bytef *)pressdata, &datalen, (const Bytef *)_rawData.c_str(), _rawData.size());
     if (err != Z_OK) {
-        cerr << "compress error:" << err << endl;
+        ERRORLOG("compress error: ", err);
         return;
     }
-    string tmp(pressdata, datalen);
-    m_compress_data = tmp;
+    std::string tmp(pressdata, datalen);
+    _compressData = tmp;
 
     delete [] pressdata;
 }
-// void Compress::uncompressFunc()
-// {   
-//     char * uncompressData= new char[m_uncompress_len]{0};
-//     int err = uncompress((Bytef *)uncompressData, &m_uncompress_len,(const Bytef *)m_compress_data.c_str(), m_compress_data.size());
-//     if (err != Z_OK) {
-//         cerr << "uncompress error:" << err << endl;
-//         return;
-//     }
-//     string tmp(uncompressData, m_uncompress_len);
-//     m_raw_data = tmp;
-
-//     delete [] uncompressData;
-// }
 
 void Compress::uncompressFunc() {
-    size_t initialCapacity = m_uncompress_len;
+    size_t initialCapacity = _uncompressLen;
     int maxAttempts = 2;
 
     char* uncompressData = new char[initialCapacity]{0};
 
     int err;
     do {
-        err = uncompress((Bytef*)uncompressData, &initialCapacity, (const Bytef*)m_compress_data.c_str(), m_compress_data.size());
+        err = uncompress((Bytef*)uncompressData, &initialCapacity, (const Bytef*)_compressData.c_str(), _compressData.size());
 
         if (err == Z_BUF_ERROR && maxAttempts > 0) {
             // Increase capacity
@@ -56,8 +42,8 @@ void Compress::uncompressFunc() {
         }
     } while (err == Z_BUF_ERROR && maxAttempts > 0);
 
-    string tmp(uncompressData, uncompressData + initialCapacity);
-    m_raw_data = tmp;
+    std::string tmp(uncompressData, uncompressData + initialCapacity);
+    _rawData = tmp;
 
     delete[] uncompressData;
 }

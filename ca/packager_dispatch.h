@@ -1,13 +1,5 @@
-/*
- * @Author: lyw 15035612538@163.com
- * @Date: 2024-03-25 10:07:37
- * @LastEditors: lyw 15035612538@163.com
- * @LastEditTime: 2024-04-15 00:35:07
- * @FilePath: /don/ca/packager_dispatch.h
- */
 #ifndef _PACKAGER_DISPATCH_
 #define _PACKAGER_DISPATCH_
-
 #include <map>
 #include <list>
 #include <mutex>
@@ -20,26 +12,30 @@
 #include "../proto/transaction.pb.h"
 #include "../proto/ca_protomsg.pb.h"
 #include "../proto/block.pb.h"
-#include "utils/CTimer.hpp"
-#include "utils/MagicSingleton.h"
+#include "utils/timer.hpp"
+#include "utils/magic_singleton.h"
 #include "include/logging.h"
-#include "ca/ca_dispatchtx.h"
+
 
 class packDispatch
 {
-    /* data */
 public:
     packDispatch(/* args */) = default;
     ~packDispatch() = default;
 public:
-    void Add(const std::string& contractHash, const std::vector<std::string>& dependentContracts);
-    void AddTx(const std::string& contractHash, const CTransaction &msg);
-    void GetDependentData(std::vector<std::pair<std::set<std::string>,std::vector<CTransaction>>> &Dependent ,std::vector<CTransaction> &nonDependent);
+    void Add(const std::string& contractHash, const std::vector<std::string>& dependentContracts,const CTransaction &msg);
+    void GetDependentData(std::map<uint32_t, std::map<std::string, CTransaction>>& dependentContractTxMap, std::map<std::string, CTransaction> &nonContractTxMap);
 private:
+
     std::mutex _packDispatchMutex;
-    std::unordered_map<std::string, std::vector<std::string>> _packDispatchDependent;
-    std::mutex _packDispatchTxMsgReqMutex;
-    std::unordered_map<std::string, CTransaction> _packDispatchTxCache; 
+    struct Hash_Depend
+    {
+        uint64_t time;
+        std::unordered_map<std::string, std::vector<std::string>> hash_dep;
+        std::unordered_map<std::string, CTransaction> hash_tx; 
+    };
+
+    Hash_Depend _packDispatchDependent;
 };
 
 #endif

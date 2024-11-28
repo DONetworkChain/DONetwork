@@ -1,39 +1,198 @@
-/*
- * @Author: lyw 15035612538@163.com
- * @Date: 2024-03-24 14:58:14
- * @LastEditors: lyw 15035612538@163.com
- * @LastEditTime: 2024-04-15 00:35:57
- * @FilePath: /don/net/handle_event.h
+/**
+ * *****************************************************************************
+ * @file        handle_event.h
+ * @brief       
+ * @author  ()
+ * @date        2023-09-26
+ * @copyright   don
+ * *****************************************************************************
  */
 #ifndef _HANDLE_EVENT_H_
 #define _HANDLE_EVENT_H_
 
 #include <memory>
-#include "net.pb.h"
+
 #include "./msg_queue.h"
-#include "ca_protomsg.pb.h"
-#include "proto/interface.pb.h"
+#include "../utils/cycliclist.hpp"
+#include "../common/task_pool.h"
+#include "../proto/net.pb.h"
+#include "../proto/ca_protomsg.pb.h"
+#include "../proto/interface.pb.h"
 
-int handlePrintMsgReq(const std::shared_ptr<PrintMsgReq> &printMsgReq, const MsgData &from);
-int handleRegisterNodeReq(const std::shared_ptr<RegisterNodeReq> &registerNode, const MsgData &from);
-int handleRegisterNodeAck(const std::shared_ptr<RegisterNodeAck> &registerNodeAck, const MsgData &from);
-int VerifyRegisterNode(const NodeInfo &nodeinfo, uint32_t &from_ip, uint32_t &from_port);
-int handleBroadcastMsgReq(const std::shared_ptr<BroadcastMsgReq> &broadcaseMsgReq, const MsgData &from);
 
-int handlePingReq(const std::shared_ptr<PingReq> &pingReq, const MsgData &from);
-int handlePongReq(const std::shared_ptr<PongReq> &pongReq, const MsgData &from);
-int handleSyncNodeReq(const std::shared_ptr<SyncNodeReq> &syncNodeReq, const MsgData &from);
-int handleSyncNodeAck(const std::shared_ptr<SyncNodeAck> &syncNodeAck, const MsgData &from);
-int handleEchoReq(const std::shared_ptr<EchoReq> &echoReq, const MsgData &from);
-int handleEchoAck(const std::shared_ptr<EchoAck> &echoAck, const MsgData &from);
+/**
+ * @brief       
+ * 
+ * @param       printMsgReq 
+ * @param       from 
+ * @return      int 
+ */
+int HandlePrintMsgReq(const std::shared_ptr<PrintMsgReq> &printMsgReq, const MsgData &from);
 
-int handleNodeHeightChangedReq(const std::shared_ptr<NodeHeightChangedReq>& req, const MsgData& from);
-int handleNodeBase58AddrChangedReq(const std::shared_ptr<NodeBase58AddrChangedReq>& req, const MsgData& from);
+/**
+ * @brief       
+ * 
+ * @param       nodeinfo 
+ * @param       fromIp 
+ * @param       fromPort 
+ * @return      int 
+ */
 
-int handleCheckTxReq(const std::shared_ptr<CheckTxReq>& req, const MsgData& from);
-int handleCheckTxAck(const std::shared_ptr<CheckTxAck>& ack, const MsgData& from);
+/**
+ * @brief       
+ * 
+ * @param       nodeinfo 
+ * @param       fromIp 
+ * @param       fromPort 
+ * @return      int 
+ */
+int VerifyRegisterNode(const NodeInfo &nodeinfo, uint32_t &fromIp, uint32_t &fromPort);
 
-int handleBroadcastMsg( const std::shared_ptr<BuildBlockBroadcastMsg>& msg, const MsgData& msgdata);
-// int handleContractBroadcastMsg(const std::shared_ptr<BuildContractBlockBroadcastMsg>& msg,const MsgData& msgdata);
+/**
+ * @brief       
+ * 
+ * @param       msg
+ * @param       targetAddressCycleList  
+ */
+void initCyclicTargetAddresses(const std::shared_ptr<BuildBlockBroadcastMsg>& msg, Cycliclist<std::string> & targetAddressCycleList);
+
+/**
+ * @brief       
+ * 
+ * @param       cyclicNodeList
+ */
+void initCyclicNodeList(Cycliclist<std::string>& cyclicNodeList);
+
+/**
+ * @brief       
+ * 
+ * @param       msg 
+ * @param       msgData 
+ * @return      int 
+ */
+int HandleBroadcastMsg( const std::shared_ptr<BuildBlockBroadcastMsg>& msg, const MsgData& msgData);
+
+
+/**
+ * @brief       
+ * 
+ * @param       registerNode 
+ * @param       from 
+ * @return      int 
+ */
+int HandleRegisterNodeReq(const std::shared_ptr<RegisterNodeReq> &registerNode, const MsgData &from);
+/**
+ * @brief       
+ * 
+ * @param       registerNodeAck 
+ * @param       from 
+ * @return      int 
+ */
+int HandleRegisterNodeAck(const std::shared_ptr<RegisterNodeAck> &registerNodeAck, const MsgData &from);
+
+/**
+ * @brief       
+ * 
+ * @param       pingReq 
+ * @param       from 
+ * @return      int 
+ */
+int HandlePingReq(const std::shared_ptr<PingReq> &pingReq, const MsgData &from);
+/**
+ * @brief       
+ * 
+ * @param       pongReq 
+ * @param       from 
+ * @return      int 
+ */
+int HandlePongReq(const std::shared_ptr<PongReq> &pongReq, const MsgData &from);
+
+/**
+ * @brief       
+ * 
+ * @param       syncNodeReq 
+ * @param       from 
+ * @return      int 
+ */
+int HandleSyncNodeReq(const std::shared_ptr<SyncNodeReq> &syncNodeReq, const MsgData &from);
+/**
+ * @brief       
+ * 
+ * @param       syncNodeAck 
+ * @param       from 
+ * @return      int 
+ */
+int HandleSyncNodeAck(const std::shared_ptr<SyncNodeAck> &syncNodeAck, const MsgData &from);
+
+/**
+ * @brief       
+ * 
+ * @param       echoReq 
+ * @param       from 
+ * @return      int 
+ */
+int HandleEchoReq(const std::shared_ptr<EchoReq> &echoReq, const MsgData &from);
+/**
+ * @brief       
+ * 
+ * @param       echoAck 
+ * @param       from 
+ * @return      int 
+ */
+int HandleEchoAck(const std::shared_ptr<EchoAck> &echoAck, const MsgData &from);
+
+/**
+ * @brief       
+ * 
+ * @param       testReq 
+ * @param       from 
+ * @return      int 
+ */
+int HandleNetTestReq(const std::shared_ptr<TestNetReq> &testReq, const MsgData &from);
+/**
+ * @brief       
+ * 
+ * @param       testAck 
+ * @param       from 
+ * @return      int 
+ */
+int HandleNetTestAck(const std::shared_ptr<TestNetAck> &testAck, const MsgData &from);
+
+/**
+ * @brief       
+ * 
+ * @param       req 
+ * @param       from 
+ * @return      int 
+ */
+int HandleCheckTxReq(const std::shared_ptr<CheckTxReq>& req, const MsgData& from);
+/**
+ * @brief       
+ * 
+ * @param       ack 
+ * @param       from 
+ * @return      int 
+ */
+int HandleCheckTxAck(const std::shared_ptr<CheckTxAck>& ack, const MsgData& from);
+
+/**
+ * @brief       
+ * 
+ * @param       req 
+ * @param       from 
+ * @return      int 
+ */
+int HandleNodeHeightChangedReq(const std::shared_ptr<NodeHeightChangedReq>& req, const MsgData& from);
+/**
+ * @brief       
+ * 
+ * @param       req 
+ * @param       from 
+ * @return      int 
+ */
+int HandleNodeAddrChangedReq(const std::shared_ptr<NodeAddrChangedReq>& req, const MsgData& from);
+
+int HandleGetTxUtxoHashReq(const std::shared_ptr<GetUtxoHashReq>& req, const MsgData& from);
+int HandleGetTxUtxoHashAck(const std::shared_ptr<GetUtxoHashAck>& ack, const MsgData& from);
 
 #endif

@@ -1,76 +1,196 @@
+/**
+ * *****************************************************************************
+ * @file        dispatcher.h
+ * @brief       
+ * @author  ()
+ * @date        2023-09-26
+ * @copyright   don
+ * *****************************************************************************
+ */
 
 #ifndef _IP_DISPATCHER_H_
 #define _IP_DISPATCHER_H_
 
-#include "msg_queue.h"
 #include <functional>
-#include <google/protobuf/descriptor.h>
 #include <map>
-#include "utils/MagicSingleton.h"
-typedef google::protobuf::Message Message;
-typedef google::protobuf::Descriptor Descriptor;
-typedef std::shared_ptr<Message> MessagePtr;
-typedef std::function<int(const MessagePtr &, const MsgData &)> ProtoCallBack;
+
+#include "./msg_queue.h"
+#include "../common/protobuf_define.h"
 
 class ProtobufDispatcher
 {
 public:
-    int handle(const MsgData &data);
+    /**
+     * @brief       
+     * 
+     * @param       data 
+     * @return      int 
+     */
+    int Handle(const MsgData &data);
 
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     * @param       cb 
+     */
     template <typename T>
-    void ca_registerCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
-    template <typename T>
-    void net_registerCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
-    template <typename T>
-    void broadcast_registerCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
+    void CaRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
 
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     * @param       cb 
+     */
     template <typename T>
-    void tx_registerCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
+    void NetRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
+    
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     * @param       cb 
+     */
     template <typename T>
-    void syncBlock_registerCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
-    template <typename T>
-    void saveBlock_registerCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
+    void BroadcastRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
 
-    template <typename T>
-    void ca_unRegisterCallback();
-    template <typename T>
-    void net_unRegisterCallback();
-    template <typename T>
-    void broadcast_unRegisterCallback();
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     * @param       cb 
+     */
 
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     * @param       cb 
+     */
     template <typename T>
-    void block_unRegisterCallback();    
+    void TxRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
+    
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     * @param       cb 
+     */
+    template <typename T>
+    void SyncBlockRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
 
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     * @param       cb 
+     */
+    template <typename T>
+    void SaveBlockRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
+
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     * @param       cb 
+     */
     template <typename T>
     void BlockRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb);
 
-    void registerAll();
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     */
+    template <typename T>
+    void CaUnregisterCallback();
 
-    void task_info(std::ostringstream& oss);
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     */
+    template <typename T>
+    void NetUnregisterCallback();
+
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     */
+    template <typename T>
+    void BroadcastUnregisterCallback();
+
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     */
+    template <typename T>
+    void TxUnregisterCallback();
+
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     */
+    template <typename T>
+    void SyncBlockUnregisterCallback();
+
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     */
+    template <typename T>
+    void SaveBlockUnregisterCallback();
+
+    /**
+     * @brief       
+     * 
+     * @tparam T 
+     */
+    template <typename T>
+    void BlockUnregisterCallback();
+
+    /**
+     * @brief       
+     * 
+     * @param       oss 
+     */
+    void TaskInfo(std::ostringstream& oss);
 private:
-    std::map<const std::string, ProtoCallBack> ca_protocbs_;
-    std::map<const std::string, ProtoCallBack> net_protocbs_;
-    std::map<const std::string, ProtoCallBack> broadcast_protocbs_;
+    /**
+     * @brief       
+     * 
+     * @param       where 
+     * @return      std::string 
+     */
+    friend std::string PrintCache(int where);
 
-    std::map<const std::string, ProtoCallBack> tx_protocbs_;
-    std::map<const std::string, ProtoCallBack> syncBlock_protocbs_;
-    std::map<const std::string, ProtoCallBack> saveBlock_protocbs_;
-    std::map<const std::string, ProtoCallBack> blockProtocbs;
+    std::map<const std::string, ProtoCallBack> _caProtocbs;
+    std::map<const std::string, ProtoCallBack> _netProtocbs;
+    std::map<const std::string, ProtoCallBack> _broadcastProtocbs;
+    std::map<const std::string, ProtoCallBack> _txProtocbs;
+    std::map<const std::string, ProtoCallBack> _syncBlockProtocbs;
+    std::map<const std::string, ProtoCallBack> _saveBlockProtocbs;
+    std::map<const std::string, ProtoCallBack> _blockProtocbs;
 };
 
 template <typename T>
-void ProtobufDispatcher::ca_registerCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
+void ProtobufDispatcher::CaRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
 {
-    ca_protocbs_[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
+    _caProtocbs[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
     {
         return cb(std::static_pointer_cast<T>(msg), from);
     };
 }
 
 template <typename T>
-void ProtobufDispatcher::net_registerCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
+void ProtobufDispatcher::NetRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
 {
-    net_protocbs_[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
+    _netProtocbs[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
     {
         return cb(std::static_pointer_cast<T>(msg), from);
     };
@@ -78,67 +198,88 @@ void ProtobufDispatcher::net_registerCallback(std::function<int(const std::share
 
 
 template <typename T>
-void ProtobufDispatcher::broadcast_registerCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
+void ProtobufDispatcher::BroadcastRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
 {
-    broadcast_protocbs_[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
+    _broadcastProtocbs[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
     {
         return cb(std::static_pointer_cast<T>(msg), from);
     };
 }
 
 template <typename T>
-void ProtobufDispatcher::tx_registerCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
+void ProtobufDispatcher::TxRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
 {
-    tx_protocbs_[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
+    _txProtocbs[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
     {
         return cb(std::static_pointer_cast<T>(msg), from);
     };
 }
 
 template <typename T>
-void ProtobufDispatcher::syncBlock_registerCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
+void ProtobufDispatcher::SyncBlockRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
 {
-    syncBlock_protocbs_[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
+    _syncBlockProtocbs[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
     {
         return cb(std::static_pointer_cast<T>(msg), from);
     };
 }
 
 template <typename T>
-void ProtobufDispatcher::saveBlock_registerCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
+void ProtobufDispatcher::SaveBlockRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
 {
-    saveBlock_protocbs_[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
+    _saveBlockProtocbs[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
     {
         return cb(std::static_pointer_cast<T>(msg), from);
     };
 }
-
-template <typename T>
-void ProtobufDispatcher::ca_unRegisterCallback()
-{
-    ca_protocbs_.erase(T::descriptor()->name());
-}
-
-template <typename T>
-void ProtobufDispatcher::net_unRegisterCallback()
-{
-    net_protocbs_.erase(T::descriptor()->name());
-}
-
 
 template <typename T>
 void ProtobufDispatcher::BlockRegisterCallback(std::function<int(const std::shared_ptr<T> &msg, const MsgData &from)> cb)
 {
-    blockProtocbs[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
+    _blockProtocbs[T::descriptor()->name()] = [cb](const MessagePtr &msg, const MsgData &from)->int
     {
         return cb(std::static_pointer_cast<T>(msg), from);
     };
 }
 
 template <typename T>
-void ProtobufDispatcher::block_unRegisterCallback()
+void ProtobufDispatcher::CaUnregisterCallback()
 {
-    blockProtocbs.erase(T::descriptor()->name());
+    _caProtocbs.erase(T::descriptor()->name());
+}
+template <typename T>
+void ProtobufDispatcher::NetUnregisterCallback()
+{
+    _netProtocbs.erase(T::descriptor()->name());
 }
 
+template <typename T>
+void ProtobufDispatcher::BroadcastUnregisterCallback()
+{
+    _broadcastProtocbs.erase(T::descriptor()->name());
+}
+
+template <typename T>
+void ProtobufDispatcher::TxUnregisterCallback()
+{
+    _txProtocbs.erase(T::descriptor()->name());
+}
+
+template <typename T>
+void ProtobufDispatcher::SyncBlockUnregisterCallback()
+{
+    _syncBlockProtocbs.erase(T::descriptor()->name());
+}
+
+template <typename T>
+void ProtobufDispatcher::SaveBlockUnregisterCallback()
+{
+    _saveBlockProtocbs.erase(T::descriptor()->name());
+}
+
+template <typename T>
+void ProtobufDispatcher::BlockUnregisterCallback()
+{
+    _blockProtocbs.erase(T::descriptor()->name());
+}
 #endif

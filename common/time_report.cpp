@@ -1,47 +1,41 @@
 #include "time_report.h"
 #include "../utils/time_util.h"
-#include "../utils/MagicSingleton.h"
+#include "../utils/magic_singleton.h"
 #include "../include/logging.h"
 #include "../utils/console.h"
 #include "../utils/tmp_log.h"
 #include <iostream>
 
-TimeReport::TimeReport() : title_("Elapsed time:"), start_(0), end_(0)
+TimeReport::TimeReport() : _title("Elapsed time:"), _start(0), _end(0)
 {
     Init();
 }
 
-TimeReport::TimeReport(const string& title) : title_(title), start_(0), end_(0)
-{
-    Init();
-}
 
 TimeReport::~TimeReport()
 {
-    // End();
-    // Report();
+    
 }
 
 void TimeReport::Init()
 {
-    start_ = MagicSingleton<TimeUtil>::GetInstance()->getUTCTimestamp();
+    _start = MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp();
 }
 
 void TimeReport::End()
 {
-    end_ = MagicSingleton<TimeUtil>::GetInstance()->getUTCTimestamp();
+    _end = MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp();
 }
 
 void TimeReport::Report()
 {
-    Report(title_);
+    Report(_title);
 }
 
-void TimeReport::Report(const string& title)
+void TimeReport::Report(const std::string& title)
 {
     End();
-    int64_t usedTime = end_ - start_;
+    int64_t usedTime = _end - _start;
     double dUsendTime = ((double)usedTime) / 1000000.0;
     write_tmplog(title + " " + std::to_string(dUsendTime) + " second", OUTTYPE::file, "time_test");
-    //std::cout << RED << title << " " << dUsendTime << " second" << RESET << std::endl;
 }

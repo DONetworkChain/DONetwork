@@ -10,6 +10,16 @@
 #include <regex>
 #include <filesystem>
 
+
+#include <sstream>
+#include <cstring>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <netdb.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/select.h>
+
 #include "../utils/console.h"
 #include "../net/peer_node.h"
 #include "../common/global.h"
@@ -17,8 +27,15 @@
 #include "../net/ip_port.h"
 #include "../include/logging.h"
 #include "../net/peer_node.h"
-#include "../ca/ca_global.h"
+#include "../ca/global.h"
 
+namespace IpFactor
+{
+    extern bool kMOptionUsed;
+    extern bool kMLocalhostUsed;
+    extern bool kMPublicIpUsed;
+    extern std::string kPublicIpAddress;
+}
 
 int Config::InitFile()
 {
@@ -33,11 +50,6 @@ int Config::InitFile()
         {   
             return -1;
         }
-        // if(_version != kNewConfigName)
-        // {
-        //     std::cout<<"Please make sure that you've delete the config file,and reboot the program." << std::endl;
-        //     return -3;
-        // }
     }
     f.close();
 
@@ -52,11 +64,6 @@ int Config::InitFile()
         {
             return -2;
         }
-        // if(_version != kNewConfigName)
-        // {
-        //     std::cout<<"Please make sure that you've delete the config file,and reboot the program." << std::endl;
-        //     return -3;
-        // }
         outFile << tmpJson.dump(4);
         outFile.close();    
         
@@ -73,9 +80,9 @@ int Config::InitFile()
       return 0;
     }
 
-    //GetAllServerAddress();
     return 0;
 }
+
 
 int Config::_Parse(nlohmann::json json)
 {
@@ -103,14 +110,24 @@ int Config::_Parse(nlohmann::json json)
         {
             _server.insert(server.get<std::string>());
         }
+
+        if(IpFactor::kPublicIpAddress.empty()) 
+        {   
+            for(auto& reconnoitre : sentinelNode){
+                IpFactor::kPublicIpAddress = reconnoitre;
+                if(_ip.empty()){
+                    _ip=ExecuteBasedOnGlobalOptions();
+                }
+            }
+        }
+        else
+        {
+            _ip=ExecuteBasedOnGlobalOptions();
+        }
+
        _serverPort = json[kCfgServerPort].get<uint32_t>();
 
        _version = json[kCfgKeyVersion].get<std::string>();  
-        // if(_version != kNewConfigName)
-        // {
-        //     std::cout<<"Please make sure that you've delete the config file,and reboot the program." << std::endl;
-        //     return -2;
-        // }
 
         }
 
@@ -118,9 +135,10 @@ int Config::_Parse(nlohmann::json json)
         {
          std::cout << e.what() << std::endl; 
         }
-                
+        SetIP(_ip);       
        return 0;
         }
+
 
     //_Check whether the nickname is legal
 #define Dverify(Info,param,minnum,maxnum,ip,regex_var)  \
@@ -129,7 +147,7 @@ int Config::_Parse(nlohmann::json json)
         if(!Info.param.empty() && !std::regex_match(Info.param,std::regex(regex_var)))  \
         {   \
             std::cout << RED << "Config error in " << #param << " _Verify " ; \
-            if(ip)  std::cout << " ip: " << IpPort::ipsz(ip);    \
+            if(ip)  std::cout << " ip: " << IpPort::IpSz(ip);    \
             std::cout << RESET << std::endl;    \
             return -1;  \
         }   \
@@ -138,7 +156,7 @@ int Config::_Parse(nlohmann::json json)
     {   \
         std::cout << RED << "Config error in "<< #param << " length! " << #param << " : " <<  Info.param  \
         << " length is: " << Info.param.length() << " The range should be:" << minnum << " - " << maxnum ;  \
-        if(ip)  std::cout << " ip: " << IpPort::ipsz(ip);    \
+        if(ip)  std::cout << " ip: " << IpPort::IpSz(ip);    \
         std::cout << RESET << std::endl;    \
         return -2;  \
     }   \
@@ -146,8 +164,8 @@ int Config::_Parse(nlohmann::json json)
 
 int Config::_Verify(const Node& node)
 {
-    Dverify(node,name,0,45,node.public_ip,"^[\u4E00-\u9FA5A-Za-z0-9_]+$");
-    Dverify(node,logo,0,512,node.public_ip,"^(http|https|ftp)\\://([a-zA-Z0-9\\.\\-]+(\\:[a-zA-Z0-9\\.&%\\$\\-]+)*@)?((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9\\-]+\\.)*[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,4})(\\:[0-9]+)?(/[^/][a-zA-Z0-9\\.\\,\?\'\\/\\+&%\\$#\\=~_\\-@]*)*$"); 
+    Dverify(node,name,0,45,node.publicIp,"^[\u4E00-\u9FA5A-Za-z0-9_]+$");
+    Dverify(node,logo,0,512,node.publicIp,"^(http|https|ftp)\\://([a-zA-Z0-9\\.\\-]+(\\:[a-zA-Z0-9\\.&%\\$\\-]+)*@)?((25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9])\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[1-9]|0)\\.(25[0-5]|2[0-4][0-9]|[0-1]{1}[0-9]{2}|[1-9]{1}[0-9]{1}|[0-9])|([a-zA-Z0-9\\-]+\\.)*[a-zA-Z0-9\\-]+\\.[a-zA-Z]{2,4})(\\:[0-9]+)?(/[^/][a-zA-Z0-9\\.\\,\?\'\\/\\+&%\\$#\\=~_\\-@]*)*$"); 
     return 0;
 }
 
@@ -187,18 +205,10 @@ int Config::_Filter()
     {
         return -5;
     }
-    // if(!FilterBool(_rpc))
-    // {
-    //     return -6;
-    // }
-    // if(FilterVersion(_version) != 0)
-    // {
-    //     return -7;
-    // }
-    
+
     if(FilterHttpCallback(_httpCallback) != 0)
     {
-        return -8;
+        return -6;
     }
     return 0;
 }
@@ -258,6 +268,10 @@ std::set<std::string> Config::GetServer()
     return _server;
 }
 
+std::string Config::GetVersion(){
+    return _version;
+}
+
 int Config::GetLog(Config::Log & log)
 {
     log = _log;
@@ -282,8 +296,8 @@ int Config::FilterHttpPort(T & t)
     }
     else 
     {
-    cerr << RED << "http port format error" <<  RESET << std::endl;
-    return -1;
+        std::cerr << RED << "http port format error" <<  RESET << std::endl;
+        return -1;
     }
     
 }
@@ -300,8 +314,8 @@ int Config::FilterServerPort(T & t)
     }
     else 
     {
-    cerr << RED << "server port format error" <<  RESET << std::endl;
-    return -1;
+        std::cerr << RED << "server port format error" <<  RESET << std::endl;
+        return -1;
     }
     
 }
@@ -320,8 +334,8 @@ int Config::FilterIp(T & t)
     }
     else 
     {
-    std::cerr << RED <<"ip address format error and has set default" << RESET << std::endl ;
-    return -1;
+        std::cerr << RED <<"ip address format error and has set default" << RESET << std::endl ;
+        return -1;
     }
 }
 
@@ -337,8 +351,8 @@ int Config::FilterServerIp(T & t)
     }
     else 
     {
-    std::cerr << RED <<"server ip address format error and has set default" << RESET << std::endl ;
-    return -1;
+        std::cerr << RED <<"server ip address format error and has set default" << RESET << std::endl ;
+        return -1;
     }
 }
 
@@ -391,17 +405,21 @@ bool Config::FilterBool(T  &t)
     {
         return false;
     }
-    
 }
 
 void Config::GetAllServerAddress()
 {
-    std::vector<Node> nodeList =
-        MagicSingleton<PeerNode>::GetInstance()->get_nodelist();
-        tmpJson["server"].clear();
+    std::vector<Node> nodeList =MagicSingleton<PeerNode>::GetInstance()->GetNodelist();
+    tmpJson["server"].clear();
+
+    for(auto servernode : sentinelNode)
+    {
+        tmpJson["server"].push_back(servernode);
+    }
+
    	for (auto node : nodeList)
 	{
-        std::string ip = std::string(IpPort::ipsz(node.public_ip));
+        std::string ip = std::string(IpPort::IpSz(node.publicIp));
         std::vector<std::string> a = tmpJson["server"];
         if (std::find(a.begin(), a.end(), ip) != a.end())
         {
@@ -428,10 +446,175 @@ void Config::_Check()
 {
     while(!_exitThread)  
     {
-    std::this_thread::sleep_for(std::chrono::hours(1));
-    GetAllServerAddress(); 
+        for(int i=0; i <= 1800 && !_exitThread ; i++){
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+        }
+        
+        if(!_exitThread){
+            GetAllServerAddress(); 
+        }
     }
     return ;
 }
 
+int set_non_blocking(int sock) {
+    int flags = fcntl(sock, F_GETFL, 0);
+    if (flags == -1) return -1;
+    flags |= O_NONBLOCK;
+    return fcntl(sock, F_SETFL, flags);
+}
 
+
+bool connect_with_timeout(int sock, const struct sockaddr *addr, socklen_t addrlen, int timeout_sec) {
+    
+    int res = connect(sock, addr, addrlen);
+    if (res < 0) {
+        if (errno == EINPROGRESS) { 
+            fd_set write_fds;
+            FD_ZERO(&write_fds);
+            FD_SET(sock, &write_fds);
+
+            struct timeval timeout;
+            timeout.tv_sec = timeout_sec;
+            timeout.tv_usec = 0;
+
+            res = select(sock + 1, NULL, &write_fds, NULL, &timeout);
+            if (res > 0) {
+                int so_error;
+                socklen_t len = sizeof(so_error);
+                getsockopt(sock, SOL_SOCKET, SO_ERROR, &so_error, &len);
+                if (so_error == 0) {
+                    return true; 
+                } else 
+                {
+                    errno = so_error;
+                }
+            } else if (res == 0) {
+                errno = ETIMEDOUT;
+            }
+        }
+        return false;
+    }
+    return true; 
+}
+
+std::string Config::Get_RequestIp(const std::string& host, const std::string& path, int port) {
+    int sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock < 0) {
+        perror("ERROR opening socket");
+        return "";
+    }
+
+    if (set_non_blocking(sock) == -1) {
+        perror("Failed to set non-blocking socket");
+        close(sock);
+        return "";
+    }
+
+    struct timeval timeout;
+    timeout.tv_sec = 10;  
+    timeout.tv_usec = 0;
+
+    
+    //setsockopt(sock, SOL_SOCKET, SO_SNDTIMEO, &timeout, sizeof(timeout));
+    //setsockopt(sock, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+
+    struct hostent *server = gethostbyname(host.c_str());
+    if (!server) {
+        fprintf(stderr, "ERROR, no such host\n");
+        close(sock);
+        return "";
+    }
+
+    struct sockaddr_in serv_addr = {};
+    serv_addr.sin_family = AF_INET;
+    std::memcpy(&serv_addr.sin_addr.s_addr, server->h_addr, server->h_length);
+    serv_addr.sin_port = htons(port);
+
+   if (!connect_with_timeout(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr), 2)) {
+        perror("ERROR connecting");
+        close(sock);
+        return "";
+    }
+
+    std::stringstream request;
+    request << "GET " << path << " HTTP/1.1\r\n"
+            << "Host: " << host << "\r\n"
+            << "Connection: close\r\n\r\n";
+
+    int total_sent = 0;
+    std::string request_str = request.str();
+    while (total_sent < request_str.size()) {
+        int sent = send(sock, request_str.c_str() + total_sent, request_str.size() - total_sent, 0);
+        if (sent < 0) {
+            perror("ERROR writing to socket");
+            close(sock);
+            return "";
+        }
+        total_sent += sent;
+    }
+
+    sleep(2);
+    char buffer[4096];
+    std::string response;
+    fd_set read_fds;
+    FD_ZERO(&read_fds);
+    FD_SET(sock, &read_fds);
+    timeout.tv_sec = 10;  
+    timeout.tv_usec = 0;
+
+    if (select(sock + 1, &read_fds, NULL, NULL, &timeout) > 0) {
+        int received = recv(sock, buffer, sizeof(buffer) - 1, 0);
+        if (received > 0) {
+            buffer[received] = '\0';
+            response = buffer;
+        } 
+        else if (received == 0) {
+            std::cout<<"No data received"<<std::endl;
+        } 
+        else {
+            perror("ERROR reading from socket");
+        }
+    } 
+    else {
+        perror("ERROR waiting for data");
+    }
+
+    close(sock);
+    size_t found = response.find("\r\n\r\n");
+    return found != std::string::npos ? response.substr(found + 4) : "";
+}
+
+std::string Config::ExecuteBasedOnGlobalOptions(){
+    std::string host = IpFactor::kPublicIpAddress;
+    std::string path = "/GetPublicIp";
+    int port = _httpPort;
+    if (IpFactor::kMPublicIpUsed) 
+    {          
+        std::string response = Get_RequestIp(host, path, port);
+         if(response.empty()){
+           std::cout << "ip is set to the local IP" << std::endl;
+        }
+        return response; 
+    }
+    else if (IpFactor::kMLocalhostUsed) 
+    {
+        
+        return "";
+    }
+    else if(IpFactor::kMOptionUsed)
+    {
+        
+        if(_ip.empty())
+        {
+            std::string response = Get_RequestIp(host, path, port);       
+            if(response.empty())
+            {
+                std::cout << "ip is set to the local IP" << std::endl;
+            }
+            return response; 
+        }
+        return _ip;
+    }
+    return _ip;
+}

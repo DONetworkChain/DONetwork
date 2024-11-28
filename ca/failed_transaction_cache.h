@@ -3,25 +3,21 @@
  * @file        failed_transaction_cache.h
  * @brief       
  * @date        2023-09-27
- * @copyright   tfsc
+ * @copyright   don
  * *****************************************************************************
  */
-#ifndef _DON_STROAGE_
-#define _DON_STROAGE_
+#ifndef _TRAN_STROAGE_
+#define _TRAN_STROAGE_
 
-#include <net/if.h>
-#include <unistd.h>
-
-#include <shared_mutex>
 #include <map>
+#include <unistd.h>
+#include <shared_mutex>
 
-#include "ca_txhelper.h"
-#include "ca_global.h"
+#include "utils/timer.hpp"
+#include "ca/txhelper.h"
+#include "ca/transaction_cache.h"
 #include "proto/transaction.pb.h"
 #include "proto/ca_protomsg.pb.h"
-#include "net/msg_queue.h"
-#include "utils/time_util.h"
-#include "ca/ca_transaction_cache.h"
 
 /**
  * @brief       
@@ -44,7 +40,13 @@ public:
      * @param       msg: 
      * @return      int 
      */
-	int Add(uint64_t height,const ContractTempTxMsgReq& msg);
+	int Add(uint64_t height,const TxMsgReq& msg);
+    
+    /**
+     * @brief       
+     * 
+     */
+	void _StartTimer();
 
     /**
      * @brief       
@@ -52,12 +54,6 @@ public:
      */
     void StopTimer() { _timer.Cancel(); }
 private:
-    /**
-     * @brief       
-     * 
-     */
-	void _StartTimer();
-
     /**
      * @brief       
      * 
@@ -72,9 +68,8 @@ private:
      */
 	void _Check();
 private:
-//    friend std::string PrintCache(int where);
     mutable std::shared_mutex _txPendingMutex;
-    std::map<uint64_t, std::vector<ContractTempTxMsgReq>> _txPending;
+    std::map<uint64_t, std::vector<TxMsgReq>> _txPending;
 	CTimer _timer;
 };
 

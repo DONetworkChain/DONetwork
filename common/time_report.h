@@ -1,34 +1,71 @@
-// Time report.  create 20211215  Liu
+/**
+ * *****************************************************************************
+ * @file        time_report.h
+ * @brief       
+ * @author  ()
+ * @date        2023-09-28
+ * @copyright   don
+ * *****************************************************************************
+ */
 #ifndef __TIME_REPORT_H__
 #define __TIME_REPORT_H__
 
 #include <string>
 
-using namespace std;
-
 class TimeReport
 {
 public:
     TimeReport();
-    TimeReport(const string& title);
     ~TimeReport();
-    TimeReport(const TimeReport&) = delete;
     TimeReport(TimeReport&&) = delete;
     TimeReport& operator=(const TimeReport&) = delete;
     TimeReport& operator=(TimeReport&&) = delete;
 
 public:
+    
+    /**
+     * @brief       
+     * 
+     */
     void Init();
+    
+    /**
+     * @brief       
+     * 
+     */
     void End();
+    
+    /**
+     * @brief       
+     * 
+     */
     void Report();
-    void Report(const string& title);
-    uint64_t GetStart() { return start_; }
-    uint64_t GetEnd() { return end_; }
+    
+    /**
+     * @brief       
+     * 
+     * @param       title 
+     */
+    void Report(const std::string& title);
+    
+    /**
+     * @brief       Get the Start object
+     * 
+     * @return      uint64_t 
+     */
+    uint64_t GetStart() { return _start; }
+
+    /**
+     * @brief       Get the End object
+     * 
+     * @return      uint64_t 
+     */
+    uint64_t GetEnd() { return _end; }
 
 private:
-    string title_;
-    uint64_t start_;
-    uint64_t end_;
+    std::string _title;
+    uint64_t _start;
+    uint64_t _end;
 };
 
 #endif // __TIME_REPORT_H__

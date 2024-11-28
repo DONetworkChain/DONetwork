@@ -5,12 +5,12 @@
 #include <string>
 
 constexpr int END_FLAG              = 7777777;             
-constexpr int IP_LEN				= 16;
+constexpr int IP_LEN				= 16;	//IPlenght
 			  
 constexpr int MAXEPOLLSIZE			= 100000;
 constexpr int MAXLINE				= 10240l;
 			   
-constexpr int HEART_INTVL     =  60;   //detect how many times to start sending heartbeat packets,
+constexpr int HEART_INTVL     =  60;   // detect how many times to start sending heartbeat packets,
 constexpr int HEART_PROBES    =  3;   //If the other party does not respond after sending several heartbeat packets, the connection is close
 
 
@@ -29,14 +29,15 @@ using i64 = std::int64_t;
 using nll = long long;
 using ull = unsigned long long;
 
+
 //Network packet body
-typedef struct net_pack
+typedef struct NetPack
 {
 	uint32_t	len				= 0;
 	std::string	data			= "";
-	uint32_t   	checksum		= 0;
+	uint32_t   	checkSum		= 0;
 	uint32_t	flag			= 0;
-	uint32_t    end_flag        = END_FLAG;
-}net_pack;
+	uint32_t    endFlag        = END_FLAG;
+}NetPack;
 
 #endif

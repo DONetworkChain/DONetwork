@@ -1,11 +1,10 @@
 #include "ca/failed_transaction_cache.h" 
 #include "db/db_api.h"
-#include "ca_transaction.h"
-#include "utils/AccountManager.h"
-#include "utils/DONbenchmark.h"
-#include "common/time_report.h"
+#include "transaction.h"
+
 #include "utils/tmp_log.h"
 #include "common/task_pool.h"
+#include "include/logging.h"
 
 void FailedTransactionCache::_StartTimer()
 {
@@ -39,7 +38,7 @@ void FailedTransactionCache::_Check()
     {
         ERRORLOG("db get top failed!!");
     }
-    std::vector<Node> nodelist = MagicSingleton<PeerNode>::GetInstance()->get_nodelist();
+    std::vector<Node> nodelist = MagicSingleton<PeerNode>::GetInstance()->GetNodelist();
     auto begin = _txPending.begin();
     std::vector<decltype(begin)> deleteTxPending;
     std::unique_lock<std::shared_mutex> lock(_txPendingMutex);
@@ -66,14 +65,14 @@ void FailedTransactionCache::_Check()
 
         for(auto& txmsg : iter->second)
         {
-            MagicSingleton<taskPool>::GetInstance()->commit_tx_task(
+            MagicSingleton<TaskPool>::GetInstance()->CommitTxTask(
                 [=](){
                     CTransaction tx;
-                    int ret = DoHandleContractTx(std::make_shared<ContractTempTxMsgReq>(txmsg), tx);
+                    int ret = DoHandleTx(std::make_shared<TxMsgReq>(txmsg), tx);
 
                     tx.clear_hash();
                     tx.clear_verifysign();
-                    tx.set_hash(getsha256hash(tx.SerializeAsString()));
+                    tx.set_hash(Getsha256hash(tx.SerializeAsString()));
                     if (ret != 0)
                     {
                         DEBUGLOG("TTT tx verify <fail!!!> txhash:{}, ret:{}", tx.hash(), ret);
@@ -92,8 +91,9 @@ void FailedTransactionCache::_Check()
     }
 }
 	
-int FailedTransactionCache::Add(uint64_t height, const ContractTempTxMsgReq& msg)
+int FailedTransactionCache::Add(uint64_t height, const TxMsgReq& msg)
 {
+    DEBUGLOG("TTT NodelistHeight discontent, repeat commit tx ,NodeHeight:{}, txUtxoHeight:{}",height, msg.txmsginfo().txutxoheight());
     std::unique_lock<std::shared_mutex> lock(_txPendingMutex);
     _txPending[height].push_back(msg);
 	return 0;

@@ -7,7 +7,6 @@
 #include "define.h"
 #include "ip_port.h"
 
-
 enum ConnKind
 {
 	NOTYET, //Not yet connected
@@ -18,75 +17,74 @@ enum ConnKind
 class Node
 {
 public:
-	std::string     base58address     = "";
+	std::string     address     = "";
 	std::string     pub               = "";
 	std::string     sign              = "";
-	std::string 	public_base58addr = "";
 	std::string     identity          = "";
 	std::string     name			  = "";
 	std::string 	logo			  = "";
 	std::string		ver			      = "";
-	uint32_t      listen_ip                = 0;
-	uint32_t      listen_port              = 0;
-	uint32_t      public_ip                = 0;
-	uint32_t      public_port              = 0;
-	uint32_t      height                   = 0;
-	uint64_t      time_stamp				  = 0;
-	ConnKind conn_kind                = NOTYET;
-	int32_t      fd                       = -1;
-	int32_t      heart_probes             = HEART_PROBES;
+	uint32_t        listenIp                = 0;
+	uint32_t        listenPort              = 0;
+	uint32_t        publicIp                = 0;
+	uint32_t        publicPort              = 0;
+	uint32_t        height                   = 0;
+	ConnKind 	    connKind                = NOTYET;
+	int32_t         fd                       = -1;
+	int32_t         pulse             = HEART_PROBES;
 
-	Node()
+	Node(){}
+	Node(std::string nodeAddress)
 	{
-	}
-	Node(std::string node_base58address)
-	{
-		base58address = node_base58address;
+		address = nodeAddress;
 	}
 
 	bool operator==(const Node &obj) const
 	{
-		return base58address == obj.base58address;
+		return address == obj.address;
 	}
 
-	bool operator>(const Node &obj) //
+	bool operator>(const Node &obj)
 	{
-		return (*this).base58address > obj.base58address;
+		return (*this).address > obj.address;
 	}
 
 	void ResetHeart()
 	{
-		heart_probes = HEART_PROBES;
+		pulse = HEART_PROBES;
 	}
-	void print()
+	void Print()
 	{
-		std::cout << info_str() << std::endl;
+		std::cout << InfoStr() << std::endl;
 	}
 
-	std::string info_str()
+	std::string InfoStr()
 	{
 		
 		std::ostringstream oss;
 		oss
-			<< "  ip(" << std::string(IpPort::ipsz(public_ip)) << ")"
-			<< "  port(" << public_port << ")"
-			<< "  ip_l(" << std::string(IpPort::ipsz(listen_ip)) << ")"
-			<< "  port_l(" << listen_port << ")"
-			<< "  kind(" << conn_kind << ")"
+			<< "  ip(" << std::string(IpPort::IpSz(publicIp)) << ")"
+			<< "  port(" << publicPort << ")"
+			<< "  ip_l(" << std::string(IpPort::IpSz(listenIp)) << ")"
+			<< "  port_l(" << listenPort << ")"
+			<< "  kind(" << connKind << ")"
 			<< "  fd(" << fd << ")"
-			<< "  base58(" << base58address << ")"
-			<< "  heart_probes(" << heart_probes << ")"
+			<< "  addr(" << "0x"+ address << ")"
+			<< "  pulse(" << pulse << ")"
 			<< "  height( " << height << " )"
 			<< "  name(" << name << ")"
 			<< "  version(" << ver << ")"
+			<< "  logo(" << logo << ")"
 			<< std::endl;
 		return oss.str();
 	}
-	bool is_connected() const
+
+
+	bool IsConnected() const
 	{
 		return fd > 0 || fd == -2;
 	}
-	void set_height(uint32_t height)
+	void SetHeight(uint32_t height)
 	{
 		this->height = height;
 	}

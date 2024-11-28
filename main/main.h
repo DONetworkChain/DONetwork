@@ -2,12 +2,12 @@
 #define DON_MAIN_H
 
  
-void menu();
-bool init();
+void Menu();
+bool Init();
 bool InitConfig();
 bool InitLog();
 bool InitAccount();
-bool InitRocksDb();
+int  InitRocksDb();
 
 /*********Check Consistency*********/
 

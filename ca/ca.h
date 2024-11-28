@@ -1,13 +1,18 @@
+/**
+ * *****************************************************************************
+ * @file        ca.h
+ * @brief       
+ * @date        2023-09-26
+ * @copyright   don
+ * *****************************************************************************
+ */
+
 #ifndef DON_CA_H
 #define DON_CA_H
 
 #include <iostream>
 #include <thread>
 #include <shared_mutex>
-#include <string>
-#include <vector>
-#include <map>
-#include "proto/transaction.pb.h"
 
 #include "proto/transaction.pb.h"
 
@@ -16,79 +21,149 @@ extern bool bIsCreateTx;
 
 void RegisterCallback();
 void TestCreateTx(const std::vector<std::string> & addrs, const int & sleepTime);
-std::string PrintTime(uint64_t time);
-void CreateMultiThreadAutomaticDeployContract();
+
+/**
+ * @brief       CA initialization
+ * 
+ * @return      true success
+ * @return      false failure
+ */
+bool CaInit();
+
+/**
+ * @brief       CA cleanup function
+ */
+void CaCleanup();
+
+/**
+ * @brief       Related implementation functions used in the main menu
+ */
+void PrintBasicInfo();
+
+/**
+ * @brief       
+ */
+void HandleTransaction();
+
+/**
+ * @brief       
+ */
+void HandleStake();
+
+/**
+ * @brief       
+ */
+void HandleUnstake();
+
+/**
+ * @brief       
+ */
+void HandleInvest();
+
+/**
+ * @brief       
+ */
+void HandleDisinvest();
+
+/**
+ * @brief       
+ */
+void HandleBonus();
+
+/**
+ * @brief       
+ */
+void HandleAccountManger();
+
+/**
+ * @brief       
+ */
+void HandleSetdefaultAccount();
+
+/**
+ * @brief       
+ */
+void HandleDeployContract();
+
+/**
+ * @brief       
+ */
+void HandleCallContract();
+
+/**
+ * @brief       
+ */
+void HandleExportPrivateKey();
+
+/**
+ * @brief       NTPcheckout
+ * 
+ * @return      int 
+ */
+int CheckNtpTime();
+
+/**
+ * @brief       Get the Chain Height object
+ * 
+ * @param       chainHeight: 
+ * @return      int 
+ */
+int GetChainHeight(unsigned int & chainHeight);
+
+
+/**
+ * @brief       
+ * 
+ * @param       arg: 
+ * @param       ack: 
+ * @return      std::string 
+ */
+std::string RpcCallContract(void * arg,void *ack);
+
+/**
+ * @brief       
+ * 
+ * @param       arg: 
+ * @param       ack: 
+ * @return      std::string 
+ */
+std::string RpcDeployContract(void * arg,void *ack);
+
+/**
+ * @brief       
+ * 
+ * @param       tx: 
+ * @param       addr: 
+ * @return      int 
+ */
+int SigTx(CTransaction &tx,const std::string & addr);
+/**
+ * @brief   Deploy multiple contracts with one click   
+ * 
+ */
+void CreateAutomaticDeployContract();
+/**
+ * @brief   Processing contract transactions   
+ * 
+ */
+void HandleMultiDeployContract(const std::string &strFromAddr);
+/**
+ * @brief   The contract data is exported to json
+ * 
+ */
 void printJson();
 
-/**
-*@ Description: CA initialization
-*@ param none
-*@ return: return true for success and false for failure
-*/
-bool ca_init();
+void printJsonOnPremise();
 
+void PrintDBM2();
 
+std::string remove0xPrefix(std::string str);
 
+std::vector<uint8_t> hexStringToBytes(const std::string& hexString);
 
-/**
-*@ Description: CA cleanup function
-*@ param none
-*@ return: none
- */
-void ca_cleanup();
+std::string seedToHexString(const uint8_t seed[], size_t length);
 
-/**
-*@ Description: CA menu
-*@ param none
-*@ return: none
- */
-void ca_print();
+std::string addHexPrefix(std::string hexStr);
 
-
-
-/**
- * @description: Related implementation functions used in the main menu
- * @create: 20201104   LiuMingLiang
- */
-void ca_print_basic_info();
-void handle_transaction();
-void handle_declaration();
-void handle_stake();
-void handle_unstake();
-void handle_invest();
-void handle_disinvest();
-void handle_bonus();
-void handle_AccountManger();
-void handle_SetdefaultAccount();
-void handle_deploy_contract();
-
-void handle_call_contract();
-
-void handle_delegates_transaction();
-
-
-
-void handle_export_private_key();
-void handle_export_all_private_key();
-
-
-
-
-
-//==================rpc======================
-std::string handle__deploy_contract_rpc(void * arg,void *ack);
-
-std::string handle__call_contract_rpc(void * arg,void *ack);
-
-//NTPcheckout
-int checkNtpTime();
-
-bool isPublicIp(const std::string& ip);
-
-int get_chain_height(unsigned int & chainHeight);
-
-void title_version();
-
-int SigTx(CTransaction &tx,const std::string & addr);
-
+int ComputeHash();
 #endif

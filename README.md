@@ -40,7 +40,7 @@ cmake .. -DPRIMARYCHAIN=ON
 make
 ```
 
-### Translate and install the main network release version
+### Compile and install the main network release version
 
 ```
 mkdir build_primary_release && cd build_primary_release

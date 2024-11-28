@@ -39,7 +39,8 @@ PROTOBUF_CONSTEXPR TxMsgInfo::TxMsgInfo(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.contractstoragelist_)*/{}
   , /*decltype(_impl_.tx_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.height_)*/uint64_t{0u}
+  , /*decltype(_impl_.nodeheight_)*/uint64_t{0u}
+  , /*decltype(_impl_.txutxoheight_)*/uint64_t{0u}
   , /*decltype(_impl_.type_)*/0u
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct TxMsgInfoDefaultTypeInternal {
@@ -69,52 +70,6 @@ struct TxMsgReqDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TxMsgReqDefaultTypeInternal _TxMsgReq_default_instance_;
-PROTOBUF_CONSTEXPR ContractTempTxMsgReq::ContractTempTxMsgReq(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.signnodemsg_)*/{}
-  , /*decltype(_impl_.prevblkhashs_)*/{}
-  , /*decltype(_impl_.version_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.txmsginfo_)*/nullptr
-  , /*decltype(_impl_.vrfinfo_)*/nullptr
-  , /*decltype(_impl_.txvrfinfo_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct ContractTempTxMsgReqDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR ContractTempTxMsgReqDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~ContractTempTxMsgReqDefaultTypeInternal() {}
-  union {
-    ContractTempTxMsgReq _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ContractTempTxMsgReqDefaultTypeInternal _ContractTempTxMsgReq_default_instance_;
-PROTOBUF_CONSTEXPR Vrf::Vrf(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.data_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.vrfsign_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct VrfDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR VrfDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~VrfDefaultTypeInternal() {}
-  union {
-    Vrf _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 VrfDefaultTypeInternal _Vrf_default_instance_;
-PROTOBUF_CONSTEXPR NewVrf::NewVrf(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.vrfdata_)*/nullptr
-  , /*decltype(_impl_.vrfsign_)*/nullptr
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct NewVrfDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR NewVrfDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~NewVrfDefaultTypeInternal() {}
-  union {
-    NewVrf _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 NewVrfDefaultTypeInternal _NewVrf_default_instance_;
 PROTOBUF_CONSTEXPR VrfData::VrfData(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.vrflist_)*/{}
@@ -134,6 +89,20 @@ struct VrfDataDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 VrfDataDefaultTypeInternal _VrfData_default_instance_;
+PROTOBUF_CONSTEXPR Vrf::Vrf(
+    ::_pbi::ConstantInitialized): _impl_{
+    /*decltype(_impl_.vrfdata_)*/nullptr
+  , /*decltype(_impl_.vrfsign_)*/nullptr
+  , /*decltype(_impl_._cached_size_)*/{}} {}
+struct VrfDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR VrfDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~VrfDefaultTypeInternal() {}
+  union {
+    Vrf _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 VrfDefaultTypeInternal _Vrf_default_instance_;
 PROTOBUF_CONSTEXPR TxMsgAck::TxMsgAck(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.version_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
@@ -153,11 +122,12 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR BuildBlockBroadcastMsg::BuildBlockBroadcastMsg(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.castaddrs_)*/{}
+  , /*decltype(_impl_.vrfinfo_)*/{}
+  , /*decltype(_impl_.txvrfinfo_)*/{}
   , /*decltype(_impl_.version_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
   , /*decltype(_impl_.blockraw_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.vrfinfo_)*/nullptr
-  , /*decltype(_impl_.contractvrf_)*/nullptr
+  , /*decltype(_impl_.blockvrfinfo_)*/nullptr
   , /*decltype(_impl_.flag_)*/0
   , /*decltype(_impl_.type_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -170,41 +140,6 @@ struct BuildBlockBroadcastMsgDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BuildBlockBroadcastMsgDefaultTypeInternal _BuildBlockBroadcastMsg_default_instance_;
-PROTOBUF_CONSTEXPR BuildContractBlockBroadcastMsg::BuildContractBlockBroadcastMsg(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.castaddrs_)*/{}
-  , /*decltype(_impl_.version_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.blockraw_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.vrfinfo_)*/nullptr
-  , /*decltype(_impl_.flag_)*/0
-  , /*decltype(_impl_.type_)*/0
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct BuildContractBlockBroadcastMsgDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR BuildContractBlockBroadcastMsgDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~BuildContractBlockBroadcastMsgDefaultTypeInternal() {}
-  union {
-    BuildContractBlockBroadcastMsg _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BuildContractBlockBroadcastMsgDefaultTypeInternal _BuildContractBlockBroadcastMsg_default_instance_;
-PROTOBUF_CONSTEXPR BuildBlockBroadcastMsgAck::BuildBlockBroadcastMsgAck(
-    ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.version_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.id_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.success_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_.blockhash_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
-  , /*decltype(_impl_._cached_size_)*/{}} {}
-struct BuildBlockBroadcastMsgAckDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR BuildBlockBroadcastMsgAckDefaultTypeInternal()
-      : _instance(::_pbi::ConstantInitialized{}) {}
-  ~BuildBlockBroadcastMsgAckDefaultTypeInternal() {}
-  union {
-    BuildBlockBroadcastMsgAck _instance;
-  };
-};
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 BuildBlockBroadcastMsgAckDefaultTypeInternal _BuildBlockBroadcastMsgAck_default_instance_;
 PROTOBUF_CONSTEXPR ContractTxMsgReq::ContractTxMsgReq(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.contractdependentaddress_)*/{}
@@ -250,7 +185,7 @@ struct ContractPackagerMsgDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 ContractPackagerMsgDefaultTypeInternal _ContractPackagerMsg_default_instance_;
-static ::_pb::Metadata file_level_metadata_ca_5fprotomsg_2eproto[14];
+static ::_pb::Metadata file_level_metadata_ca_5fprotomsg_2eproto[10];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_ca_5fprotomsg_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_ca_5fprotomsg_2eproto = nullptr;
 
@@ -272,7 +207,8 @@ const uint32_t TableStruct_ca_5fprotomsg_2eproto::offsets[] PROTOBUF_SECTION_VAR
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::TxMsgInfo, _impl_.type_),
   PROTOBUF_FIELD_OFFSET(::TxMsgInfo, _impl_.tx_),
-  PROTOBUF_FIELD_OFFSET(::TxMsgInfo, _impl_.height_),
+  PROTOBUF_FIELD_OFFSET(::TxMsgInfo, _impl_.nodeheight_),
+  PROTOBUF_FIELD_OFFSET(::TxMsgInfo, _impl_.txutxoheight_),
   PROTOBUF_FIELD_OFFSET(::TxMsgInfo, _impl_.contractstoragelist_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::TxMsgReq, _internal_metadata_),
@@ -287,34 +223,6 @@ const uint32_t TableStruct_ca_5fprotomsg_2eproto::offsets[] PROTOBUF_SECTION_VAR
   PROTOBUF_FIELD_OFFSET(::TxMsgReq, _impl_.signnodemsg_),
   PROTOBUF_FIELD_OFFSET(::TxMsgReq, _impl_.prevblkhashs_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::ContractTempTxMsgReq, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::ContractTempTxMsgReq, _impl_.version_),
-  PROTOBUF_FIELD_OFFSET(::ContractTempTxMsgReq, _impl_.txmsginfo_),
-  PROTOBUF_FIELD_OFFSET(::ContractTempTxMsgReq, _impl_.vrfinfo_),
-  PROTOBUF_FIELD_OFFSET(::ContractTempTxMsgReq, _impl_.txvrfinfo_),
-  PROTOBUF_FIELD_OFFSET(::ContractTempTxMsgReq, _impl_.signnodemsg_),
-  PROTOBUF_FIELD_OFFSET(::ContractTempTxMsgReq, _impl_.prevblkhashs_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::Vrf, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Vrf, _impl_.data_),
-  PROTOBUF_FIELD_OFFSET(::Vrf, _impl_.vrfsign_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::NewVrf, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::NewVrf, _impl_.vrfdata_),
-  PROTOBUF_FIELD_OFFSET(::NewVrf, _impl_.vrfsign_),
-  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::VrfData, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -327,6 +235,14 @@ const uint32_t TableStruct_ca_5fprotomsg_2eproto::offsets[] PROTOBUF_SECTION_VAR
   PROTOBUF_FIELD_OFFSET(::VrfData, _impl_.targetaddr_),
   PROTOBUF_FIELD_OFFSET(::VrfData, _impl_.vrflist_),
   PROTOBUF_FIELD_OFFSET(::VrfData, _impl_.txvrfinfohash_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Vrf, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Vrf, _impl_.vrfdata_),
+  PROTOBUF_FIELD_OFFSET(::Vrf, _impl_.vrfsign_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::TxMsgAck, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -346,34 +262,12 @@ const uint32_t TableStruct_ca_5fprotomsg_2eproto::offsets[] PROTOBUF_SECTION_VAR
   PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsg, _impl_.version_),
   PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsg, _impl_.id_),
   PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsg, _impl_.blockraw_),
-  PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsg, _impl_.vrfinfo_),
+  PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsg, _impl_.blockvrfinfo_),
   PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsg, _impl_.flag_),
   PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsg, _impl_.type_),
   PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsg, _impl_.castaddrs_),
-  PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsg, _impl_.contractvrf_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::BuildContractBlockBroadcastMsg, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::BuildContractBlockBroadcastMsg, _impl_.version_),
-  PROTOBUF_FIELD_OFFSET(::BuildContractBlockBroadcastMsg, _impl_.id_),
-  PROTOBUF_FIELD_OFFSET(::BuildContractBlockBroadcastMsg, _impl_.blockraw_),
-  PROTOBUF_FIELD_OFFSET(::BuildContractBlockBroadcastMsg, _impl_.vrfinfo_),
-  PROTOBUF_FIELD_OFFSET(::BuildContractBlockBroadcastMsg, _impl_.flag_),
-  PROTOBUF_FIELD_OFFSET(::BuildContractBlockBroadcastMsg, _impl_.type_),
-  PROTOBUF_FIELD_OFFSET(::BuildContractBlockBroadcastMsg, _impl_.castaddrs_),
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsgAck, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsgAck, _impl_.version_),
-  PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsgAck, _impl_.id_),
-  PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsgAck, _impl_.success_),
-  PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsgAck, _impl_.blockhash_),
+  PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsg, _impl_.vrfinfo_),
+  PROTOBUF_FIELD_OFFSET(::BuildBlockBroadcastMsg, _impl_.txvrfinfo_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::ContractTxMsgReq, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -405,32 +299,24 @@ const uint32_t TableStruct_ca_5fprotomsg_2eproto::offsets[] PROTOBUF_SECTION_VAR
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::SignNodeMsg)},
   { 9, -1, -1, sizeof(::TxMsgInfo)},
-  { 19, -1, -1, sizeof(::TxMsgReq)},
-  { 31, -1, -1, sizeof(::ContractTempTxMsgReq)},
-  { 43, -1, -1, sizeof(::Vrf)},
-  { 51, -1, -1, sizeof(::NewVrf)},
-  { 59, -1, -1, sizeof(::VrfData)},
-  { 72, -1, -1, sizeof(::TxMsgAck)},
-  { 82, -1, -1, sizeof(::BuildBlockBroadcastMsg)},
-  { 96, -1, -1, sizeof(::BuildContractBlockBroadcastMsg)},
-  { 109, -1, -1, sizeof(::BuildBlockBroadcastMsgAck)},
-  { 119, -1, -1, sizeof(::ContractTxMsgReq)},
-  { 128, -1, -1, sizeof(::VrfDataSource)},
-  { 135, -1, -1, sizeof(::ContractPackagerMsg)},
+  { 20, -1, -1, sizeof(::TxMsgReq)},
+  { 32, -1, -1, sizeof(::VrfData)},
+  { 45, -1, -1, sizeof(::Vrf)},
+  { 53, -1, -1, sizeof(::TxMsgAck)},
+  { 63, -1, -1, sizeof(::BuildBlockBroadcastMsg)},
+  { 78, -1, -1, sizeof(::ContractTxMsgReq)},
+  { 87, -1, -1, sizeof(::VrfDataSource)},
+  { 94, -1, -1, sizeof(::ContractPackagerMsg)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::_SignNodeMsg_default_instance_._instance,
   &::_TxMsgInfo_default_instance_._instance,
   &::_TxMsgReq_default_instance_._instance,
-  &::_ContractTempTxMsgReq_default_instance_._instance,
-  &::_Vrf_default_instance_._instance,
-  &::_NewVrf_default_instance_._instance,
   &::_VrfData_default_instance_._instance,
+  &::_Vrf_default_instance_._instance,
   &::_TxMsgAck_default_instance_._instance,
   &::_BuildBlockBroadcastMsg_default_instance_._instance,
-  &::_BuildContractBlockBroadcastMsg_default_instance_._instance,
-  &::_BuildBlockBroadcastMsgAck_default_instance_._instance,
   &::_ContractTxMsgReq_default_instance_._instance,
   &::_VrfDataSource_default_instance_._instance,
   &::_ContractPackagerMsg_default_instance_._instance,
@@ -439,53 +325,42 @@ static const ::_pb::Message* const file_default_instances[] = {
 const char descriptor_table_protodef_ca_5fprotomsg_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n\021ca_protomsg.proto\032\nsign.proto\"4\n\013SignN"
   "odeMsg\022\n\n\002id\030\001 \001(\t\022\014\n\004sign\030\002 \001(\014\022\013\n\003pub\030"
-  "\003 \001(\014\"R\n\tTxMsgInfo\022\014\n\004type\030\001 \001(\r\022\n\n\002tx\030\002"
-  " \001(\014\022\016\n\006height\030\003 \001(\004\022\033\n\023contractStorageL"
-  "ist\030\004 \003(\t\"\243\001\n\010TxMsgReq\022\017\n\007version\030\001 \001(\t\022"
-  "\035\n\ttxMsgInfo\030\002 \001(\0132\n.TxMsgInfo\022\025\n\007vrfInf"
-  "o\030\003 \001(\0132\004.Vrf\022\027\n\ttxvrfInfo\030\004 \001(\0132\004.Vrf\022!"
-  "\n\013signNodeMsg\030\005 \003(\0132\014.SignNodeMsg\022\024\n\014pre"
-  "vBlkHashs\030\006 \003(\t\"\265\001\n\024ContractTempTxMsgReq"
-  "\022\017\n\007version\030\001 \001(\t\022\035\n\ttxMsgInfo\030\002 \001(\0132\n.T"
-  "xMsgInfo\022\030\n\007vrfInfo\030\003 \001(\0132\007.NewVrf\022\032\n\ttx"
-  "vrfInfo\030\004 \001(\0132\007.NewVrf\022!\n\013signNodeMsg\030\005 "
-  "\003(\0132\014.SignNodeMsg\022\024\n\014prevBlkHashs\030\006 \003(\t\""
-  ",\n\003Vrf\022\014\n\004data\030\001 \001(\t\022\027\n\007Vrfsign\030\002 \001(\0132\006."
-  "CSign\"<\n\006NewVrf\022\031\n\007vrfdata\030\001 \001(\0132\010.VrfDa"
-  "ta\022\027\n\007Vrfsign\030\002 \001(\0132\006.CSign\"\206\001\n\007VrfData\022"
-  "\014\n\004hash\030\001 \001(\t\022\r\n\005range\030\002 \001(\004\022\022\n\npercenta"
-  "ge\030\003 \001(\004\022\016\n\006height\030\004 \001(\004\022\022\n\ntargetAddr\030\005"
-  " \001(\t\022\017\n\007vrfList\030\006 \003(\t\022\025\n\rtxvrfinfohash\030\007"
-  " \001(\t\"F\n\010TxMsgAck\022\017\n\007version\030\001 \001(\t\022\014\n\004cod"
-  "e\030\002 \001(\005\022\017\n\007message\030\003 \001(\t\022\n\n\002tx\030\004 \001(\014\"\253\001\n"
-  "\026BuildBlockBroadcastMsg\022\017\n\007version\030\001 \001(\t"
-  "\022\n\n\002id\030\002 \001(\t\022\020\n\010blockRaw\030\003 \001(\014\022\025\n\007vrfInf"
-  "o\030\004 \001(\0132\004.Vrf\022\014\n\004flag\030\005 \001(\005\022\014\n\004type\030\006 \001("
-  "\005\022\021\n\tcastAddrs\030\007 \003(\t\022\034\n\013contractvrf\030\010 \001("
-  "\0132\007.NewVrf\"\230\001\n\036BuildContractBlockBroadca"
-  "stMsg\022\017\n\007version\030\001 \001(\t\022\n\n\002id\030\002 \001(\t\022\020\n\010bl"
-  "ockRaw\030\003 \001(\014\022\030\n\007vrfInfo\030\004 \001(\0132\007.NewVrf\022\014"
-  "\n\004flag\030\005 \001(\005\022\014\n\004type\030\006 \001(\005\022\021\n\tcastAddrs\030"
-  "\007 \003(\t\"\\\n\031BuildBlockBroadcastMsgAck\022\017\n\007ve"
-  "rsion\030\001 \001(\t\022\n\n\002id\030\002 \001(\t\022\017\n\007success\030\003 \001(\t"
-  "\022\021\n\tblockhash\030\004 \001(\t\"n\n\020ContractTxMsgReq\022"
-  "\017\n\007version\030\001 \001(\t\022\'\n\010txMsgReq\030\002 \001(\0132\025.Con"
-  "tractTempTxMsgReq\022 \n\030contractDependentAd"
-  "dress\030\003 \003(\t\"$\n\rVrfDataSource\022\023\n\013vrfNodel"
-  "ist\030\001 \003(\t\"\246\001\n\023ContractPackagerMsg\022\017\n\007ver"
-  "sion\030\001 \001(\t\022\024\n\004sign\030\002 \001(\0132\006.CSign\022\'\n\010txMs"
-  "gReq\030\003 \003(\0132\025.ContractTempTxMsgReq\022\030\n\007vrf"
-  "Info\030\004 \001(\0132\007.NewVrf\022%\n\rvrfDataSource\030\005 \001"
-  "(\0132\016.VrfDataSourceb\006proto3"
+  "\003 \001(\014\"l\n\tTxMsgInfo\022\014\n\004type\030\001 \001(\r\022\n\n\002tx\030\002"
+  " \001(\014\022\022\n\nnodeHeight\030\003 \001(\004\022\024\n\014txUtxoHeight"
+  "\030\004 \001(\004\022\033\n\023contractStorageList\030\005 \003(\t\"\243\001\n\010"
+  "TxMsgReq\022\017\n\007version\030\001 \001(\t\022\035\n\ttxMsgInfo\030\002"
+  " \001(\0132\n.TxMsgInfo\022\025\n\007vrfInfo\030\003 \001(\0132\004.Vrf\022"
+  "\027\n\ttxvrfInfo\030\004 \001(\0132\004.Vrf\022!\n\013signNodeMsg\030"
+  "\005 \003(\0132\014.SignNodeMsg\022\024\n\014prevBlkHashs\030\006 \003("
+  "\t\"\206\001\n\007VrfData\022\014\n\004hash\030\001 \001(\t\022\r\n\005range\030\002 \001"
+  "(\004\022\022\n\npercentage\030\003 \001(\004\022\016\n\006height\030\004 \001(\004\022\022"
+  "\n\ntargetAddr\030\005 \001(\t\022\017\n\007vrfList\030\006 \003(\t\022\025\n\rt"
+  "xvrfinfohash\030\007 \001(\t\"9\n\003Vrf\022\031\n\007vrfdata\030\001 \001"
+  "(\0132\010.VrfData\022\027\n\007Vrfsign\030\002 \001(\0132\006.CSign\"F\n"
+  "\010TxMsgAck\022\017\n\007version\030\001 \001(\t\022\014\n\004code\030\002 \001(\005"
+  "\022\017\n\007message\030\003 \001(\t\022\n\n\002tx\030\004 \001(\014\"\302\001\n\026BuildB"
+  "lockBroadcastMsg\022\017\n\007version\030\001 \001(\t\022\n\n\002id\030"
+  "\002 \001(\t\022\020\n\010blockRaw\030\003 \001(\014\022\032\n\014blockVrfInfo\030"
+  "\004 \001(\0132\004.Vrf\022\014\n\004flag\030\005 \001(\005\022\014\n\004type\030\006 \001(\005\022"
+  "\021\n\tcastAddrs\030\007 \003(\t\022\025\n\007vrfInfo\030\010 \003(\0132\004.Vr"
+  "f\022\027\n\ttxvrfInfo\030\t \003(\0132\004.Vrf\"b\n\020ContractTx"
+  "MsgReq\022\017\n\007version\030\001 \001(\t\022\033\n\010txMsgReq\030\002 \001("
+  "\0132\t.TxMsgReq\022 \n\030contractDependentAddress"
+  "\030\003 \003(\t\"$\n\rVrfDataSource\022\023\n\013vrfNodelist\030\001"
+  " \003(\t\"\227\001\n\023ContractPackagerMsg\022\017\n\007version\030"
+  "\001 \001(\t\022\024\n\004sign\030\002 \001(\0132\006.CSign\022\033\n\010txMsgReq\030"
+  "\003 \003(\0132\t.TxMsgReq\022\025\n\007vrfInfo\030\004 \001(\0132\004.Vrf\022"
+  "%\n\rvrfDataSource\030\005 \001(\0132\016.VrfDataSourceb\006"
+  "proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_ca_5fprotomsg_2eproto_deps[1] = {
   &::descriptor_table_sign_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_ca_5fprotomsg_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_ca_5fprotomsg_2eproto = {
-    false, false, 1586, descriptor_table_protodef_ca_5fprotomsg_2eproto,
+    false, false, 1126, descriptor_table_protodef_ca_5fprotomsg_2eproto,
     "ca_protomsg.proto",
-    &descriptor_table_ca_5fprotomsg_2eproto_once, descriptor_table_ca_5fprotomsg_2eproto_deps, 1, 14,
+    &descriptor_table_ca_5fprotomsg_2eproto_once, descriptor_table_ca_5fprotomsg_2eproto_deps, 1, 10,
     schemas, file_default_instances, TableStruct_ca_5fprotomsg_2eproto::offsets,
     file_level_metadata_ca_5fprotomsg_2eproto, file_level_enum_descriptors_ca_5fprotomsg_2eproto,
     file_level_service_descriptors_ca_5fprotomsg_2eproto,
@@ -808,7 +683,8 @@ TxMsgInfo::TxMsgInfo(const TxMsgInfo& from)
   new (&_impl_) Impl_{
       decltype(_impl_.contractstoragelist_){from._impl_.contractstoragelist_}
     , decltype(_impl_.tx_){}
-    , decltype(_impl_.height_){}
+    , decltype(_impl_.nodeheight_){}
+    , decltype(_impl_.txutxoheight_){}
     , decltype(_impl_.type_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
@@ -821,9 +697,9 @@ TxMsgInfo::TxMsgInfo(const TxMsgInfo& from)
     _this->_impl_.tx_.Set(from._internal_tx(), 
       _this->GetArenaForAllocation());
   }
-  ::memcpy(&_impl_.height_, &from._impl_.height_,
+  ::memcpy(&_impl_.nodeheight_, &from._impl_.nodeheight_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.type_) -
-    reinterpret_cast<char*>(&_impl_.height_)) + sizeof(_impl_.type_));
+    reinterpret_cast<char*>(&_impl_.nodeheight_)) + sizeof(_impl_.type_));
   // @@protoc_insertion_point(copy_constructor:TxMsgInfo)
 }
 
@@ -834,7 +710,8 @@ inline void TxMsgInfo::SharedCtor(
   new (&_impl_) Impl_{
       decltype(_impl_.contractstoragelist_){arena}
     , decltype(_impl_.tx_){}
-    , decltype(_impl_.height_){uint64_t{0u}}
+    , decltype(_impl_.nodeheight_){uint64_t{0u}}
+    , decltype(_impl_.txutxoheight_){uint64_t{0u}}
     , decltype(_impl_.type_){0u}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -871,9 +748,9 @@ void TxMsgInfo::Clear() {
 
   _impl_.contractstoragelist_.Clear();
   _impl_.tx_.ClearToEmpty();
-  ::memset(&_impl_.height_, 0, static_cast<size_t>(
+  ::memset(&_impl_.nodeheight_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.type_) -
-      reinterpret_cast<char*>(&_impl_.height_)) + sizeof(_impl_.type_));
+      reinterpret_cast<char*>(&_impl_.nodeheight_)) + sizeof(_impl_.type_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -900,17 +777,25 @@ const char* TxMsgInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
         } else
           goto handle_unusual;
         continue;
-      // uint64 height = 3;
+      // uint64 nodeHeight = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
-          _impl_.height_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          _impl_.nodeheight_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // repeated string contractStorageList = 4;
+      // uint64 txUtxoHeight = 4;
       case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          _impl_.txutxoheight_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated string contractStorageList = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
           ptr -= 1;
           do {
             ptr += 1;
@@ -919,7 +804,7 @@ const char* TxMsgInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
             CHK_(ptr);
             CHK_(::_pbi::VerifyUTF8(str, "TxMsgInfo.contractStorageList"));
             if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<34>(ptr));
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
         } else
           goto handle_unusual;
         continue;
@@ -964,20 +849,26 @@ uint8_t* TxMsgInfo::_InternalSerialize(
         2, this->_internal_tx(), target);
   }
 
-  // uint64 height = 3;
-  if (this->_internal_height() != 0) {
+  // uint64 nodeHeight = 3;
+  if (this->_internal_nodeheight() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(3, this->_internal_height(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(3, this->_internal_nodeheight(), target);
   }
 
-  // repeated string contractStorageList = 4;
+  // uint64 txUtxoHeight = 4;
+  if (this->_internal_txutxoheight() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(4, this->_internal_txutxoheight(), target);
+  }
+
+  // repeated string contractStorageList = 5;
   for (int i = 0, n = this->_internal_contractstoragelist_size(); i < n; i++) {
     const auto& s = this->_internal_contractstoragelist(i);
     ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
       s.data(), static_cast<int>(s.length()),
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
       "TxMsgInfo.contractStorageList");
-    target = stream->WriteString(4, s, target);
+    target = stream->WriteString(5, s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -996,7 +887,7 @@ size_t TxMsgInfo::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated string contractStorageList = 4;
+  // repeated string contractStorageList = 5;
   total_size += 1 *
       ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.contractstoragelist_.size());
   for (int i = 0, n = _impl_.contractstoragelist_.size(); i < n; i++) {
@@ -1011,9 +902,14 @@ size_t TxMsgInfo::ByteSizeLong() const {
         this->_internal_tx());
   }
 
-  // uint64 height = 3;
-  if (this->_internal_height() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_height());
+  // uint64 nodeHeight = 3;
+  if (this->_internal_nodeheight() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_nodeheight());
+  }
+
+  // uint64 txUtxoHeight = 4;
+  if (this->_internal_txutxoheight() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_txutxoheight());
   }
 
   // uint32 type = 1;
@@ -1043,8 +939,11 @@ void TxMsgInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROT
   if (!from._internal_tx().empty()) {
     _this->_internal_set_tx(from._internal_tx());
   }
-  if (from._internal_height() != 0) {
-    _this->_internal_set_height(from._internal_height());
+  if (from._internal_nodeheight() != 0) {
+    _this->_internal_set_nodeheight(from._internal_nodeheight());
+  }
+  if (from._internal_txutxoheight() != 0) {
+    _this->_internal_set_txutxoheight(from._internal_txutxoheight());
   }
   if (from._internal_type() != 0) {
     _this->_internal_set_type(from._internal_type());
@@ -1076,9 +975,9 @@ void TxMsgInfo::InternalSwap(TxMsgInfo* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(TxMsgInfo, _impl_.type_)
       + sizeof(TxMsgInfo::_impl_.type_)
-      - PROTOBUF_FIELD_OFFSET(TxMsgInfo, _impl_.height_)>(
-          reinterpret_cast<char*>(&_impl_.height_),
-          reinterpret_cast<char*>(&other->_impl_.height_));
+      - PROTOBUF_FIELD_OFFSET(TxMsgInfo, _impl_.nodeheight_)>(
+          reinterpret_cast<char*>(&_impl_.nodeheight_),
+          reinterpret_cast<char*>(&other->_impl_.nodeheight_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata TxMsgInfo::GetMetadata() const {
@@ -1490,907 +1389,6 @@ void TxMsgReq::InternalSwap(TxMsgReq* other) {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
       file_level_metadata_ca_5fprotomsg_2eproto[2]);
-}
-
-// ===================================================================
-
-class ContractTempTxMsgReq::_Internal {
- public:
-  static const ::TxMsgInfo& txmsginfo(const ContractTempTxMsgReq* msg);
-  static const ::NewVrf& vrfinfo(const ContractTempTxMsgReq* msg);
-  static const ::NewVrf& txvrfinfo(const ContractTempTxMsgReq* msg);
-};
-
-const ::TxMsgInfo&
-ContractTempTxMsgReq::_Internal::txmsginfo(const ContractTempTxMsgReq* msg) {
-  return *msg->_impl_.txmsginfo_;
-}
-const ::NewVrf&
-ContractTempTxMsgReq::_Internal::vrfinfo(const ContractTempTxMsgReq* msg) {
-  return *msg->_impl_.vrfinfo_;
-}
-const ::NewVrf&
-ContractTempTxMsgReq::_Internal::txvrfinfo(const ContractTempTxMsgReq* msg) {
-  return *msg->_impl_.txvrfinfo_;
-}
-ContractTempTxMsgReq::ContractTempTxMsgReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:ContractTempTxMsgReq)
-}
-ContractTempTxMsgReq::ContractTempTxMsgReq(const ContractTempTxMsgReq& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  ContractTempTxMsgReq* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.signnodemsg_){from._impl_.signnodemsg_}
-    , decltype(_impl_.prevblkhashs_){from._impl_.prevblkhashs_}
-    , decltype(_impl_.version_){}
-    , decltype(_impl_.txmsginfo_){nullptr}
-    , decltype(_impl_.vrfinfo_){nullptr}
-    , decltype(_impl_.txvrfinfo_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.version_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.version_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_version().empty()) {
-    _this->_impl_.version_.Set(from._internal_version(), 
-      _this->GetArenaForAllocation());
-  }
-  if (from._internal_has_txmsginfo()) {
-    _this->_impl_.txmsginfo_ = new ::TxMsgInfo(*from._impl_.txmsginfo_);
-  }
-  if (from._internal_has_vrfinfo()) {
-    _this->_impl_.vrfinfo_ = new ::NewVrf(*from._impl_.vrfinfo_);
-  }
-  if (from._internal_has_txvrfinfo()) {
-    _this->_impl_.txvrfinfo_ = new ::NewVrf(*from._impl_.txvrfinfo_);
-  }
-  // @@protoc_insertion_point(copy_constructor:ContractTempTxMsgReq)
-}
-
-inline void ContractTempTxMsgReq::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.signnodemsg_){arena}
-    , decltype(_impl_.prevblkhashs_){arena}
-    , decltype(_impl_.version_){}
-    , decltype(_impl_.txmsginfo_){nullptr}
-    , decltype(_impl_.vrfinfo_){nullptr}
-    , decltype(_impl_.txvrfinfo_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.version_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.version_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-
-ContractTempTxMsgReq::~ContractTempTxMsgReq() {
-  // @@protoc_insertion_point(destructor:ContractTempTxMsgReq)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
-  SharedDtor();
-}
-
-inline void ContractTempTxMsgReq::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.signnodemsg_.~RepeatedPtrField();
-  _impl_.prevblkhashs_.~RepeatedPtrField();
-  _impl_.version_.Destroy();
-  if (this != internal_default_instance()) delete _impl_.txmsginfo_;
-  if (this != internal_default_instance()) delete _impl_.vrfinfo_;
-  if (this != internal_default_instance()) delete _impl_.txvrfinfo_;
-}
-
-void ContractTempTxMsgReq::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-void ContractTempTxMsgReq::Clear() {
-// @@protoc_insertion_point(message_clear_start:ContractTempTxMsgReq)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.signnodemsg_.Clear();
-  _impl_.prevblkhashs_.Clear();
-  _impl_.version_.ClearToEmpty();
-  if (GetArenaForAllocation() == nullptr && _impl_.txmsginfo_ != nullptr) {
-    delete _impl_.txmsginfo_;
-  }
-  _impl_.txmsginfo_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && _impl_.vrfinfo_ != nullptr) {
-    delete _impl_.vrfinfo_;
-  }
-  _impl_.vrfinfo_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && _impl_.txvrfinfo_ != nullptr) {
-    delete _impl_.txvrfinfo_;
-  }
-  _impl_.txvrfinfo_ = nullptr;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* ContractTempTxMsgReq::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string version = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_version();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "ContractTempTxMsgReq.version"));
-        } else
-          goto handle_unusual;
-        continue;
-      // .TxMsgInfo txMsgInfo = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          ptr = ctx->ParseMessage(_internal_mutable_txmsginfo(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .NewVrf vrfInfo = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          ptr = ctx->ParseMessage(_internal_mutable_vrfinfo(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .NewVrf txvrfInfo = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          ptr = ctx->ParseMessage(_internal_mutable_txvrfinfo(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // repeated .SignNodeMsg signNodeMsg = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            ptr = ctx->ParseMessage(_internal_add_signnodemsg(), ptr);
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<42>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      // repeated string prevBlkHashs = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 50)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            auto str = _internal_add_prevblkhashs();
-            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(ptr);
-            CHK_(::_pbi::VerifyUTF8(str, "ContractTempTxMsgReq.prevBlkHashs"));
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<50>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* ContractTempTxMsgReq::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:ContractTempTxMsgReq)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // string version = 1;
-  if (!this->_internal_version().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_version().data(), static_cast<int>(this->_internal_version().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "ContractTempTxMsgReq.version");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_version(), target);
-  }
-
-  // .TxMsgInfo txMsgInfo = 2;
-  if (this->_internal_has_txmsginfo()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, _Internal::txmsginfo(this),
-        _Internal::txmsginfo(this).GetCachedSize(), target, stream);
-  }
-
-  // .NewVrf vrfInfo = 3;
-  if (this->_internal_has_vrfinfo()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(3, _Internal::vrfinfo(this),
-        _Internal::vrfinfo(this).GetCachedSize(), target, stream);
-  }
-
-  // .NewVrf txvrfInfo = 4;
-  if (this->_internal_has_txvrfinfo()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(4, _Internal::txvrfinfo(this),
-        _Internal::txvrfinfo(this).GetCachedSize(), target, stream);
-  }
-
-  // repeated .SignNodeMsg signNodeMsg = 5;
-  for (unsigned i = 0,
-      n = static_cast<unsigned>(this->_internal_signnodemsg_size()); i < n; i++) {
-    const auto& repfield = this->_internal_signnodemsg(i);
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-        InternalWriteMessage(5, repfield, repfield.GetCachedSize(), target, stream);
-  }
-
-  // repeated string prevBlkHashs = 6;
-  for (int i = 0, n = this->_internal_prevblkhashs_size(); i < n; i++) {
-    const auto& s = this->_internal_prevblkhashs(i);
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      s.data(), static_cast<int>(s.length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "ContractTempTxMsgReq.prevBlkHashs");
-    target = stream->WriteString(6, s, target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:ContractTempTxMsgReq)
-  return target;
-}
-
-size_t ContractTempTxMsgReq::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:ContractTempTxMsgReq)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // repeated .SignNodeMsg signNodeMsg = 5;
-  total_size += 1UL * this->_internal_signnodemsg_size();
-  for (const auto& msg : this->_impl_.signnodemsg_) {
-    total_size +=
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
-  }
-
-  // repeated string prevBlkHashs = 6;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.prevblkhashs_.size());
-  for (int i = 0, n = _impl_.prevblkhashs_.size(); i < n; i++) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-      _impl_.prevblkhashs_.Get(i));
-  }
-
-  // string version = 1;
-  if (!this->_internal_version().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_version());
-  }
-
-  // .TxMsgInfo txMsgInfo = 2;
-  if (this->_internal_has_txmsginfo()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.txmsginfo_);
-  }
-
-  // .NewVrf vrfInfo = 3;
-  if (this->_internal_has_vrfinfo()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.vrfinfo_);
-  }
-
-  // .NewVrf txvrfInfo = 4;
-  if (this->_internal_has_txvrfinfo()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.txvrfinfo_);
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData ContractTempTxMsgReq::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    ContractTempTxMsgReq::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*ContractTempTxMsgReq::GetClassData() const { return &_class_data_; }
-
-
-void ContractTempTxMsgReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<ContractTempTxMsgReq*>(&to_msg);
-  auto& from = static_cast<const ContractTempTxMsgReq&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:ContractTempTxMsgReq)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  _this->_impl_.signnodemsg_.MergeFrom(from._impl_.signnodemsg_);
-  _this->_impl_.prevblkhashs_.MergeFrom(from._impl_.prevblkhashs_);
-  if (!from._internal_version().empty()) {
-    _this->_internal_set_version(from._internal_version());
-  }
-  if (from._internal_has_txmsginfo()) {
-    _this->_internal_mutable_txmsginfo()->::TxMsgInfo::MergeFrom(
-        from._internal_txmsginfo());
-  }
-  if (from._internal_has_vrfinfo()) {
-    _this->_internal_mutable_vrfinfo()->::NewVrf::MergeFrom(
-        from._internal_vrfinfo());
-  }
-  if (from._internal_has_txvrfinfo()) {
-    _this->_internal_mutable_txvrfinfo()->::NewVrf::MergeFrom(
-        from._internal_txvrfinfo());
-  }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void ContractTempTxMsgReq::CopyFrom(const ContractTempTxMsgReq& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:ContractTempTxMsgReq)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool ContractTempTxMsgReq::IsInitialized() const {
-  return true;
-}
-
-void ContractTempTxMsgReq::InternalSwap(ContractTempTxMsgReq* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.signnodemsg_.InternalSwap(&other->_impl_.signnodemsg_);
-  _impl_.prevblkhashs_.InternalSwap(&other->_impl_.prevblkhashs_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.version_, lhs_arena,
-      &other->_impl_.version_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(ContractTempTxMsgReq, _impl_.txvrfinfo_)
-      + sizeof(ContractTempTxMsgReq::_impl_.txvrfinfo_)
-      - PROTOBUF_FIELD_OFFSET(ContractTempTxMsgReq, _impl_.txmsginfo_)>(
-          reinterpret_cast<char*>(&_impl_.txmsginfo_),
-          reinterpret_cast<char*>(&other->_impl_.txmsginfo_));
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata ContractTempTxMsgReq::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
-      file_level_metadata_ca_5fprotomsg_2eproto[3]);
-}
-
-// ===================================================================
-
-class Vrf::_Internal {
- public:
-  static const ::CSign& vrfsign(const Vrf* msg);
-};
-
-const ::CSign&
-Vrf::_Internal::vrfsign(const Vrf* msg) {
-  return *msg->_impl_.vrfsign_;
-}
-void Vrf::clear_vrfsign() {
-  if (GetArenaForAllocation() == nullptr && _impl_.vrfsign_ != nullptr) {
-    delete _impl_.vrfsign_;
-  }
-  _impl_.vrfsign_ = nullptr;
-}
-Vrf::Vrf(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:Vrf)
-}
-Vrf::Vrf(const Vrf& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  Vrf* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.data_){}
-    , decltype(_impl_.vrfsign_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.data_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.data_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_data().empty()) {
-    _this->_impl_.data_.Set(from._internal_data(), 
-      _this->GetArenaForAllocation());
-  }
-  if (from._internal_has_vrfsign()) {
-    _this->_impl_.vrfsign_ = new ::CSign(*from._impl_.vrfsign_);
-  }
-  // @@protoc_insertion_point(copy_constructor:Vrf)
-}
-
-inline void Vrf::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.data_){}
-    , decltype(_impl_.vrfsign_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.data_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.data_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-
-Vrf::~Vrf() {
-  // @@protoc_insertion_point(destructor:Vrf)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
-  SharedDtor();
-}
-
-inline void Vrf::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.data_.Destroy();
-  if (this != internal_default_instance()) delete _impl_.vrfsign_;
-}
-
-void Vrf::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-void Vrf::Clear() {
-// @@protoc_insertion_point(message_clear_start:Vrf)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.data_.ClearToEmpty();
-  if (GetArenaForAllocation() == nullptr && _impl_.vrfsign_ != nullptr) {
-    delete _impl_.vrfsign_;
-  }
-  _impl_.vrfsign_ = nullptr;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* Vrf::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string data = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_data();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "Vrf.data"));
-        } else
-          goto handle_unusual;
-        continue;
-      // .CSign Vrfsign = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          ptr = ctx->ParseMessage(_internal_mutable_vrfsign(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* Vrf::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Vrf)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // string data = 1;
-  if (!this->_internal_data().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_data().data(), static_cast<int>(this->_internal_data().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Vrf.data");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_data(), target);
-  }
-
-  // .CSign Vrfsign = 2;
-  if (this->_internal_has_vrfsign()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, _Internal::vrfsign(this),
-        _Internal::vrfsign(this).GetCachedSize(), target, stream);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:Vrf)
-  return target;
-}
-
-size_t Vrf::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Vrf)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // string data = 1;
-  if (!this->_internal_data().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_data());
-  }
-
-  // .CSign Vrfsign = 2;
-  if (this->_internal_has_vrfsign()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.vrfsign_);
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Vrf::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    Vrf::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Vrf::GetClassData() const { return &_class_data_; }
-
-
-void Vrf::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<Vrf*>(&to_msg);
-  auto& from = static_cast<const Vrf&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:Vrf)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (!from._internal_data().empty()) {
-    _this->_internal_set_data(from._internal_data());
-  }
-  if (from._internal_has_vrfsign()) {
-    _this->_internal_mutable_vrfsign()->::CSign::MergeFrom(
-        from._internal_vrfsign());
-  }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void Vrf::CopyFrom(const Vrf& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Vrf)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool Vrf::IsInitialized() const {
-  return true;
-}
-
-void Vrf::InternalSwap(Vrf* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.data_, lhs_arena,
-      &other->_impl_.data_, rhs_arena
-  );
-  swap(_impl_.vrfsign_, other->_impl_.vrfsign_);
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata Vrf::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
-      file_level_metadata_ca_5fprotomsg_2eproto[4]);
-}
-
-// ===================================================================
-
-class NewVrf::_Internal {
- public:
-  static const ::VrfData& vrfdata(const NewVrf* msg);
-  static const ::CSign& vrfsign(const NewVrf* msg);
-};
-
-const ::VrfData&
-NewVrf::_Internal::vrfdata(const NewVrf* msg) {
-  return *msg->_impl_.vrfdata_;
-}
-const ::CSign&
-NewVrf::_Internal::vrfsign(const NewVrf* msg) {
-  return *msg->_impl_.vrfsign_;
-}
-void NewVrf::clear_vrfsign() {
-  if (GetArenaForAllocation() == nullptr && _impl_.vrfsign_ != nullptr) {
-    delete _impl_.vrfsign_;
-  }
-  _impl_.vrfsign_ = nullptr;
-}
-NewVrf::NewVrf(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:NewVrf)
-}
-NewVrf::NewVrf(const NewVrf& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  NewVrf* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.vrfdata_){nullptr}
-    , decltype(_impl_.vrfsign_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_vrfdata()) {
-    _this->_impl_.vrfdata_ = new ::VrfData(*from._impl_.vrfdata_);
-  }
-  if (from._internal_has_vrfsign()) {
-    _this->_impl_.vrfsign_ = new ::CSign(*from._impl_.vrfsign_);
-  }
-  // @@protoc_insertion_point(copy_constructor:NewVrf)
-}
-
-inline void NewVrf::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.vrfdata_){nullptr}
-    , decltype(_impl_.vrfsign_){nullptr}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-}
-
-NewVrf::~NewVrf() {
-  // @@protoc_insertion_point(destructor:NewVrf)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
-  SharedDtor();
-}
-
-inline void NewVrf::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete _impl_.vrfdata_;
-  if (this != internal_default_instance()) delete _impl_.vrfsign_;
-}
-
-void NewVrf::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-void NewVrf::Clear() {
-// @@protoc_insertion_point(message_clear_start:NewVrf)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  if (GetArenaForAllocation() == nullptr && _impl_.vrfdata_ != nullptr) {
-    delete _impl_.vrfdata_;
-  }
-  _impl_.vrfdata_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && _impl_.vrfsign_ != nullptr) {
-    delete _impl_.vrfsign_;
-  }
-  _impl_.vrfsign_ = nullptr;
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* NewVrf::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // .VrfData vrfdata = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_vrfdata(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .CSign Vrfsign = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          ptr = ctx->ParseMessage(_internal_mutable_vrfsign(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* NewVrf::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:NewVrf)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // .VrfData vrfdata = 1;
-  if (this->_internal_has_vrfdata()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::vrfdata(this),
-        _Internal::vrfdata(this).GetCachedSize(), target, stream);
-  }
-
-  // .CSign Vrfsign = 2;
-  if (this->_internal_has_vrfsign()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(2, _Internal::vrfsign(this),
-        _Internal::vrfsign(this).GetCachedSize(), target, stream);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:NewVrf)
-  return target;
-}
-
-size_t NewVrf::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:NewVrf)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // .VrfData vrfdata = 1;
-  if (this->_internal_has_vrfdata()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.vrfdata_);
-  }
-
-  // .CSign Vrfsign = 2;
-  if (this->_internal_has_vrfsign()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.vrfsign_);
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData NewVrf::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    NewVrf::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*NewVrf::GetClassData() const { return &_class_data_; }
-
-
-void NewVrf::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<NewVrf*>(&to_msg);
-  auto& from = static_cast<const NewVrf&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:NewVrf)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (from._internal_has_vrfdata()) {
-    _this->_internal_mutable_vrfdata()->::VrfData::MergeFrom(
-        from._internal_vrfdata());
-  }
-  if (from._internal_has_vrfsign()) {
-    _this->_internal_mutable_vrfsign()->::CSign::MergeFrom(
-        from._internal_vrfsign());
-  }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void NewVrf::CopyFrom(const NewVrf& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:NewVrf)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool NewVrf::IsInitialized() const {
-  return true;
-}
-
-void NewVrf::InternalSwap(NewVrf* other) {
-  using std::swap;
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(NewVrf, _impl_.vrfsign_)
-      + sizeof(NewVrf::_impl_.vrfsign_)
-      - PROTOBUF_FIELD_OFFSET(NewVrf, _impl_.vrfdata_)>(
-          reinterpret_cast<char*>(&_impl_.vrfdata_),
-          reinterpret_cast<char*>(&other->_impl_.vrfdata_));
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata NewVrf::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
-      file_level_metadata_ca_5fprotomsg_2eproto[5]);
 }
 
 // ===================================================================
@@ -2816,7 +1814,252 @@ void VrfData::InternalSwap(VrfData* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata VrfData::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
-      file_level_metadata_ca_5fprotomsg_2eproto[6]);
+      file_level_metadata_ca_5fprotomsg_2eproto[3]);
+}
+
+// ===================================================================
+
+class Vrf::_Internal {
+ public:
+  static const ::VrfData& vrfdata(const Vrf* msg);
+  static const ::CSign& vrfsign(const Vrf* msg);
+};
+
+const ::VrfData&
+Vrf::_Internal::vrfdata(const Vrf* msg) {
+  return *msg->_impl_.vrfdata_;
+}
+const ::CSign&
+Vrf::_Internal::vrfsign(const Vrf* msg) {
+  return *msg->_impl_.vrfsign_;
+}
+void Vrf::clear_vrfsign() {
+  if (GetArenaForAllocation() == nullptr && _impl_.vrfsign_ != nullptr) {
+    delete _impl_.vrfsign_;
+  }
+  _impl_.vrfsign_ = nullptr;
+}
+Vrf::Vrf(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor(arena, is_message_owned);
+  // @@protoc_insertion_point(arena_constructor:Vrf)
+}
+Vrf::Vrf(const Vrf& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  Vrf* const _this = this; (void)_this;
+  new (&_impl_) Impl_{
+      decltype(_impl_.vrfdata_){nullptr}
+    , decltype(_impl_.vrfsign_){nullptr}
+    , /*decltype(_impl_._cached_size_)*/{}};
+
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_vrfdata()) {
+    _this->_impl_.vrfdata_ = new ::VrfData(*from._impl_.vrfdata_);
+  }
+  if (from._internal_has_vrfsign()) {
+    _this->_impl_.vrfsign_ = new ::CSign(*from._impl_.vrfsign_);
+  }
+  // @@protoc_insertion_point(copy_constructor:Vrf)
+}
+
+inline void Vrf::SharedCtor(
+    ::_pb::Arena* arena, bool is_message_owned) {
+  (void)arena;
+  (void)is_message_owned;
+  new (&_impl_) Impl_{
+      decltype(_impl_.vrfdata_){nullptr}
+    , decltype(_impl_.vrfsign_){nullptr}
+    , /*decltype(_impl_._cached_size_)*/{}
+  };
+}
+
+Vrf::~Vrf() {
+  // @@protoc_insertion_point(destructor:Vrf)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void Vrf::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete _impl_.vrfdata_;
+  if (this != internal_default_instance()) delete _impl_.vrfsign_;
+}
+
+void Vrf::SetCachedSize(int size) const {
+  _impl_._cached_size_.Set(size);
+}
+
+void Vrf::Clear() {
+// @@protoc_insertion_point(message_clear_start:Vrf)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && _impl_.vrfdata_ != nullptr) {
+    delete _impl_.vrfdata_;
+  }
+  _impl_.vrfdata_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && _impl_.vrfsign_ != nullptr) {
+    delete _impl_.vrfsign_;
+  }
+  _impl_.vrfsign_ = nullptr;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* Vrf::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .VrfData vrfdata = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_vrfdata(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .CSign Vrfsign = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_vrfsign(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* Vrf::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Vrf)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .VrfData vrfdata = 1;
+  if (this->_internal_has_vrfdata()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::vrfdata(this),
+        _Internal::vrfdata(this).GetCachedSize(), target, stream);
+  }
+
+  // .CSign Vrfsign = 2;
+  if (this->_internal_has_vrfsign()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::vrfsign(this),
+        _Internal::vrfsign(this).GetCachedSize(), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Vrf)
+  return target;
+}
+
+size_t Vrf::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Vrf)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .VrfData vrfdata = 1;
+  if (this->_internal_has_vrfdata()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.vrfdata_);
+  }
+
+  // .CSign Vrfsign = 2;
+  if (this->_internal_has_vrfsign()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *_impl_.vrfsign_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Vrf::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
+    Vrf::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Vrf::GetClassData() const { return &_class_data_; }
+
+
+void Vrf::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
+  auto* const _this = static_cast<Vrf*>(&to_msg);
+  auto& from = static_cast<const Vrf&>(from_msg);
+  // @@protoc_insertion_point(class_specific_merge_from_start:Vrf)
+  GOOGLE_DCHECK_NE(&from, _this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_vrfdata()) {
+    _this->_internal_mutable_vrfdata()->::VrfData::MergeFrom(
+        from._internal_vrfdata());
+  }
+  if (from._internal_has_vrfsign()) {
+    _this->_internal_mutable_vrfsign()->::CSign::MergeFrom(
+        from._internal_vrfsign());
+  }
+  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void Vrf::CopyFrom(const Vrf& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Vrf)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool Vrf::IsInitialized() const {
+  return true;
+}
+
+void Vrf::InternalSwap(Vrf* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(Vrf, _impl_.vrfsign_)
+      + sizeof(Vrf::_impl_.vrfsign_)
+      - PROTOBUF_FIELD_OFFSET(Vrf, _impl_.vrfdata_)>(
+          reinterpret_cast<char*>(&_impl_.vrfdata_),
+          reinterpret_cast<char*>(&other->_impl_.vrfdata_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata Vrf::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
+      file_level_metadata_ca_5fprotomsg_2eproto[4]);
 }
 
 // ===================================================================
@@ -3141,24 +2384,19 @@ void TxMsgAck::InternalSwap(TxMsgAck* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata TxMsgAck::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
-      file_level_metadata_ca_5fprotomsg_2eproto[7]);
+      file_level_metadata_ca_5fprotomsg_2eproto[5]);
 }
 
 // ===================================================================
 
 class BuildBlockBroadcastMsg::_Internal {
  public:
-  static const ::Vrf& vrfinfo(const BuildBlockBroadcastMsg* msg);
-  static const ::NewVrf& contractvrf(const BuildBlockBroadcastMsg* msg);
+  static const ::Vrf& blockvrfinfo(const BuildBlockBroadcastMsg* msg);
 };
 
 const ::Vrf&
-BuildBlockBroadcastMsg::_Internal::vrfinfo(const BuildBlockBroadcastMsg* msg) {
-  return *msg->_impl_.vrfinfo_;
-}
-const ::NewVrf&
-BuildBlockBroadcastMsg::_Internal::contractvrf(const BuildBlockBroadcastMsg* msg) {
-  return *msg->_impl_.contractvrf_;
+BuildBlockBroadcastMsg::_Internal::blockvrfinfo(const BuildBlockBroadcastMsg* msg) {
+  return *msg->_impl_.blockvrfinfo_;
 }
 BuildBlockBroadcastMsg::BuildBlockBroadcastMsg(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -3171,11 +2409,12 @@ BuildBlockBroadcastMsg::BuildBlockBroadcastMsg(const BuildBlockBroadcastMsg& fro
   BuildBlockBroadcastMsg* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.castaddrs_){from._impl_.castaddrs_}
+    , decltype(_impl_.vrfinfo_){from._impl_.vrfinfo_}
+    , decltype(_impl_.txvrfinfo_){from._impl_.txvrfinfo_}
     , decltype(_impl_.version_){}
     , decltype(_impl_.id_){}
     , decltype(_impl_.blockraw_){}
-    , decltype(_impl_.vrfinfo_){nullptr}
-    , decltype(_impl_.contractvrf_){nullptr}
+    , decltype(_impl_.blockvrfinfo_){nullptr}
     , decltype(_impl_.flag_){}
     , decltype(_impl_.type_){}
     , /*decltype(_impl_._cached_size_)*/{}};
@@ -3205,11 +2444,8 @@ BuildBlockBroadcastMsg::BuildBlockBroadcastMsg(const BuildBlockBroadcastMsg& fro
     _this->_impl_.blockraw_.Set(from._internal_blockraw(), 
       _this->GetArenaForAllocation());
   }
-  if (from._internal_has_vrfinfo()) {
-    _this->_impl_.vrfinfo_ = new ::Vrf(*from._impl_.vrfinfo_);
-  }
-  if (from._internal_has_contractvrf()) {
-    _this->_impl_.contractvrf_ = new ::NewVrf(*from._impl_.contractvrf_);
+  if (from._internal_has_blockvrfinfo()) {
+    _this->_impl_.blockvrfinfo_ = new ::Vrf(*from._impl_.blockvrfinfo_);
   }
   ::memcpy(&_impl_.flag_, &from._impl_.flag_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.type_) -
@@ -3223,11 +2459,12 @@ inline void BuildBlockBroadcastMsg::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.castaddrs_){arena}
+    , decltype(_impl_.vrfinfo_){arena}
+    , decltype(_impl_.txvrfinfo_){arena}
     , decltype(_impl_.version_){}
     , decltype(_impl_.id_){}
     , decltype(_impl_.blockraw_){}
-    , decltype(_impl_.vrfinfo_){nullptr}
-    , decltype(_impl_.contractvrf_){nullptr}
+    , decltype(_impl_.blockvrfinfo_){nullptr}
     , decltype(_impl_.flag_){0}
     , decltype(_impl_.type_){0}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -3258,11 +2495,12 @@ BuildBlockBroadcastMsg::~BuildBlockBroadcastMsg() {
 inline void BuildBlockBroadcastMsg::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   _impl_.castaddrs_.~RepeatedPtrField();
+  _impl_.vrfinfo_.~RepeatedPtrField();
+  _impl_.txvrfinfo_.~RepeatedPtrField();
   _impl_.version_.Destroy();
   _impl_.id_.Destroy();
   _impl_.blockraw_.Destroy();
-  if (this != internal_default_instance()) delete _impl_.vrfinfo_;
-  if (this != internal_default_instance()) delete _impl_.contractvrf_;
+  if (this != internal_default_instance()) delete _impl_.blockvrfinfo_;
 }
 
 void BuildBlockBroadcastMsg::SetCachedSize(int size) const {
@@ -3276,17 +2514,15 @@ void BuildBlockBroadcastMsg::Clear() {
   (void) cached_has_bits;
 
   _impl_.castaddrs_.Clear();
+  _impl_.vrfinfo_.Clear();
+  _impl_.txvrfinfo_.Clear();
   _impl_.version_.ClearToEmpty();
   _impl_.id_.ClearToEmpty();
   _impl_.blockraw_.ClearToEmpty();
-  if (GetArenaForAllocation() == nullptr && _impl_.vrfinfo_ != nullptr) {
-    delete _impl_.vrfinfo_;
+  if (GetArenaForAllocation() == nullptr && _impl_.blockvrfinfo_ != nullptr) {
+    delete _impl_.blockvrfinfo_;
   }
-  _impl_.vrfinfo_ = nullptr;
-  if (GetArenaForAllocation() == nullptr && _impl_.contractvrf_ != nullptr) {
-    delete _impl_.contractvrf_;
-  }
-  _impl_.contractvrf_ = nullptr;
+  _impl_.blockvrfinfo_ = nullptr;
   ::memset(&_impl_.flag_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.type_) -
       reinterpret_cast<char*>(&_impl_.flag_)) + sizeof(_impl_.type_));
@@ -3328,10 +2564,10 @@ const char* BuildBlockBroadcastMsg::_InternalParse(const char* ptr, ::_pbi::Pars
         } else
           goto handle_unusual;
         continue;
-      // .Vrf vrfInfo = 4;
+      // .Vrf blockVrfInfo = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          ptr = ctx->ParseMessage(_internal_mutable_vrfinfo(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_blockvrfinfo(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -3367,11 +2603,29 @@ const char* BuildBlockBroadcastMsg::_InternalParse(const char* ptr, ::_pbi::Pars
         } else
           goto handle_unusual;
         continue;
-      // .NewVrf contractvrf = 8;
+      // repeated .Vrf vrfInfo = 8;
       case 8:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 66)) {
-          ptr = ctx->ParseMessage(_internal_mutable_contractvrf(), ptr);
-          CHK_(ptr);
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_vrfinfo(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<66>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      // repeated .Vrf txvrfInfo = 9;
+      case 9:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 74)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_txvrfinfo(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<74>(ptr));
         } else
           goto handle_unusual;
         continue;
@@ -3430,11 +2684,11 @@ uint8_t* BuildBlockBroadcastMsg::_InternalSerialize(
         3, this->_internal_blockraw(), target);
   }
 
-  // .Vrf vrfInfo = 4;
-  if (this->_internal_has_vrfinfo()) {
+  // .Vrf blockVrfInfo = 4;
+  if (this->_internal_has_blockvrfinfo()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(4, _Internal::vrfinfo(this),
-        _Internal::vrfinfo(this).GetCachedSize(), target, stream);
+      InternalWriteMessage(4, _Internal::blockvrfinfo(this),
+        _Internal::blockvrfinfo(this).GetCachedSize(), target, stream);
   }
 
   // int32 flag = 5;
@@ -3459,11 +2713,20 @@ uint8_t* BuildBlockBroadcastMsg::_InternalSerialize(
     target = stream->WriteString(7, s, target);
   }
 
-  // .NewVrf contractvrf = 8;
-  if (this->_internal_has_contractvrf()) {
+  // repeated .Vrf vrfInfo = 8;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_vrfinfo_size()); i < n; i++) {
+    const auto& repfield = this->_internal_vrfinfo(i);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(8, _Internal::contractvrf(this),
-        _Internal::contractvrf(this).GetCachedSize(), target, stream);
+        InternalWriteMessage(8, repfield, repfield.GetCachedSize(), target, stream);
+  }
+
+  // repeated .Vrf txvrfInfo = 9;
+  for (unsigned i = 0,
+      n = static_cast<unsigned>(this->_internal_txvrfinfo_size()); i < n; i++) {
+    const auto& repfield = this->_internal_txvrfinfo(i);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+        InternalWriteMessage(9, repfield, repfield.GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3490,6 +2753,20 @@ size_t BuildBlockBroadcastMsg::ByteSizeLong() const {
       _impl_.castaddrs_.Get(i));
   }
 
+  // repeated .Vrf vrfInfo = 8;
+  total_size += 1UL * this->_internal_vrfinfo_size();
+  for (const auto& msg : this->_impl_.vrfinfo_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  // repeated .Vrf txvrfInfo = 9;
+  total_size += 1UL * this->_internal_txvrfinfo_size();
+  for (const auto& msg : this->_impl_.txvrfinfo_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
   // string version = 1;
   if (!this->_internal_version().empty()) {
     total_size += 1 +
@@ -3511,18 +2788,11 @@ size_t BuildBlockBroadcastMsg::ByteSizeLong() const {
         this->_internal_blockraw());
   }
 
-  // .Vrf vrfInfo = 4;
-  if (this->_internal_has_vrfinfo()) {
+  // .Vrf blockVrfInfo = 4;
+  if (this->_internal_has_blockvrfinfo()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.vrfinfo_);
-  }
-
-  // .NewVrf contractvrf = 8;
-  if (this->_internal_has_contractvrf()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.contractvrf_);
+        *_impl_.blockvrfinfo_);
   }
 
   // int32 flag = 5;
@@ -3554,6 +2824,8 @@ void BuildBlockBroadcastMsg::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg,
   (void) cached_has_bits;
 
   _this->_impl_.castaddrs_.MergeFrom(from._impl_.castaddrs_);
+  _this->_impl_.vrfinfo_.MergeFrom(from._impl_.vrfinfo_);
+  _this->_impl_.txvrfinfo_.MergeFrom(from._impl_.txvrfinfo_);
   if (!from._internal_version().empty()) {
     _this->_internal_set_version(from._internal_version());
   }
@@ -3563,13 +2835,9 @@ void BuildBlockBroadcastMsg::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg,
   if (!from._internal_blockraw().empty()) {
     _this->_internal_set_blockraw(from._internal_blockraw());
   }
-  if (from._internal_has_vrfinfo()) {
-    _this->_internal_mutable_vrfinfo()->::Vrf::MergeFrom(
-        from._internal_vrfinfo());
-  }
-  if (from._internal_has_contractvrf()) {
-    _this->_internal_mutable_contractvrf()->::NewVrf::MergeFrom(
-        from._internal_contractvrf());
+  if (from._internal_has_blockvrfinfo()) {
+    _this->_internal_mutable_blockvrfinfo()->::Vrf::MergeFrom(
+        from._internal_blockvrfinfo());
   }
   if (from._internal_flag() != 0) {
     _this->_internal_set_flag(from._internal_flag());
@@ -3597,6 +2865,8 @@ void BuildBlockBroadcastMsg::InternalSwap(BuildBlockBroadcastMsg* other) {
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   _impl_.castaddrs_.InternalSwap(&other->_impl_.castaddrs_);
+  _impl_.vrfinfo_.InternalSwap(&other->_impl_.vrfinfo_);
+  _impl_.txvrfinfo_.InternalSwap(&other->_impl_.txvrfinfo_);
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
       &_impl_.version_, lhs_arena,
       &other->_impl_.version_, rhs_arena
@@ -3612,816 +2882,25 @@ void BuildBlockBroadcastMsg::InternalSwap(BuildBlockBroadcastMsg* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(BuildBlockBroadcastMsg, _impl_.type_)
       + sizeof(BuildBlockBroadcastMsg::_impl_.type_)
-      - PROTOBUF_FIELD_OFFSET(BuildBlockBroadcastMsg, _impl_.vrfinfo_)>(
-          reinterpret_cast<char*>(&_impl_.vrfinfo_),
-          reinterpret_cast<char*>(&other->_impl_.vrfinfo_));
+      - PROTOBUF_FIELD_OFFSET(BuildBlockBroadcastMsg, _impl_.blockvrfinfo_)>(
+          reinterpret_cast<char*>(&_impl_.blockvrfinfo_),
+          reinterpret_cast<char*>(&other->_impl_.blockvrfinfo_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata BuildBlockBroadcastMsg::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
-      file_level_metadata_ca_5fprotomsg_2eproto[8]);
-}
-
-// ===================================================================
-
-class BuildContractBlockBroadcastMsg::_Internal {
- public:
-  static const ::NewVrf& vrfinfo(const BuildContractBlockBroadcastMsg* msg);
-};
-
-const ::NewVrf&
-BuildContractBlockBroadcastMsg::_Internal::vrfinfo(const BuildContractBlockBroadcastMsg* msg) {
-  return *msg->_impl_.vrfinfo_;
-}
-BuildContractBlockBroadcastMsg::BuildContractBlockBroadcastMsg(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:BuildContractBlockBroadcastMsg)
-}
-BuildContractBlockBroadcastMsg::BuildContractBlockBroadcastMsg(const BuildContractBlockBroadcastMsg& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  BuildContractBlockBroadcastMsg* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.castaddrs_){from._impl_.castaddrs_}
-    , decltype(_impl_.version_){}
-    , decltype(_impl_.id_){}
-    , decltype(_impl_.blockraw_){}
-    , decltype(_impl_.vrfinfo_){nullptr}
-    , decltype(_impl_.flag_){}
-    , decltype(_impl_.type_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.version_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.version_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_version().empty()) {
-    _this->_impl_.version_.Set(from._internal_version(), 
-      _this->GetArenaForAllocation());
-  }
-  _impl_.id_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_id().empty()) {
-    _this->_impl_.id_.Set(from._internal_id(), 
-      _this->GetArenaForAllocation());
-  }
-  _impl_.blockraw_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.blockraw_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_blockraw().empty()) {
-    _this->_impl_.blockraw_.Set(from._internal_blockraw(), 
-      _this->GetArenaForAllocation());
-  }
-  if (from._internal_has_vrfinfo()) {
-    _this->_impl_.vrfinfo_ = new ::NewVrf(*from._impl_.vrfinfo_);
-  }
-  ::memcpy(&_impl_.flag_, &from._impl_.flag_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.type_) -
-    reinterpret_cast<char*>(&_impl_.flag_)) + sizeof(_impl_.type_));
-  // @@protoc_insertion_point(copy_constructor:BuildContractBlockBroadcastMsg)
-}
-
-inline void BuildContractBlockBroadcastMsg::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.castaddrs_){arena}
-    , decltype(_impl_.version_){}
-    , decltype(_impl_.id_){}
-    , decltype(_impl_.blockraw_){}
-    , decltype(_impl_.vrfinfo_){nullptr}
-    , decltype(_impl_.flag_){0}
-    , decltype(_impl_.type_){0}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.version_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.version_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.id_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.blockraw_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.blockraw_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-
-BuildContractBlockBroadcastMsg::~BuildContractBlockBroadcastMsg() {
-  // @@protoc_insertion_point(destructor:BuildContractBlockBroadcastMsg)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
-  SharedDtor();
-}
-
-inline void BuildContractBlockBroadcastMsg::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.castaddrs_.~RepeatedPtrField();
-  _impl_.version_.Destroy();
-  _impl_.id_.Destroy();
-  _impl_.blockraw_.Destroy();
-  if (this != internal_default_instance()) delete _impl_.vrfinfo_;
-}
-
-void BuildContractBlockBroadcastMsg::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-void BuildContractBlockBroadcastMsg::Clear() {
-// @@protoc_insertion_point(message_clear_start:BuildContractBlockBroadcastMsg)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.castaddrs_.Clear();
-  _impl_.version_.ClearToEmpty();
-  _impl_.id_.ClearToEmpty();
-  _impl_.blockraw_.ClearToEmpty();
-  if (GetArenaForAllocation() == nullptr && _impl_.vrfinfo_ != nullptr) {
-    delete _impl_.vrfinfo_;
-  }
-  _impl_.vrfinfo_ = nullptr;
-  ::memset(&_impl_.flag_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.type_) -
-      reinterpret_cast<char*>(&_impl_.flag_)) + sizeof(_impl_.type_));
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* BuildContractBlockBroadcastMsg::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string version = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_version();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "BuildContractBlockBroadcastMsg.version"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string id = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_id();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "BuildContractBlockBroadcastMsg.id"));
-        } else
-          goto handle_unusual;
-        continue;
-      // bytes blockRaw = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_blockraw();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .NewVrf vrfInfo = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          ptr = ctx->ParseMessage(_internal_mutable_vrfinfo(), ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // int32 flag = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
-          _impl_.flag_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // int32 type = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 48)) {
-          _impl_.type_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // repeated string castAddrs = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 58)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            auto str = _internal_add_castaddrs();
-            ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-            CHK_(ptr);
-            CHK_(::_pbi::VerifyUTF8(str, "BuildContractBlockBroadcastMsg.castAddrs"));
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<58>(ptr));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* BuildContractBlockBroadcastMsg::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:BuildContractBlockBroadcastMsg)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // string version = 1;
-  if (!this->_internal_version().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_version().data(), static_cast<int>(this->_internal_version().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "BuildContractBlockBroadcastMsg.version");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_version(), target);
-  }
-
-  // string id = 2;
-  if (!this->_internal_id().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_id().data(), static_cast<int>(this->_internal_id().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "BuildContractBlockBroadcastMsg.id");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_id(), target);
-  }
-
-  // bytes blockRaw = 3;
-  if (!this->_internal_blockraw().empty()) {
-    target = stream->WriteBytesMaybeAliased(
-        3, this->_internal_blockraw(), target);
-  }
-
-  // .NewVrf vrfInfo = 4;
-  if (this->_internal_has_vrfinfo()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(4, _Internal::vrfinfo(this),
-        _Internal::vrfinfo(this).GetCachedSize(), target, stream);
-  }
-
-  // int32 flag = 5;
-  if (this->_internal_flag() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_flag(), target);
-  }
-
-  // int32 type = 6;
-  if (this->_internal_type() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(6, this->_internal_type(), target);
-  }
-
-  // repeated string castAddrs = 7;
-  for (int i = 0, n = this->_internal_castaddrs_size(); i < n; i++) {
-    const auto& s = this->_internal_castaddrs(i);
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      s.data(), static_cast<int>(s.length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "BuildContractBlockBroadcastMsg.castAddrs");
-    target = stream->WriteString(7, s, target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:BuildContractBlockBroadcastMsg)
-  return target;
-}
-
-size_t BuildContractBlockBroadcastMsg::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:BuildContractBlockBroadcastMsg)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // repeated string castAddrs = 7;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(_impl_.castaddrs_.size());
-  for (int i = 0, n = _impl_.castaddrs_.size(); i < n; i++) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-      _impl_.castaddrs_.Get(i));
-  }
-
-  // string version = 1;
-  if (!this->_internal_version().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_version());
-  }
-
-  // string id = 2;
-  if (!this->_internal_id().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_id());
-  }
-
-  // bytes blockRaw = 3;
-  if (!this->_internal_blockraw().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::BytesSize(
-        this->_internal_blockraw());
-  }
-
-  // .NewVrf vrfInfo = 4;
-  if (this->_internal_has_vrfinfo()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.vrfinfo_);
-  }
-
-  // int32 flag = 5;
-  if (this->_internal_flag() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_flag());
-  }
-
-  // int32 type = 6;
-  if (this->_internal_type() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_type());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData BuildContractBlockBroadcastMsg::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    BuildContractBlockBroadcastMsg::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*BuildContractBlockBroadcastMsg::GetClassData() const { return &_class_data_; }
-
-
-void BuildContractBlockBroadcastMsg::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<BuildContractBlockBroadcastMsg*>(&to_msg);
-  auto& from = static_cast<const BuildContractBlockBroadcastMsg&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:BuildContractBlockBroadcastMsg)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  _this->_impl_.castaddrs_.MergeFrom(from._impl_.castaddrs_);
-  if (!from._internal_version().empty()) {
-    _this->_internal_set_version(from._internal_version());
-  }
-  if (!from._internal_id().empty()) {
-    _this->_internal_set_id(from._internal_id());
-  }
-  if (!from._internal_blockraw().empty()) {
-    _this->_internal_set_blockraw(from._internal_blockraw());
-  }
-  if (from._internal_has_vrfinfo()) {
-    _this->_internal_mutable_vrfinfo()->::NewVrf::MergeFrom(
-        from._internal_vrfinfo());
-  }
-  if (from._internal_flag() != 0) {
-    _this->_internal_set_flag(from._internal_flag());
-  }
-  if (from._internal_type() != 0) {
-    _this->_internal_set_type(from._internal_type());
-  }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void BuildContractBlockBroadcastMsg::CopyFrom(const BuildContractBlockBroadcastMsg& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:BuildContractBlockBroadcastMsg)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool BuildContractBlockBroadcastMsg::IsInitialized() const {
-  return true;
-}
-
-void BuildContractBlockBroadcastMsg::InternalSwap(BuildContractBlockBroadcastMsg* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  _impl_.castaddrs_.InternalSwap(&other->_impl_.castaddrs_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.version_, lhs_arena,
-      &other->_impl_.version_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.id_, lhs_arena,
-      &other->_impl_.id_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.blockraw_, lhs_arena,
-      &other->_impl_.blockraw_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(BuildContractBlockBroadcastMsg, _impl_.type_)
-      + sizeof(BuildContractBlockBroadcastMsg::_impl_.type_)
-      - PROTOBUF_FIELD_OFFSET(BuildContractBlockBroadcastMsg, _impl_.vrfinfo_)>(
-          reinterpret_cast<char*>(&_impl_.vrfinfo_),
-          reinterpret_cast<char*>(&other->_impl_.vrfinfo_));
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata BuildContractBlockBroadcastMsg::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
-      file_level_metadata_ca_5fprotomsg_2eproto[9]);
-}
-
-// ===================================================================
-
-class BuildBlockBroadcastMsgAck::_Internal {
- public:
-};
-
-BuildBlockBroadcastMsgAck::BuildBlockBroadcastMsgAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
-                         bool is_message_owned)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
-  SharedCtor(arena, is_message_owned);
-  // @@protoc_insertion_point(arena_constructor:BuildBlockBroadcastMsgAck)
-}
-BuildBlockBroadcastMsgAck::BuildBlockBroadcastMsgAck(const BuildBlockBroadcastMsgAck& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message() {
-  BuildBlockBroadcastMsgAck* const _this = this; (void)_this;
-  new (&_impl_) Impl_{
-      decltype(_impl_.version_){}
-    , decltype(_impl_.id_){}
-    , decltype(_impl_.success_){}
-    , decltype(_impl_.blockhash_){}
-    , /*decltype(_impl_._cached_size_)*/{}};
-
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  _impl_.version_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.version_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_version().empty()) {
-    _this->_impl_.version_.Set(from._internal_version(), 
-      _this->GetArenaForAllocation());
-  }
-  _impl_.id_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_id().empty()) {
-    _this->_impl_.id_.Set(from._internal_id(), 
-      _this->GetArenaForAllocation());
-  }
-  _impl_.success_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.success_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_success().empty()) {
-    _this->_impl_.success_.Set(from._internal_success(), 
-      _this->GetArenaForAllocation());
-  }
-  _impl_.blockhash_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.blockhash_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_blockhash().empty()) {
-    _this->_impl_.blockhash_.Set(from._internal_blockhash(), 
-      _this->GetArenaForAllocation());
-  }
-  // @@protoc_insertion_point(copy_constructor:BuildBlockBroadcastMsgAck)
-}
-
-inline void BuildBlockBroadcastMsgAck::SharedCtor(
-    ::_pb::Arena* arena, bool is_message_owned) {
-  (void)arena;
-  (void)is_message_owned;
-  new (&_impl_) Impl_{
-      decltype(_impl_.version_){}
-    , decltype(_impl_.id_){}
-    , decltype(_impl_.success_){}
-    , decltype(_impl_.blockhash_){}
-    , /*decltype(_impl_._cached_size_)*/{}
-  };
-  _impl_.version_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.version_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.id_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.id_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.success_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.success_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  _impl_.blockhash_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    _impl_.blockhash_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-}
-
-BuildBlockBroadcastMsgAck::~BuildBlockBroadcastMsgAck() {
-  // @@protoc_insertion_point(destructor:BuildBlockBroadcastMsgAck)
-  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
-  (void)arena;
-    return;
-  }
-  SharedDtor();
-}
-
-inline void BuildBlockBroadcastMsgAck::SharedDtor() {
-  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.version_.Destroy();
-  _impl_.id_.Destroy();
-  _impl_.success_.Destroy();
-  _impl_.blockhash_.Destroy();
-}
-
-void BuildBlockBroadcastMsgAck::SetCachedSize(int size) const {
-  _impl_._cached_size_.Set(size);
-}
-
-void BuildBlockBroadcastMsgAck::Clear() {
-// @@protoc_insertion_point(message_clear_start:BuildBlockBroadcastMsgAck)
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  _impl_.version_.ClearToEmpty();
-  _impl_.id_.ClearToEmpty();
-  _impl_.success_.ClearToEmpty();
-  _impl_.blockhash_.ClearToEmpty();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* BuildBlockBroadcastMsgAck::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  while (!ctx->Done(&ptr)) {
-    uint32_t tag;
-    ptr = ::_pbi::ReadTag(ptr, &tag);
-    switch (tag >> 3) {
-      // string version = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          auto str = _internal_mutable_version();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "BuildBlockBroadcastMsgAck.version"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string id = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_id();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "BuildBlockBroadcastMsgAck.id"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string success = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
-          auto str = _internal_mutable_success();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "BuildBlockBroadcastMsgAck.success"));
-        } else
-          goto handle_unusual;
-        continue;
-      // string blockhash = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
-          auto str = _internal_mutable_blockhash();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "BuildBlockBroadcastMsgAck.blockhash"));
-        } else
-          goto handle_unusual;
-        continue;
-      default:
-        goto handle_unusual;
-    }  // switch
-  handle_unusual:
-    if ((tag == 0) || ((tag & 7) == 4)) {
-      CHK_(ptr);
-      ctx->SetLastTag(tag);
-      goto message_done;
-    }
-    ptr = UnknownFieldParse(
-        tag,
-        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-        ptr, ctx);
-    CHK_(ptr != nullptr);
-  }  // while
-message_done:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto message_done;
-#undef CHK_
-}
-
-uint8_t* BuildBlockBroadcastMsgAck::_InternalSerialize(
-    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:BuildBlockBroadcastMsgAck)
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // string version = 1;
-  if (!this->_internal_version().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_version().data(), static_cast<int>(this->_internal_version().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "BuildBlockBroadcastMsgAck.version");
-    target = stream->WriteStringMaybeAliased(
-        1, this->_internal_version(), target);
-  }
-
-  // string id = 2;
-  if (!this->_internal_id().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_id().data(), static_cast<int>(this->_internal_id().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "BuildBlockBroadcastMsgAck.id");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_id(), target);
-  }
-
-  // string success = 3;
-  if (!this->_internal_success().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_success().data(), static_cast<int>(this->_internal_success().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "BuildBlockBroadcastMsgAck.success");
-    target = stream->WriteStringMaybeAliased(
-        3, this->_internal_success(), target);
-  }
-
-  // string blockhash = 4;
-  if (!this->_internal_blockhash().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_blockhash().data(), static_cast<int>(this->_internal_blockhash().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "BuildBlockBroadcastMsgAck.blockhash");
-    target = stream->WriteStringMaybeAliased(
-        4, this->_internal_blockhash(), target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:BuildBlockBroadcastMsgAck)
-  return target;
-}
-
-size_t BuildBlockBroadcastMsgAck::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:BuildBlockBroadcastMsgAck)
-  size_t total_size = 0;
-
-  uint32_t cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // string version = 1;
-  if (!this->_internal_version().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_version());
-  }
-
-  // string id = 2;
-  if (!this->_internal_id().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_id());
-  }
-
-  // string success = 3;
-  if (!this->_internal_success().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_success());
-  }
-
-  // string blockhash = 4;
-  if (!this->_internal_blockhash().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_blockhash());
-  }
-
-  return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
-}
-
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData BuildBlockBroadcastMsgAck::_class_data_ = {
-    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSourceCheck,
-    BuildBlockBroadcastMsgAck::MergeImpl
-};
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*BuildBlockBroadcastMsgAck::GetClassData() const { return &_class_data_; }
-
-
-void BuildBlockBroadcastMsgAck::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg) {
-  auto* const _this = static_cast<BuildBlockBroadcastMsgAck*>(&to_msg);
-  auto& from = static_cast<const BuildBlockBroadcastMsgAck&>(from_msg);
-  // @@protoc_insertion_point(class_specific_merge_from_start:BuildBlockBroadcastMsgAck)
-  GOOGLE_DCHECK_NE(&from, _this);
-  uint32_t cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  if (!from._internal_version().empty()) {
-    _this->_internal_set_version(from._internal_version());
-  }
-  if (!from._internal_id().empty()) {
-    _this->_internal_set_id(from._internal_id());
-  }
-  if (!from._internal_success().empty()) {
-    _this->_internal_set_success(from._internal_success());
-  }
-  if (!from._internal_blockhash().empty()) {
-    _this->_internal_set_blockhash(from._internal_blockhash());
-  }
-  _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-}
-
-void BuildBlockBroadcastMsgAck::CopyFrom(const BuildBlockBroadcastMsgAck& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:BuildBlockBroadcastMsgAck)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool BuildBlockBroadcastMsgAck::IsInitialized() const {
-  return true;
-}
-
-void BuildBlockBroadcastMsgAck::InternalSwap(BuildBlockBroadcastMsgAck* other) {
-  using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
-  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.version_, lhs_arena,
-      &other->_impl_.version_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.id_, lhs_arena,
-      &other->_impl_.id_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.success_, lhs_arena,
-      &other->_impl_.success_, rhs_arena
-  );
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &_impl_.blockhash_, lhs_arena,
-      &other->_impl_.blockhash_, rhs_arena
-  );
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata BuildBlockBroadcastMsgAck::GetMetadata() const {
-  return ::_pbi::AssignDescriptors(
-      &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
-      file_level_metadata_ca_5fprotomsg_2eproto[10]);
+      file_level_metadata_ca_5fprotomsg_2eproto[6]);
 }
 
 // ===================================================================
 
 class ContractTxMsgReq::_Internal {
  public:
-  static const ::ContractTempTxMsgReq& txmsgreq(const ContractTxMsgReq* msg);
+  static const ::TxMsgReq& txmsgreq(const ContractTxMsgReq* msg);
 };
 
-const ::ContractTempTxMsgReq&
+const ::TxMsgReq&
 ContractTxMsgReq::_Internal::txmsgreq(const ContractTxMsgReq* msg) {
   return *msg->_impl_.txmsgreq_;
 }
@@ -4450,7 +2929,7 @@ ContractTxMsgReq::ContractTxMsgReq(const ContractTxMsgReq& from)
       _this->GetArenaForAllocation());
   }
   if (from._internal_has_txmsgreq()) {
-    _this->_impl_.txmsgreq_ = new ::ContractTempTxMsgReq(*from._impl_.txmsgreq_);
+    _this->_impl_.txmsgreq_ = new ::TxMsgReq(*from._impl_.txmsgreq_);
   }
   // @@protoc_insertion_point(copy_constructor:ContractTxMsgReq)
 }
@@ -4522,7 +3001,7 @@ const char* ContractTxMsgReq::_InternalParse(const char* ptr, ::_pbi::ParseConte
         } else
           goto handle_unusual;
         continue;
-      // .ContractTempTxMsgReq txMsgReq = 2;
+      // .TxMsgReq txMsgReq = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_txmsgreq(), ptr);
@@ -4584,7 +3063,7 @@ uint8_t* ContractTxMsgReq::_InternalSerialize(
         1, this->_internal_version(), target);
   }
 
-  // .ContractTempTxMsgReq txMsgReq = 2;
+  // .TxMsgReq txMsgReq = 2;
   if (this->_internal_has_txmsgreq()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(2, _Internal::txmsgreq(this),
@@ -4632,7 +3111,7 @@ size_t ContractTxMsgReq::ByteSizeLong() const {
         this->_internal_version());
   }
 
-  // .ContractTempTxMsgReq txMsgReq = 2;
+  // .TxMsgReq txMsgReq = 2;
   if (this->_internal_has_txmsgreq()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -4662,7 +3141,7 @@ void ContractTxMsgReq::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const
     _this->_internal_set_version(from._internal_version());
   }
   if (from._internal_has_txmsgreq()) {
-    _this->_internal_mutable_txmsgreq()->::ContractTempTxMsgReq::MergeFrom(
+    _this->_internal_mutable_txmsgreq()->::TxMsgReq::MergeFrom(
         from._internal_txmsgreq());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
@@ -4695,7 +3174,7 @@ void ContractTxMsgReq::InternalSwap(ContractTxMsgReq* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ContractTxMsgReq::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
-      file_level_metadata_ca_5fprotomsg_2eproto[11]);
+      file_level_metadata_ca_5fprotomsg_2eproto[7]);
 }
 
 // ===================================================================
@@ -4885,7 +3364,7 @@ void VrfDataSource::InternalSwap(VrfDataSource* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata VrfDataSource::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
-      file_level_metadata_ca_5fprotomsg_2eproto[12]);
+      file_level_metadata_ca_5fprotomsg_2eproto[8]);
 }
 
 // ===================================================================
@@ -4893,7 +3372,7 @@ void VrfDataSource::InternalSwap(VrfDataSource* other) {
 class ContractPackagerMsg::_Internal {
  public:
   static const ::CSign& sign(const ContractPackagerMsg* msg);
-  static const ::NewVrf& vrfinfo(const ContractPackagerMsg* msg);
+  static const ::Vrf& vrfinfo(const ContractPackagerMsg* msg);
   static const ::VrfDataSource& vrfdatasource(const ContractPackagerMsg* msg);
 };
 
@@ -4901,7 +3380,7 @@ const ::CSign&
 ContractPackagerMsg::_Internal::sign(const ContractPackagerMsg* msg) {
   return *msg->_impl_.sign_;
 }
-const ::NewVrf&
+const ::Vrf&
 ContractPackagerMsg::_Internal::vrfinfo(const ContractPackagerMsg* msg) {
   return *msg->_impl_.vrfinfo_;
 }
@@ -4945,7 +3424,7 @@ ContractPackagerMsg::ContractPackagerMsg(const ContractPackagerMsg& from)
     _this->_impl_.sign_ = new ::CSign(*from._impl_.sign_);
   }
   if (from._internal_has_vrfinfo()) {
-    _this->_impl_.vrfinfo_ = new ::NewVrf(*from._impl_.vrfinfo_);
+    _this->_impl_.vrfinfo_ = new ::Vrf(*from._impl_.vrfinfo_);
   }
   if (from._internal_has_vrfdatasource()) {
     _this->_impl_.vrfdatasource_ = new ::VrfDataSource(*from._impl_.vrfdatasource_);
@@ -5040,7 +3519,7 @@ const char* ContractPackagerMsg::_InternalParse(const char* ptr, ::_pbi::ParseCo
         } else
           goto handle_unusual;
         continue;
-      // repeated .ContractTempTxMsgReq txMsgReq = 3;
+      // repeated .TxMsgReq txMsgReq = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
           ptr -= 1;
@@ -5053,7 +3532,7 @@ const char* ContractPackagerMsg::_InternalParse(const char* ptr, ::_pbi::ParseCo
         } else
           goto handle_unusual;
         continue;
-      // .NewVrf vrfInfo = 4;
+      // .Vrf vrfInfo = 4;
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 34)) {
           ptr = ctx->ParseMessage(_internal_mutable_vrfinfo(), ptr);
@@ -5115,7 +3594,7 @@ uint8_t* ContractPackagerMsg::_InternalSerialize(
         _Internal::sign(this).GetCachedSize(), target, stream);
   }
 
-  // repeated .ContractTempTxMsgReq txMsgReq = 3;
+  // repeated .TxMsgReq txMsgReq = 3;
   for (unsigned i = 0,
       n = static_cast<unsigned>(this->_internal_txmsgreq_size()); i < n; i++) {
     const auto& repfield = this->_internal_txmsgreq(i);
@@ -5123,7 +3602,7 @@ uint8_t* ContractPackagerMsg::_InternalSerialize(
         InternalWriteMessage(3, repfield, repfield.GetCachedSize(), target, stream);
   }
 
-  // .NewVrf vrfInfo = 4;
+  // .Vrf vrfInfo = 4;
   if (this->_internal_has_vrfinfo()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(4, _Internal::vrfinfo(this),
@@ -5153,7 +3632,7 @@ size_t ContractPackagerMsg::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // repeated .ContractTempTxMsgReq txMsgReq = 3;
+  // repeated .TxMsgReq txMsgReq = 3;
   total_size += 1UL * this->_internal_txmsgreq_size();
   for (const auto& msg : this->_impl_.txmsgreq_) {
     total_size +=
@@ -5174,7 +3653,7 @@ size_t ContractPackagerMsg::ByteSizeLong() const {
         *_impl_.sign_);
   }
 
-  // .NewVrf vrfInfo = 4;
+  // .Vrf vrfInfo = 4;
   if (this->_internal_has_vrfinfo()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -5215,7 +3694,7 @@ void ContractPackagerMsg::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, co
         from._internal_sign());
   }
   if (from._internal_has_vrfinfo()) {
-    _this->_internal_mutable_vrfinfo()->::NewVrf::MergeFrom(
+    _this->_internal_mutable_vrfinfo()->::Vrf::MergeFrom(
         from._internal_vrfinfo());
   }
   if (from._internal_has_vrfdatasource()) {
@@ -5257,7 +3736,7 @@ void ContractPackagerMsg::InternalSwap(ContractPackagerMsg* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ContractPackagerMsg::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_ca_5fprotomsg_2eproto_getter, &descriptor_table_ca_5fprotomsg_2eproto_once,
-      file_level_metadata_ca_5fprotomsg_2eproto[13]);
+      file_level_metadata_ca_5fprotomsg_2eproto[9]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -5274,21 +3753,13 @@ template<> PROTOBUF_NOINLINE ::TxMsgReq*
 Arena::CreateMaybeMessage< ::TxMsgReq >(Arena* arena) {
   return Arena::CreateMessageInternal< ::TxMsgReq >(arena);
 }
-template<> PROTOBUF_NOINLINE ::ContractTempTxMsgReq*
-Arena::CreateMaybeMessage< ::ContractTempTxMsgReq >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::ContractTempTxMsgReq >(arena);
+template<> PROTOBUF_NOINLINE ::VrfData*
+Arena::CreateMaybeMessage< ::VrfData >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::VrfData >(arena);
 }
 template<> PROTOBUF_NOINLINE ::Vrf*
 Arena::CreateMaybeMessage< ::Vrf >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Vrf >(arena);
-}
-template<> PROTOBUF_NOINLINE ::NewVrf*
-Arena::CreateMaybeMessage< ::NewVrf >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::NewVrf >(arena);
-}
-template<> PROTOBUF_NOINLINE ::VrfData*
-Arena::CreateMaybeMessage< ::VrfData >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::VrfData >(arena);
 }
 template<> PROTOBUF_NOINLINE ::TxMsgAck*
 Arena::CreateMaybeMessage< ::TxMsgAck >(Arena* arena) {
@@ -5297,14 +3768,6 @@ Arena::CreateMaybeMessage< ::TxMsgAck >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::BuildBlockBroadcastMsg*
 Arena::CreateMaybeMessage< ::BuildBlockBroadcastMsg >(Arena* arena) {
   return Arena::CreateMessageInternal< ::BuildBlockBroadcastMsg >(arena);
-}
-template<> PROTOBUF_NOINLINE ::BuildContractBlockBroadcastMsg*
-Arena::CreateMaybeMessage< ::BuildContractBlockBroadcastMsg >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::BuildContractBlockBroadcastMsg >(arena);
-}
-template<> PROTOBUF_NOINLINE ::BuildBlockBroadcastMsgAck*
-Arena::CreateMaybeMessage< ::BuildBlockBroadcastMsgAck >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::BuildBlockBroadcastMsgAck >(arena);
 }
 template<> PROTOBUF_NOINLINE ::ContractTxMsgReq*
 Arena::CreateMaybeMessage< ::ContractTxMsgReq >(Arena* arena) {
