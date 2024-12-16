@@ -16,12 +16,45 @@
 #include <vector>
 #include <iostream>
 #include <utils/json.hpp>
+#include <queue>
+#include <thread>
 #include <google/protobuf/util/json_util.h>
 #include <evmc/evmc.h>
 #include <boost/circular_buffer.hpp>
 
 #include "proto/ca_protomsg.pb.h"
 #include "proto/transaction.pb.h"
+
+struct ContractTransaction {
+    std::string from;         
+    std::string toAddr;        
+    std::string strInput;      
+    std::string encodedInfo;
+    uint64_t contractTip;     
+    uint64_t contractTransfer; 
+    std::string contractAddress; 
+    bool isFindUtxo = false;     
+    ContractTransaction(const std::string &from_, const std::string &toAddr_, const std::string &strInput_, const std::string &encodedInfo_,
+                        uint64_t contractTip_, uint64_t contractTransfer_, const std::string &contractAddress_, bool isFindUtxo_)
+        : from(from_), toAddr(toAddr_), strInput(strInput_), encodedInfo(encodedInfo_), contractTip(contractTip_), 
+          contractTransfer(contractTransfer_), contractAddress(contractAddress_), isFindUtxo(isFindUtxo_) {}
+};
+class TransactionProcessor {
+public:
+    TransactionProcessor();
+    
+    void saveTransaction(uint64_t nowTime, const std::string &from, const std::string &toAddr, const std::string &strInput,
+                                const std::string& encodedInfo, const uint64_t contractTip, const uint64_t contractTransfer,
+                                    const std::string &contractAddress, bool isFindUtxo = false);
+    void processCachedTransactions();
+    void run();
+    void Process();
+
+private:
+    std::queue<ContractTransaction> contractTxCache;
+    std::thread TransactionProcessorThread;
+    std::mutex cacheMutex;
+};
 
 class EvmHost;
 /**

@@ -20,6 +20,7 @@ void BlockMonitor::checkTxSuccessRate()
 		if (blockHash.empty())
 		{
 			failTxhashVec.push_back(txHash);
+			DEBUGLOG("failTxhashVec, txHash:{}", txHash);
 			DropshippingTxVecFail++;
 			continue;
 		}

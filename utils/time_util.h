@@ -57,6 +57,7 @@ public:
     */
     x_uint64_t GetTheTimestampPerUnitOfTime(const x_uint64_t& utcTime);
 
+    x_uint64_t GetDispathContractCycleTime(const x_uint64_t& utcTime);
     /**
      * @brief       Obtain the timestamp, first obtain it from NTP, and then go to the local level if it is unsuccessful
      * 

@@ -11,7 +11,7 @@ void ContractDispatcher::_DispatcherProcessingFunc()
     uint64_t timeBaseline = 0;
     while (true)
     {
-        usleep(1000000);
+        usleep(100000);
         {
             std::unique_lock<std::mutex> locker(_contractInfoCacheMutex);
             if (_contractDependentCache.empty())
@@ -20,85 +20,76 @@ void ContractDispatcher::_DispatcherProcessingFunc()
             }
         }
 
-        // uint64_t currentTime = MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp();
-        if(timeBaseline == 0)
-        {
-            timeBaseline = MagicSingleton<TimeUtil>::GetInstance()->GetTheTimestampPerUnitOfTime(timeValue);
-            auto s1 = MagicSingleton<TimeUtil>::GetInstance()->FormatUTCTimestamp(timeValue);
-            auto s2 = MagicSingleton<TimeUtil>::GetInstance()->FormatUTCTimestamp(timeBaseline);
-            DEBUGLOG("FFF OOOOOOOO, currentTime:{}, timeBaseline:{}", s1, s2);
-        }
-        /*
-            A = Transaction reception time in 10 seconds (time interval between two dispatchers' packaging) = Switching dispatcher time (10 seconds)
-            B = Delay in distribution and packaging after receiving the transaction by the dispatcher in 5 seconds
-            C = B (Fastest transaction confirmation time)
-            D = A + B (Slowest transaction confirmation time)
-        */
-        if (timeValue >= timeBaseline + _contractWaitingTime)
-        {
-            std::unique_lock<std::mutex> lock(_contractHandleMutex);
-            DEBUGLOG("************** time out 10s");
-   
-            std::multimap<std::string, msgInfo> distribution;
-            auto ret = DistributionContractTx(distribution);
-            if(ret != 0)
-            {
-                ERRORLOG("++++++++++++++++ DistributionContractTx error ret :{} ++++++++++++++++++", ret);
-                continue;;
-            }
+        std::vector<uint64_t> keysToErase;
 
-            if(distribution.empty())
+        for(const auto& pair : _contractDependentCache)
+        {
+            uint64_t currentTime = MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp();
+            uint64_t contractCycleTime = pair.first;
+            if (currentTime >= contractCycleTime + global::ca::contractWaitingTime + 1000000)
             {
-                ERRORLOG("++++++++++++++++ distribution empty ++++++++++++++++++");
-            }
+                std::unique_lock<std::mutex> lock(_contractHandleMutex);
+                DEBUGLOG("currentTime:{}, contractCycleTime:{}", currentTime / 1000000, contractCycleTime);
 
-            for(auto & item : distribution)
-            {
-                DEBUGLOG("-0-0-0-0-0-0-0-0- send packager : {}, Number of transactions: {} ", item.first, item.second.txMsgReq.size());
-                for(auto & txmsg : item.second.txMsgReq)
+                std::multimap<std::string, msgInfo> distribution;
+                auto ret = DistributionContractTx(contractCycleTime, distribution);
+                if(ret != 0)
                 {
-                CTransaction contractTx;
-                if (!contractTx.ParseFromString(txmsg.txmsginfo().tx()))
-                {
-                    ERRORLOG("Failed to deserialize transaction body!");
+                    ERRORLOG("++++++++++++++++ DistributionContractTx error ret :{} ++++++++++++++++++", ret);
                     continue;
                 }
-                DEBUGLOG("send packager : {} , tx hash : {}", item.first, contractTx.hash());
+
+                if(distribution.empty())
+                {
+                    ERRORLOG("++++++++++++++++ distribution empty ++++++++++++++++++");
                 }
-                SendTxInfoToPackager(item.first,item.second.info,item.second.txMsgReq,item.second.nodelist);
+
+                for(auto & item : distribution)
+                {
+                    DEBUGLOG("-0-0-0-0-0-0-0-0- send packager : {}, Number of transactions: {} ", item.first, item.second.txMsgReq.size());
+                    for(auto & txmsg : item.second.txMsgReq)
+                    {
+                        CTransaction contractTx;
+                        if (!contractTx.ParseFromString(txmsg.txmsginfo().tx()))
+                        {
+                            ERRORLOG("Failed to deserialize transaction body!");
+                            continue;
+                        }
+                        DEBUGLOG("send packager : {} , tx hash : {}, time:{}", item.first, contractTx.hash(), MagicSingleton<TimeUtil>::GetInstance()->FormatUTCTimestamp(contractTx.time()));
+                    }
+                    SendTxInfoToPackager(item.first,item.second.info,item.second.txMsgReq,item.second.nodelist);
+                }
+
+                keysToErase.push_back(contractCycleTime);
             }
-
-            
-
-            std::scoped_lock locker(_contractInfoCacheMutex,_contractMsgMutex,_mtx);
-            _contractMsgReqCache.clear();
-            _contractDependentCache.clear();
-            timeBaseline = 0;
-            timeValue = 0;
-            isFirst = false;
-        }else
-        {
-            timeValue+= 1000000;
-            DEBUGLOG("timeValue+= 500000");
         }
 
+        if (!keysToErase.empty())
+        {
+            std::scoped_lock locker(_contractInfoCacheMutex, _contractMsgMutex, _mtx);
+            for (const auto& key : keysToErase)
+            {
+                _contractMsgReqCache.erase(key);
+                _contractDependentCache.erase(key);
+            }
+        }
     }
 }
 
 
-void ContractDispatcher::AddContractInfo(const std::string& contractHash, const std::vector<std::string>& dependentContracts)
+void ContractDispatcher::AddContractInfo(const std::string& contractHash, const uint64_t contractCycleTime, const std::vector<std::string>& dependentContracts)
 {
     std::unique_lock<std::mutex> locker(_contractInfoCacheMutex);
-    _contractDependentCache.insert(std::make_pair(contractHash, dependentContracts));
+    _contractDependentCache[contractCycleTime].insert(std::make_pair(contractHash, dependentContracts));
 }
 
 
-void ContractDispatcher::AddContractMsgReq(const std::string& contractHash, const ContractTxMsgReq &msg)
+void ContractDispatcher::AddContractMsgReq(const std::string& contractHash, const uint64_t contractCycleTime, const ContractTxMsgReq &msg)
 {
     std::unique_lock<std::mutex> locker(_contractMsgMutex);
     TxMsgReq  txmsg = msg.txmsgreq();
 
-    _contractMsgReqCache.insert(std::make_pair(contractHash, txmsg));
+    _contractMsgReqCache[contractCycleTime].insert(std::make_pair(contractHash, txmsg));
 }
 
 bool ContractDispatcher::HasDuplicate(const std::vector<std::string>& v1, const std::vector<std::string>& v2)
@@ -167,15 +158,15 @@ int ContractDispatcher::SendTxInfoToPackager(const std::string &packager, const 
     return 0;
 }
 
-std::vector<std::vector<TxMsgReq>> ContractDispatcher::GetDependentData()
+std::vector<std::vector<TxMsgReq>> ContractDispatcher::GetDependentData(const uint64_t contractCycleTime)
 {
     DEBUGLOG("DependencyGrouping");
     std::vector<std::set<std::string>> groupedDependencies;
-	for (const auto& [key, values] : _contractDependentCache) {
+	for (const auto& [key, values] : _contractDependentCache[contractCycleTime]) {
 		std::set<std::string> commonKeys;
 		commonKeys.insert(key);
         //Check for duplicate dependencies
-		for (const auto& [otherKey, otherValues] : _contractDependentCache) {
+		for (const auto& [otherKey, otherValues] : _contractDependentCache[contractCycleTime]) {
 			if (key == otherKey)  continue;
 
 			if (HasDuplicate(values, otherValues) == true)
@@ -216,10 +207,10 @@ std::vector<std::vector<TxMsgReq>> ContractDispatcher::GetDependentData()
         std::vector<TxMsgReq> messageVec;
         for(const auto & hash : hashContainer)
         {
-            if(_contractMsgReqCache.count(hash) == 0) {
+            if(_contractMsgReqCache[contractCycleTime].count(hash) == 0) {
                 continue;
             }
-            messageVec.emplace_back(_contractMsgReqCache.at(hash));
+            messageVec.emplace_back(_contractMsgReqCache[contractCycleTime].at(hash));
         }
         if(messageVec.size() != 0)
         {
@@ -281,10 +272,10 @@ std::vector<std::vector<TxMsgReq>> ContractDispatcher::GroupDependentData(const 
     return groupTxMsg;
 }
 
-int ContractDispatcher::DistributionContractTx(std::multimap<std::string, msgInfo>& distribution)
+int ContractDispatcher::DistributionContractTx(const uint64_t contractCycleTime, std::multimap<std::string, msgInfo>& distribution)
 {
     //1.Fetching dependent data
-    std::vector<std::vector<TxMsgReq>> dependentData = GetDependentData();
+    std::vector<std::vector<TxMsgReq>> dependentData = GetDependentData(contractCycleTime);
     if(dependentData.empty())
     {
         ERRORLOG("DependencyGrouping dependentData  is empty");

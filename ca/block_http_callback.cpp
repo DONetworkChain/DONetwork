@@ -151,6 +151,116 @@ bool CBlockHttpCallback::SendBlockHttp(const std::string& block,const std::strin
     return (bool)res;
 }
 
+// std::string CBlockHttpCallback::ToJson(const CBlock& block)
+// {
+//     nlohmann::json allTx;
+//     nlohmann::json jsonBlock;
+//     jsonBlock["hash"] = addHexPrefix(block.hash());
+//     jsonBlock["height"] = block.height();
+//     jsonBlock["time"] = block.time();
+//     if(!block.data().empty())
+//     {
+//         nlohmann::json blockdataJson = nlohmann::json::parse(block.data());
+//         nlohmann::json modifiedJsonData;
+
+
+//         for (auto it = blockdataJson.begin(); it != blockdataJson.end(); ++it) {
+//             std::string originalKey = it.key();
+//             auto value = it.value();
+//             std::string modifiedKey = addHexPrefix(originalKey);
+//             modifiedJsonData[modifiedKey] = value;
+//         }
+//         blockdataJson = modifiedJsonData;
+
+//         if(blockdataJson.contains("dependentCTx") && !blockdataJson["dependentCTx"].get<std::string>().empty()){
+//             blockdataJson["dependentCTx"] = addHexPrefix(blockdataJson["dependentCTx"].get<std::string>());
+//         }
+//         else
+//         {
+//             blockdataJson["dependentCTx"] = "";
+//         }
+//         jsonBlock["blockdata"] = blockdataJson;
+        
+//     }
+//     else
+//     {
+//         jsonBlock["blockdata"] = "";
+//     }
+//     int k = 0;
+//     for(auto & tx : block.txs())
+//     {
+//         nlohmann::json Tx;
+//         if(tx.type() == global::ca::kTxSign)
+//         {   
+//             if((global::ca::TxType)tx.txtype() != global::ca::TxType::kTxTypeTx)
+//             {
+                
+//                 nlohmann::json dataJson = nlohmann::json::parse(tx.data());
+//                 if (dataJson.contains("TxInfo") && dataJson["TxInfo"].contains("BonusAddr")) 
+//                 {
+//                     std::string bonusAddr = dataJson["TxInfo"]["BonusAddr"].get<std::string>();
+//                     dataJson["TxInfo"]["BonusAddr"] = addHexPrefix(bonusAddr);
+//                 }
+                
+//                 if (dataJson.contains("TxInfo") && dataJson["TxInfo"].contains("DisinvestUtxo")) 
+//                 {
+//                     std::string disinvestUtxo = dataJson["TxInfo"]["DisinvestUtxo"].get<std::string>();
+//                     dataJson["TxInfo"]["DisinvestUtxo"] = addHexPrefix(disinvestUtxo);
+//                 }
+//                 Tx["data"] = dataJson;
+                
+//             }
+            
+//             Tx["time"] = tx.time();
+//             Tx["hash"] = addHexPrefix(tx.hash());
+
+//             for(auto & owner: tx.utxo().owner())
+//             {
+//                 Tx["from"].push_back(addHexPrefix(owner));
+//             }
+
+//             for(auto & vout : tx.utxo().vout())
+//             {
+//                 nlohmann::json utxoVout;
+//                 utxoVout["pub"] = addHexPrefix(vout.addr());
+//                 utxoVout["value"] = vout.value();
+
+//                 Tx["to"].push_back(utxoVout); 
+//             }
+
+//             Tx["type"] = tx.txtype();
+
+//             allTx[k++] = FixTxField(Tx);
+//         }
+//         else if(tx.type() == global::ca::kGenesisSign)
+//         {
+//             Tx["time"] = tx.time();
+//             Tx["hash"] = addHexPrefix(tx.hash());
+
+//             for(auto & owner: tx.utxo().owner())
+//             {
+//                 Tx["from"].push_back(addHexPrefix(owner));
+//             }
+
+//             for(auto & vout : tx.utxo().vout())
+//             {
+//                 nlohmann::json utxoVout;
+//                 utxoVout["addr"] = addHexPrefix(vout.addr());
+//                 utxoVout["value"] = vout.value();
+
+//                 Tx["to"].push_back(utxoVout); 
+//             }
+//             Tx["type"] = tx.txtype();
+//             allTx[k++] = FixTxField(Tx);
+//         }
+//     }
+    
+//     jsonBlock["tx"] = allTx;
+    
+//     std::string json = jsonBlock.dump(4);
+//     return json;
+// }
+
 void CBlockHttpCallback::Test()
 {
     std::random_device rd;

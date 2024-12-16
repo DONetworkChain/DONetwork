@@ -187,6 +187,11 @@ void ContrackInvke(contractJob job){
 //        return;
 //    }
 
+    if(ret != 0)
+    {
+        return;
+    }
+
     ContractTxMsgReq ContractMsg;
     ContractMsg.set_version(global::kVersion);
     TxMsgReq * txMsg = ContractMsg.mutable_txmsgreq();
@@ -265,7 +270,6 @@ void test_contact_thread(){
         }
     }
 }
-
 
 void GenKey()
 {

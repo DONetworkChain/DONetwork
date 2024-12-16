@@ -345,6 +345,8 @@ private:
 
 };
 
+static bool GetHeightBlockHash(uint64_t startHeight, uint64_t endHeight, std::vector<std::string> &blockHashes);
+
 void SendFastSyncGetHashReq(const std::string &nodeId, const std::string &msgId, uint64_t startHeight, uint64_t endHeight);
 void SendFastSyncGetHashAck(const std::string &nodeId, const std::string &msgId, uint64_t startHeight, uint64_t endHeight);
 void SendFastSyncGetBlockReq(const std::string &nodeId, const std::string &msgId, const std::vector<FastSyncBlockHashs> &requestHashs);

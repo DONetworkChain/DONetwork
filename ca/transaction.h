@@ -545,4 +545,6 @@ int VerifyVrf(const std::shared_ptr<BuildBlockBroadcastMsg> &msg, const CBlock& 
  * @return      std::string Contract Addr
  */
 std::string GetContractAddr(const CTransaction & tx);
+
+bool isLast3SecondsOfCycle(uint64_t timestamp_microseconds);
 #endif

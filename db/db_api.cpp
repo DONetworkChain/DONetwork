@@ -597,18 +597,16 @@ DBStatus DBReader::MultiReadData(const std::vector<std::string> &keys, std::vect
     }
 
     std::vector<std::string> cache_values;
-    std::vector<rocksdb::Slice> db_keys;
-    std::vector<std::string> str;
-    for(auto t : keys)
-    {
-        str.push_back(t);
-    }
-    
     std::vector<std::string> db_keys_str;
-    for (auto key : keys)
+    std::vector<rocksdb::Slice> db_keys;
+    
+    db_keys_str.reserve(keys.size());
+    db_keys.reserve(keys.size());
+
+    for (const auto& key : keys)
     {
         db_keys_str.push_back(key);
-        db_keys.push_back(db_keys_str.back());
+        db_keys.push_back(rocksdb::Slice(db_keys_str.back()));
     }
 
     std::string value;

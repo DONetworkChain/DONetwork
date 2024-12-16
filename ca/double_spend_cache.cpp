@@ -6,7 +6,6 @@ int DoubleSpendCache::AddFromAddr(const std::pair<std::string,DoubleSpendCache::
 	auto it =  _pending.find(usings.first);
 	if(it != _pending.end())
 	{
-
 		std::vector<std::string> usingsUtxo(usings.second.utxoVec.begin(), usings.second.utxoVec.end());
 		std::vector<std::string> pendingsUtxo(it->second.utxoVec.begin(), it->second.utxoVec.end());
 		std::sort(usingsUtxo.begin(),usingsUtxo.end());

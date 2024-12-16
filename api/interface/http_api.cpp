@@ -94,7 +94,6 @@
         }
 
 
-
 void _CaRegisterHttpCallbacks() {
     HttpServer::RegisterCallback("/", _ApiJsonRpc);
     HttpServer::RegisterCallback("/GetPublicIp", _GetRequesterIP);

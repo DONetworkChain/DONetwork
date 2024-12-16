@@ -1096,7 +1096,7 @@ int ContractCommonInterface::fillingTransactions(const std::string &fromAddr, gl
         type = TxHelper::vrfAgentType_vrf;
     }
 
-    outTx.set_time(currentTime);
+    //outTx.set_time(currentTime);
 
     std::string identity;
     int ret = GetContractDistributionManager(outTx.time(), height - 1, identity, info_);

@@ -3,7 +3,6 @@
 #include "utils/tmp_log.h"
 
 
-
 #define PARSE_PARAMS(value)\
   if(jsObject.contains(#value)){\
         if(jsObject[#value].is_string()) { \
@@ -30,7 +29,6 @@
             }\
   }       
 
-//(id jsonrpc method)
 #define PARSE_REGULAR_JSON(value)                                                      \
   if(jsObject.contains(#value)){\
 		jsObject[#value].get_to(this->value);\
@@ -65,6 +63,7 @@
 #define TO_RESULT(value) jsResult[#value] = this->value;
 #define TO_PARAMS(value) jsParams[#value] = this->value;
 
+
 #define PARSE_REQ(sname)                                                     \
   std::string sname::_paseFromJson(const std::string& json) {                  \
     nlohmann::json jsObject;                                                   \
@@ -75,6 +74,7 @@
         PARSE_REGULAR_JSON(jsonrpc)\
         PARSE_PARAMS(params)
         
+
 #define PARSE_ACK(sname)                                                     \
   std::string sname::_paseFromJson(const std::string& json) {                   \
     nlohmann::json jsObject;                                                   \
@@ -86,6 +86,7 @@
         PARSE_REGULAR_JSON(jsonrpc)\
         PARSE_PARAMS(result)
 
+
 #define DUMP_REQ(sname)                                                     \
   std::string sname::_paseToString() {                                          \
     nlohmann::json jsObject;                                                   \
@@ -94,6 +95,7 @@
     TO_JSON(id)\
     TO_JSON(jsonrpc)\
     // TO_JSON(params)
+
 
 #define DUMP_ACK(sname)                                                     \
   std::string sname::_paseToString() {                                          \
@@ -105,6 +107,7 @@
       TO_JSON(jsonrpc)
       // TO_JSON(result)
 
+
 #define PARSE_END \
     }                                                                            \
     catch (std::exception & e) {                                                 \
@@ -113,6 +116,7 @@
     }                                                                            \
   return "OK";                                                                 \
   }
+
 
 #define REQ_DUMP_END                                                                \
       jsObject["params"] = jsParams;\

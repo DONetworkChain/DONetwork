@@ -29,6 +29,112 @@
 #include "ca/evm/evm_manager.h"
 #include "ca.h"
 
+TransactionProcessor::TransactionProcessor() {}
+
+void TransactionProcessor::saveTransaction(uint64_t nowTime, const std::string &from, const std::string &toAddr, 
+									const std::string &strInput, const std::string& encodedInfo, const uint64_t contractTip, 
+									const uint64_t contractTransfer, const std::string &contractAddress, bool isFindUtxo) 
+{
+	std::lock_guard<std::mutex> lock(cacheMutex);
+	contractTxCache.push({from, toAddr, strInput, encodedInfo, contractTip, contractTransfer, contractAddress, isFindUtxo});
+
+	DEBUGLOG("XXX UTC Time:{}", MagicSingleton<TimeUtil>::GetInstance()->FormatUTCTimestamp(nowTime));
+	std::cout <<"XXX UTC Time:" << MagicSingleton<TimeUtil>::GetInstance()->FormatUTCTimestamp(nowTime) << std::endl;
+}
+
+
+
+void TransactionProcessor::processCachedTransactions() {
+	std::lock_guard<std::mutex> lock(cacheMutex);
+	while (!contractTxCache.empty()) {
+		auto contractTx = contractTxCache.front();
+		contractTxCache.pop();
+
+		MagicSingleton<TaskPool>::GetInstance()->CommitTxTask([contractTx]() {
+			int top = discoverTransactionHeight();
+			if(top <= 0){
+				ERRORLOG("discoverTransactionHeight error {}", top);
+				return;
+			}
+			DEBUGLOG("create tx top: {}", top);
+			
+			CTransaction outTx;
+			std::vector<std::string> dirtyContract;
+			TxHelper::vrfAgentType isNeedAgentFlag;
+			Vrf info;
+			auto ret = TxHelper::CreateEvmCallContractTransaction(contractTx.from, contractTx.toAddr, contractTx.strInput, contractTx.encodedInfo ,top + 1,
+															outTx, isNeedAgentFlag, info, contractTx.contractTip, contractTx.contractTransfer,
+															dirtyContract, contractTx.contractAddress, contractTx.isFindUtxo);
+			if(ret != 0)
+			{
+				ERRORLOG("Create call contract transaction failed! ret:{}", ret);        
+				return;
+			}
+
+			ContractTxMsgReq ContractMsg;
+			ContractMsg.set_version(global::kVersion);
+			TxMsgReq * txMsg = ContractMsg.mutable_txmsgreq();
+			txMsg->set_version(global::kVersion);
+			TxMsgInfo * txMsgInfo = txMsg->mutable_txmsginfo();
+			txMsgInfo->set_type(0);
+			txMsgInfo->set_tx(outTx.SerializeAsString());
+			txMsgInfo->set_nodeheight(top);
+
+			//std::cout << "size = " << dirtyContract.size() << std::endl;
+			for (const auto& addr : dirtyContract)
+			{
+				//std::cout << "addr = " << "0x"+addr << std::endl;
+				txMsgInfo->add_contractstoragelist(addr);
+			}
+
+			if(isNeedAgentFlag== TxHelper::vrfAgentType::vrfAgentType_vrf)
+			{
+				Vrf * newInfo=txMsg->mutable_vrfinfo();
+				newInfo -> CopyFrom(info);
+			}
+
+			auto msg = std::make_shared<ContractTxMsgReq>(ContractMsg);
+			std::string defaultAddr = MagicSingleton<AccountManager>::GetInstance()->GetDefaultAddr();
+			if(isNeedAgentFlag==TxHelper::vrfAgentType::vrfAgentType_vrf)
+			{
+				ret = DropCallShippingTx(msg,outTx);
+				MagicSingleton<BlockMonitor>::GetInstance()->addDropshippingTxVec(outTx.hash());
+			}
+
+			DEBUGLOG("rocessing transaction with hash:{}  ret:{}", outTx.hash(), ret);
+		});
+	}
+}
+
+void TransactionProcessor::run()
+{
+	while (true) 
+	{
+		auto nowTime = MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp();
+		uint64_t contractCycleTime =  MagicSingleton<TimeUtil>::GetInstance()->GetDispathContractCycleTime(nowTime);
+		
+		if(!contractTxCache.empty() && !isLast3SecondsOfCycle(nowTime))
+		{
+			auto timeDiff = (contractCycleTime + global::ca::contractWaitingTime - nowTime);
+			DEBUGLOG("XXXX UTC contractCycleTime:{}, nowTime:{}, timeDiff:{}",
+			MagicSingleton<TimeUtil>::GetInstance()->FormatUTCTimestamp(contractCycleTime + global::ca::contractWaitingTime),
+			MagicSingleton<TimeUtil>::GetInstance()->FormatUTCTimestamp(nowTime), timeDiff);
+			if(timeDiff >= 1000000)
+			{
+				processCachedTransactions();
+				DEBUGLOG("XXXX UTC Time:{}, timeDiff:{}",MagicSingleton<TimeUtil>::GetInstance()->FormatUTCTimestamp(nowTime), timeDiff);
+			}
+		}
+		sleep(1);
+	}
+}
+
+void TransactionProcessor::Process()
+{
+	TransactionProcessorThread = std::thread(std::bind(&TransactionProcessor::run, this));
+	TransactionProcessorThread.detach();
+}
+
 int TxHelper::GetTxUtxoHeight(const CTransaction &tx, uint64_t& txUtxoHeight)
 {
 	DBReader dbReader;
@@ -2065,7 +2171,18 @@ int TxHelper::CreateEvmDeployContractTransaction(uint64_t height, CTransaction &
         return -2;
     }
 
-    int64_t blockTimestamp = evm_environment::CalculateBlockTimestamp(3);
+	auto nowTime = MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp();
+	while (isLast3SecondsOfCycle(nowTime))
+    {
+        DEBUGLOG("XXXX UTC Time:{}",MagicSingleton<TimeUtil>::GetInstance()->FormatUTCTimestamp(nowTime));
+        sleep(1);
+        nowTime = MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp();
+    }
+
+	outTx.set_time(nowTime);
+    int64_t blockTimestamp = evm_environment::CalculateBlockTimestamp(nowTime);
+
+    //int64_t blockTimestamp = evm_environment::CalculateBlockTimestamp(3);
     if (blockTimestamp < 0)
     {
         return -3;
@@ -2151,7 +2268,19 @@ int TxHelper::CreateEvmCallContractTransaction(const std::string &from, const st
         return -2;
     }
     host.code = contractCode;
-    int64_t blockTimestamp = evm_environment::CalculateBlockTimestamp(3);
+	
+	auto nowTime = MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp();
+	
+	if(isLast3SecondsOfCycle(nowTime))
+    {
+        MagicSingleton<TransactionProcessor>::GetInstance()->saveTransaction(nowTime, from, toAddr, strInput, encodedInfo, contractTip, contractTransfer, to);
+        return -99;
+    }
+
+	outTx.set_time(nowTime);
+    int64_t blockTimestamp = evm_environment::CalculateBlockTimestamp(nowTime);
+
+    //int64_t blockTimestamp = evm_environment::CalculateBlockTimestamp(3);
     if (blockTimestamp < 0)
     {
         return -3;
@@ -2233,7 +2362,11 @@ int TxHelper::RPC_CreateEvmCallContractTransaction(const std::string &from, cons
     }
     host.code = contractCode;
 
-	int64_t blockTimestamp = evm_environment::CalculateBlockTimestamp(3);
+	auto nowTime = MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp();
+	outTx.set_time(nowTime);
+    int64_t blockTimestamp = evm_environment::CalculateBlockTimestamp(nowTime);
+
+	//int64_t blockTimestamp = evm_environment::CalculateBlockTimestamp(3);
     if (blockTimestamp < 0)
     {
 		SetRpcError("-10",Sutil::Format("Calculate block timestamp failed!"));

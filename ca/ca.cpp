@@ -104,6 +104,7 @@ bool CaInit()
 
     MagicSingleton<ContractDispatcher>::GetInstance()->Process();
 
+    MagicSingleton<TransactionProcessor>::GetInstance()->Process();
     std::filesystem::create_directory("./contract");
 
 //    DON::_wasm_time_init();
@@ -1506,6 +1507,131 @@ void HandleDeployContract()
     DEBUGLOG("Transaction result,ret:{}  txHash:{}", ret, outTx.hash())
 }
 
+int discoverTransactionHeight()
+{
+    uint64_t top = 0;
+    if(!BlockHelper::ObtainChainHeight(top)){
+        ERRORLOG("db get top failed!!")
+        return -1;
+    }
+    
+    DEBUGLOG("current top: {}", top);
+    DBReader dbReader;
+    uint64_t selfNodeHeight = 0;
+    auto status = dbReader.GetBlockTop(selfNodeHeight);
+    if (DBStatus::DB_SUCCESS != status)
+    {
+        DEBUGLOG("GetBlockTop fail!!!");
+        return -1;
+    }
+    
+    if(selfNodeHeight >= top){
+        return top;
+    }
+
+    std::vector<std::string> pledgeAddr;
+
+    std::vector<Node> nodelist = MagicSingleton<PeerNode>::GetInstance()->GetNodelist();
+    for (const auto &node : nodelist)
+    {
+        int ret = VerifyBonusAddr(node.address);
+
+        int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(node.address, global::ca::StakeType::kStakeType_Node);
+        if (stakeTime > 0 && ret == 0)
+        {
+            pledgeAddr.push_back(node.address);
+        }
+    }
+    
+    uint64_t endSyncHeight = selfNodeHeight -3;
+    std::string msgId;
+    if (!GLOBALDATAMGRPTR.CreateWait(90, pledgeAddr.size() * 0.8, msgId))
+    {
+        return -2;
+    }
+    for (auto &nodeId : pledgeAddr)
+    {
+        if(!GLOBALDATAMGRPTR.AddResNode(msgId, nodeId))
+        {
+            ERRORLOG("_GetSyncBlockHashNode AddResNode error");
+            return -2;
+        }
+        DEBUGLOG("new sync get block hash from {}", nodeId);
+        SendSyncGetHeightHashReq(nodeId, msgId, selfNodeHeight, endSyncHeight);
+    }
+    std::vector<std::string> retDatas;
+    if (!GLOBALDATAMGRPTR.WaitData(msgId, retDatas))
+    {
+        if(retDatas.size() < pledgeAddr.size() * 0.5)
+        {
+            ERRORLOG("wait sync block hash time out send:{} recv:{}", pledgeAddr.size(), retDatas.size());
+            return -2;
+        }
+    }
+
+    uint64_t succentCount = 0;
+    SyncGetHeightHashAck ack;
+    std::map<std::string, std::set<std::string>> syncBlockHashes;
+    for (auto &retData : retDatas)
+    {
+        ack.Clear();
+        if (!ack.ParseFromString(retData))
+        {
+            continue;
+        }
+        if(ack.code() != 0)
+        {
+            continue;
+        }
+        succentCount++;
+        for (auto &key : ack.block_hashes())
+        {
+            auto it = syncBlockHashes.find(key);
+            if (syncBlockHashes.end() == it)
+            {
+                syncBlockHashes.insert(std::make_pair(key, std::set<std::string>()));
+            }
+            auto &value = syncBlockHashes.at(key);
+            value.insert(ack.self_node_id());
+        }
+    }
+    
+    if(succentCount < (size_t)(retDatas.size() * 0.66))
+    {
+        ERRORLOG("ret data error succentCount:{}, (uint32_t)(retDatas * 0.66):{}, retDatas.size():{}", succentCount, (size_t)(retDatas.size() * 0.66), retDatas.size());
+        return -2;
+    }
+    
+    size_t verifyNum = succentCount / 5 * 4;
+    std::vector<std::string> hashes;
+    std::string strblock;
+    CBlock block;
+    uint64_t highestHeight = 0;
+    for (auto &syncBlockHash : syncBlockHashes)
+    {
+        strblock.clear();
+        auto res = dbReader.GetBlockByBlockHash(syncBlockHash.first, strblock);
+        if(DBStatus::DB_NOT_FOUND != res)
+        {
+            continue;
+        }
+        if (syncBlockHash.second.size() < verifyNum)
+        {
+            continue;
+        }
+        
+        hashes.push_back(syncBlockHash.first);
+
+        if(!block.ParseFromString(strblock)){
+            return -3;
+        }
+        highestHeight = highestHeight > block.height() ? highestHeight :  block.height();
+    }
+
+    DEBUGLOG("highestHeight: {}", highestHeight);
+    return highestHeight;
+}
+
 void HandleCallContract()
 {
 
@@ -1696,12 +1822,19 @@ void HandleCallContract()
     }
 
     uint64_t contractTip = (std::stod(contractTipStr) + global::ca::kFixDoubleMinPrecision) * global::ca::kDecimalNum;
-    uint64_t top = 0;
-	if (DBStatus::DB_SUCCESS != dataReader.GetBlockTop(top))
-    {
-        ERRORLOG("db get top failed!!")
-        return ;
+    // uint64_t top = 0;
+	// if (DBStatus::DB_SUCCESS != dataReader.GetBlockTop(top))
+    // {
+    //     ERRORLOG("db get top failed!!")
+    //     return ;
+    // }
+
+    int top = discoverTransactionHeight();
+    if(top <= 0){
+        ERRORLOG("discoverTransactionHeight error {}", top);
+        return;
     }
+    DEBUGLOG("create tx top: {}", top);
 
 
     CTransaction outTx;
@@ -2328,14 +2461,25 @@ std::string RpcCallContract(void * arg,void *ack)
 
     uint64_t contractTip = (std::stod(contractTipStr) + global::ca::kFixDoubleMinPrecision) * global::ca::kDecimalNum;
     uint64_t contractTransfer = (std::stod(contractTransferStr) + global::ca::kFixDoubleMinPrecision) * global::ca::kDecimalNum;
-    uint64_t top = 0;
-	if (DBStatus::DB_SUCCESS != dataReader.GetBlockTop(top))
-    {
+    //uint64_t top = 0;
+	// if (DBStatus::DB_SUCCESS != dataReader.GetBlockTop(top))
+    // {
+    //     ack_t->code = -5;
+    //     ack_t->message = "db get top failed!!";
+    //     ERRORLOG("db get top failed!!");
+    //     return "db get top failed!!";
+    // }
+
+    int top = discoverTransactionHeight();
+    if(top <= 0){
         ack_t->code = -5;
         ack_t->message = "db get top failed!!";
         ERRORLOG("db get top failed!!");
         return "db get top failed!!";
     }
+    DEBUGLOG("create tx top: {}", top);
+
+
 
     std::string encodedInfo = Base64Encode(req->txInfo);
     if(encodedInfo.size() > 1024){
@@ -2367,6 +2511,14 @@ std::string RpcCallContract(void * arg,void *ack)
     nlohmann::json txInfo = dataJson["TxInfo"].get<nlohmann::json>();
     int vmType = txInfo[Evmone::contractVirtualMachineKeyName].get<int>();
  
+    auto nowTime = MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp();
+    while (isLast3SecondsOfCycle(nowTime))
+    {
+        DEBUGLOG("XXXX txHash:{}, UTC Time:{}",outTx.hash(), MagicSingleton<TimeUtil>::GetInstance()->FormatUTCTimestamp(nowTime));
+        sleep(1);
+        nowTime = MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp();
+    }
+
     int ret = 0;
     TxHelper::vrfAgentType isNeedAgentFlag;
     Vrf info;
@@ -2830,19 +2982,7 @@ int ComputeHash()
 {
     DBReadWriter dbWriter;
 
-    uint64_t height = 0;
-    auto dbRet = dbWriter.GetKComputeHashFlag(height);
-    if(dbRet != DBStatus::DB_SUCCESS && dbRet != DBStatus::DB_NOT_FOUND)
-    {
-        ERRORLOG("set compute hash flag failed, height = {}", height);
-        return -1;
-    }
-    if(dbRet == DBStatus::DB_SUCCESS)
-    {
-        return 0;
-    }
-
-	uint64_t top = 0;
+    uint64_t top = 0;
     if (DBStatus::DB_SUCCESS != dbWriter.GetBlockTop(top))
     {
         ERRORLOG("db get top failed!!");
@@ -2850,27 +2990,68 @@ int ComputeHash()
     }
     top = top / 100 * 100;
     std::cout << "top = " << top << std::endl;
-    int ret = 0;
-    for(int i = 100; i <= top; i+=100)
+
+    if(top == 0)
     {
-        ret = ca_algorithm::CalcHeightsSumHash(i, dbWriter);
-        if(ret != 0)
+        return 0;
+    }
+
+    unsigned int threadCount = std::thread::hardware_concurrency();
+    threadCount = threadCount == 0 ? 4 : threadCount;
+    if(threadCount > top / 100)
+    {
+        threadCount = top / 100;
+    }
+    
+    uint64_t blocksPerThread = (top / 100) / threadCount;
+    if (blocksPerThread == 0) blocksPerThread = 1;
+
+    std::vector<std::thread> threads;
+    std::vector<int> results(threadCount, 0);
+
+    for (unsigned int t = 0; t < threadCount; ++t)
+    {
+        uint64_t start = t * blocksPerThread * 100 + 100;
+        uint64_t end = (t == threadCount - 1) ? top : (t + 1) * blocksPerThread * 100;
+        std::cout << "start = " << start << ", end = " << end << std::endl;
+
+        threads.emplace_back([start, end, &results, t]() {
+            DBReadWriter localDbWriter; 
+            for (uint64_t i = start; i <= end; i += 100)
+            {
+                int ret = ca_algorithm::CalcHeightsSumHash(i, localDbWriter);
+                if (ret != 0)
+                {
+                    results[t] = -3;
+                    ERRORLOG("CalcHeightsSumHash failed, height = {}", i);
+                    return;
+                }
+            }
+
+            if(DBStatus::DB_SUCCESS !=  localDbWriter.TransactionCommit())
+            {
+                ERRORLOG("db commit failed!!");
+                results[t] = -5;
+            }
+            results[t] = 0;
+        });
+    }
+
+    for (auto& thread : threads)
+    {
+        thread.join();
+    }
+
+    for (int result : results)
+    {
+        if (result != 0)
         {
-            ERRORLOG("CalcHeightsSumHash failed, height = {}", i);
-            return -3;
+            std::cout << "ComputeHash failed!! ret: " << result << std::endl;
+            return result;
         }
     }
 
-    if(DBStatus::DB_SUCCESS !=  dbWriter.SetKComputeHashFlag(top))
-    {
-        ERRORLOG("db set compute hash flag failed, height = {}", top);
-        return -4;
-    }
-    if(DBStatus::DB_SUCCESS !=  dbWriter.TransactionCommit())
-    {
-        ERRORLOG("db commit failed!!");
-        return -5;
-    }
+    std::cout << "ComputeHash success!!" << std::endl;
 
     return 0;
 }

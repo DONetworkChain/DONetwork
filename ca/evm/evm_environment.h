@@ -50,8 +50,9 @@ namespace evm_environment
 
     int64_t GetBlockPrevRandao(const CTransaction &transaction);
 
-    int64_t CalculateBlockTimestamp(int64_t time);
-
+    //int64_t CalculateBlockTimestamp(int64_t time);
+    int64_t CalculateBlockTimestamp(uint64_t txTime);
+    
     int64_t CalculateBlockPrevRandao(const std::string &from);
 
     int64_t CalculateBlockPrevRandao(const CTransaction &transaction);

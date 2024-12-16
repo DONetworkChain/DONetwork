@@ -166,4 +166,6 @@ std::string seedToHexString(const uint8_t seed[], size_t length);
 std::string addHexPrefix(std::string hexStr);
 
 int ComputeHash();
+
+int discoverTransactionHeight();
 #endif

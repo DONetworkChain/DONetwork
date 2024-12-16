@@ -6,7 +6,6 @@
 #include "test.h"
 
 
-
 void _CaRegisterHttpCallbacks();
 
 /**

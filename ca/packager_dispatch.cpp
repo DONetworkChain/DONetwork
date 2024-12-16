@@ -26,7 +26,6 @@ void packDispatch::GetDependentData(std::map<uint32_t, std::map<std::string, CTr
 		for (const auto& [otherKey, otherValues] : _packDispatchDependent.hash_dep) {
 			if (key == otherKey)  continue;
 
-
 			if (MagicSingleton<ContractDispatcher>::GetInstance()->HasDuplicate(values, otherValues) == true)
 			{
 				commonKeys.insert(otherKey);
@@ -50,7 +49,6 @@ void packDispatch::GetDependentData(std::map<uint32_t, std::map<std::string, CTr
 					break;
 				}
 			}
-
 			if (!foundDuplicate) {
 				res.push_back(commonKeys);
 			}

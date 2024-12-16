@@ -4,7 +4,7 @@
  * @LastEditors: HaoXuDong 2848973813@qq.com
  * @LastEditTime: 2024-09-04 09:20:43
  * @FilePath: /don/common/global.h
- * @Description:https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Description: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 #ifndef _GLOBAL_H
 #define _GLOBAL_H
@@ -33,9 +33,9 @@ namespace global{
         @brief Version 
         @brief Network version number depends on the first version number
     */
-    static const std::string kNetVersion = "2.3";
-    static const std::string kLinuxCompatible = "2.3.0";
-    static const std::string kWindowsCompatible = "2.3.0";
+    static const std::string kNetVersion = "2.4";
+    static const std::string kLinuxCompatible = "2.4.0";
+    static const std::string kWindowsCompatible = "2.4.0";
     static const std::string kIOSCompatible = "4.0.4";
     static const std::string kAndroidCompatible = "3.1.0";
 

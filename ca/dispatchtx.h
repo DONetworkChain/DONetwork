@@ -11,6 +11,7 @@
 #include "ca/transaction.h"
 #include "ca/transaction_cache.h"
 
+
 class ContractDispatcher{
 
     public:
@@ -22,14 +23,14 @@ class ContractDispatcher{
         * @param       contractHash: 
         * @param       dependentContracts: 
         */
-        void AddContractInfo(const std::string& contractHash, const std::vector<std::string>& dependentContracts);
+        void AddContractInfo(const std::string& contractHash, const uint64_t contractCycleTime, const std::vector<std::string>& dependentContracts);
         /**
         * @brief       
         * 
         * @param       contractHash: 
         * @param       msg: 
         */
-        void AddContractMsgReq(const std::string& contractHash, const ContractTxMsgReq &msg);
+        void AddContractMsgReq(const std::string& contractHash, const uint64_t contractCycleTime, const ContractTxMsgReq &msg);
         /**
         * @brief       
         */
@@ -47,7 +48,6 @@ class ContractDispatcher{
         void setValue(const uint64_t& newValue);
         
     private:
-        constexpr static int _contractWaitingTime = 3 * 1000000;
 
         struct msgInfo
         {
@@ -65,7 +65,7 @@ class ContractDispatcher{
         * 
         * @return      std::vector<std::vector<TxMsgReq>> 
         */
-        std::vector<std::vector<TxMsgReq>> GetDependentData();
+        std::vector<std::vector<TxMsgReq>> GetDependentData(const uint64_t contractCycleTime);
         /**
         * @brief       
         * 
@@ -79,7 +79,7 @@ class ContractDispatcher{
         * @param       distribution:
         * @return      int 
         */
-        int DistributionContractTx(std::multimap<std::string, msgInfo>& distribution);
+        int DistributionContractTx(const uint64_t contractCycleTime, std::multimap<std::string, msgInfo>& distribution);
         /**
         * @brief       Message the transaction information to the packer
         * 
@@ -101,8 +101,10 @@ class ContractDispatcher{
         bool isFirst = false;
         uint64_t timeValue;
 
-        std::unordered_map<std::string/*txHash*/, std::vector<std::string>/*Contract dependency address*/> _contractDependentCache; //The data received from the initiator is stored
-        std::unordered_map<std::string, TxMsgReq> _contractMsgReqCache; //hash TxMsgReq
+        std::unordered_map<uint64_t, std::unordered_map<std::string/*txHash*/, std::vector<std::string>/*Contract dependency address*/>> _contractDependentCache; //The data received from the initiator is stored
+         
+        std::unordered_map<uint64_t, std::unordered_map<std::string, TxMsgReq>> _contractMsgReqCache; //hash TxMsgReq
+         
 
  
 

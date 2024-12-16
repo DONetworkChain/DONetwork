@@ -727,7 +727,6 @@ int SyncBlock::_GetSyncNodeBasic(uint32_t num, uint64_t heightBaseline,
 
     std::random_device rd;
     std::mt19937 gen(rd());
-
     std::set<std::string> sendNodeIdsSet;
     if(top < global::ca::kMinUnstakeHeight)
     {
@@ -747,7 +746,7 @@ int SyncBlock::_GetSyncNodeBasic(uint32_t num, uint64_t heightBaseline,
             qualifyingNode.erase(qualifyingNode.cbegin() + index); 
         }
 
-        while (sendNodeIdsSet.size() < num && !nodes.empty()) 
+        while (sendNodeIdsSet.size() < num && !nodes.empty())
         {
             std::uniform_int_distribution<int> distNodes(0, nodes.size() - 1);
             int index = distNodes(gen);
@@ -1388,8 +1387,8 @@ int SyncBlock::_GetSyncSumHashNode(uint64_t pledgeAddrSize, const std::vector<st
             if (value != (end + 1))
             {
                 needSyncHeights.insert(std::make_pair(start, end));
-                start = -1;
-                end = -1;
+                start = value;
+                end = value;
             }
             else
             {
@@ -1413,9 +1412,6 @@ int SyncBlock::_GetSyncSumHashNode(uint64_t pledgeAddrSize, const std::vector<st
             needSyncHeights.insert(std::make_pair(1, chainHeight + noVerifyHeight));
         }
     }
-    uint64_t selfNodeHeight = 0;
-
-    dbReader.GetBlockTop(selfNodeHeight);
 
     return 0;
 }
@@ -1969,6 +1965,7 @@ int SyncBlock::_GetSyncBlockHashNode(const std::vector<std::string> &sendNodeIds
         }
         if(ack.code() != 0)
         {
+            ERRORLOG("startSyncHeitght:{}, endSyncHeight:{}, selfNodeHeight:{} ack.code():{}", startSyncHeight, endSyncHeight, selfNodeHeight, ack.code());
             continue;
         }
         succentCount++;

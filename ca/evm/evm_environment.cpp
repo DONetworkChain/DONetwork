@@ -11,6 +11,7 @@
 #include "transaction.h"
 #include "evm_manager.h"
 #include <string>
+#include "ca/global.h"
 
 namespace
 {
@@ -151,20 +152,37 @@ int64_t evm_environment::GetBlockNumber()
     return Util::Unsign64toSign64(top + 1);
 }
 
-int64_t evm_environment::CalculateBlockTimestamp(int64_t predictOffset)
+// int64_t evm_environment::CalculateBlockTimestamp(int64_t predictOffset)
+// {
+//     int64_t nowTime = 0;
+//     try
+//     {
+//         nowTime = Util::Unsign64toSign64(MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp());
+//     }
+//     catch (const std::exception &e)
+//     {
+//         ERRORLOG("{}", e.what())
+//         return -1;
+//     }
+//     int64_t evmPrecisionTime = nowTime / 1000000;
+//     return Util::integerRound(evmPrecisionTime + predictOffset);
+// }
+
+int64_t evm_environment::CalculateBlockTimestamp(uint64_t txTime)
 {
     int64_t nowTime = 0;
     try
     {
-        nowTime = Util::Unsign64toSign64(MagicSingleton<TimeUtil>::GetInstance()->GetUTCTimestamp());
+        nowTime = Util::Unsign64toSign64(txTime);
     }
     catch (const std::exception &e)
     {
         ERRORLOG("{}", e.what())
         return -1;
     }
-    int64_t evmPrecisionTime = nowTime / 1000000;
-    return Util::integerRound(evmPrecisionTime + predictOffset);
+
+    int64_t minutes = nowTime / global::ca::contractWaitingTime;
+    return minutes *  global::ca::contractWaitingTime / 1000000;
 }
 
 int64_t evm_environment::GetNonce(const std::string &address)
@@ -325,19 +343,26 @@ int64_t evm_environment::VerifyEvmParameters(const CTransaction &transaction)
 {
     const static int64_t blockTimestampTolerance = 20;
 
-    int64_t blockTimestamp = CalculateBlockTimestamp(0);
+    int64_t blockTimestamp = CalculateBlockTimestamp(transaction.time());
 
     int64_t transactionBlockTimestamp = evm_environment::GetBlockTimestamp(transaction);
     if (transactionBlockTimestamp < 0)
     {
         return -5;
     }
-    if (std::abs(blockTimestamp - transactionBlockTimestamp) > blockTimestampTolerance)
+    if (blockTimestamp != transactionBlockTimestamp)
     {
         ERRORLOG("verify blockTimestamp fail, transaction timestamp: {} block timestamp: {}", transactionBlockTimestamp,
                  blockTimestamp)
         return -1;
     }
+
+    // if (std::abs(blockTimestamp - transactionBlockTimestamp) > blockTimestampTolerance)
+    // {
+    //     ERRORLOG("verify blockTimestamp fail, transaction timestamp: {} block timestamp: {}", transactionBlockTimestamp,
+    //              blockTimestamp)
+    //     return -1;
+    // }
 
     auto ret = VerifyEvmParametersPrevRandao(transaction);
     if(ret != 0)
