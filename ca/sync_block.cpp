@@ -192,7 +192,7 @@ void SyncBlock::ThreadStart()
                 _syncThreadRuningMutex.unlock();
                 if (!_syncThreadRuning)
                 {
-                    break;
+                    continue;
                 }
                 else
                 {
@@ -1142,7 +1142,7 @@ int SyncBlock::_GetSyncSumHashNode(uint64_t pledgeAddrSize, const std::vector<st
         DEBUGLOG("Enable Byzantine consensus across the entire network, newSyncSnedNum:{}", newSyncSnedNum);
         acceptanceRate = 0.9;
     }
-    if (!GLOBALDATAMGRPTR.CreateWait(90, sendNum * acceptanceRate, msgId))
+    if (!GLOBALDATAMGRPTR.CreateWait(60, sendNum * acceptanceRate, msgId))
     {
         ret = -1;
         return ret;
@@ -1929,7 +1929,7 @@ int SyncBlock::_GetSyncBlockHashNode(const std::vector<std::string> &sendNodeIds
     int ret = 0;
     std::string msgId;
     uint64_t succentCount = 0;
-    if (!GLOBALDATAMGRPTR.CreateWait(90, sendNodeIds.size() * 0.8, msgId))
+    if (!GLOBALDATAMGRPTR.CreateWait(60, sendNodeIds.size() * 0.8, msgId))
     {
         ret = -1;
         return ret;
@@ -2142,7 +2142,7 @@ int SyncBlock::_GetSyncBlockData(const std::vector<std::string> &sendNodeIds, co
         return 0;
     }
     std::string msgId;
-    if (!GLOBALDATAMGRPTR.CreateWait(90, 3, msgId))
+    if (!GLOBALDATAMGRPTR.CreateWait(60, 3, msgId))
     {
         ret = -1;
         return ret;
@@ -2649,7 +2649,7 @@ void SendSyncGetHeightHashAck(SyncGetHeightHashAck& ack,const std::string &nodeI
     std::vector<std::string> blockHashes;
     if(endHeight > selfNodeHeight)
     {
-        endHeight = selfNodeHeight + 1;
+        endHeight = selfNodeHeight;
     }
     if(startHeight > endHeight)
     {

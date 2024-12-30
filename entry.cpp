@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include <sys/wait.h>
 #include "main/main.h"
 #include "utils/time_util.h"
 #include "utils/console.h"
@@ -19,6 +20,35 @@ namespace IpFactor {
     bool kMLocalhostUsed = false;
     bool kMPublicIpUsed = false;
     std::string kPublicIpAddress = "";
+}
+
+bool isDaemonMode = false;
+
+void startDaemon(const char* programName, const char* programPath) {
+    if (daemon(1, 0) == -1) {
+        std::cerr << "Failed to daemonize process." << std::endl;
+        exit(-1);
+    }
+
+    signal(SIGCHLD, SIG_IGN); 
+    while (true) {
+        pid_t pid = fork();  
+        if (pid == 0) {
+            chdir(programPath); 
+            execlp(programName, programName, "-m", NULL);
+            exit(0); 
+        } else if (pid < 0) {
+            perror("fork failed");
+            exit(-1);
+        }
+
+        int status;
+        waitpid(pid, &status, 0);  
+        if (WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+            std::cerr << "Child process crashed, restarting..." << std::endl;
+        }
+        sleep(10);  
+    }
 }
 
 int main(int argc, char* argv[])
@@ -95,6 +125,10 @@ int main(int argc, char* argv[])
 				}
 	      	}		   
 		}
+		else if(strcmp(argv[i], "-d") == 0)
+		{
+            isDaemonMode = true;  
+		}
 		else if (strcmp(argv[i], "-c") == 0)
 		{
 		    std::ifstream configFile("config.json");
@@ -133,6 +167,15 @@ int main(int argc, char* argv[])
 		}
 	}
 
+	if (isDaemonMode) {
+        const char* programName = argv[0];
+        char resolved_path[1024];  
+        getcwd(resolved_path, sizeof(resolved_path));
+        const char* programPath = resolved_path;
+        startDaemon(programName, programPath);
+    }
+
+
 	bool initFail = false;
 	if (!Init())
 	{
@@ -149,13 +192,6 @@ int main(int argc, char* argv[])
 		CaCleanup();
 		exit(0);
 	}
-
-	int ret = ComputeHash();
-	if (ret != 0)
-	{
-		std::cout << "ComputeHash failed! ret = " << ret << std::endl;
-		exit(-1);
-	} 
 
 	if (showMenu)
 	{

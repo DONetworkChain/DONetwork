@@ -181,5 +181,5 @@ void ApiPrintHundredSumHash(const Request & req, Response & res);
 void ApiPrintCalc1000SumHash(const Request &req,Response &res);
 void ApiPrintAllBlocks(const Request &req,Response &res);
 void ApiComputeSumHash(const Request &req,Response &res);
-
+void GetAllSystemInfo(const Request &req, Response &res);
 #endif

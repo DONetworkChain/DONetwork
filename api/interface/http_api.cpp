@@ -141,6 +141,7 @@ void _CaRegisterHttpCallbacks() {
     HttpServer::RegisterCallback("/printhundredhash", ApiPrintHundredSumHash);
     HttpServer::RegisterCallback("/printblock", ApiPrintAllBlocks);
     HttpServer::RegisterCallback("/ComputeSumHash", ApiComputeSumHash);
+    HttpServer::RegisterCallback("/SystemInfo", GetAllSystemInfo);
     // #endif
 
     HttpServer::Start();
@@ -1576,7 +1577,7 @@ void _ApiGetBlock(const Request &req, Response &res) {
 
     num = num > 500 ? 500 : num;
 
-    if (top < 0 || num <= 0) {
+    if (top < 0 || num < 0) {
         ERRORLOG("_ApiGetBlock top < 0||num <= 0");
         return;
     }
@@ -1942,4 +1943,479 @@ void ApiComputeSumHash(const Request &req,Response &res)
 
 
     res.set_content(oss.str(), "text/plain");
+}
+
+
+
+
+struct CPUStat 
+{
+    unsigned long long user;
+    unsigned long long nice;
+    unsigned long long system;
+    unsigned long long idle;
+    unsigned long long iowait;
+    unsigned long long irq;
+    unsigned long long softirq;
+};
+
+static std::vector<CPUStat> GetCpuStats() {
+    std::vector<CPUStat> cpuStats;
+    std::ifstream statFile("/proc/stat");
+
+    std::string line;
+    while (std::getline(statFile, line)) 
+    {
+        if (line.compare(0, 3, "cpu") == 0) 
+        {
+            std::istringstream ss(line);
+
+            std::string cpuLabel;
+            CPUStat stat;
+            ss >> cpuLabel >> stat.user >> stat.nice >> stat.system >>
+                stat.idle >> stat.iowait >> stat.irq >> stat.softirq;
+
+            cpuStats.push_back(stat);
+        }
+    }
+
+    return cpuStats;
+}
+
+static double CalculateCpuUsage(const CPUStat &prev, const CPUStat &curr) 
+{
+    auto prevTotal = prev.user + prev.nice + prev.system + prev.idle +
+                      prev.iowait + prev.irq + prev.softirq;
+    auto currTotal = curr.user + curr.nice + curr.system + curr.idle +
+                      curr.iowait + curr.irq + curr.softirq;
+
+    auto totalDiff = currTotal - prevTotal;
+    auto idleDiff = curr.idle - prev.idle;
+
+    return (totalDiff - idleDiff) * 100.0 / totalDiff;
+}
+
+static std::string DoubleToStringWithPrecision(double value, int precision) 
+{
+    std::ostringstream out;
+    out << std::fixed << std::setprecision(precision) << value;
+    return out.str();
+}
+
+// get cpu info
+std::string ApiGetCpuInfo() 
+{
+    std::string sum;
+    sum =
+        "======================================================================"
+        "=========";
+    sum += "\n";
+    sum += "get_cpu_info";
+    sum += "\n";
+    std::ifstream cpuinfoFile("/proc/cpuinfo");
+    std::string line;
+    int cpuCores = 0;
+    std::string cpuModel;
+    double cpuFrequency = 0;
+
+    while (std::getline(cpuinfoFile, line)) 
+    {
+        if (line.compare(0, 9, "processor") == 0) 
+        {
+            cpuCores++;
+        } else if (line.compare(0, 10, "model name") == 0) 
+        {
+            cpuModel = line.substr(line.find(":") + 2);
+        } else if (line.compare(0, 7, "cpu MHz") == 0) 
+        {
+            cpuFrequency = std::stod(line.substr(line.find(":") + 2)) / 1000;
+        }
+    }
+
+    auto prevStats = GetCpuStats();
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    auto currStats = GetCpuStats();
+
+    double totalUsage = 0;
+    for (size_t i = 1; i < prevStats.size(); ++i) {
+        totalUsage += CalculateCpuUsage(prevStats[i], currStats[i]);
+    }
+
+    double avgUsage = totalUsage / (prevStats.size() - 1);
+    sum +=
+        "CPU Usage: " + DoubleToStringWithPrecision(avgUsage, 1) + "%" + "\n";
+    sum += "CPU Frequency: " + DoubleToStringWithPrecision(cpuFrequency, 3) +
+           " GHZ" + "\n";
+    sum += "CPU Model: " + cpuModel + "\n";
+    sum += "CPU Cores: " + std::to_string(cpuCores);
+    return sum;
+}
+
+
+struct NetStat 
+{
+    unsigned long long bytesReceived;
+    unsigned long long bytesSent;
+};
+
+static NetStat GetNetStat(const std::string &interface) {
+    NetStat netStat = {0, 0};
+    std::ifstream netDevFile("/proc/net/dev");
+    std::string line;
+
+    while (std::getline(netDevFile, line)) 
+    {
+        if (line.find(interface) != std::string::npos) 
+        {
+            std::istringstream ss(line);
+            std::string iface;
+            ss >> iface >> netStat.bytesReceived;
+
+            for (int i = 0; i < 7; ++i) 
+            {
+                unsigned long long tmp;
+                ss >> tmp;
+            }
+
+            ss >> netStat.bytesSent;
+            break;
+        }
+    }
+
+    return netStat;
+}
+
+static std::string formatSpeed(double speed) 
+{
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(2) << speed << " Mbps";
+    return ss.str();
+}
+
+
+static std::string GetMacAddress(const std::string &interface) 
+{
+    int sock = socket(AF_INET, SOCK_DGRAM, 0);
+    if (sock < 0) 
+    {
+        return "";
+    }
+
+    struct ifreq ifr;
+    memset(&ifr, 0, sizeof(ifr));
+    strncpy(ifr.ifr_name, interface.c_str(), IFNAMSIZ - 1);
+
+    if (ioctl(sock, SIOCGIFHWADDR, &ifr) < 0) 
+    {
+        close(sock);
+        return "";
+    }
+
+    close(sock);
+    char macAddress[18];
+    snprintf(macAddress, sizeof(macAddress), "%02x:%02x:%02x:%02x:%02x:%02x",
+             static_cast<unsigned char>(ifr.ifr_hwaddr.sa_data[0]),
+             static_cast<unsigned char>(ifr.ifr_hwaddr.sa_data[1]),
+             static_cast<unsigned char>(ifr.ifr_hwaddr.sa_data[2]),
+             static_cast<unsigned char>(ifr.ifr_hwaddr.sa_data[3]),
+             static_cast<unsigned char>(ifr.ifr_hwaddr.sa_data[4]),
+             static_cast<unsigned char>(ifr.ifr_hwaddr.sa_data[5]));
+
+    return macAddress;
+}
+
+static std::string GetNetworkInterfaceModel(const std::string &interface) 
+{
+    std::string modelPath = "/sys/class/net/" + interface + "/device/modalias";
+    std::ifstream modelFile(modelPath);
+    if (!modelFile.is_open()) 
+    {
+        return "";
+    }
+
+    std::string modelInfo;
+    std::getline(modelFile, modelInfo);
+    modelFile.close();
+
+    return modelInfo;
+}
+
+std::string GetNetRate() 
+{
+    std::string interface = "eth0";
+    auto prevStat = GetNetStat(interface);
+    std::string str;
+    str =
+        "======================================================================"
+        "=========";
+    str += "\n";
+    str += "GetNetRate";
+    str += "\n";
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    auto currStat = GetNetStat(interface);
+
+    double downloadSpeed =
+        (currStat.bytesReceived - prevStat.bytesReceived) * 8 / 1000.0 /
+        1000.0;
+    double uploadSpeed =
+        (currStat.bytesSent - prevStat.bytesSent) * 8 / 1000.0 / 1000.0;
+
+    std::string downloadSpeedStr = formatSpeed(downloadSpeed);
+    std::string uploadSpeedStr = formatSpeed(uploadSpeed);
+
+    str += "Download speed: " + downloadSpeedStr + "\n";
+    str += "Upload speed: " + uploadSpeedStr + "\n";
+    str += "Interface: " + interface + "\n";
+    str += "MAC Address: " + GetMacAddress(interface);
+    str += "Model Info: " + GetNetworkInterfaceModel(interface);
+    prevStat = currStat;
+    return str;
+}
+
+std::string Exec(const char *cmd) 
+{
+    char buffer[128];
+    std::string result = "";
+    FILE *pipe = popen(cmd, "r");
+    if (!pipe)
+        throw std::runtime_error("popen() failed!");
+    try {
+        while (fgets(buffer, sizeof(buffer), pipe) != NULL) {
+            result += buffer;
+        }
+    } catch (...) {
+        pclose(pipe);
+        throw;
+    }
+    pclose(pipe);
+    return result;
+}
+
+
+static std::string GetOsVersion() 
+{
+    struct utsname buffer;
+    std::string osRelease = Exec("cat /etc/os-release");
+    std::string str;
+    if (uname(&buffer) != 0) {
+        return "Error getting OS version";
+    }
+    str = std::string(buffer.sysname) + " " + std::string(buffer.release) +
+          " " + std::string(buffer.version);
+    str += osRelease;
+    return str;
+}
+
+std::string ApiGetSystemInfo() 
+{
+    std::string str;
+    str =
+        "======================================================================"
+        "=========";
+    str += "\n";
+    str += "ApiGetSystemInfo";
+    str += "\n";
+    str += "OS Version: " + GetOsVersion() + "\n";
+    return str;
+}
+
+std::string ApiTime()
+{
+    std::string str;
+	auto now = std::time(0);
+    str += std::ctime(&now);	
+   	auto now1 = std::chrono::system_clock::now();
+    auto nowUs = std::chrono::duration_cast<std::chrono::microseconds>(now1.time_since_epoch()).count();
+    auto stamp= std::to_string(nowUs) ;
+    str  += stamp +"\n";
+
+    addrinfo hints;
+    memset(&hints, 0, sizeof hints);
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_socktype = SOCK_DGRAM;
+    hints.ai_flags = AI_PASSIVE;
+
+    addrinfo *result;
+    getaddrinfo(NULL, "0", &hints, &result);
+    sockaddr_in *addr = (sockaddr_in *)result->ai_addr;
+
+    auto timeMs = std::chrono::duration_cast<std::chrono::microseconds>(
+            std::chrono::system_clock::now().time_since_epoch()).count();
+    std::string netTime = std::to_string(timeMs) ; 
+    str += netTime + "\n";
+
+    if(timeMs >1000 + nowUs)
+    {
+        std::string cache = std::to_string(timeMs - nowUs); 
+        str +=cache +"microsecond"+"slow" + "\n" ;
+    }
+
+    if(nowUs  > 1000 + timeMs)
+    {
+        std::string cache = std::to_string(timeMs - nowUs);
+        str +=cache +"microsecond"+"fast" +"\n";
+    }
+    else 
+    {
+        str +="normal";
+        str +="\n";
+    }
+    str +="time check======================" ;
+    str +="\n";
+    return str;
+}
+
+
+std::string GetProcessInfo() 
+{
+    const int BUFFER_SIZE = 1024;
+
+    std::string str;
+    str =
+        "======================================================================"
+        "=========";
+    str += "\n";
+    str += "GetProcessInfo";
+    str += "\n";
+
+    FILE *pipe = popen("ps -ef", "r");
+    if (!pipe) {
+
+        return "-1";
+    }
+    
+    char buffer[BUFFER_SIZE];
+    while (fgets(buffer, BUFFER_SIZE, pipe)) 
+    {
+
+        str += buffer;
+        str += "\n";
+    }
+    pclose(pipe);
+    return str;
+}
+
+int GetFileLine() 
+{
+    FILE *fp;
+    int flag = 0, count = 0;
+    if ((fp = fopen("/proc/meminfo", "r")) == NULL)
+        return -1;
+    while (!feof(fp)) 
+    {
+        flag = fgetc(fp);
+        if (flag == '\n')
+            count++;
+    }
+    fclose(fp);
+    return count;
+}
+
+void GetMemOccupy(int lenNum, std::string &strMem) 
+{
+    strMem = "";
+    FILE *fpMemInfo = fopen("/proc/meminfo", "r");
+    if (NULL == fpMemInfo) 
+    {
+        strMem = "-1 meminfo fopen error";
+        return;
+    }
+
+    int i = 0;
+    int value = 0;
+    char name[512];
+    char line[512];
+    int nFiledNumber = 2;
+    int total = 0;
+    int available = 0;
+    while (fgets(line, sizeof(line) - 1, fpMemInfo)) 
+    {
+        if (sscanf(line, "%s%u", name, &value) != nFiledNumber) 
+        {
+            continue;
+        }
+        if (0 == strcmp(name, "MemTotal:")) 
+        {
+            total = value;
+            strMem += "MemTotal:\t" + std::to_string(value) + '\n';
+        } 
+        else if (0 == strcmp(name, "MemFree:")) 
+        {
+            strMem += "MemFree:\t" + std::to_string(value) + '\n';
+        } 
+        else if (0 == strcmp(name, "MemAvailable:")) 
+        {
+            available = value;
+            strMem += "MemAvailable:\t" + std::to_string(value) + '\n';
+        } 
+        else if (0 == strcmp(name, "Buffers:")) 
+        {
+            strMem += "MemBuffers:\t" + std::to_string(value) + '\n';
+        } 
+        else if (0 == strcmp(name, "Cached:")) 
+        {
+            strMem += "MemCached:\t" + std::to_string(value) + '\n';
+        }
+        else if (0 == strcmp(name, "SwapCached:")) 
+        {
+            strMem += "SwapCached:\t" + std::to_string(value) + '\n';
+        } 
+        else if (0 == strcmp(name, "SwapTotal:")) 
+        {
+            strMem += "SwapTotal:\t" + std::to_string(value) + '\n';
+        } 
+        else if (0 == strcmp(name, "SwapFree:")) 
+        {
+            strMem += "SwapFree:\t" + std::to_string(value) + '\n';
+        }
+
+        if (++i == lenNum) 
+        {
+            break;
+        }
+    }
+    strMem += "Memory usage:\t" +
+              std::to_string(100.0 * (total - available) / total) + "%\n";
+    fclose(fpMemInfo);
+}
+
+void GetDiskType(std::string &strMem) {
+    std::ifstream rotational("/sys/block/sda/queue/rotational");
+    if (rotational.is_open()) {
+        int isRotational;
+        rotational >> isRotational;
+        strMem += "Disk type:\t";
+        strMem += (isRotational ? "HDD" : "SSD");
+        rotational.close();
+    } 
+    else 
+    {
+        strMem += "-1 Disk rotational open error";
+    }
+}
+
+void GetAllSystemInfo(const Request &req, Response &res) 
+{
+    std::string outPut;
+    std::string MemStr;
+    int lenNum = GetFileLine();
+    GetMemOccupy(lenNum, MemStr);
+    GetDiskType(MemStr);
+    outPut =
+        "=================================================================="
+        "=============";
+    outPut += "\n";
+    outPut += "GetMemOccupy";
+    outPut += MemStr;
+    outPut += "\n";
+
+    outPut += ApiGetCpuInfo() + "\n";
+    outPut += GetNetRate() + "\n";
+    outPut += ApiGetSystemInfo() + "\n";
+    outPut += ApiTime() + "\n";
+    outPut += GetProcessInfo() + "\n";
+    
+
+    res.set_content(outPut, "text/plain");
 }

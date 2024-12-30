@@ -1,15 +1,3 @@
-/*
- * @Author: HaoXuDong 2848973813@qq.com
- * @Date: 2024-08-08 11:25:49
- * @LastEditors: HaoXuDong 2848973813@qq.com
- * @LastEditTime: 2024-08-08 11:29:30
- * @FilePath: /don/ca/evm/evm_environment.h
- * @Description:https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-//
-// Created by root on 2024/4/24.
-//
-
 #ifndef DON_EVM_ENVIRONMENT_H
 #define DON_EVM_ENVIRONMENT_H
 

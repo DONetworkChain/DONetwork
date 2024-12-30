@@ -934,6 +934,7 @@ bool net_com::BroadBroadcastMessage( BuildBlockBroadcastMsg& BuildBlockMsg, cons
 			BuildBlockMsg.set_type(1);//Set the number of broadcasts to 1
 			for(auto &addr:addrs)
 			{
+				DEBUGLOG("Send type 1 addr : {}", addr);
 				BuildBlockMsg.add_castaddrs(addr);	
 			}
 			
@@ -950,6 +951,7 @@ bool net_com::BroadBroadcastMessage( BuildBlockBroadcastMsg& BuildBlockMsg, cons
 			
 			for(auto & addr : addrs)
 			{
+				DEBUGLOG("Send type 1 addr : {}", addr);
 				BuildBlockMsg.add_castaddrs(addr);	
 			}
 

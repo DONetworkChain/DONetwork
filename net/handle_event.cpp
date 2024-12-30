@@ -695,6 +695,7 @@ void initCyclicTargetAddresses(const std::shared_ptr<BuildBlockBroadcastMsg>& ms
 	auto castAddrs = msg->castaddrs();
 	if(msg->castaddrs_size() == 0)
 	{
+		ERRORLOG("error castaddr empty!");
 		std::cout <<" error castaddr empty" << std::endl;
 	}
 
@@ -900,6 +901,20 @@ int HandleBroadcastMsg(const std::shared_ptr<BuildBlockBroadcastMsg>& msg, const
 	int findTimes = 0;
 	if(msg->type() == 1)
 	{
+
+		Node node;
+		if (!MagicSingleton<PeerNode>::GetInstance()->FindNodeByFd(msgData.fd, node))
+		{
+			ERRORLOG("Invalid message ");
+			return -1;
+		}
+		DEBUGLOG("Handle Broadcast type is 1");
+		DEBUGLOG("The first Broadcast node is : {}", node.address);
+		for (auto &addr : msg->castaddrs())
+		{
+			DEBUGLOG("My broadcast type is 1 and my peers are: {}", addr);
+		}
+
 		Cycliclist<std::string> targetAddressCycleList;
 		initCyclicTargetAddresses(msg, targetAddressCycleList);
 
@@ -941,16 +956,21 @@ int HandleBroadcastMsg(const std::shared_ptr<BuildBlockBroadcastMsg>& msg, const
 				{
 					if(startIterator->data != defaultAddress)
 					{
+						DEBUGLOG("Broadcast type 2 msg to peer : {}", startIterator->data);
 						MagicSingleton<TaskPool>::GetInstance()->CommitBroadcastTask(std::bind(&net_com::SendMessageTask, startIterator->data, *msg));
 					}
 				}
 				if(startIterator->data != defaultAddress)
 				{
+					DEBUGLOG("Broadcast type 2 msg to peer : {}", startIterator->data);
 					MagicSingleton<TaskPool>::GetInstance()->CommitBroadcastTask(std::bind(&net_com::SendMessageTask, startIterator->data, *msg));
 				}
 				break;
 			}
 		}
+	}
+	else if(msg->type() == 2){
+			DEBUGLOG("Handle Broadcast type should not be 2");
 	}
 	return 0;
 }
