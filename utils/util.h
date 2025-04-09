@@ -7,6 +7,7 @@
 #include <vector>
 #include <functional>
 #include "../utils/string_util.h"
+#include <cstdint>
 
 class Util
 {

@@ -49,6 +49,7 @@ void packDispatch::GetDependentData(std::map<uint32_t, std::map<std::string, CTr
 					break;
 				}
 			}
+
 			if (!foundDuplicate) {
 				res.push_back(commonKeys);
 			}

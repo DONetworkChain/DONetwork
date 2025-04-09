@@ -27,6 +27,7 @@
 #include <openssl/evp.h>
 #include <openssl/pem.h>
 #include <openssl/core_names.h>
+#include <zip.h>
 
 /**
  * @brief       
@@ -34,6 +35,10 @@
  */
 static const int PrimeSeedNum = 16;
 static const int DerivedSeedNum = 32;
+struct ZipFileData {
+    bool success;
+    std::vector<uint8_t> seedData;
+};
 class Account
 {
     public:
@@ -201,7 +206,7 @@ class Account
                 _seed[i] =seed[i];
             }            
         }
-        
+        void GenerateKeysAndAddress(EVP_PKEY* pkeyPtr);
     private:
         /**
          * @brief  Generate a public key through a pointer
@@ -262,9 +267,9 @@ class AccountManager
          * @brief       
          * 
          * @param       account: 
-         * @return      int 
+         * @return      
          */
-        int AddAccount(Account &account);
+        void AddAccount(Account &account);
 
         /**
          * @brief       
@@ -390,6 +395,14 @@ class AccountManager
         std::string _defaultAddr;
         std::map<std::string /*addr*/, std::shared_ptr<Account>> _accountList;
         
+        
+        bool ensureDirectoryExists(const std::string& path);
+        std::vector<std::string> getFilesInDirectory(const std::string& path);
+        int handleSingleZipFile(const std::string& path, const std::string& filename);
+        int handleMultipleFiles(const std::string& path, const std::vector<std::string>& files);
+        int createAccountFromZipData(const ZipFileData& zipData);
+        int createDefaultAccount();
+        void setDefaultAccountIfNeeded();
         int _init();
 };
 class VerifiedAddressSet {
@@ -514,4 +527,11 @@ bool GetEDPubKeyByBytes(const std::string &pubStr, EVP_PKEY* &pKey);
  */
 
 void sha256_hash(const uint8_t* input, size_t input_len, uint8_t* output);
+
+std::string prompt_password();
+bool is_zip_file(const std::string &filename);
+bool is_encrypted(zip_t *zip, zip_uint64_t index);
+bool validate_password(zip_t *zip, zip_uint64_t index, const std::string &password);
+std::vector<ZipFileData> read_zip_file(const std::string& filename);
+
 #endif

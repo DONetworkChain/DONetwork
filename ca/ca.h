@@ -167,5 +167,5 @@ std::string addHexPrefix(std::string hexStr);
 
 int ComputeHash();
 
-int discoverTransactionHeight();
+int discoverTransactionHeight(uint64_t &height);
 #endif

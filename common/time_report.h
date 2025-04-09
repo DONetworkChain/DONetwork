@@ -9,7 +9,7 @@
  */
 #ifndef __TIME_REPORT_H__
 #define __TIME_REPORT_H__
-
+#include <cstdint>
 #include <string>
 
 class TimeReport

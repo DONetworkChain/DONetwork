@@ -257,7 +257,15 @@ void ReplaceCreateTxTransaction(const std::vector<std::string>& fromAddr,
 	Vrf info;
 	if(type == TxHelper::vrfAgentType_defalut || type == TxHelper::vrfAgentType_local)
 	{
-		outTx.set_identity(TxHelper::GetEligibleNodes());
+		auto id = TxHelper::GetEligibleNodes();
+		if(id.empty())
+		{
+			ackT->message = "No eligible nodes";
+			ackT->code=-15;
+			ERRORLOG("No eligible nodes");
+			return;
+		}
+		outTx.set_identity(id);
 	}
 	else
 	{
@@ -343,10 +351,17 @@ void ReplaceCreateStakeTransaction(const std::string & fromAddr, uint64_t stakeA
 		return;	
 	}
 	
-	if(stakeAmount < global::ca::kMinStakeAmt)
+	uint64_t minStakeAmt = 0;
+	if(height >= global::ca::KHardForkHeight){
+		minStakeAmt = global::ca::kNewMinStakeAmt;
+	}else{
+		minStakeAmt = global::ca::kMinStakeAmt;
+	}
+	
+	if(stakeAmount < minStakeAmt)
 	{
 		ack_t->code = -6;
-        ack_t->message = "The pledge amount must be greater than " + std::to_string(global::ca::kMinStakeAmt);
+        ack_t->message = "The pledge amount must be greater than " + std::to_string(minStakeAmt);
 		return;
 	}
 
@@ -417,6 +432,8 @@ void ReplaceCreateStakeTransaction(const std::string & fromAddr, uint64_t stakeA
 		return;
 	}
 
+	DoubleSpendCache::doubleSpendsuc used;
+
 	for (auto & owner : setTxowners)
 	{
 		txUtxo->add_owner(owner);
@@ -429,6 +446,7 @@ void ReplaceCreateStakeTransaction(const std::string & fromAddr, uint64_t stakeA
 				CTxPrevOutput * prevOutput = vin->add_prevout();
 				prevOutput->set_hash(utxo.hash);
 				prevOutput->set_n(utxo.n);
+				used.utxoVec.push_back(utxo.hash);
 			}
 		}
 		vin->set_sequence(n++);
@@ -437,7 +455,8 @@ void ReplaceCreateStakeTransaction(const std::string & fromAddr, uint64_t stakeA
 	nlohmann::json txInfo;
 	txInfo["StakeType"] = strStakeType;
 	txInfo["StakeAmount"] = stakeAmount;
-	if(commissionRate < global::ca::KMinCommissionRate || commissionRate > global::ca::KMaxCommissionRate)
+
+	if(commissionRate <= global::ca::KNewMinCommissionRate || commissionRate >= global::ca::KNewMaxCommissionRate)
     {
 		ack_t->code = -13;
         ack_t->message = "The commission ratio is not in the range";
@@ -502,7 +521,15 @@ void ReplaceCreateStakeTransaction(const std::string & fromAddr, uint64_t stakeA
 	Vrf info;
 	if(type == TxHelper::vrfAgentType_defalut || type == TxHelper::vrfAgentType_local)
 	{
-		outTx.set_identity(TxHelper::GetEligibleNodes());
+		auto id = TxHelper::GetEligibleNodes();
+		if(id.empty())
+		{
+			ack_t->message = "No eligible nodes";
+			ack_t->code=-17;
+			ERRORLOG("No eligible nodes");
+			return;
+		}
+		outTx.set_identity(id);
 	}
 	else
 	{
@@ -522,6 +549,13 @@ void ReplaceCreateStakeTransaction(const std::string & fromAddr, uint64_t stakeA
 			return;
     	}
 		outTx.set_identity(id);
+	}
+
+	used.time = outTx.time();
+	if (MagicSingleton<DoubleSpendCache>::GetInstance()->AddFromAddr(std::make_pair(fromAddr, used)))
+	{
+		ERRORLOG("utxo is using!");
+		return;
 	}
 
 	std::string txJsonString;
@@ -640,6 +674,9 @@ void ReplaceCreatUnstakeTransaction(const std::string& fromAddr, const std::stri
 		ack_t->message = "The information entered exceeds the specified length";
 		return;
 	}
+
+	DoubleSpendCache::doubleSpendsuc used;
+
 	{
 		//  Fill vin
 		txUtxo->add_owner(fromAddr);
@@ -648,6 +685,7 @@ void ReplaceCreatUnstakeTransaction(const std::string& fromAddr, const std::stri
 		CTxPrevOutput* prevout = txin->add_prevout();
 		prevout->set_hash(utxoHash);
 		prevout->set_n(1);
+		used.utxoVec.push_back(utxoHash);
 	}
 
 	for (auto & owner : setTxowners)
@@ -662,6 +700,7 @@ void ReplaceCreatUnstakeTransaction(const std::string& fromAddr, const std::stri
 				CTxPrevOutput * prevOutput = vin->add_prevout();
 				prevOutput->set_hash(utxo.hash);
 				prevOutput->set_n(utxo.n);
+				used.utxoVec.push_back(utxo.hash);
 			}
 		}
 		vin->set_sequence(n++);
@@ -735,7 +774,15 @@ void ReplaceCreatUnstakeTransaction(const std::string& fromAddr, const std::stri
 	Vrf info;
 	if(type == TxHelper::vrfAgentType_defalut || type == TxHelper::vrfAgentType_local)
 	{
-		outTx.set_identity(TxHelper::GetEligibleNodes());
+		auto id = TxHelper::GetEligibleNodes();
+		if(id.empty())
+		{
+			ack_t->message = "No eligible nodes";
+			ack_t->code=-10;
+			ERRORLOG("No eligible nodes");
+			return;
+		}
+		outTx.set_identity(id);
 	}
 	else
 	{
@@ -755,6 +802,13 @@ void ReplaceCreatUnstakeTransaction(const std::string& fromAddr, const std::stri
 			return;
     	}
 		outTx.set_identity(id);
+	}
+
+	used.time = outTx.time();
+	if (MagicSingleton<DoubleSpendCache>::GetInstance()->AddFromAddr(std::make_pair(fromAddr, used)))
+	{
+		ERRORLOG("utxo is using!");
+		return;
 	}
 
 	std::string txJsonString;
@@ -828,9 +882,11 @@ void ReplaceCreateInvestTransaction(const std::string & fromAddr,
 		return;
 	}
 
-	if(investAmount < global::ca::kMinInvestAmt){
+	uint64_t minInvestAmt = global::ca::kNewMinInvestAmt;
+
+	if(investAmount < minInvestAmt){
         ackT->code = -5;
-		ackT->message = "investment amount less " + std::to_string(global::ca::kMinInvestAmt);
+		ackT->message = "investment amount less " + std::to_string(minInvestAmt);
 		return;
 	}
 
@@ -907,6 +963,8 @@ void ReplaceCreateInvestTransaction(const std::string & fromAddr,
 
 	}
 
+	DoubleSpendCache::doubleSpendsuc used;
+
 	for (auto & owner : setTxowners)
 	{
 		txUtxo->add_owner(owner);
@@ -919,6 +977,7 @@ void ReplaceCreateInvestTransaction(const std::string & fromAddr,
 				CTxPrevOutput * prevOutput = vin->add_prevout();
 				prevOutput->set_hash(utxo.hash);
 				prevOutput->set_n(utxo.n);
+				used.utxoVec.push_back(utxo.hash);
 			}
 		}
 		vin->set_sequence(n++);
@@ -987,7 +1046,15 @@ void ReplaceCreateInvestTransaction(const std::string & fromAddr,
 	Vrf info;
 	if(type == TxHelper::vrfAgentType_defalut || type == TxHelper::vrfAgentType_local)
 	{
-		outTx.set_identity(TxHelper::GetEligibleNodes());
+		auto id = TxHelper::GetEligibleNodes();
+		if(id.empty())
+		{
+			ackT->message = "No eligible nodes";
+			ackT->code=-14;
+			ERRORLOG("No eligible nodes");
+			return;
+		}
+		outTx.set_identity(id);
 	}
 	else
 	{	
@@ -1008,6 +1075,13 @@ void ReplaceCreateInvestTransaction(const std::string & fromAddr,
 
     	}
 		outTx.set_identity(id);
+	}
+
+	used.time = outTx.time();
+	if (MagicSingleton<DoubleSpendCache>::GetInstance()->AddFromAddr(std::make_pair(fromAddr, used)))
+	{
+		ERRORLOG("utxo is using!");
+		return;
 	}
 
 	std::string txJsonString;
@@ -1139,6 +1213,8 @@ void ReplaceCreateDisinvestTransaction(const std::string& fromAddr,
 
 	}
 
+	DoubleSpendCache::doubleSpendsuc used;
+
 	{
 		txUtxo->add_owner(fromAddr);
 		CTxInput* txin = txUtxo->add_vin();
@@ -1146,6 +1222,7 @@ void ReplaceCreateDisinvestTransaction(const std::string& fromAddr,
 		CTxPrevOutput* prevout = txin->add_prevout();
 		prevout->set_hash(utxoHash);
 		prevout->set_n(1);
+		used.utxoVec.push_back(utxoHash);
 	}
 
 	for (auto & owner : setTxowners)
@@ -1226,7 +1303,15 @@ void ReplaceCreateDisinvestTransaction(const std::string& fromAddr,
 	// Determine whether dropshipping is default or local dropshipping
 	if(type == TxHelper::vrfAgentType_defalut || type == TxHelper::vrfAgentType_local)
 	{
-		outTx.set_identity(TxHelper::GetEligibleNodes());
+		auto id = TxHelper::GetEligibleNodes();
+		if(id.empty())
+		{
+			ackT->message = "No eligible nodes";
+			ackT->code=-12;
+			ERRORLOG("No eligible nodes");
+			return;
+		}
+		outTx.set_identity(id);
 	}
 	else
 	{	
@@ -1246,6 +1331,13 @@ void ReplaceCreateDisinvestTransaction(const std::string& fromAddr,
 
     	}
 		outTx.set_identity(id);
+	}
+
+	used.time = outTx.time();
+	if (MagicSingleton<DoubleSpendCache>::GetInstance()->AddFromAddr(std::make_pair(fromAddr, used)))
+	{
+		ERRORLOG("utxo is using!");
+		return;
 	}
 
 	std::string txJsonString;
@@ -1281,9 +1373,15 @@ void ReplaceCreateBonusTransaction(const std::string& addr, bool isFindUtxo, con
 	Vrf information;
 	uint64_t height;
 
-	DBReader dbReader; 
-    if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(height))
-    {
+	// DBReader dbReader; 
+    // if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(height))
+    // {
+	// 	ackT->code = -1;	
+	// 	ackT->message = "Failed to get the current highest block height";
+    //     return;
+    // }
+    int retNum = discoverTransactionHeight(height);
+    if(retNum != 0){
 		ackT->code = -1;	
 		ackT->message = "Failed to get the current highest block height";
         return;
@@ -1372,6 +1470,8 @@ void ReplaceCreateBonusTransaction(const std::string& addr, bool isFindUtxo, con
 		return;		
 	}
 
+	DoubleSpendCache::doubleSpendsuc used;
+
 	for (auto & owner : setTxowners)
 	{
 		txUtxo->add_owner(owner);
@@ -1384,6 +1484,7 @@ void ReplaceCreateBonusTransaction(const std::string& addr, bool isFindUtxo, con
 				CTxPrevOutput * prevOutput = vin->add_prevout();
 				prevOutput->set_hash(utxo.hash);
 				prevOutput->set_n(utxo.n);
+				used.utxoVec.push_back(utxo.hash);
 			}
 		}
 		vin->set_sequence(n++);
@@ -1394,7 +1495,7 @@ void ReplaceCreateBonusTransaction(const std::string& addr, bool isFindUtxo, con
 	uint64_t tempNodeDividend=0;
 	uint64_t tempTotalClaim=0;
 	double tempcommissionRate;
-	int rt = ca_algorithm::GetCommissionPercentage(addr, tempcommissionRate);
+	int rt = ca_algorithm::GetCommissionPercentage(addr, height, tempcommissionRate);
 	if(rt != 0)
 	{
 		ackT->code = -9;	
@@ -1495,7 +1596,15 @@ void ReplaceCreateBonusTransaction(const std::string& addr, bool isFindUtxo, con
 	// Determine whether dropshipping is default or local dropshipping
 	if(type == TxHelper::vrfAgentType_defalut || type == TxHelper::vrfAgentType_local)
 	{
-		outTx.set_identity(TxHelper::GetEligibleNodes());
+		auto id = TxHelper::GetEligibleNodes();
+		if(id.empty())
+		{
+			ackT->message = "No eligible nodes";
+			ackT->code=-14;
+			ERRORLOG("No eligible nodes");
+			return;
+		}
+		outTx.set_identity(id);
 	}
 	else{
 
@@ -1514,6 +1623,13 @@ void ReplaceCreateBonusTransaction(const std::string& addr, bool isFindUtxo, con
 			return;
     	}
 		outTx.set_identity(id);
+	}
+
+	used.time = outTx.time();
+	if (MagicSingleton<DoubleSpendCache>::GetInstance()->AddFromAddr(std::make_pair(addr, used)))
+	{
+		ERRORLOG("utxo is using!");
+		return;
 	}
 
 	std::string txJsonString;

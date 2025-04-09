@@ -103,3 +103,44 @@ message newSeekContractPreHashAck
   string self_node_id = 3;
   repeated preHashPair seekContractBlock = 4;
 }
+
+message CheckVinReq
+{
+  string version = 1;
+  string msg_id = 2;
+  string self_node_id = 3;
+  string owner = 4;
+  repeated string utxoHash = 5;
+}
+
+message CheckVinAck
+{
+  string version = 1;
+  string msg_id = 2;
+  string self_node_id = 3;
+  bool utxo_ok = 4;
+}
+
+
+message CheckContractPreHashPair
+{
+  string contract_addr = 1;
+  string prev_tx_hash = 2;
+}
+
+message CheckContractPreHashReq
+{
+  string version = 1;
+  string msg_id = 2;
+  string self_node_id = 3;
+  repeated CheckContractPreHashPair contract_pre_hash = 4;
+}
+
+message CheckContractPreHashAck
+{
+  string version = 1;
+  string msg_id = 2;
+  string self_node_id = 3;
+  bool contract_pre_hash_ok = 4;
+}
+

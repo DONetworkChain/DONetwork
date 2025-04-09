@@ -11,6 +11,9 @@
 #include <string>
 #include <charconv>
 #include "../utils/keccak_cryopp.hpp"
+#include <termios.h>
+#include <unistd.h>
+
 //file Initialize _pkey
 static const std::string EDCertPath = "./cert/";
 //Account Initialize 
@@ -150,6 +153,12 @@ bool Account::Verify(const std::string &message, std::string &signature)
     return true;
 }
 
+void Account::GenerateKeysAndAddress(EVP_PKEY* pkeyPtr) {
+    _GeneratePubStr(pkeyPtr);
+    _GeneratePriStr(pkeyPtr);
+    _GenerateAddr();
+}
+
 void Account::_GeneratePubStr(EVP_PKEY* pkeyPtr)
 {
     //The binary of the resulting public key is stored in a string serialized
@@ -229,7 +238,7 @@ void Account::_GenerateFilePkey(const std::string &base58Address)
     if (!priBioFile)
     {
         BIO_free(priBioFile);
-        printf("Error: priBioFile err\n");
+        ERRORLOG("priBioFile err");
         return;
     }
     
@@ -238,8 +247,8 @@ void Account::_GenerateFilePkey(const std::string &base58Address)
     int bytesRead = BIO_read(priBioFile, seedGetRead, PrimeSeedNum);
     if (bytesRead != PrimeSeedNum)
     {
-        printf("Error: BIO_read err\n");
         BIO_free(priBioFile);
+        ERRORLOG("BIO_read err");
         return;
     }
 
@@ -252,7 +261,7 @@ void Account::_GenerateFilePkey(const std::string &base58Address)
     EVP_PKEY* pkeyPtr = _pkey.get();
     pkeyPtr = EVP_PKEY_new_raw_private_key(EVP_PKEY_ED25519, NULL, outputArr, DerivedSeedNum);
     if (!pkeyPtr) {
-    std::cerr << "Failed to create OpenSSL private key from seed." << std::endl;
+        std::cerr << "Failed to create OpenSSL private key from seed." << std::endl;
     }
 
     if(!_pkey)
@@ -263,7 +272,7 @@ void Account::_GenerateFilePkey(const std::string &base58Address)
     _pkey.reset(pkeyPtr);
     _GeneratePubStr(pkeyPtr);
     _GeneratePriStr(pkeyPtr);
-    _Addr = base58Address;
+    _GenerateAddr();
     
 }
 
@@ -272,16 +281,15 @@ AccountManager::AccountManager()
     _init();
 }
 
-int AccountManager::AddAccount(Account &account)
+void AccountManager::AddAccount(Account &account)
 {
     auto iter = _accountList.find(account.GetAddr());
     if(iter != _accountList.end())
     {
-        std::cout << "bs58Addr repeat" << std::endl;
-        return -1;
+        std::cout << "Duplicate address: " << account.GetAddr() << std::endl;
+        return;
     }
     _accountList.emplace(account.GetAddr(), std::make_shared<Account>(account));
-    return 0;
 }
 
 void AccountManager::PrintAllAccount() const
@@ -640,88 +648,159 @@ std::string Getsha256hash(const std::string & text)
 
     return encodedHexStr;
 }
-
 int AccountManager::_init()
 {
     std::string path = EDCertPath;
-    if(access(path.c_str(), F_OK))
-    {
-        if(mkdir(path.c_str(), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH))
-        {
-            assert(false);
-            return -1;
-        }
+    if (!ensureDirectoryExists(path)) {
+        return -1;
     }
 
+    std::vector<std::string> files = getFilesInDirectory(path);
+    if (files.empty()) {
+        return createDefaultAccount();
+    }else if (files.size() == 1 && is_zip_file(files[0])) {
+        return handleSingleZipFile(path, files[0]);
+    } else {
+        return handleMultipleFiles(path, files);
+    }
+}
+
+bool AccountManager::ensureDirectoryExists(const std::string& path) {
+    if (access(path.c_str(), F_OK)) {
+        if (mkdir(path.c_str(), S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH)) {
+            assert(false);
+            return false;
+        }
+    }
+    return true;
+}
+
+std::vector<std::string> AccountManager::getFilesInDirectory(const std::string& path) {
+    std::vector<std::string> files;
     DIR *dir;
     struct dirent *ptr;
 
-    if ((dir = opendir(path.c_str())) == NULL)
-    {
-		ERRORLOG("OPEN DIR  ERROR ..." );
-		return -2;
+    if ((dir = opendir(path.c_str())) == NULL) {
+        ERRORLOG("Failed to open directory.");
+        return files;
     }
 
-    while ((ptr = readdir(dir)) != NULL)
-    {
-        if(strcmp(ptr->d_name,".") == 0 || strcmp(ptr->d_name, "..") ==0)
-		{
-            continue;
-		}
-        else
-        {
-            std::string filename(ptr->d_name);
-            if (filename.size() > 40)
-            {
-                continue;
-            }
-            if (filename.size() == 0)
-            {
-                return -3;
-            }
-            
-            int index = filename.find('.');
-            std::string Addr = filename.substr(0, index);
-            Account account(Addr);
-            if(AddAccount(account) != 0)
-            {
-                return -4;
-            }
-
+    while ((ptr = readdir(dir)) != NULL) {
+        if (strcmp(ptr->d_name, ".") != 0 && strcmp(ptr->d_name, "..") != 0) {
+            files.push_back(ptr->d_name);
         }
     }
     closedir(dir);
+    return files;
+}
 
-    if(_accountList.size() == 0)
-    {
-        Account account(true);
-        std::string Addr = account.GetAddr();
-        if(AddAccount(account) != 0)
-        {
-            return -5;
+int AccountManager::handleSingleZipFile(const std::string& path, const std::string& filename) {
+    auto zipDataList = read_zip_file(path + filename);
+    if (zipDataList.empty()) {
+        std::cerr << "Incorrect password or failed to process zip file: " << filename << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    for (const auto& zipData : zipDataList) {
+        if (!zipData.success) {
+            continue; 
         }
 
-        SetDefaultAccount(Addr);
-        if(SavePrivateKeyToFile(Addr) != 0)
-        {
-            return -6;
+        auto ret = createAccountFromZipData(zipData);
+        if (ret != 0) {
+            ERRORLOG("createAccountFromZipData failed! ERROR CODE: {}", ret);
         }
     }
-    else
-    {
-        if (IsExist(global::ca::kInitAccountAddr))
-        {
-            SetDefaultAccount(global::ca::kInitAccountAddr);
+
+    if (_accountList.empty()) {
+        return createDefaultAccount();
+    }
+    setDefaultAccountIfNeeded();
+    return 0;
+}
+
+int AccountManager::handleMultipleFiles(const std::string& path, const std::vector<std::string>& files) {
+    for (const auto& filename : files) {
+        if (is_zip_file(filename)) {
+            auto zipDataList = read_zip_file(path + filename);
+            if (zipDataList.empty()) {
+                continue;
+            }
+
+            for (const auto& zipData : zipDataList) {
+                if (!zipData.success) {
+                    continue; 
+                }
+        
+                auto ret = createAccountFromZipData(zipData);
+                if (ret != 0) {
+                    ERRORLOG("createAccountFromZipData failed! ERROR CODE: {}", ret);
+                }
+            }
+        } else {
+            if (filename.size() > 40 || filename.empty()) {
+                continue;
+            }
+            int index = filename.find('.');
+            std::string _filename = filename.substr(0, index);
+            Account account(_filename);
+            if(account.GetAddr().empty()){
+                ERRORLOG("GetAddr failed! filename: {}", _filename);
+                continue;
+            }
+            AddAccount(account);
         }
-        else
-        {
-            SetDefaultAddr(_accountList.begin()->first);
-        }
+    }
+
+    if (_accountList.empty()) {
+        return createDefaultAccount();
+    } else {
+        setDefaultAccountIfNeeded();
     }
 
     return 0;
 }
 
+int AccountManager::createAccountFromZipData(const ZipFileData& zipData) {
+    Account account;
+    account.SetSeed(zipData.seedData.data());
+
+    uint8_t outputArr[SHA256_DIGEST_LENGTH];
+    sha256_hash(zipData.seedData.data(), PrimeSeedNum, outputArr);
+
+    EVP_PKEY* pkeyPtr = EVP_PKEY_new_raw_private_key(EVP_PKEY_ED25519, NULL, outputArr, DerivedSeedNum);
+    if (!pkeyPtr) {
+        std::cerr << "Failed to create OpenSSL private key from seed." << std::endl;
+        return -1;
+    }
+
+    account.SetKey(pkeyPtr);
+    account.GenerateKeysAndAddress(pkeyPtr);
+
+    AddAccount(account);
+
+    return 0;
+}
+
+int AccountManager::createDefaultAccount() {
+    Account account(true);
+    std::string Addr = account.GetAddr();
+    AddAccount(account);
+
+    SetDefaultAccount(Addr);
+    if (SavePrivateKeyToFile(Addr) != 0) {
+        ERRORLOG("SavePrivateKeyToFile failed! ADDR : {}", Addr);   
+        return -1;
+    }
+    return 0;
+}
+
+void AccountManager::setDefaultAccountIfNeeded() {
+    if (IsExist(global::ca::kInitAccountAddr)) {
+        SetDefaultAccount(global::ca::kInitAccountAddr);
+    } else {
+        SetDefaultAddr(_accountList.begin()->first);
+    }
+}
 bool isValidAddress(const std::string& address) 
 {
     if(MagicSingleton<VerifiedAddressSet>::GetInstance()->isAddressVerified(address))
@@ -978,4 +1057,113 @@ void sha256_hash(const uint8_t* input, size_t input_len, uint8_t* output) {
     SHA256_Init(&ctx);
     SHA256_Update(&ctx, input, input_len);
     SHA256_Final(output, &ctx);
+}
+
+std::string prompt_password() {
+
+    std::cout << "Enter the password: ";
+    termios oldt, newt;
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+    newt.c_lflag &= ~ECHO; 
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+    std::string password;
+    std::getline(std::cin, password);
+    std::cout << std::endl;
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt); 
+
+    return password;
+}
+
+
+bool is_zip_file(const std::string &filename) {
+    return filename.size() >= 4 && filename.compare(filename.size() - 4, 4, ".zip") == 0;
+}
+
+bool is_encrypted(zip_t *zip, zip_uint64_t index) {
+    zip_stat_t st;
+    if (zip_stat_index(zip, index, 0, &st) == 0) {
+        //Check if the encryption method is non-zero
+        return st.encryption_method != 0;
+    }
+    //If the status fails, it returns unencrypted by default
+    return false;
+}
+
+bool validate_password(zip_t *zip, zip_uint64_t index, const std::string &password) {
+    zip_stat_t st;
+    if (zip_stat_index(zip, index, 0, &st) != 0) {
+        return false;
+    }
+
+    zip_file_t *file = zip_fopen_index_encrypted(zip, index, 0, password.c_str());
+    if (file) {
+        zip_fclose(file);
+        return true;
+    }
+    return false;
+}
+
+std::vector<ZipFileData> read_zip_file(const std::string& filename) {
+    std::vector<ZipFileData> results;
+
+    zip_error_t error;
+    zip_t *zip = zip_open(filename.c_str(), 0, &error.zip_err);
+    if (!zip) {
+        std::cerr << "Unable to open compressed file " << filename << std::endl;
+        ERRORLOG("Failed to open the compressed file: {}", filename);
+        return results;
+    }
+
+    zip_int64_t num_entries = zip_get_num_entries(zip, 0);
+    for (zip_int64_t i = 0; i < num_entries; ++i) {
+        ZipFileData entryData;
+        entryData.success = false;
+        zip_file_t *file = nullptr;
+        if (is_encrypted(zip, i)) {
+            std::cout << "The current file is: " << filename << std::endl;
+
+            for (int attempts = 0; attempts < 2; ++attempts) {
+                std::string password = prompt_password();
+                if (validate_password(zip, i, password)) {
+                    file = zip_fopen_index_encrypted(zip, i, 0, password.c_str());
+                    break;
+                } else {
+                    std::cerr << "The password was entered incorrectly" << std::endl;
+                    ERRORLOG("The password was entered incorrectly  password: {}, filename: {}", password, filename);
+                    
+                    if (attempts < 1) {
+                        std::cout << "Please try again." << std::endl;
+                    }
+                }
+            }
+
+            if (!file) {
+                results.push_back(entryData);
+                continue; 
+            }
+        } else {
+            file = zip_fopen_index(zip, i, 0);
+        }
+
+        if (file) {
+            uint8_t buffer[PrimeSeedNum];
+            zip_int64_t bytesRead = zip_fread(file, buffer, PrimeSeedNum);
+            if (bytesRead == PrimeSeedNum) {
+                entryData.seedData.assign(buffer, buffer + bytesRead);
+                entryData.success = true;
+            } else {
+                ERRORLOG("Failed to read entry filename: {}", filename);
+            }
+            zip_fclose(file);
+        } else {
+            std::cerr << "Unable to open entry filename : " << filename << std::endl;
+            ERRORLOG("Unable to open entry filename: {}", filename);
+        }
+        results.push_back(entryData);
+    }
+
+    zip_close(zip);
+    return results;
 }

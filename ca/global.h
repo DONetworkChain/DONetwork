@@ -11,24 +11,19 @@
 namespace global{
 
     namespace ca{
-        
         extern const std::string kInitAccountAddr;
         extern const std::string kGenesisBlockRaw;
         extern const uint64_t kGenesisTime;
         extern const std::string kConfigJson;
 
         // consensus
-        extern const  int kConsensus;
-         
-        extern const  int KDouble_broadcast_threshold;
- 
-        extern const  int KSend_node_threshold;
- 
-        extern const  int kNeed_node_threshold;
-        extern const  int KSign_node_threshold;
-        extern const  int KRandomNodeGroup;
-
-
+        extern const int kConsensus;
+        
+        extern const int KDouble_broadcast_threshold;
+        extern const int KSend_node_threshold;
+        extern const int kNeed_node_threshold;
+        extern const int KSign_node_threshold;
+        extern const int KRandomNodeGroup;
         extern const int TxTimeoutMin;
 
         // timer
@@ -47,14 +42,19 @@ namespace global{
         extern const uint64_t kM2;
 
         extern const uint64_t kMinSignatureEligibilityAmt;
-        extern const uint64_t kMinStakeAmt ;
-        extern const uint64_t kMinInvestAmt ;
-        extern const uint64_t kMaxInvertAmt ;
+        extern const uint64_t kMinStakeAmt;
+        extern const uint64_t kMinInvestAmt;
+        extern const uint64_t kMaxInvertAmt;
 
+        extern const uint64_t kNewMinSignatureEligibilityAmt;
+        extern const uint64_t kNewMinStakeAmt;
+        extern const uint64_t kNewMinInvestAmt;
+        extern const uint64_t kNewMaxInvertAmt;
+        extern const uint64_t KHardForkHeight;
 
         extern const std::string kGenesisSign;
         extern const std::string kTxSign;
-        extern const std::string kVirtualStakeAddr ;
+        extern const std::string kVirtualStakeAddr;
         extern const std::string kVirtualInvestAddr;
         extern const std::string kVirtualBurnGasAddr;
         extern const std::string kStakeTypeNet;
@@ -66,9 +66,11 @@ namespace global{
         extern const uint64_t KtxTimeout;
         extern const uint64_t KPackNodeThreshold;
 
-        extern const double KCommissionRate;
         extern const double KMaxCommissionRate;
         extern const double KMinCommissionRate;
+
+        extern const double KNewMaxCommissionRate;
+        extern const double KNewMinCommissionRate;
 
         extern const int contractWaitingTime;
         

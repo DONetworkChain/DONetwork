@@ -271,27 +271,27 @@ int PrintTx(const CTransaction & tx, bool isConsoleOutput, std::ostream & stream
     {
         CaConsole txColor(kConsoleColor_Red, kConsoleColor_Black, true);
         CaConsole greenColor(kConsoleColor_Green, kConsoleColor_Black, true);
-        stream << "TxHash -> " << txColor.Color() << tx.hash() << txColor.Reset() << std::endl;
+        stream << "TxHash -> " << txColor.Color() << addHexPrefix(tx.hash()) << txColor.Reset() << std::endl;
         stream << "n -> " << tx.n() << std::endl;
-        stream << "identity -> " << "[" << greenColor.Color() << tx.identity() << greenColor.Reset() << "] " << std::endl;
+        stream << "identity -> " << "[" << greenColor.Color() << addHexPrefix(tx.identity()) << greenColor.Reset() << "] " << std::endl;
         stream << "type -> " << tx.type() << std::endl;
 
         stream << "verifySign[" << tx.verifysign_size() << "]" << std::endl;
 
         for (auto & verifySign : tx.verifysign())
         {
-            stream << "Verify Sign " << Str2Hex(verifySign.sign()) << " : " << Str2Hex(verifySign.pub()) << "[" << greenColor.Color() << GenerateAddr(verifySign.pub()) << greenColor.Reset() << "]" << std::endl;
+            stream << "Verify Sign " << Str2Hex(verifySign.sign()) << " : " << Str2Hex(verifySign.pub()) << "[" << greenColor.Color() << addHexPrefix(GenerateAddr(verifySign.pub())) << greenColor.Reset() << "]" << std::endl;
         }
         
         for (auto & verifySign : tx.verifysign())
         {
-            stream << "Transaction signer -> [" << greenColor.Color() << GenerateAddr(verifySign.pub()) << greenColor.Reset() << "]" << std::endl;
+            stream << "Transaction signer -> [" << greenColor.Color() << addHexPrefix(GenerateAddr(verifySign.pub())) << greenColor.Reset() << "]" << std::endl;
         }
 
         stream << "Owner -> ";
         for (auto & addr : tx.utxo().owner())
         {
-            stream << "[" << greenColor.Color() << addr << greenColor.Reset() << "]";
+            stream << "[" << greenColor.Color() << addHexPrefix(addr) << greenColor.Reset() << "]";
         }
         stream << std::endl;
 
@@ -299,11 +299,11 @@ int PrintTx(const CTransaction & tx, bool isConsoleOutput, std::ostream & stream
         {
             const CTxInput & vin = tx.utxo().vin(j);
             stream << "vin[" << j << "] sequence -> " << vin.sequence() << std::endl;
-            stream << "vin[" << j << "] sign -> " << Str2Hex(vin.vinsign().sign()) << " : " << Str2Hex(vin.vinsign().pub()) << "[" << greenColor.Color() << GenerateAddr(vin.vinsign().pub()) << greenColor.Reset() << "]" << std::endl;
+            stream << "vin[" << j << "] sign -> " << Str2Hex(vin.vinsign().sign()) << " : " << Str2Hex(vin.vinsign().pub()) << "[" << greenColor.Color() << addHexPrefix(GenerateAddr(vin.vinsign().pub())) << greenColor.Reset() << "]" << std::endl;
 
             for (auto & prevout : vin.prevout())
             {
-                stream << "vin[" << j << "] Prev Output Hash -> " << prevout.n() << " : " << prevout.hash() << std::endl;
+                stream << "vin[" << j << "] Prev Output Hash -> " << prevout.n() << " : " << addHexPrefix(prevout.hash()) << std::endl;
             }
         }
 
@@ -311,39 +311,39 @@ int PrintTx(const CTransaction & tx, bool isConsoleOutput, std::ostream & stream
         {
             const CTxOutput & vout = tx.utxo().vout(j);
             CaConsole amount(kConsoleColor_Yellow, kConsoleColor_Black, true);
-            stream << "vout[" << j << "] public key -> [" << greenColor.Color() <<  vout.addr() << greenColor.Reset() << "]" << std::endl;
+            stream << "vout[" << j << "] public key -> [" << greenColor.Color() <<  addHexPrefix(vout.addr()) << greenColor.Reset() << "]" << std::endl;
             stream << "vout[" << j << "] value -> [" << amount.Color() <<  vout.value() << amount.Reset() << "]" << std::endl;
         }
 
         for (int j = 0; j < tx.utxo().multisign_size(); j++)
         {
             const CSign & multiSign = tx.utxo().multisign(j);
-            stream << "multiSign[" << j << "] -> " << Str2Hex(multiSign.sign()) << " : " << Str2Hex(multiSign.pub()) << "[" << greenColor.Color() << GenerateAddr(multiSign.pub()) << greenColor.Reset() << "]" << std::endl;
+            stream << "multiSign[" << j << "] -> " << Str2Hex(multiSign.sign()) << " : " << Str2Hex(multiSign.pub()) << "[" << greenColor.Color() << addHexPrefix(GenerateAddr(multiSign.pub())) << greenColor.Reset() << "]" << std::endl;
         }
     }
     else
     {
-        stream << "TxHash -> " << tx.hash() << std::endl;
+        stream << "TxHash -> " << addHexPrefix(tx.hash()) << std::endl;
         stream << "n -> " << tx.n() << std::endl;
-        stream << "identity -> " << tx.identity() << std::endl;
+        stream << "identity -> " << addHexPrefix(tx.identity()) << std::endl;
         stream << "type -> " << tx.type() << std::endl;
 
         stream << "verifySign[" << tx.verifysign_size() << "]" << std::endl;
 
         for (auto & verifySign : tx.verifysign())
         {
-            stream << "Verify Sign " << Str2Hex(verifySign.sign()) << " : " << Str2Hex(verifySign.pub()) << "[" << GenerateAddr(verifySign.pub()) << "]" << std::endl;  
+            stream << "Verify Sign " << Str2Hex(verifySign.sign()) << " : " << Str2Hex(verifySign.pub()) << "[" << addHexPrefix(GenerateAddr(verifySign.pub())) << "]" << std::endl;  
         }
         
         for (auto & verifySign : tx.verifysign())
         {
-            stream << "Transaction signer -> [" << GenerateAddr(verifySign.pub()) << "]" << std::endl;
+            stream << "Transaction signer -> [" << addHexPrefix(GenerateAddr(verifySign.pub())) << "]" << std::endl;
         }
 
         stream << "Owner -> ";
         for (auto & addr : tx.utxo().owner())
         {
-            stream << "[" << addr << "]";
+            stream << "[" << addHexPrefix(addr) << "]";
         }
         stream << std::endl;
 
@@ -351,25 +351,25 @@ int PrintTx(const CTransaction & tx, bool isConsoleOutput, std::ostream & stream
         {
             const CTxInput & vin = tx.utxo().vin(j);
             stream << "vin[" << j << "] sequence -> " << vin.sequence() << std::endl;
-            stream << "vin[" << j << "] sign -> " << Str2Hex(vin.vinsign().sign()) << " : " << Str2Hex(vin.vinsign().pub()) << "[" << GenerateAddr(vin.vinsign().pub()) << "]" << std::endl;
+            stream << "vin[" << j << "] sign -> " << Str2Hex(vin.vinsign().sign()) << " : " << Str2Hex(vin.vinsign().pub()) << "[" << addHexPrefix(GenerateAddr(vin.vinsign().pub())) << "]" << std::endl;
 
             for (auto & prevout : vin.prevout())
             {
-                stream << "vin[" << j << "] Prev Output Hash -> " << prevout.n() << " : " << prevout.hash() << std::endl;
+                stream << "vin[" << j << "] Prev Output Hash -> " << prevout.n() << " : " << addHexPrefix(prevout.hash()) << std::endl;
             }
         }
 
         for (int j = 0; j < tx.utxo().vout_size(); j++)
         {
             const CTxOutput & vout = tx.utxo().vout(j);
-            stream << "vout[" << j << "] public key -> [" << vout.addr() << "]" << std::endl;
+            stream << "vout[" << j << "] public key -> [" << addHexPrefix(vout.addr()) << "]" << std::endl;
             stream << "vout[" << j << "] value -> [" << vout.value() << "]" << std::endl;
         }
 
         for (int j = 0; j < tx.utxo().multisign_size(); j++)
         {
             const CSign & multiSign = tx.utxo().multisign(j);
-            stream << "multiSign[" << j << "] -> " << Str2Hex(multiSign.sign()) << " : " << Str2Hex(multiSign.pub()) << GenerateAddr(multiSign.pub()) << std::endl;
+            stream << "multiSign[" << j << "] -> " << Str2Hex(multiSign.sign()) << " : " << Str2Hex(multiSign.pub()) << addHexPrefix(GenerateAddr(multiSign.pub())) << std::endl;
         }
     }
 
@@ -400,7 +400,8 @@ int PrintTx(const CTransaction & tx, bool isConsoleOutput, std::ostream & stream
             }
             else if (txType == global::ca::TxType::kTxTypeUnstake)
             {
-                dataMap.push_back(std::make_pair("UnstakeUtxo", dataJson["TxInfo"]["UnstakeUtxo"].get<std::string>()));
+                std::string unstakeUtxo = dataJson["TxInfo"]["UnstakeUtxo"].get<std::string>();
+                dataMap.push_back(std::make_pair("UnstakeUtxo", addHexPrefix(unstakeUtxo)));
             }
             
             for (auto & item : dataMap)
@@ -559,6 +560,13 @@ void BlockInvert(const CBlock & block, nlohmann::json &blocks)
                 {
                     std::string disinvestUtxo = dataJson["TxInfo"]["DisinvestUtxo"].get<std::string>();
                     dataJson["TxInfo"]["DisinvestUtxo"] = addHexPrefix(disinvestUtxo);
+                }
+                
+                if (dataJson.contains("TxInfo") && dataJson["TxInfo"].contains("UnstakeUtxo")) 
+                {
+                    
+                    std::string unstakeUtxo = dataJson["TxInfo"]["UnstakeUtxo"].get<std::string>();
+                    dataJson["TxInfo"]["UnstakeUtxo"] = addHexPrefix(unstakeUtxo); 
                 }
                 Tx["data"] = dataJson;
             }

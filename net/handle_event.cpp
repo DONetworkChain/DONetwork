@@ -730,6 +730,8 @@ void initCyclicNodeList(Cycliclist<std::string>& cyclicNodeList)
 	}
 }
 
+
+std::mutex broadcastMutex;
 int HandleBroadcastMsg(const std::shared_ptr<BuildBlockBroadcastMsg>& msg, const MsgData& msgData)
 {	
 	DEBUGLOG("HandleBuildBlockBroadcastMsg begin");
@@ -741,6 +743,7 @@ int HandleBroadcastMsg(const std::shared_ptr<BuildBlockBroadcastMsg>& msg, const
 		return -1;
 	}
 
+	std::unique_lock<std::mutex> lock(broadcastMutex);
 	std::string serBlock = msg->blockraw();
 	CBlock block;
    
@@ -769,139 +772,134 @@ int HandleBroadcastMsg(const std::shared_ptr<BuildBlockBroadcastMsg>& msg, const
 			return false;
 		});
 
-        if(targetPosition==Cycliclist<std::string>::iterator(nullptr)){
-           
-		    
+        if(targetPosition == Cycliclist<std::string>::iterator(nullptr)){
             return false;
         }
-		Cycliclist<std::string>::iterator up;
-		Cycliclist<std::string>::iterator down;
-    
-		up=targetPosition - 1;
-		down=targetPosition + 1;
-     
-		int times = 0;
-		while(times < clist.size() / 2){	
-			if(up != down && up-1 != down && down+1 != up)
-			{
-             
+		Cycliclist<std::string>::iterator up = targetPosition - 1;
+		Cycliclist<std::string>::iterator down = targetPosition + 1;
+		
+		int maxBoundaries = (clist.size() - 1) / 2; 
+		int upperCount = 0;
+		int lowerCount = 0;
+		DEBUGLOG("maxBoundaries:{}", maxBoundaries);
+
+		while (upperCount < maxBoundaries || lowerCount < maxBoundaries) {
+			if (upperCount < maxBoundaries) {
 				upperBoundary.push_back(up);
-				lowerBoundary.push_back(down);
+				DEBUGLOG("up : {}, upperCount : {}", up->data, upperCount);
 				up--;
+				upperCount++;
+			}
+
+			if (lowerCount < maxBoundaries) {
+				lowerBoundary.push_back(down);
+				DEBUGLOG("down : {}, lowerCount : {}", down->data, lowerCount);
 				down++;
+				lowerCount++;
 			}
-			else
-			{
-				break;
-			}
-			times++;
 		}
         return true;
 	};
 
 	//Find adjacent nodes up
-	auto getUpperIterator= [&](int times, Cycliclist<std::string> & nodeList)->std::pair<Cycliclist<std::string>::iterator,int>
+	auto getUpperIterator= [&](int times, 
+								Cycliclist<std::string>::iterator& upperIter,
+								Cycliclist<std::string>::iterator& lowerIter,
+								Cycliclist<std::string> & nodeList) -> std::pair<Cycliclist<std::string>::iterator,int>
 	{
+		DEBUGLOG("getUpperIterator begin");
 		std::pair<Cycliclist<std::string>::iterator,int> res;
         res.second = 0;
-
+		if (nodeList.size() == 0) {
+			ERRORLOG("getUpperIterator node list is empty!");
+            res.second = -1;
+            return res;  
+        }
         try {
-            if (times >= upperBoundary.size() || times >= lowerBoundary.size()) 
-			{
-                ERRORLOG("find times is over! "
-                         "[times:{}],[upperBoundary.size:{}],[lowerBoundary.size:{}]",
-                         times, upperBoundary.size(), lowerBoundary.size());
-                res.second = -1033;
-                return res;
-            }
-
             Cycliclist<std::string>::iterator iter = nodeList.begin();
             if(iter == Cycliclist<std::string>::iterator(nullptr))
 			{
+				 ERRORLOG("getUpperIterator node list is empty!");
                  res.second=-1;
                  return res;
             }
+
+			auto targetAddr = upperIter->data;
             for (; iter != nodeList.end(); iter++) {
-                if(upperBoundary[times] == Cycliclist<std::string>::iterator(nullptr))
+                if (targetAddr == iter->data) 
 				{
-                    res.second=-1;
-                    return res;
-                }
-                if (upperBoundary[times]->data == iter->data) 
-				{
+					DEBUGLOG("getUpperIterator upperBoundary times: {} upperBoundary data : {}, iter data : {}", times, targetAddr, iter->data);
                     res.first = iter;
                     res.second = 0;
+					return res;
                 }
             }
-             if(upperBoundary[times] == Cycliclist<std::string>::iterator(nullptr))
-			 {      
-                    res.second = -1;
-                    return res;
-            }
-            if (upperBoundary[times]->data == iter->data) 
+            if (targetAddr == iter->data) 
 			{
+				DEBUGLOG("getUpperIterator upperBoundary times: {} upperBoundary data : {}, iter data : {}", times, targetAddr, iter->data);
                 res.first = iter;
                 res.second = 0;
+				return res;
             }
-
+			ERRORLOG("getUpperIterator: targetAddr not found in node list.");
+        	res.second = -4;
         } catch (std::exception &e) {
+			ERRORLOG("getUpperIterator error {}", e.what());
             res.second = -3;
-           // errorL("nul")
         }
         return res;
 	};
 
 	//Find adjacent nodes down
-	auto getLowerIterator = [&](int times, Cycliclist<std::string> & nodeList)->std::pair<Cycliclist<std::string>::iterator,int>
+	auto getLowerIterator = [&](int times, 
+								Cycliclist<std::string>::iterator& upperIter,
+								Cycliclist<std::string>::iterator& lowerIter,
+								Cycliclist<std::string> & nodeList) -> std::pair<Cycliclist<std::string>::iterator,int>
 	{
+		DEBUGLOG("getLowerIterator begin");
 		std::pair<Cycliclist<std::string>::iterator,int> res;
         res.second = 0;
-
-		if(times >= upperBoundary.size() || times >= lowerBoundary.size())
-		{
-			ERRORLOG("find times is over! [times:{}],[upperBoundary.size:{}],[lowerBoundary.size:{}]",times,upperBoundary.size(),lowerBoundary.size());
-			res.second=-1033;
-			return res;
-		}
+		if (nodeList.size() == 0) {
+			ERRORLOG("getLowerIterator node list is empty!");
+            res.second = -1;
+            return res;  
+        }
         try{
             Cycliclist<std::string>::iterator iter = nodeList.begin();
             if(iter == Cycliclist<std::string>::iterator(nullptr))
 			{
-               //  errorL("node list is empty!");
+				ERRORLOG("getLowerIterator node list is empty!");
                  res.second = -1;
                  return res;
             }
-            for (; iter != nodeList.end(); iter++) {
-                 if(lowerBoundary[times] == Cycliclist<std::string>::iterator(nullptr))
-				 {
-                    res.second = -1;
-                    return res;
-                 }
-                if (lowerBoundary[times] -> data == iter-> data) {
-                    res.first = iter;
 
+			auto targetAddr = lowerIter->data;
+            for (; iter != nodeList.end(); iter++) {
+                if (targetAddr == iter->data) {
+					DEBUGLOG("getLowerIterator lowerBoundary times: {} lowerBoundary data : {}, iter data : {}", times, targetAddr, iter->data);
+                    res.first = iter;
                     res.second = 0;
+					return res;
                 }
             }
-            if(lowerBoundary[times] == Cycliclist<std::string>::iterator(nullptr))
-			{       
-                    res.second = -1;
-                    return res;
-            }
-            if (lowerBoundary[times]->data == iter->data) 
-			{
+   
+            if (targetAddr == iter->data) {
+				DEBUGLOG("getLowerIterator lowerBoundary times: {} lowerBoundary data : {}, iter data : {}", times,targetAddr, iter->data);
                 res.first = iter;
                 res.second = 0;
+				return res;
             }
+			ERRORLOG("getLowerIterator: targetAddr not found in node list.");
+        	res.second = -4;
         } catch (std::exception &e) {
+			ERRORLOG("getLowerIterator error {}", e.what());
             res.second = -3;
         }
         return res;
 	};
-	int findTimes = 0;
+	int findTimes = 3;
 	if(msg->type() == 1)
 	{
-
 		Node node;
 		if (!MagicSingleton<PeerNode>::GetInstance()->FindNodeByFd(msgData.fd, node))
 		{
@@ -930,47 +928,82 @@ int HandleBroadcastMsg(const std::shared_ptr<BuildBlockBroadcastMsg>& msg, const
 		initCyclicNodeList(cyclicNodeList);
 
 		msg->set_type(2);
-		for(;findTimes < upperBoundary.size() && findTimes < lowerBoundary.size(); findTimes++)
-		{
-			auto upIter = getUpperIterator(findTimes, cyclicNodeList);
-            if(upIter.second != 0)
-			{   
-                return -1;
-            }
-			auto downIter = getLowerIterator(findTimes, cyclicNodeList);
-            if(downIter.second != 0)
-			{
-                return -1;
-            }
-          
-			Cycliclist<std::string>::iterator startIterator = upIter.first;
-			Cycliclist<std::string>::iterator endIterator = downIter.first;
 
-			if(startIterator == Cycliclist<std::string>::iterator(nullptr) || endIterator == Cycliclist<std::string>::iterator(nullptr))
-			{
-				continue;
+		
+		if(findTimes >= upperBoundary.size() ||  findTimes >= lowerBoundary.size())
+		{
+			ERRORLOG("findTimes is over! [findTimes:{}],[upperBoundary.size:{}],[lowerBoundary.size:{}]",findTimes,upperBoundary.size(),lowerBoundary.size());
+			return -2;
+		}
+			
+		DEBUGLOG("findTimes: {} upperBoundary size {}, lowerBoundary size {}", findTimes, upperBoundary.size(), lowerBoundary.size());
+		Cycliclist<std::string>::iterator upperIter = upperBoundary[findTimes];
+		Cycliclist<std::string>::iterator lowerIter = lowerBoundary[findTimes];
+		if(upperIter == Cycliclist<std::string>::iterator(nullptr) || lowerIter == Cycliclist<std::string>::iterator(nullptr))
+		{
+			ERRORLOG("upperIter or lowerIter is empty");
+			return -3;
+		}
+		DEBUGLOG("upperIter data : {}, lowerIter data {}", upperIter->data, lowerIter->data);
+		
+		auto upIter = getUpperIterator(findTimes, upperIter, lowerIter, cyclicNodeList);
+		if(upIter.second != 0)
+		{   
+			ERRORLOG("getUpperIterator findTimes: {}, ERROR CODE : {}", findTimes, upIter.second);
+			return -1;
+		}
+		auto downIter = getLowerIterator(findTimes, upperIter, lowerIter, cyclicNodeList);
+		if(downIter.second != 0)
+		{
+			ERRORLOG("getLowerIterator findTimes: {}, ERROR CODE : {}", findTimes, upIter.second);
+			return -1;
+		}
+		
+		Cycliclist<std::string>::iterator startIterator = upIter.first;
+		Cycliclist<std::string>::iterator endIterator = downIter.first;
+		DEBUGLOG("startIterator data : {}, endIterator data {}", startIterator->data, endIterator->data);
+
+		Cycliclist<std::string>::iterator begin;
+		cyclicNodeList.filter([&](Cycliclist<std::string>::iterator iter) -> bool{
+			if(iter->data == startIterator->data){
+				begin = iter;
 			}
-			else
+		});
+		if(begin == Cycliclist<std::string>::iterator(nullptr)){
+			ERRORLOG("begin is empty");
+			return -3;
+		}
+		
+		Cycliclist<std::string>::iterator end;
+		cyclicNodeList.filter([&](Cycliclist<std::string>::iterator iter) -> bool{
+			if(iter->data == endIterator->data){
+				end = iter;
+				return true;
+			}
+		});
+		
+		if(end == Cycliclist<std::string>::iterator(nullptr)){
+			ERRORLOG("end is empty");
+			return -4;
+		}
+
+		for(; begin != end; begin++)
+		{
+			if(begin->data != defaultAddress)
 			{
-				for(; startIterator != endIterator; startIterator++)
-				{
-					if(startIterator->data != defaultAddress)
-					{
-						DEBUGLOG("Broadcast type 2 msg to peer : {}", startIterator->data);
-						MagicSingleton<TaskPool>::GetInstance()->CommitBroadcastTask(std::bind(&net_com::SendMessageTask, startIterator->data, *msg));
-					}
-				}
-				if(startIterator->data != defaultAddress)
-				{
-					DEBUGLOG("Broadcast type 2 msg to peer : {}", startIterator->data);
-					MagicSingleton<TaskPool>::GetInstance()->CommitBroadcastTask(std::bind(&net_com::SendMessageTask, startIterator->data, *msg));
-				}
-				break;
+				DEBUGLOG("Broadcast type 2 msg to peer : {}", begin->data);
+				MagicSingleton<TaskPool>::GetInstance()->CommitBroadcastTask(std::bind(&net_com::SendMessageTask, begin->data, *msg));
 			}
 		}
+		if(begin->data != defaultAddress)
+		{
+			DEBUGLOG("Broadcast type 2 msg to peer : {}", begin->data);
+			MagicSingleton<TaskPool>::GetInstance()->CommitBroadcastTask(std::bind(&net_com::SendMessageTask, begin->data, *msg));
+		}
 	}
-	else if(msg->type() == 2){
-			DEBUGLOG("Handle Broadcast type should not be 2");
+	else if (msg->type() == 2)
+	{
+		DEBUGLOG("Handle Broadcast type should not be 2");
 	}
 	return 0;
 }

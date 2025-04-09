@@ -89,6 +89,7 @@ bool UnregisterNode::Register(std::map<uint32_t, Node> nodeMap)
             }
             return false;
         }
+        DEBUGLOG("UnregisterNode::Register wait Register time out send:{} recv:{}", sendNum, returnDatas.size());
     }
 
     RegisterNodeAck registerNodeAck;
@@ -99,9 +100,19 @@ bool UnregisterNode::Register(std::map<uint32_t, Node> nodeMap)
         {
             continue;
         }
+
+        if(registerNodeAck.nodes_size() == 0){
+            ERRORLOG("registerNodeAck node size is 0");
+            continue;
+        }
         uint32_t ip = registerNodeAck.from_ip();
         uint32_t port = registerNodeAck.from_port();
-
+        if (ip == 0 || port == 0)
+        {
+            ERRORLOG("Invalid IP or port: ip={}, port={}", ip, port);
+            continue;
+        }
+        
         DEBUGLOG("UnregisterNode::Register ip:{}, port:{}", ip, port);
         auto find = nodeIPAndFd.find(ip);
         if(find != nodeIPAndFd.end())
@@ -110,7 +121,7 @@ bool UnregisterNode::Register(std::map<uint32_t, Node> nodeMap)
         }
 
         std::cout << "registerNodeAck.nodes_size(): " << registerNodeAck.nodes_size() <<std::endl;
-        if(registerNodeAck.nodes_size() <= 1)
+        if(registerNodeAck.nodes_size() == 1)
 	    {
             const NodeInfo &nodeinfo = registerNodeAck.nodes(0);
 			if (MagicSingleton<BufferCrol>::GetInstance()->IsExists(ip, port) /* && node.is_established()*/)
@@ -137,13 +148,24 @@ bool UnregisterNode::StartRegisterNode(std::map<std::string, int> &serverList)
 {
     std::string msgId;
     uint32 sendNum = serverList.size();
-    if (!GLOBALDATAMGRPTR.CreateWait(5, sendNum, msgId))
+    if (!GLOBALDATAMGRPTR.CreateWait(10, sendNum, msgId))
     {
         return false;
     }
+    auto sentinelNode = MagicSingleton<Config>::GetInstance()->GetScoutNode();
+    std::vector<std::pair<std::string, int>> prioritizedList;
+    for (const auto& ip : sentinelNode) {
+        auto it = serverList.find(ip);
+        if (it != serverList.end()) {
+            prioritizedList.push_back(*it);
+            serverList.erase(it);
+        }
+    }
+    prioritizedList.insert(prioritizedList.end(), serverList.begin(), serverList.end());
+
     Node selfNode = MagicSingleton<PeerNode>::GetInstance()->GetSelfNode();
-    for (auto & item : serverList)
-	{
+    for (auto & item : prioritizedList)
+    {
         //The party actively establishing the connection
 		Node node;
 		node.publicIp = IpPort::IpNum(item.first);
@@ -444,12 +466,12 @@ void UnregisterNode::DeleteSpiltNodeList(const std::string & addr)
 void UnregisterNode::GetConsensusStakeNodelist(std::map<std::string,int>& consensusStakeNodeMap)
 {
     std::unique_lock<std::mutex> lck(_mutexStakelist);
-    if(stakeNodelist.empty())
+    if (stakeNodelist.empty())
     {
         return;
     }
+
     consensusStakeNodeMap.insert(stakeNodelist.rbegin()->second.begin(), stakeNodelist.rbegin()->second.end());
-    return;
 }
 
 void UnregisterNode::GetConsensusNodelist(std::map<std::string,int>& consensusNodeMap)
@@ -504,33 +526,66 @@ void UnregisterNode::splitAndInsertData(const std::map<Node, int, NodeCompare>  
     std::map<std::string, int>  stakeSyncNodeCount;
     std::map<std::string, int>  UnstakeSyncNodeCount;
 
-    auto VerifyBonusAddr = [](const std::string& bonusAddr) -> int
-    {
-        uint64_t investAmount;
-        auto ret = MagicSingleton<BonusAddrCache>::GetInstance()->getAmount(bonusAddr, investAmount);
-        if (ret < 0)
-        {
-            return -99;
-        }
-        return investAmount >= global::ca::kMinInvestAmt ? 0 : -99;
-    };
-
+    uint64_t top = 0;
     DBReader dbReader;
+    if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
+    {
+        ERRORLOG("db get top failed!!");
+        return;
+    }
+
     DEBUGLOG("splitAndInsertData @@@@@ ");
     for(auto & item : syncNodeCount)
     {
-        //Verification of investment and pledge
-        int ret = VerifyBonusAddr(item.first.address);
+        uint64_t investAmount = 0;
+        auto retBouns = MagicSingleton<BonusAddrCache>::GetInstance()->getAmount(item.first.address, investAmount);
+
         std::vector<std::string> pledgeUtxoHashs;
-        int retValue = dbReader.GetStakeAddressUtxo(item.first.address, pledgeUtxoHashs);
-        bool HasPledged = DBStatus::DB_SUCCESS == retValue || !pledgeUtxoHashs.empty();
-        if (HasPledged && ret == 0)
+        auto retStake = dbReader.GetStakeAddressUtxo(item.first.address, pledgeUtxoHashs);
+
+        if (retBouns >= 0 && retStake == DBStatus::DB_SUCCESS && !pledgeUtxoHashs.empty())
         {
-            stakeSyncNodeCount.insert(std::make_pair(item.first.address,item.second));
+            for (const auto &utxo : pledgeUtxoHashs)
+            {
+                std::string txRaw;
+                if (dbReader.GetTransactionByHash(utxo, txRaw) != DBStatus::DB_SUCCESS)
+                {
+                    continue;
+                }
+
+                CTransaction tx;
+                if (!tx.ParseFromString(txRaw))
+                {
+                    continue;
+                }
+
+                uint64_t stakeAmount = 0;
+                for (const auto &vout : tx.utxo().vout())
+                {
+                    if (vout.addr() == global::ca::kVirtualStakeAddr)
+                    {
+                        stakeAmount = vout.value();
+                        break;
+                    }
+                }
+
+                auto minSignatureEligibilityAmt = top >= global::ca::KHardForkHeight ? global::ca::kNewMinSignatureEligibilityAmt : global::ca::kMinSignatureEligibilityAmt;
+                if (stakeAmount + investAmount >= minSignatureEligibilityAmt)
+                {
+                    DEBUGLOG("stakeSyncNodeCount ADDR: {} COUNT: {}", item.first.address, item.second);
+                    stakeSyncNodeCount.insert(std::make_pair(item.first.address, item.second));
+                }
+                else
+                {
+                    DEBUGLOG("UnstakeSyncNodeCount ADDR: {} COUNT: {}", item.first.address, item.second);
+                    UnstakeSyncNodeCount.insert(std::make_pair(item.first.address, item.second));
+                }
+            }
         }
         else
         {
-            UnstakeSyncNodeCount.insert(std::make_pair(item.first.address,item.second));
+            DEBUGLOG("UnstakeSyncNodeCount ADDR: {} COUNT: {}", item.first.address, item.second);
+            UnstakeSyncNodeCount.insert(std::make_pair(item.first.address, item.second));
         }
     }
 

@@ -86,10 +86,12 @@ int Evmone::SaveContract(const std::string &deployerAddress, const std::string &
         return -84;
     }
 
+    DEBUGLOG("AAABBBCCC SaveContract SetLatestUtxoByContractAddr begin, contractAddress: {}, deployHash: {}", contractAddress, deployHash);
     if (DBStatus::DB_SUCCESS != dbReadWriter.SetLatestUtxoByContractAddr(contractAddress, deployHash))
     {
         return -90;
     }
+    DEBUGLOG("AAABBBCCC SaveContract SetLatestUtxoByContractAddr end");
 
     if (DBStatus::DB_SUCCESS != dbReadWriter.SetContractAddrByDeployerAddr(deployerAddress, contractAddress))
     {
@@ -143,10 +145,13 @@ int Evmone::DeleteContract(const std::string &deployerAddress, const std::string
     {
         return -89;
     }
+    
+    DEBUGLOG("AAABBBCCC DeleteContract RemoveLatestUtxoByContractAddr begin, contractAddress: {}", contractAddress);
     if (DBStatus::DB_SUCCESS != dbReadWriter.RemoveLatestUtxoByContractAddr(contractAddress))
     {
         return -92;
     }
+    DEBUGLOG("AAABBBCCC DeleteContract RemoveLatestUtxoByContractAddr end");
 
     if (DBStatus::DB_SUCCESS !=
         dbReadWriter.RemoveContractAddrByDeployerAddr(deployerAddress, contractAddress))

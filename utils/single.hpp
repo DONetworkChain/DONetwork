@@ -7,6 +7,7 @@
  * @copyright   don
  * *****************************************************************************
  */
+#include "logging.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -166,6 +167,14 @@ static void sigHandler(int sig)
 {
 	if(sig == SIGINT || sig == SIGTERM)
 		remove(MY_PID_FILE);
- 
+	
+	ERRORLOG("*** Program abnormal exit Caught signal {}", sig);
+
 	_exit(0);
+}
+
+static void sigHandlerOnther(int sig)
+{
+	ERRORLOG("*** Program abnormal exit Caught signal {}", sig);
+	exit(sig);
 }

@@ -51,9 +51,10 @@ void TransactionProcessor::processCachedTransactions() {
 		contractTxCache.pop();
 
 		MagicSingleton<TaskPool>::GetInstance()->CommitTxTask([contractTx]() {
-			int top = discoverTransactionHeight();
-			if(top <= 0){
-				ERRORLOG("discoverTransactionHeight error {}", top);
+			uint64_t top = 0;
+			int retNum = discoverTransactionHeight(top);
+			if(retNum != 0){
+				ERRORLOG("discoverTransactionHeight error {}", retNum);
 				return;
 			}
 			DEBUGLOG("create tx top: {}", top);
@@ -578,7 +579,7 @@ int TxHelper::SendConfirmUtxoHashReq(const std::multiset<TxHelper::Utxo, TxHelpe
     //send_size
     std::string msgId;
     std::map<std::string, uint32_t> successHash;
-    if (!GLOBALDATAMGRPTR.CreateWait(5, randomNodeLists.size() * 0.8, msgId))
+    if (!GLOBALDATAMGRPTR.CreateWait(60, randomNodeLists.size() * 0.8, msgId))
     {
         ERRORLOG("SendConfirmTransactionReq CreateWait is error");
         return -2;
@@ -606,9 +607,10 @@ int TxHelper::SendConfirmUtxoHashReq(const std::multiset<TxHelper::Utxo, TxHelpe
     }
 
     std::vector<std::string> ret_datas;
+	ERRORLOG("FAFAFAFA  waitData begin, randomNodeLists size = {}", randomNodeLists.size());
     if (!GLOBALDATAMGRPTR.WaitData(msgId, ret_datas))
     {
-        ERRORLOG("SendConfirmTransactionReq WaitData is error");
+        ERRORLOG("FAFAFAFA  SendConfirmTransactionReq WaitData is error, ret_datas size = {}", ret_datas.size());
         return -4;
     }
 
@@ -933,11 +935,25 @@ int TxHelper::CreateStakeTransaction(const std::string & fromAddr,
 		return -2;		
 	}
 	
-	if(stakeAmount < global::ca::kMinStakeAmt)
-	{
-		std::cout << "The pledge amount must be greater than 2000" << std::endl;
+	DBReader dbReader;
+    uint64_t top = 0;
+    if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top)){
+		ERRORLOG("db get top failed!!");
 		return -3;
 	}
+
+	if(stakeAmount < global::ca::kNewMinStakeAmt)
+	{
+		std::cout << "The pledge amount must be greater than 20000" << std::endl;
+		return -3;
+	}
+
+
+	// if(stakeAmount < minStakeAmt)
+	// {
+	// 	std::cout << "The pledge amount must be greater than 2000" << std::endl;
+	// 	return -3;
+	// }
 
 	std::string strStakeType;
 	if (pledgeType == TxHelper::pledgeType::kPledgeType_Node)
@@ -950,7 +966,7 @@ int TxHelper::CreateStakeTransaction(const std::string & fromAddr,
 		return -4;
 	}
 
-	DBReader dbReader;
+	// DBReader dbReader;
 	std::vector<std::string> stakeUtxos;
     auto dbret = dbReader.GetStakeAddressUtxo(fromAddr,stakeUtxos);
 	if(dbret != DBStatus::DB_NOT_FOUND)
@@ -1010,6 +1026,7 @@ int TxHelper::CreateStakeTransaction(const std::string & fromAddr,
 	}
 
 	uint32_t n = 0;
+	DoubleSpendCache::doubleSpendsuc used;
 	for (auto & owner : setTxowners)
 	{
 		txUtxo->add_owner(owner);
@@ -1022,6 +1039,7 @@ int TxHelper::CreateStakeTransaction(const std::string & fromAddr,
 				CTxPrevOutput * prevOutput = vin->add_prevout();
 				prevOutput->set_hash(utxo.hash);
 				prevOutput->set_n(utxo.n);
+				used.utxoVec.push_back(utxo.hash);
 			}
 		}
 		vin->set_sequence(n++);
@@ -1110,9 +1128,17 @@ int TxHelper::CreateStakeTransaction(const std::string & fromAddr,
 		outTx.set_identity(id);
 		
 	}
-
+	
+	DEBUGLOG("CreateStakeTransaction tx time = {}, package = {}", outTx.time(), outTx.identity());
 	std::string txHash = Getsha256hash(outTx.SerializeAsString());
 	outTx.set_hash(txHash);
+	used.time = outTx.time();
+
+	if (MagicSingleton<DoubleSpendCache>::GetInstance()->AddFromAddr(std::make_pair(fromAddr, used)))
+	{
+		ERRORLOG("utxo is using!");
+		return -7;
+	}
 
 	INFOLOG( "Transaction Start Time = {}");
 	
@@ -1210,6 +1236,8 @@ int TxHelper::CreatUnstakeTransaction(const std::string& fromAddr,
 		return -3;
 	}
 
+	DoubleSpendCache::doubleSpendsuc used;
+
 	{
 		//  Fill vin
 		txUtxo->add_owner(fromAddr);
@@ -1218,7 +1246,7 @@ int TxHelper::CreatUnstakeTransaction(const std::string& fromAddr,
 		CTxPrevOutput* prevout = txin->add_prevout();
 		prevout->set_hash(utxoHash);
 		prevout->set_n(1);
-
+		used.utxoVec.push_back(utxoHash);
 		std::string serVinHash = Getsha256hash(txin->SerializeAsString());
 		std::string signature;
 		std::string pub;
@@ -1245,6 +1273,7 @@ int TxHelper::CreatUnstakeTransaction(const std::string& fromAddr,
 				CTxPrevOutput * prevOutput = vin->add_prevout();
 				prevOutput->set_hash(utxo.hash);
 				prevOutput->set_n(utxo.n);
+				used.utxoVec.push_back(utxo.hash);
 			}
 		}
 		vin->set_sequence(n++);
@@ -1342,6 +1371,14 @@ int TxHelper::CreatUnstakeTransaction(const std::string& fromAddr,
 
 	std::string txHash = Getsha256hash(outTx.SerializeAsString());
 	outTx.set_hash(txHash);
+	used.time = outTx.time();
+	
+	DEBUGLOG("CreatUnstakeTransaction tx time = {}, package = {}", outTx.time(), outTx.identity());
+	if (MagicSingleton<DoubleSpendCache>::GetInstance()->AddFromAddr(std::make_pair(fromAddr, used)))
+	{
+		ERRORLOG("utxo is using!");
+		return -7;
+	}
 	INFOLOG( "Transaction Start Time = {}");
 	return 0;
 }
@@ -1381,9 +1418,9 @@ int TxHelper::CreateInvestTransaction(const std::string & fromAddr,
 		return -2;
 	}
 
-	if(investAmount < global::ca::kMinInvestAmt){
+	if(investAmount < global::ca::kNewMinInvestAmt){
 		ERRORLOG("Investment amount exceeds the limit!");
-		std::cout << "Investment amount exceeds the 200" << std::endl;
+		std::cout << "Investment amount exceeds the 1500" << std::endl;
 		return -3;
 	}
 
@@ -1455,7 +1492,7 @@ int TxHelper::CreateInvestTransaction(const std::string & fromAddr,
 		return -6;
 	}
 
-	
+	DoubleSpendCache::doubleSpendsuc used;
 	uint32_t n = 0;
 	for (auto & owner : setTxowners)
 	{
@@ -1468,6 +1505,7 @@ int TxHelper::CreateInvestTransaction(const std::string & fromAddr,
 				CTxPrevOutput * prevOutput = vin->add_prevout();
 				prevOutput->set_hash(utxo.hash);
 				prevOutput->set_n(utxo.n);
+				used.utxoVec.push_back(utxo.hash);
 			}
 		}
 		vin->set_sequence(n++);
@@ -1557,6 +1595,15 @@ int TxHelper::CreateInvestTransaction(const std::string & fromAddr,
 
 	std::string txHash = Getsha256hash(outTx.SerializeAsString());
 	outTx.set_hash(txHash);
+	used.time = outTx.time();
+	
+	DEBUGLOG("CreateInvestTransaction tx time = {}, package = {}", outTx.time(), outTx.identity());
+	if (MagicSingleton<DoubleSpendCache>::GetInstance()->AddFromAddr(std::make_pair(fromAddr, used)))
+	{
+		ERRORLOG("utxo is using!");
+		return -7;
+	}
+
 	INFOLOG( "Transaction Start Time = {}");
 	return 0;
 }
@@ -1649,6 +1696,8 @@ int TxHelper::CreateDisinvestTransaction(const std::string& fromAddr,
 		return -5;
 	}
 
+	DoubleSpendCache::doubleSpendsuc used;
+
 	{
 		//  Fill vin
 		txUtxo->add_owner(fromAddr);
@@ -1657,7 +1706,7 @@ int TxHelper::CreateDisinvestTransaction(const std::string& fromAddr,
 		CTxPrevOutput* prevout = txin->add_prevout();
 		prevout->set_hash(utxoHash);
 		prevout->set_n(1);
-
+		used.utxoVec.push_back(utxoHash);
 		std::string serVinHash = Getsha256hash(txin->SerializeAsString());
 		std::string signature;
 		std::string pub;
@@ -1685,6 +1734,7 @@ int TxHelper::CreateDisinvestTransaction(const std::string& fromAddr,
 				CTxPrevOutput * prevOutput = vin->add_prevout();
 				prevOutput->set_hash(utxo.hash);
 				prevOutput->set_n(utxo.n);
+				used.utxoVec.push_back(utxo.hash);
 			}
 		}
 		vin->set_sequence(n++);
@@ -1778,8 +1828,16 @@ int TxHelper::CreateDisinvestTransaction(const std::string& fromAddr,
 
 	std::string txHash = Getsha256hash(outTx.SerializeAsString());
 	outTx.set_hash(txHash);
+	used.time = outTx.time();
+	
+	DEBUGLOG("CreateDisinvestTransaction tx time = {}, package = {}", outTx.time(), outTx.identity());
+	if (MagicSingleton<DoubleSpendCache>::GetInstance()->AddFromAddr(std::make_pair(fromAddr, used)))
+	{
+		ERRORLOG("utxo is using!");
+		return -11;
+	}
 
-	INFOLOG( "Transaction Start Time = {}");
+	INFOLOG("Transaction Start Time = {}", outTx.time());
 
 	return 0;
 }
@@ -1836,7 +1894,7 @@ int TxHelper::CreateBonusTransaction(const std::string& addr,
 	uint64_t tempTotalClaim=0;
 
 	double tempcommissionRate;
-	int rt = ca_algorithm::GetCommissionPercentage(addr, tempcommissionRate);
+	int rt = ca_algorithm::GetCommissionPercentage(addr, height, tempcommissionRate);
 	if(rt != 0)
 	{
 		ERRORLOG("GetCommissionPercentage error:{}", rt);
@@ -1898,6 +1956,7 @@ int TxHelper::CreateBonusTransaction(const std::string& addr,
 		return -3;
 	}
 
+	DoubleSpendCache::doubleSpendsuc used;
 	for (auto & owner : setTxowners)
 	{
 		txUtxo->add_owner(owner);
@@ -1910,6 +1969,7 @@ int TxHelper::CreateBonusTransaction(const std::string& addr,
 				CTxPrevOutput * prevOutput = vin->add_prevout();
 				prevOutput->set_hash(utxo.hash);
 				prevOutput->set_n(utxo.n);
+				used.utxoVec.push_back(utxo.hash);
 			}
 		}
 		vin->set_sequence(n++);
@@ -2015,7 +2075,13 @@ int TxHelper::CreateBonusTransaction(const std::string& addr,
 	}
 	std::string txHash = Getsha256hash(outTx.SerializeAsString());
 	outTx.set_hash(txHash);
+	used.time = outTx.time();
 
+	if (MagicSingleton<DoubleSpendCache>::GetInstance()->AddFromAddr(std::make_pair(addr, used)))
+	{
+		ERRORLOG("utxo is using!");
+		return -7;
+	}
 	INFOLOG( "Transaction Start Time = {}");
 	return 0;
 }
@@ -2712,9 +2778,7 @@ std::string TxHelper::GetIdentityNodes()
 		return defaultAddr;
 	}
 	
-	int ret = VerifyBonusAddr(defaultAddr);
-	int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(defaultAddr, global::ca::StakeType::kStakeType_Node);
-	if (stakeTime > 0 && ret == 0)
+	if(CheckVerifyNodeQualification(defaultAddr) == 0)
 	{
 		return defaultAddr;
 	}
@@ -2726,13 +2790,10 @@ std::string TxHelper::GetEligibleNodes(){
     std::vector<std::string> result_node;
     for (const auto &node : nodelist)
     {
-        int ret = VerifyBonusAddr(node.address);
-
-        int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(node.address, global::ca::StakeType::kStakeType_Node);
-        if (stakeTime > 0 && ret == 0)
-        {
-            result_node.push_back(node.address);
-        }
+		if(CheckVerifyNodeQualification(node.address) == 0)
+		{
+			result_node.push_back(node.address);
+		}
     }
 	auto getNextNumber=[&](int limit) ->int {
 	  	std::random_device seed;
@@ -2749,6 +2810,10 @@ std::string TxHelper::GetEligibleNodes(){
 	DEBUGLOG("GetEligibleNodes: node size: {}",result_node.size());
 	int rumdom=getNextNumber(result_node.size());
 	DEBUGLOG("GetEligibleNodes: rumdom: {}",rumdom);
+
+	std::string packager = result_node[rumdom];
+	DEBUGLOG("GetEligibleNodes:  panckager : {}",packager);
+	std::cout << "packager: " <<"0x"+ packager << std::endl;
     
-	return result_node[rumdom];
+	return packager;
 }

@@ -80,6 +80,36 @@ extern GetCheckSumHashAckDefaultTypeInternal _GetCheckSumHashAck_default_instanc
 class GetCheckSumHashReq;
 struct GetCheckSumHashReqDefaultTypeInternal;
 extern GetCheckSumHashReqDefaultTypeInternal _GetCheckSumHashReq_default_instance_;
+class GetLogAck;
+struct GetLogAckDefaultTypeInternal;
+extern GetLogAckDefaultTypeInternal _GetLogAck_default_instance_;
+class GetLogReq;
+struct GetLogReqDefaultTypeInternal;
+extern GetLogReqDefaultTypeInternal _GetLogReq_default_instance_;
+class GetRpcBlockAck;
+struct GetRpcBlockAckDefaultTypeInternal;
+extern GetRpcBlockAckDefaultTypeInternal _GetRpcBlockAck_default_instance_;
+class GetRpcBlockInfoAck;
+struct GetRpcBlockInfoAckDefaultTypeInternal;
+extern GetRpcBlockInfoAckDefaultTypeInternal _GetRpcBlockInfoAck_default_instance_;
+class GetRpcBlockInfoReq;
+struct GetRpcBlockInfoReqDefaultTypeInternal;
+extern GetRpcBlockInfoReqDefaultTypeInternal _GetRpcBlockInfoReq_default_instance_;
+class GetRpcBlockReq;
+struct GetRpcBlockReqDefaultTypeInternal;
+extern GetRpcBlockReqDefaultTypeInternal _GetRpcBlockReq_default_instance_;
+class GetRpcPubAck;
+struct GetRpcPubAckDefaultTypeInternal;
+extern GetRpcPubAckDefaultTypeInternal _GetRpcPubAck_default_instance_;
+class GetRpcPubReq;
+struct GetRpcPubReqDefaultTypeInternal;
+extern GetRpcPubReqDefaultTypeInternal _GetRpcPubReq_default_instance_;
+class GetRpcSySInfoAck;
+struct GetRpcSySInfoAckDefaultTypeInternal;
+extern GetRpcSySInfoAckDefaultTypeInternal _GetRpcSySInfoAck_default_instance_;
+class GetRpcSySInfoReq;
+struct GetRpcSySInfoReqDefaultTypeInternal;
+extern GetRpcSySInfoReqDefaultTypeInternal _GetRpcSySInfoReq_default_instance_;
 class HashType;
 struct HashTypeDefaultTypeInternal;
 extern HashTypeDefaultTypeInternal _HashType_default_instance_;
@@ -101,6 +131,12 @@ extern SyncFromZeroSumHashDefaultTypeInternal _SyncFromZeroSumHash_default_insta
 class SyncGetBlockAck;
 struct SyncGetBlockAckDefaultTypeInternal;
 extern SyncGetBlockAckDefaultTypeInternal _SyncGetBlockAck_default_instance_;
+class SyncGetBlockHeightAndHashAck;
+struct SyncGetBlockHeightAndHashAckDefaultTypeInternal;
+extern SyncGetBlockHeightAndHashAckDefaultTypeInternal _SyncGetBlockHeightAndHashAck_default_instance_;
+class SyncGetBlockHeightAndHashReq;
+struct SyncGetBlockHeightAndHashReqDefaultTypeInternal;
+extern SyncGetBlockHeightAndHashReqDefaultTypeInternal _SyncGetBlockHeightAndHashReq_default_instance_;
 class SyncGetBlockReq;
 struct SyncGetBlockReqDefaultTypeInternal;
 extern SyncGetBlockReqDefaultTypeInternal _SyncGetBlockReq_default_instance_;
@@ -138,6 +174,16 @@ template<> ::GetBlockByUtxoAck* Arena::CreateMaybeMessage<::GetBlockByUtxoAck>(A
 template<> ::GetBlockByUtxoReq* Arena::CreateMaybeMessage<::GetBlockByUtxoReq>(Arena*);
 template<> ::GetCheckSumHashAck* Arena::CreateMaybeMessage<::GetCheckSumHashAck>(Arena*);
 template<> ::GetCheckSumHashReq* Arena::CreateMaybeMessage<::GetCheckSumHashReq>(Arena*);
+template<> ::GetLogAck* Arena::CreateMaybeMessage<::GetLogAck>(Arena*);
+template<> ::GetLogReq* Arena::CreateMaybeMessage<::GetLogReq>(Arena*);
+template<> ::GetRpcBlockAck* Arena::CreateMaybeMessage<::GetRpcBlockAck>(Arena*);
+template<> ::GetRpcBlockInfoAck* Arena::CreateMaybeMessage<::GetRpcBlockInfoAck>(Arena*);
+template<> ::GetRpcBlockInfoReq* Arena::CreateMaybeMessage<::GetRpcBlockInfoReq>(Arena*);
+template<> ::GetRpcBlockReq* Arena::CreateMaybeMessage<::GetRpcBlockReq>(Arena*);
+template<> ::GetRpcPubAck* Arena::CreateMaybeMessage<::GetRpcPubAck>(Arena*);
+template<> ::GetRpcPubReq* Arena::CreateMaybeMessage<::GetRpcPubReq>(Arena*);
+template<> ::GetRpcSySInfoAck* Arena::CreateMaybeMessage<::GetRpcSySInfoAck>(Arena*);
+template<> ::GetRpcSySInfoReq* Arena::CreateMaybeMessage<::GetRpcSySInfoReq>(Arena*);
 template<> ::HashType* Arena::CreateMaybeMessage<::HashType>(Arena*);
 template<> ::SyncFromZeroGetBlockAck* Arena::CreateMaybeMessage<::SyncFromZeroGetBlockAck>(Arena*);
 template<> ::SyncFromZeroGetBlockReq* Arena::CreateMaybeMessage<::SyncFromZeroGetBlockReq>(Arena*);
@@ -145,6 +191,8 @@ template<> ::SyncFromZeroGetSumHashAck* Arena::CreateMaybeMessage<::SyncFromZero
 template<> ::SyncFromZeroGetSumHashReq* Arena::CreateMaybeMessage<::SyncFromZeroGetSumHashReq>(Arena*);
 template<> ::SyncFromZeroSumHash* Arena::CreateMaybeMessage<::SyncFromZeroSumHash>(Arena*);
 template<> ::SyncGetBlockAck* Arena::CreateMaybeMessage<::SyncGetBlockAck>(Arena*);
+template<> ::SyncGetBlockHeightAndHashAck* Arena::CreateMaybeMessage<::SyncGetBlockHeightAndHashAck>(Arena*);
+template<> ::SyncGetBlockHeightAndHashReq* Arena::CreateMaybeMessage<::SyncGetBlockHeightAndHashReq>(Arena*);
 template<> ::SyncGetBlockReq* Arena::CreateMaybeMessage<::SyncGetBlockReq>(Arena*);
 template<> ::SyncGetHeightHashAck* Arena::CreateMaybeMessage<::SyncGetHeightHashAck>(Arena*);
 template<> ::SyncGetHeightHashReq* Arena::CreateMaybeMessage<::SyncGetHeightHashReq>(Arena*);
@@ -2221,6 +2269,403 @@ class SyncGetHeightHashAck final :
 };
 // -------------------------------------------------------------------
 
+class SyncGetBlockHeightAndHashReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SyncGetBlockHeightAndHashReq) */ {
+ public:
+  inline SyncGetBlockHeightAndHashReq() : SyncGetBlockHeightAndHashReq(nullptr) {}
+  ~SyncGetBlockHeightAndHashReq() override;
+  explicit PROTOBUF_CONSTEXPR SyncGetBlockHeightAndHashReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SyncGetBlockHeightAndHashReq(const SyncGetBlockHeightAndHashReq& from);
+  SyncGetBlockHeightAndHashReq(SyncGetBlockHeightAndHashReq&& from) noexcept
+    : SyncGetBlockHeightAndHashReq() {
+    *this = ::std::move(from);
+  }
+
+  inline SyncGetBlockHeightAndHashReq& operator=(const SyncGetBlockHeightAndHashReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SyncGetBlockHeightAndHashReq& operator=(SyncGetBlockHeightAndHashReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SyncGetBlockHeightAndHashReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SyncGetBlockHeightAndHashReq* internal_default_instance() {
+    return reinterpret_cast<const SyncGetBlockHeightAndHashReq*>(
+               &_SyncGetBlockHeightAndHashReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    11;
+
+  friend void swap(SyncGetBlockHeightAndHashReq& a, SyncGetBlockHeightAndHashReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SyncGetBlockHeightAndHashReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SyncGetBlockHeightAndHashReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SyncGetBlockHeightAndHashReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SyncGetBlockHeightAndHashReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SyncGetBlockHeightAndHashReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SyncGetBlockHeightAndHashReq& from) {
+    SyncGetBlockHeightAndHashReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SyncGetBlockHeightAndHashReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "SyncGetBlockHeightAndHashReq";
+  }
+  protected:
+  explicit SyncGetBlockHeightAndHashReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kSelfNodeIdFieldNumber = 1,
+    kMsgIdFieldNumber = 2,
+    kStartHeightFieldNumber = 3,
+    kEndHeightFieldNumber = 4,
+  };
+  // string self_node_id = 1;
+  void clear_self_node_id();
+  const std::string& self_node_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_self_node_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_self_node_id();
+  PROTOBUF_NODISCARD std::string* release_self_node_id();
+  void set_allocated_self_node_id(std::string* self_node_id);
+  private:
+  const std::string& _internal_self_node_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_self_node_id(const std::string& value);
+  std::string* _internal_mutable_self_node_id();
+  public:
+
+  // string msg_id = 2;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // uint64 start_height = 3;
+  void clear_start_height();
+  uint64_t start_height() const;
+  void set_start_height(uint64_t value);
+  private:
+  uint64_t _internal_start_height() const;
+  void _internal_set_start_height(uint64_t value);
+  public:
+
+  // uint64 end_height = 4;
+  void clear_end_height();
+  uint64_t end_height() const;
+  void set_end_height(uint64_t value);
+  private:
+  uint64_t _internal_end_height() const;
+  void _internal_set_end_height(uint64_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:SyncGetBlockHeightAndHashReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr self_node_id_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    uint64_t start_height_;
+    uint64_t end_height_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SyncGetBlockHeightAndHashAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SyncGetBlockHeightAndHashAck) */ {
+ public:
+  inline SyncGetBlockHeightAndHashAck() : SyncGetBlockHeightAndHashAck(nullptr) {}
+  ~SyncGetBlockHeightAndHashAck() override;
+  explicit PROTOBUF_CONSTEXPR SyncGetBlockHeightAndHashAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SyncGetBlockHeightAndHashAck(const SyncGetBlockHeightAndHashAck& from);
+  SyncGetBlockHeightAndHashAck(SyncGetBlockHeightAndHashAck&& from) noexcept
+    : SyncGetBlockHeightAndHashAck() {
+    *this = ::std::move(from);
+  }
+
+  inline SyncGetBlockHeightAndHashAck& operator=(const SyncGetBlockHeightAndHashAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SyncGetBlockHeightAndHashAck& operator=(SyncGetBlockHeightAndHashAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SyncGetBlockHeightAndHashAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SyncGetBlockHeightAndHashAck* internal_default_instance() {
+    return reinterpret_cast<const SyncGetBlockHeightAndHashAck*>(
+               &_SyncGetBlockHeightAndHashAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    12;
+
+  friend void swap(SyncGetBlockHeightAndHashAck& a, SyncGetBlockHeightAndHashAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SyncGetBlockHeightAndHashAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SyncGetBlockHeightAndHashAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SyncGetBlockHeightAndHashAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SyncGetBlockHeightAndHashAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SyncGetBlockHeightAndHashAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SyncGetBlockHeightAndHashAck& from) {
+    SyncGetBlockHeightAndHashAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SyncGetBlockHeightAndHashAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "SyncGetBlockHeightAndHashAck";
+  }
+  protected:
+  explicit SyncGetBlockHeightAndHashAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kBlockHashesFieldNumber = 4,
+    kSelfNodeIdFieldNumber = 2,
+    kMsgIdFieldNumber = 3,
+    kCodeFieldNumber = 1,
+  };
+  // repeated string block_hashes = 4;
+  int block_hashes_size() const;
+  private:
+  int _internal_block_hashes_size() const;
+  public:
+  void clear_block_hashes();
+  const std::string& block_hashes(int index) const;
+  std::string* mutable_block_hashes(int index);
+  void set_block_hashes(int index, const std::string& value);
+  void set_block_hashes(int index, std::string&& value);
+  void set_block_hashes(int index, const char* value);
+  void set_block_hashes(int index, const char* value, size_t size);
+  std::string* add_block_hashes();
+  void add_block_hashes(const std::string& value);
+  void add_block_hashes(std::string&& value);
+  void add_block_hashes(const char* value);
+  void add_block_hashes(const char* value, size_t size);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& block_hashes() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_block_hashes();
+  private:
+  const std::string& _internal_block_hashes(int index) const;
+  std::string* _internal_add_block_hashes();
+  public:
+
+  // string self_node_id = 2;
+  void clear_self_node_id();
+  const std::string& self_node_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_self_node_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_self_node_id();
+  PROTOBUF_NODISCARD std::string* release_self_node_id();
+  void set_allocated_self_node_id(std::string* self_node_id);
+  private:
+  const std::string& _internal_self_node_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_self_node_id(const std::string& value);
+  std::string* _internal_mutable_self_node_id();
+  public:
+
+  // string msg_id = 3;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // int32 code = 1;
+  void clear_code();
+  int32_t code() const;
+  void set_code(int32_t value);
+  private:
+  int32_t _internal_code() const;
+  void _internal_set_code(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:SyncGetBlockHeightAndHashAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> block_hashes_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr self_node_id_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    int32_t code_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
 class SyncGetBlockReq final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SyncGetBlockReq) */ {
  public:
@@ -2269,7 +2714,7 @@ class SyncGetBlockReq final :
                &_SyncGetBlockReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    13;
 
   friend void swap(SyncGetBlockReq& a, SyncGetBlockReq& b) {
     a.Swap(&b);
@@ -2464,7 +2909,7 @@ class SyncGetBlockAck final :
                &_SyncGetBlockAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    12;
+    14;
 
   friend void swap(SyncGetBlockAck& a, SyncGetBlockAck& b) {
     a.Swap(&b);
@@ -2643,7 +3088,7 @@ class SyncFromZeroSumHash final :
                &_SyncFromZeroSumHash_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    13;
+    15;
 
   friend void swap(SyncFromZeroSumHash& a, SyncFromZeroSumHash& b) {
     a.Swap(&b);
@@ -2807,7 +3252,7 @@ class SyncFromZeroGetSumHashReq final :
                &_SyncFromZeroGetSumHashReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    14;
+    16;
 
   friend void swap(SyncFromZeroGetSumHashReq& a, SyncFromZeroGetSumHashReq& b) {
     a.Swap(&b);
@@ -3001,7 +3446,7 @@ class SyncFromZeroGetSumHashAck final :
                &_SyncFromZeroGetSumHashAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    17;
 
   friend void swap(SyncFromZeroGetSumHashAck& a, SyncFromZeroGetSumHashAck& b) {
     a.Swap(&b);
@@ -3201,7 +3646,7 @@ class SyncFromZeroGetBlockReq final :
                &_SyncFromZeroGetBlockReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    18;
 
   friend void swap(SyncFromZeroGetBlockReq& a, SyncFromZeroGetBlockReq& b) {
     a.Swap(&b);
@@ -3381,7 +3826,7 @@ class SyncFromZeroGetBlockAck final :
                &_SyncFromZeroGetBlockAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    17;
+    19;
 
   friend void swap(SyncFromZeroGetBlockAck& a, SyncFromZeroGetBlockAck& b) {
     a.Swap(&b);
@@ -3587,7 +4032,7 @@ class GetBlockByUtxoReq final :
                &_GetBlockByUtxoReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    18;
+    20;
 
   friend void swap(GetBlockByUtxoReq& a, GetBlockByUtxoReq& b) {
     a.Swap(&b);
@@ -3772,7 +4217,7 @@ class GetBlockByUtxoAck final :
                &_GetBlockByUtxoAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    19;
+    21;
 
   friend void swap(GetBlockByUtxoAck& a, GetBlockByUtxoAck& b) {
     a.Swap(&b);
@@ -3973,7 +4418,7 @@ class HashType final :
                &_HashType_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    20;
+    22;
 
   friend void swap(HashType& a, HashType& b) {
     a.Swap(&b);
@@ -4153,7 +4598,7 @@ class GetBlockByHashReq final :
                &_GetBlockByHashReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    21;
+    23;
 
   friend void swap(GetBlockByHashReq& a, GetBlockByHashReq& b) {
     a.Swap(&b);
@@ -4342,7 +4787,7 @@ class GetBlockByHashAck final :
                &_GetBlockByHashAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    22;
+    24;
 
   friend void swap(GetBlockByHashAck& a, GetBlockByHashAck& b) {
     a.Swap(&b);
@@ -4531,7 +4976,7 @@ class SyncNodeHashReq final :
                &_SyncNodeHashReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    25;
 
   friend void swap(SyncNodeHashReq& a, SyncNodeHashReq& b) {
     a.Swap(&b);
@@ -4700,7 +5145,7 @@ class SyncNodeHashAck final :
                &_SyncNodeHashAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    26;
 
   friend void swap(SyncNodeHashAck& a, SyncNodeHashAck& b) {
     a.Swap(&b);
@@ -4885,7 +5330,7 @@ class GetCheckSumHashReq final :
                &_GetCheckSumHashReq_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    27;
 
   friend void swap(GetCheckSumHashReq& a, GetCheckSumHashReq& b) {
     a.Swap(&b);
@@ -5065,7 +5510,7 @@ class GetCheckSumHashAck final :
                &_GetCheckSumHashAck_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    26;
+    28;
 
   friend void swap(GetCheckSumHashAck& a, GetCheckSumHashAck& b) {
     a.Swap(&b);
@@ -5217,6 +5662,1901 @@ class GetCheckSumHashAck final :
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr self_node_id_;
     uint64_t height_;
     bool success_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetLogReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetLogReq) */ {
+ public:
+  inline GetLogReq() : GetLogReq(nullptr) {}
+  ~GetLogReq() override;
+  explicit PROTOBUF_CONSTEXPR GetLogReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetLogReq(const GetLogReq& from);
+  GetLogReq(GetLogReq&& from) noexcept
+    : GetLogReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetLogReq& operator=(const GetLogReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetLogReq& operator=(GetLogReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetLogReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetLogReq* internal_default_instance() {
+    return reinterpret_cast<const GetLogReq*>(
+               &_GetLogReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    29;
+
+  friend void swap(GetLogReq& a, GetLogReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetLogReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetLogReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetLogReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetLogReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetLogReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetLogReq& from) {
+    GetLogReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetLogReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetLogReq";
+  }
+  protected:
+  explicit GetLogReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kStartTimeFieldNumber = 1,
+    kEndTimeFieldNumber = 2,
+    kAddressFieldNumber = 3,
+    kMsgIdFieldNumber = 4,
+    kFilenameFieldNumber = 5,
+    kLinesFieldNumber = 6,
+  };
+  // string startTime = 1;
+  void clear_starttime();
+  const std::string& starttime() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_starttime(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_starttime();
+  PROTOBUF_NODISCARD std::string* release_starttime();
+  void set_allocated_starttime(std::string* starttime);
+  private:
+  const std::string& _internal_starttime() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_starttime(const std::string& value);
+  std::string* _internal_mutable_starttime();
+  public:
+
+  // string endTime = 2;
+  void clear_endtime();
+  const std::string& endtime() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_endtime(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_endtime();
+  PROTOBUF_NODISCARD std::string* release_endtime();
+  void set_allocated_endtime(std::string* endtime);
+  private:
+  const std::string& _internal_endtime() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_endtime(const std::string& value);
+  std::string* _internal_mutable_endtime();
+  public:
+
+  // string address = 3;
+  void clear_address();
+  const std::string& address() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_address(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_address();
+  PROTOBUF_NODISCARD std::string* release_address();
+  void set_allocated_address(std::string* address);
+  private:
+  const std::string& _internal_address() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
+  std::string* _internal_mutable_address();
+  public:
+
+  // string msg_id = 4;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // string filename = 5;
+  void clear_filename();
+  const std::string& filename() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_filename(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_filename();
+  PROTOBUF_NODISCARD std::string* release_filename();
+  void set_allocated_filename(std::string* filename);
+  private:
+  const std::string& _internal_filename() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_filename(const std::string& value);
+  std::string* _internal_mutable_filename();
+  public:
+
+  // int32 lines = 6;
+  void clear_lines();
+  int32_t lines() const;
+  void set_lines(int32_t value);
+  private:
+  int32_t _internal_lines() const;
+  void _internal_set_lines(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetLogReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr starttime_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr endtime_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr filename_;
+    int32_t lines_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetLogAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetLogAck) */ {
+ public:
+  inline GetLogAck() : GetLogAck(nullptr) {}
+  ~GetLogAck() override;
+  explicit PROTOBUF_CONSTEXPR GetLogAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetLogAck(const GetLogAck& from);
+  GetLogAck(GetLogAck&& from) noexcept
+    : GetLogAck() {
+    *this = ::std::move(from);
+  }
+
+  inline GetLogAck& operator=(const GetLogAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetLogAck& operator=(GetLogAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetLogAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetLogAck* internal_default_instance() {
+    return reinterpret_cast<const GetLogAck*>(
+               &_GetLogAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    30;
+
+  friend void swap(GetLogAck& a, GetLogAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetLogAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetLogAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetLogAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetLogAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetLogAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetLogAck& from) {
+    GetLogAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetLogAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetLogAck";
+  }
+  protected:
+  explicit GetLogAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDataFieldNumber = 1,
+    kAddressFieldNumber = 2,
+    kMsgIdFieldNumber = 3,
+  };
+  // bytes data = 1;
+  void clear_data();
+  const std::string& data() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_data(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_data();
+  PROTOBUF_NODISCARD std::string* release_data();
+  void set_allocated_data(std::string* data);
+  private:
+  const std::string& _internal_data() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_data(const std::string& value);
+  std::string* _internal_mutable_data();
+  public:
+
+  // string address = 2;
+  void clear_address();
+  const std::string& address() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_address(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_address();
+  PROTOBUF_NODISCARD std::string* release_address();
+  void set_allocated_address(std::string* address);
+  private:
+  const std::string& _internal_address() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
+  std::string* _internal_mutable_address();
+  public:
+
+  // string msg_id = 3;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetLogAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRpcBlockReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetRpcBlockReq) */ {
+ public:
+  inline GetRpcBlockReq() : GetRpcBlockReq(nullptr) {}
+  ~GetRpcBlockReq() override;
+  explicit PROTOBUF_CONSTEXPR GetRpcBlockReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRpcBlockReq(const GetRpcBlockReq& from);
+  GetRpcBlockReq(GetRpcBlockReq&& from) noexcept
+    : GetRpcBlockReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRpcBlockReq& operator=(const GetRpcBlockReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRpcBlockReq& operator=(GetRpcBlockReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRpcBlockReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRpcBlockReq* internal_default_instance() {
+    return reinterpret_cast<const GetRpcBlockReq*>(
+               &_GetRpcBlockReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    31;
+
+  friend void swap(GetRpcBlockReq& a, GetRpcBlockReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRpcBlockReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRpcBlockReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRpcBlockReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRpcBlockReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRpcBlockReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetRpcBlockReq& from) {
+    GetRpcBlockReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRpcBlockReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetRpcBlockReq";
+  }
+  protected:
+  explicit GetRpcBlockReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAddressFieldNumber = 1,
+    kMsgIdFieldNumber = 2,
+    kNumFieldNumber = 3,
+    kHeightFieldNumber = 4,
+    kHashFieldNumber = 5,
+    kPreHashFlagFieldNumber = 6,
+  };
+  // string address = 1;
+  void clear_address();
+  const std::string& address() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_address(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_address();
+  PROTOBUF_NODISCARD std::string* release_address();
+  void set_allocated_address(std::string* address);
+  private:
+  const std::string& _internal_address() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
+  std::string* _internal_mutable_address();
+  public:
+
+  // string msg_id = 2;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // int32 num = 3;
+  void clear_num();
+  int32_t num() const;
+  void set_num(int32_t value);
+  private:
+  int32_t _internal_num() const;
+  void _internal_set_num(int32_t value);
+  public:
+
+  // int32 height = 4;
+  void clear_height();
+  int32_t height() const;
+  void set_height(int32_t value);
+  private:
+  int32_t _internal_height() const;
+  void _internal_set_height(int32_t value);
+  public:
+
+  // bool hash = 5;
+  void clear_hash();
+  bool hash() const;
+  void set_hash(bool value);
+  private:
+  bool _internal_hash() const;
+  void _internal_set_hash(bool value);
+  public:
+
+  // bool preHashFlag = 6;
+  void clear_prehashflag();
+  bool prehashflag() const;
+  void set_prehashflag(bool value);
+  private:
+  bool _internal_prehashflag() const;
+  void _internal_set_prehashflag(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetRpcBlockReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    int32_t num_;
+    int32_t height_;
+    bool hash_;
+    bool prehashflag_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRpcBlockAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetRpcBlockAck) */ {
+ public:
+  inline GetRpcBlockAck() : GetRpcBlockAck(nullptr) {}
+  ~GetRpcBlockAck() override;
+  explicit PROTOBUF_CONSTEXPR GetRpcBlockAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRpcBlockAck(const GetRpcBlockAck& from);
+  GetRpcBlockAck(GetRpcBlockAck&& from) noexcept
+    : GetRpcBlockAck() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRpcBlockAck& operator=(const GetRpcBlockAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRpcBlockAck& operator=(GetRpcBlockAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRpcBlockAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRpcBlockAck* internal_default_instance() {
+    return reinterpret_cast<const GetRpcBlockAck*>(
+               &_GetRpcBlockAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    32;
+
+  friend void swap(GetRpcBlockAck& a, GetRpcBlockAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRpcBlockAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRpcBlockAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRpcBlockAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRpcBlockAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRpcBlockAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetRpcBlockAck& from) {
+    GetRpcBlockAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRpcBlockAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetRpcBlockAck";
+  }
+  protected:
+  explicit GetRpcBlockAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDataFieldNumber = 1,
+    kAddressFieldNumber = 2,
+    kMsgIdFieldNumber = 3,
+  };
+  // bytes data = 1;
+  void clear_data();
+  const std::string& data() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_data(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_data();
+  PROTOBUF_NODISCARD std::string* release_data();
+  void set_allocated_data(std::string* data);
+  private:
+  const std::string& _internal_data() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_data(const std::string& value);
+  std::string* _internal_mutable_data();
+  public:
+
+  // string address = 2;
+  void clear_address();
+  const std::string& address() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_address(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_address();
+  PROTOBUF_NODISCARD std::string* release_address();
+  void set_allocated_address(std::string* address);
+  private:
+  const std::string& _internal_address() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
+  std::string* _internal_mutable_address();
+  public:
+
+  // string msg_id = 3;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetRpcBlockAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRpcSySInfoReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetRpcSySInfoReq) */ {
+ public:
+  inline GetRpcSySInfoReq() : GetRpcSySInfoReq(nullptr) {}
+  ~GetRpcSySInfoReq() override;
+  explicit PROTOBUF_CONSTEXPR GetRpcSySInfoReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRpcSySInfoReq(const GetRpcSySInfoReq& from);
+  GetRpcSySInfoReq(GetRpcSySInfoReq&& from) noexcept
+    : GetRpcSySInfoReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRpcSySInfoReq& operator=(const GetRpcSySInfoReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRpcSySInfoReq& operator=(GetRpcSySInfoReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRpcSySInfoReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRpcSySInfoReq* internal_default_instance() {
+    return reinterpret_cast<const GetRpcSySInfoReq*>(
+               &_GetRpcSySInfoReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    33;
+
+  friend void swap(GetRpcSySInfoReq& a, GetRpcSySInfoReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRpcSySInfoReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRpcSySInfoReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRpcSySInfoReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRpcSySInfoReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRpcSySInfoReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetRpcSySInfoReq& from) {
+    GetRpcSySInfoReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRpcSySInfoReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetRpcSySInfoReq";
+  }
+  protected:
+  explicit GetRpcSySInfoReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAddressFieldNumber = 1,
+    kMsgIdFieldNumber = 2,
+  };
+  // string address = 1;
+  void clear_address();
+  const std::string& address() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_address(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_address();
+  PROTOBUF_NODISCARD std::string* release_address();
+  void set_allocated_address(std::string* address);
+  private:
+  const std::string& _internal_address() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
+  std::string* _internal_mutable_address();
+  public:
+
+  // string msg_id = 2;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetRpcSySInfoReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRpcSySInfoAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetRpcSySInfoAck) */ {
+ public:
+  inline GetRpcSySInfoAck() : GetRpcSySInfoAck(nullptr) {}
+  ~GetRpcSySInfoAck() override;
+  explicit PROTOBUF_CONSTEXPR GetRpcSySInfoAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRpcSySInfoAck(const GetRpcSySInfoAck& from);
+  GetRpcSySInfoAck(GetRpcSySInfoAck&& from) noexcept
+    : GetRpcSySInfoAck() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRpcSySInfoAck& operator=(const GetRpcSySInfoAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRpcSySInfoAck& operator=(GetRpcSySInfoAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRpcSySInfoAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRpcSySInfoAck* internal_default_instance() {
+    return reinterpret_cast<const GetRpcSySInfoAck*>(
+               &_GetRpcSySInfoAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    34;
+
+  friend void swap(GetRpcSySInfoAck& a, GetRpcSySInfoAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRpcSySInfoAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRpcSySInfoAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRpcSySInfoAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRpcSySInfoAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRpcSySInfoAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetRpcSySInfoAck& from) {
+    GetRpcSySInfoAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRpcSySInfoAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetRpcSySInfoAck";
+  }
+  protected:
+  explicit GetRpcSySInfoAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDataFieldNumber = 1,
+    kAddressFieldNumber = 2,
+    kMsgIdFieldNumber = 3,
+  };
+  // bytes data = 1;
+  void clear_data();
+  const std::string& data() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_data(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_data();
+  PROTOBUF_NODISCARD std::string* release_data();
+  void set_allocated_data(std::string* data);
+  private:
+  const std::string& _internal_data() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_data(const std::string& value);
+  std::string* _internal_mutable_data();
+  public:
+
+  // string address = 2;
+  void clear_address();
+  const std::string& address() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_address(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_address();
+  PROTOBUF_NODISCARD std::string* release_address();
+  void set_allocated_address(std::string* address);
+  private:
+  const std::string& _internal_address() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
+  std::string* _internal_mutable_address();
+  public:
+
+  // string msg_id = 3;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetRpcSySInfoAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRpcPubReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetRpcPubReq) */ {
+ public:
+  inline GetRpcPubReq() : GetRpcPubReq(nullptr) {}
+  ~GetRpcPubReq() override;
+  explicit PROTOBUF_CONSTEXPR GetRpcPubReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRpcPubReq(const GetRpcPubReq& from);
+  GetRpcPubReq(GetRpcPubReq&& from) noexcept
+    : GetRpcPubReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRpcPubReq& operator=(const GetRpcPubReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRpcPubReq& operator=(GetRpcPubReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRpcPubReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRpcPubReq* internal_default_instance() {
+    return reinterpret_cast<const GetRpcPubReq*>(
+               &_GetRpcPubReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    35;
+
+  friend void swap(GetRpcPubReq& a, GetRpcPubReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRpcPubReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRpcPubReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRpcPubReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRpcPubReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRpcPubReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetRpcPubReq& from) {
+    GetRpcPubReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRpcPubReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetRpcPubReq";
+  }
+  protected:
+  explicit GetRpcPubReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAddressFieldNumber = 1,
+    kMsgIdFieldNumber = 2,
+  };
+  // string address = 1;
+  void clear_address();
+  const std::string& address() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_address(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_address();
+  PROTOBUF_NODISCARD std::string* release_address();
+  void set_allocated_address(std::string* address);
+  private:
+  const std::string& _internal_address() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
+  std::string* _internal_mutable_address();
+  public:
+
+  // string msg_id = 2;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetRpcPubReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRpcPubAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetRpcPubAck) */ {
+ public:
+  inline GetRpcPubAck() : GetRpcPubAck(nullptr) {}
+  ~GetRpcPubAck() override;
+  explicit PROTOBUF_CONSTEXPR GetRpcPubAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRpcPubAck(const GetRpcPubAck& from);
+  GetRpcPubAck(GetRpcPubAck&& from) noexcept
+    : GetRpcPubAck() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRpcPubAck& operator=(const GetRpcPubAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRpcPubAck& operator=(GetRpcPubAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRpcPubAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRpcPubAck* internal_default_instance() {
+    return reinterpret_cast<const GetRpcPubAck*>(
+               &_GetRpcPubAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    36;
+
+  friend void swap(GetRpcPubAck& a, GetRpcPubAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRpcPubAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRpcPubAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRpcPubAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRpcPubAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRpcPubAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetRpcPubAck& from) {
+    GetRpcPubAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRpcPubAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetRpcPubAck";
+  }
+  protected:
+  explicit GetRpcPubAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDataFieldNumber = 1,
+    kAddressFieldNumber = 2,
+    kMsgIdFieldNumber = 3,
+  };
+  // bytes data = 1;
+  void clear_data();
+  const std::string& data() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_data(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_data();
+  PROTOBUF_NODISCARD std::string* release_data();
+  void set_allocated_data(std::string* data);
+  private:
+  const std::string& _internal_data() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_data(const std::string& value);
+  std::string* _internal_mutable_data();
+  public:
+
+  // string address = 2;
+  void clear_address();
+  const std::string& address() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_address(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_address();
+  PROTOBUF_NODISCARD std::string* release_address();
+  void set_allocated_address(std::string* address);
+  private:
+  const std::string& _internal_address() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
+  std::string* _internal_mutable_address();
+  public:
+
+  // string msg_id = 3;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetRpcPubAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRpcBlockInfoReq final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetRpcBlockInfoReq) */ {
+ public:
+  inline GetRpcBlockInfoReq() : GetRpcBlockInfoReq(nullptr) {}
+  ~GetRpcBlockInfoReq() override;
+  explicit PROTOBUF_CONSTEXPR GetRpcBlockInfoReq(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRpcBlockInfoReq(const GetRpcBlockInfoReq& from);
+  GetRpcBlockInfoReq(GetRpcBlockInfoReq&& from) noexcept
+    : GetRpcBlockInfoReq() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRpcBlockInfoReq& operator=(const GetRpcBlockInfoReq& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRpcBlockInfoReq& operator=(GetRpcBlockInfoReq&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRpcBlockInfoReq& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRpcBlockInfoReq* internal_default_instance() {
+    return reinterpret_cast<const GetRpcBlockInfoReq*>(
+               &_GetRpcBlockInfoReq_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    37;
+
+  friend void swap(GetRpcBlockInfoReq& a, GetRpcBlockInfoReq& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRpcBlockInfoReq* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRpcBlockInfoReq* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRpcBlockInfoReq* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRpcBlockInfoReq>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRpcBlockInfoReq& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetRpcBlockInfoReq& from) {
+    GetRpcBlockInfoReq::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRpcBlockInfoReq* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetRpcBlockInfoReq";
+  }
+  protected:
+  explicit GetRpcBlockInfoReq(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kAddressFieldNumber = 1,
+    kMsgIdFieldNumber = 2,
+    kTopFieldNumber = 3,
+    kNumFieldNumber = 4,
+  };
+  // string address = 1;
+  void clear_address();
+  const std::string& address() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_address(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_address();
+  PROTOBUF_NODISCARD std::string* release_address();
+  void set_allocated_address(std::string* address);
+  private:
+  const std::string& _internal_address() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
+  std::string* _internal_mutable_address();
+  public:
+
+  // string msg_id = 2;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // int32 top = 3;
+  void clear_top();
+  int32_t top() const;
+  void set_top(int32_t value);
+  private:
+  int32_t _internal_top() const;
+  void _internal_set_top(int32_t value);
+  public:
+
+  // int32 num = 4;
+  void clear_num();
+  int32_t num() const;
+  void set_num(int32_t value);
+  private:
+  int32_t _internal_num() const;
+  void _internal_set_num(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetRpcBlockInfoReq)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
+    int32_t top_;
+    int32_t num_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_sync_5fblock_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetRpcBlockInfoAck final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:GetRpcBlockInfoAck) */ {
+ public:
+  inline GetRpcBlockInfoAck() : GetRpcBlockInfoAck(nullptr) {}
+  ~GetRpcBlockInfoAck() override;
+  explicit PROTOBUF_CONSTEXPR GetRpcBlockInfoAck(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GetRpcBlockInfoAck(const GetRpcBlockInfoAck& from);
+  GetRpcBlockInfoAck(GetRpcBlockInfoAck&& from) noexcept
+    : GetRpcBlockInfoAck() {
+    *this = ::std::move(from);
+  }
+
+  inline GetRpcBlockInfoAck& operator=(const GetRpcBlockInfoAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetRpcBlockInfoAck& operator=(GetRpcBlockInfoAck&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GetRpcBlockInfoAck& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GetRpcBlockInfoAck* internal_default_instance() {
+    return reinterpret_cast<const GetRpcBlockInfoAck*>(
+               &_GetRpcBlockInfoAck_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    38;
+
+  friend void swap(GetRpcBlockInfoAck& a, GetRpcBlockInfoAck& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetRpcBlockInfoAck* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetRpcBlockInfoAck* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GetRpcBlockInfoAck* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GetRpcBlockInfoAck>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GetRpcBlockInfoAck& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const GetRpcBlockInfoAck& from) {
+    GetRpcBlockInfoAck::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetRpcBlockInfoAck* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "GetRpcBlockInfoAck";
+  }
+  protected:
+  explicit GetRpcBlockInfoAck(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kDataFieldNumber = 1,
+    kAddressFieldNumber = 2,
+    kMsgIdFieldNumber = 3,
+  };
+  // bytes data = 1;
+  void clear_data();
+  const std::string& data() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_data(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_data();
+  PROTOBUF_NODISCARD std::string* release_data();
+  void set_allocated_data(std::string* data);
+  private:
+  const std::string& _internal_data() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_data(const std::string& value);
+  std::string* _internal_mutable_data();
+  public:
+
+  // string address = 2;
+  void clear_address();
+  const std::string& address() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_address(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_address();
+  PROTOBUF_NODISCARD std::string* release_address();
+  void set_allocated_address(std::string* address);
+  private:
+  const std::string& _internal_address() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_address(const std::string& value);
+  std::string* _internal_mutable_address();
+  public:
+
+  // string msg_id = 3;
+  void clear_msg_id();
+  const std::string& msg_id() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_msg_id(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_msg_id();
+  PROTOBUF_NODISCARD std::string* release_msg_id();
+  void set_allocated_msg_id(std::string* msg_id);
+  private:
+  const std::string& _internal_msg_id() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_msg_id(const std::string& value);
+  std::string* _internal_mutable_msg_id();
+  public:
+
+  // @@protoc_insertion_point(class_scope:GetRpcBlockInfoAck)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr data_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr address_;
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr msg_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -6715,6 +9055,349 @@ SyncGetHeightHashAck::block_hashes() const {
 inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
 SyncGetHeightHashAck::mutable_block_hashes() {
   // @@protoc_insertion_point(field_mutable_list:SyncGetHeightHashAck.block_hashes)
+  return &_impl_.block_hashes_;
+}
+
+// -------------------------------------------------------------------
+
+// SyncGetBlockHeightAndHashReq
+
+// string self_node_id = 1;
+inline void SyncGetBlockHeightAndHashReq::clear_self_node_id() {
+  _impl_.self_node_id_.ClearToEmpty();
+}
+inline const std::string& SyncGetBlockHeightAndHashReq::self_node_id() const {
+  // @@protoc_insertion_point(field_get:SyncGetBlockHeightAndHashReq.self_node_id)
+  return _internal_self_node_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SyncGetBlockHeightAndHashReq::set_self_node_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.self_node_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SyncGetBlockHeightAndHashReq.self_node_id)
+}
+inline std::string* SyncGetBlockHeightAndHashReq::mutable_self_node_id() {
+  std::string* _s = _internal_mutable_self_node_id();
+  // @@protoc_insertion_point(field_mutable:SyncGetBlockHeightAndHashReq.self_node_id)
+  return _s;
+}
+inline const std::string& SyncGetBlockHeightAndHashReq::_internal_self_node_id() const {
+  return _impl_.self_node_id_.Get();
+}
+inline void SyncGetBlockHeightAndHashReq::_internal_set_self_node_id(const std::string& value) {
+  
+  _impl_.self_node_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SyncGetBlockHeightAndHashReq::_internal_mutable_self_node_id() {
+  
+  return _impl_.self_node_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SyncGetBlockHeightAndHashReq::release_self_node_id() {
+  // @@protoc_insertion_point(field_release:SyncGetBlockHeightAndHashReq.self_node_id)
+  return _impl_.self_node_id_.Release();
+}
+inline void SyncGetBlockHeightAndHashReq::set_allocated_self_node_id(std::string* self_node_id) {
+  if (self_node_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.self_node_id_.SetAllocated(self_node_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.self_node_id_.IsDefault()) {
+    _impl_.self_node_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:SyncGetBlockHeightAndHashReq.self_node_id)
+}
+
+// string msg_id = 2;
+inline void SyncGetBlockHeightAndHashReq::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& SyncGetBlockHeightAndHashReq::msg_id() const {
+  // @@protoc_insertion_point(field_get:SyncGetBlockHeightAndHashReq.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SyncGetBlockHeightAndHashReq::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SyncGetBlockHeightAndHashReq.msg_id)
+}
+inline std::string* SyncGetBlockHeightAndHashReq::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:SyncGetBlockHeightAndHashReq.msg_id)
+  return _s;
+}
+inline const std::string& SyncGetBlockHeightAndHashReq::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void SyncGetBlockHeightAndHashReq::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SyncGetBlockHeightAndHashReq::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SyncGetBlockHeightAndHashReq::release_msg_id() {
+  // @@protoc_insertion_point(field_release:SyncGetBlockHeightAndHashReq.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void SyncGetBlockHeightAndHashReq::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:SyncGetBlockHeightAndHashReq.msg_id)
+}
+
+// uint64 start_height = 3;
+inline void SyncGetBlockHeightAndHashReq::clear_start_height() {
+  _impl_.start_height_ = uint64_t{0u};
+}
+inline uint64_t SyncGetBlockHeightAndHashReq::_internal_start_height() const {
+  return _impl_.start_height_;
+}
+inline uint64_t SyncGetBlockHeightAndHashReq::start_height() const {
+  // @@protoc_insertion_point(field_get:SyncGetBlockHeightAndHashReq.start_height)
+  return _internal_start_height();
+}
+inline void SyncGetBlockHeightAndHashReq::_internal_set_start_height(uint64_t value) {
+  
+  _impl_.start_height_ = value;
+}
+inline void SyncGetBlockHeightAndHashReq::set_start_height(uint64_t value) {
+  _internal_set_start_height(value);
+  // @@protoc_insertion_point(field_set:SyncGetBlockHeightAndHashReq.start_height)
+}
+
+// uint64 end_height = 4;
+inline void SyncGetBlockHeightAndHashReq::clear_end_height() {
+  _impl_.end_height_ = uint64_t{0u};
+}
+inline uint64_t SyncGetBlockHeightAndHashReq::_internal_end_height() const {
+  return _impl_.end_height_;
+}
+inline uint64_t SyncGetBlockHeightAndHashReq::end_height() const {
+  // @@protoc_insertion_point(field_get:SyncGetBlockHeightAndHashReq.end_height)
+  return _internal_end_height();
+}
+inline void SyncGetBlockHeightAndHashReq::_internal_set_end_height(uint64_t value) {
+  
+  _impl_.end_height_ = value;
+}
+inline void SyncGetBlockHeightAndHashReq::set_end_height(uint64_t value) {
+  _internal_set_end_height(value);
+  // @@protoc_insertion_point(field_set:SyncGetBlockHeightAndHashReq.end_height)
+}
+
+// -------------------------------------------------------------------
+
+// SyncGetBlockHeightAndHashAck
+
+// int32 code = 1;
+inline void SyncGetBlockHeightAndHashAck::clear_code() {
+  _impl_.code_ = 0;
+}
+inline int32_t SyncGetBlockHeightAndHashAck::_internal_code() const {
+  return _impl_.code_;
+}
+inline int32_t SyncGetBlockHeightAndHashAck::code() const {
+  // @@protoc_insertion_point(field_get:SyncGetBlockHeightAndHashAck.code)
+  return _internal_code();
+}
+inline void SyncGetBlockHeightAndHashAck::_internal_set_code(int32_t value) {
+  
+  _impl_.code_ = value;
+}
+inline void SyncGetBlockHeightAndHashAck::set_code(int32_t value) {
+  _internal_set_code(value);
+  // @@protoc_insertion_point(field_set:SyncGetBlockHeightAndHashAck.code)
+}
+
+// string self_node_id = 2;
+inline void SyncGetBlockHeightAndHashAck::clear_self_node_id() {
+  _impl_.self_node_id_.ClearToEmpty();
+}
+inline const std::string& SyncGetBlockHeightAndHashAck::self_node_id() const {
+  // @@protoc_insertion_point(field_get:SyncGetBlockHeightAndHashAck.self_node_id)
+  return _internal_self_node_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SyncGetBlockHeightAndHashAck::set_self_node_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.self_node_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SyncGetBlockHeightAndHashAck.self_node_id)
+}
+inline std::string* SyncGetBlockHeightAndHashAck::mutable_self_node_id() {
+  std::string* _s = _internal_mutable_self_node_id();
+  // @@protoc_insertion_point(field_mutable:SyncGetBlockHeightAndHashAck.self_node_id)
+  return _s;
+}
+inline const std::string& SyncGetBlockHeightAndHashAck::_internal_self_node_id() const {
+  return _impl_.self_node_id_.Get();
+}
+inline void SyncGetBlockHeightAndHashAck::_internal_set_self_node_id(const std::string& value) {
+  
+  _impl_.self_node_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SyncGetBlockHeightAndHashAck::_internal_mutable_self_node_id() {
+  
+  return _impl_.self_node_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SyncGetBlockHeightAndHashAck::release_self_node_id() {
+  // @@protoc_insertion_point(field_release:SyncGetBlockHeightAndHashAck.self_node_id)
+  return _impl_.self_node_id_.Release();
+}
+inline void SyncGetBlockHeightAndHashAck::set_allocated_self_node_id(std::string* self_node_id) {
+  if (self_node_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.self_node_id_.SetAllocated(self_node_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.self_node_id_.IsDefault()) {
+    _impl_.self_node_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:SyncGetBlockHeightAndHashAck.self_node_id)
+}
+
+// string msg_id = 3;
+inline void SyncGetBlockHeightAndHashAck::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& SyncGetBlockHeightAndHashAck::msg_id() const {
+  // @@protoc_insertion_point(field_get:SyncGetBlockHeightAndHashAck.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SyncGetBlockHeightAndHashAck::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:SyncGetBlockHeightAndHashAck.msg_id)
+}
+inline std::string* SyncGetBlockHeightAndHashAck::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:SyncGetBlockHeightAndHashAck.msg_id)
+  return _s;
+}
+inline const std::string& SyncGetBlockHeightAndHashAck::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void SyncGetBlockHeightAndHashAck::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* SyncGetBlockHeightAndHashAck::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* SyncGetBlockHeightAndHashAck::release_msg_id() {
+  // @@protoc_insertion_point(field_release:SyncGetBlockHeightAndHashAck.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void SyncGetBlockHeightAndHashAck::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:SyncGetBlockHeightAndHashAck.msg_id)
+}
+
+// repeated string block_hashes = 4;
+inline int SyncGetBlockHeightAndHashAck::_internal_block_hashes_size() const {
+  return _impl_.block_hashes_.size();
+}
+inline int SyncGetBlockHeightAndHashAck::block_hashes_size() const {
+  return _internal_block_hashes_size();
+}
+inline void SyncGetBlockHeightAndHashAck::clear_block_hashes() {
+  _impl_.block_hashes_.Clear();
+}
+inline std::string* SyncGetBlockHeightAndHashAck::add_block_hashes() {
+  std::string* _s = _internal_add_block_hashes();
+  // @@protoc_insertion_point(field_add_mutable:SyncGetBlockHeightAndHashAck.block_hashes)
+  return _s;
+}
+inline const std::string& SyncGetBlockHeightAndHashAck::_internal_block_hashes(int index) const {
+  return _impl_.block_hashes_.Get(index);
+}
+inline const std::string& SyncGetBlockHeightAndHashAck::block_hashes(int index) const {
+  // @@protoc_insertion_point(field_get:SyncGetBlockHeightAndHashAck.block_hashes)
+  return _internal_block_hashes(index);
+}
+inline std::string* SyncGetBlockHeightAndHashAck::mutable_block_hashes(int index) {
+  // @@protoc_insertion_point(field_mutable:SyncGetBlockHeightAndHashAck.block_hashes)
+  return _impl_.block_hashes_.Mutable(index);
+}
+inline void SyncGetBlockHeightAndHashAck::set_block_hashes(int index, const std::string& value) {
+  _impl_.block_hashes_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:SyncGetBlockHeightAndHashAck.block_hashes)
+}
+inline void SyncGetBlockHeightAndHashAck::set_block_hashes(int index, std::string&& value) {
+  _impl_.block_hashes_.Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:SyncGetBlockHeightAndHashAck.block_hashes)
+}
+inline void SyncGetBlockHeightAndHashAck::set_block_hashes(int index, const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.block_hashes_.Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:SyncGetBlockHeightAndHashAck.block_hashes)
+}
+inline void SyncGetBlockHeightAndHashAck::set_block_hashes(int index, const char* value, size_t size) {
+  _impl_.block_hashes_.Mutable(index)->assign(
+    reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:SyncGetBlockHeightAndHashAck.block_hashes)
+}
+inline std::string* SyncGetBlockHeightAndHashAck::_internal_add_block_hashes() {
+  return _impl_.block_hashes_.Add();
+}
+inline void SyncGetBlockHeightAndHashAck::add_block_hashes(const std::string& value) {
+  _impl_.block_hashes_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add:SyncGetBlockHeightAndHashAck.block_hashes)
+}
+inline void SyncGetBlockHeightAndHashAck::add_block_hashes(std::string&& value) {
+  _impl_.block_hashes_.Add(std::move(value));
+  // @@protoc_insertion_point(field_add:SyncGetBlockHeightAndHashAck.block_hashes)
+}
+inline void SyncGetBlockHeightAndHashAck::add_block_hashes(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _impl_.block_hashes_.Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:SyncGetBlockHeightAndHashAck.block_hashes)
+}
+inline void SyncGetBlockHeightAndHashAck::add_block_hashes(const char* value, size_t size) {
+  _impl_.block_hashes_.Add()->assign(reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:SyncGetBlockHeightAndHashAck.block_hashes)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
+SyncGetBlockHeightAndHashAck::block_hashes() const {
+  // @@protoc_insertion_point(field_list:SyncGetBlockHeightAndHashAck.block_hashes)
+  return _impl_.block_hashes_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
+SyncGetBlockHeightAndHashAck::mutable_block_hashes() {
+  // @@protoc_insertion_point(field_mutable_list:SyncGetBlockHeightAndHashAck.block_hashes)
   return &_impl_.block_hashes_;
 }
 
@@ -9084,9 +11767,1613 @@ inline void GetCheckSumHashAck::set_allocated_self_node_id(std::string* self_nod
   // @@protoc_insertion_point(field_set_allocated:GetCheckSumHashAck.self_node_id)
 }
 
+// -------------------------------------------------------------------
+
+// GetLogReq
+
+// string startTime = 1;
+inline void GetLogReq::clear_starttime() {
+  _impl_.starttime_.ClearToEmpty();
+}
+inline const std::string& GetLogReq::starttime() const {
+  // @@protoc_insertion_point(field_get:GetLogReq.startTime)
+  return _internal_starttime();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetLogReq::set_starttime(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.starttime_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetLogReq.startTime)
+}
+inline std::string* GetLogReq::mutable_starttime() {
+  std::string* _s = _internal_mutable_starttime();
+  // @@protoc_insertion_point(field_mutable:GetLogReq.startTime)
+  return _s;
+}
+inline const std::string& GetLogReq::_internal_starttime() const {
+  return _impl_.starttime_.Get();
+}
+inline void GetLogReq::_internal_set_starttime(const std::string& value) {
+  
+  _impl_.starttime_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetLogReq::_internal_mutable_starttime() {
+  
+  return _impl_.starttime_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetLogReq::release_starttime() {
+  // @@protoc_insertion_point(field_release:GetLogReq.startTime)
+  return _impl_.starttime_.Release();
+}
+inline void GetLogReq::set_allocated_starttime(std::string* starttime) {
+  if (starttime != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.starttime_.SetAllocated(starttime, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.starttime_.IsDefault()) {
+    _impl_.starttime_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetLogReq.startTime)
+}
+
+// string endTime = 2;
+inline void GetLogReq::clear_endtime() {
+  _impl_.endtime_.ClearToEmpty();
+}
+inline const std::string& GetLogReq::endtime() const {
+  // @@protoc_insertion_point(field_get:GetLogReq.endTime)
+  return _internal_endtime();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetLogReq::set_endtime(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.endtime_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetLogReq.endTime)
+}
+inline std::string* GetLogReq::mutable_endtime() {
+  std::string* _s = _internal_mutable_endtime();
+  // @@protoc_insertion_point(field_mutable:GetLogReq.endTime)
+  return _s;
+}
+inline const std::string& GetLogReq::_internal_endtime() const {
+  return _impl_.endtime_.Get();
+}
+inline void GetLogReq::_internal_set_endtime(const std::string& value) {
+  
+  _impl_.endtime_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetLogReq::_internal_mutable_endtime() {
+  
+  return _impl_.endtime_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetLogReq::release_endtime() {
+  // @@protoc_insertion_point(field_release:GetLogReq.endTime)
+  return _impl_.endtime_.Release();
+}
+inline void GetLogReq::set_allocated_endtime(std::string* endtime) {
+  if (endtime != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.endtime_.SetAllocated(endtime, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.endtime_.IsDefault()) {
+    _impl_.endtime_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetLogReq.endTime)
+}
+
+// string address = 3;
+inline void GetLogReq::clear_address() {
+  _impl_.address_.ClearToEmpty();
+}
+inline const std::string& GetLogReq::address() const {
+  // @@protoc_insertion_point(field_get:GetLogReq.address)
+  return _internal_address();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetLogReq::set_address(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetLogReq.address)
+}
+inline std::string* GetLogReq::mutable_address() {
+  std::string* _s = _internal_mutable_address();
+  // @@protoc_insertion_point(field_mutable:GetLogReq.address)
+  return _s;
+}
+inline const std::string& GetLogReq::_internal_address() const {
+  return _impl_.address_.Get();
+}
+inline void GetLogReq::_internal_set_address(const std::string& value) {
+  
+  _impl_.address_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetLogReq::_internal_mutable_address() {
+  
+  return _impl_.address_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetLogReq::release_address() {
+  // @@protoc_insertion_point(field_release:GetLogReq.address)
+  return _impl_.address_.Release();
+}
+inline void GetLogReq::set_allocated_address(std::string* address) {
+  if (address != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.address_.IsDefault()) {
+    _impl_.address_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetLogReq.address)
+}
+
+// string msg_id = 4;
+inline void GetLogReq::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& GetLogReq::msg_id() const {
+  // @@protoc_insertion_point(field_get:GetLogReq.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetLogReq::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetLogReq.msg_id)
+}
+inline std::string* GetLogReq::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:GetLogReq.msg_id)
+  return _s;
+}
+inline const std::string& GetLogReq::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void GetLogReq::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetLogReq::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetLogReq::release_msg_id() {
+  // @@protoc_insertion_point(field_release:GetLogReq.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void GetLogReq::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetLogReq.msg_id)
+}
+
+// string filename = 5;
+inline void GetLogReq::clear_filename() {
+  _impl_.filename_.ClearToEmpty();
+}
+inline const std::string& GetLogReq::filename() const {
+  // @@protoc_insertion_point(field_get:GetLogReq.filename)
+  return _internal_filename();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetLogReq::set_filename(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.filename_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetLogReq.filename)
+}
+inline std::string* GetLogReq::mutable_filename() {
+  std::string* _s = _internal_mutable_filename();
+  // @@protoc_insertion_point(field_mutable:GetLogReq.filename)
+  return _s;
+}
+inline const std::string& GetLogReq::_internal_filename() const {
+  return _impl_.filename_.Get();
+}
+inline void GetLogReq::_internal_set_filename(const std::string& value) {
+  
+  _impl_.filename_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetLogReq::_internal_mutable_filename() {
+  
+  return _impl_.filename_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetLogReq::release_filename() {
+  // @@protoc_insertion_point(field_release:GetLogReq.filename)
+  return _impl_.filename_.Release();
+}
+inline void GetLogReq::set_allocated_filename(std::string* filename) {
+  if (filename != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.filename_.SetAllocated(filename, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.filename_.IsDefault()) {
+    _impl_.filename_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetLogReq.filename)
+}
+
+// int32 lines = 6;
+inline void GetLogReq::clear_lines() {
+  _impl_.lines_ = 0;
+}
+inline int32_t GetLogReq::_internal_lines() const {
+  return _impl_.lines_;
+}
+inline int32_t GetLogReq::lines() const {
+  // @@protoc_insertion_point(field_get:GetLogReq.lines)
+  return _internal_lines();
+}
+inline void GetLogReq::_internal_set_lines(int32_t value) {
+  
+  _impl_.lines_ = value;
+}
+inline void GetLogReq::set_lines(int32_t value) {
+  _internal_set_lines(value);
+  // @@protoc_insertion_point(field_set:GetLogReq.lines)
+}
+
+// -------------------------------------------------------------------
+
+// GetLogAck
+
+// bytes data = 1;
+inline void GetLogAck::clear_data() {
+  _impl_.data_.ClearToEmpty();
+}
+inline const std::string& GetLogAck::data() const {
+  // @@protoc_insertion_point(field_get:GetLogAck.data)
+  return _internal_data();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetLogAck::set_data(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.data_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetLogAck.data)
+}
+inline std::string* GetLogAck::mutable_data() {
+  std::string* _s = _internal_mutable_data();
+  // @@protoc_insertion_point(field_mutable:GetLogAck.data)
+  return _s;
+}
+inline const std::string& GetLogAck::_internal_data() const {
+  return _impl_.data_.Get();
+}
+inline void GetLogAck::_internal_set_data(const std::string& value) {
+  
+  _impl_.data_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetLogAck::_internal_mutable_data() {
+  
+  return _impl_.data_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetLogAck::release_data() {
+  // @@protoc_insertion_point(field_release:GetLogAck.data)
+  return _impl_.data_.Release();
+}
+inline void GetLogAck::set_allocated_data(std::string* data) {
+  if (data != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.data_.SetAllocated(data, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.data_.IsDefault()) {
+    _impl_.data_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetLogAck.data)
+}
+
+// string address = 2;
+inline void GetLogAck::clear_address() {
+  _impl_.address_.ClearToEmpty();
+}
+inline const std::string& GetLogAck::address() const {
+  // @@protoc_insertion_point(field_get:GetLogAck.address)
+  return _internal_address();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetLogAck::set_address(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetLogAck.address)
+}
+inline std::string* GetLogAck::mutable_address() {
+  std::string* _s = _internal_mutable_address();
+  // @@protoc_insertion_point(field_mutable:GetLogAck.address)
+  return _s;
+}
+inline const std::string& GetLogAck::_internal_address() const {
+  return _impl_.address_.Get();
+}
+inline void GetLogAck::_internal_set_address(const std::string& value) {
+  
+  _impl_.address_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetLogAck::_internal_mutable_address() {
+  
+  return _impl_.address_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetLogAck::release_address() {
+  // @@protoc_insertion_point(field_release:GetLogAck.address)
+  return _impl_.address_.Release();
+}
+inline void GetLogAck::set_allocated_address(std::string* address) {
+  if (address != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.address_.IsDefault()) {
+    _impl_.address_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetLogAck.address)
+}
+
+// string msg_id = 3;
+inline void GetLogAck::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& GetLogAck::msg_id() const {
+  // @@protoc_insertion_point(field_get:GetLogAck.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetLogAck::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetLogAck.msg_id)
+}
+inline std::string* GetLogAck::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:GetLogAck.msg_id)
+  return _s;
+}
+inline const std::string& GetLogAck::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void GetLogAck::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetLogAck::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetLogAck::release_msg_id() {
+  // @@protoc_insertion_point(field_release:GetLogAck.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void GetLogAck::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetLogAck.msg_id)
+}
+
+// -------------------------------------------------------------------
+
+// GetRpcBlockReq
+
+// string address = 1;
+inline void GetRpcBlockReq::clear_address() {
+  _impl_.address_.ClearToEmpty();
+}
+inline const std::string& GetRpcBlockReq::address() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockReq.address)
+  return _internal_address();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcBlockReq::set_address(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcBlockReq.address)
+}
+inline std::string* GetRpcBlockReq::mutable_address() {
+  std::string* _s = _internal_mutable_address();
+  // @@protoc_insertion_point(field_mutable:GetRpcBlockReq.address)
+  return _s;
+}
+inline const std::string& GetRpcBlockReq::_internal_address() const {
+  return _impl_.address_.Get();
+}
+inline void GetRpcBlockReq::_internal_set_address(const std::string& value) {
+  
+  _impl_.address_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockReq::_internal_mutable_address() {
+  
+  return _impl_.address_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockReq::release_address() {
+  // @@protoc_insertion_point(field_release:GetRpcBlockReq.address)
+  return _impl_.address_.Release();
+}
+inline void GetRpcBlockReq::set_allocated_address(std::string* address) {
+  if (address != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.address_.IsDefault()) {
+    _impl_.address_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcBlockReq.address)
+}
+
+// string msg_id = 2;
+inline void GetRpcBlockReq::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& GetRpcBlockReq::msg_id() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockReq.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcBlockReq::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcBlockReq.msg_id)
+}
+inline std::string* GetRpcBlockReq::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:GetRpcBlockReq.msg_id)
+  return _s;
+}
+inline const std::string& GetRpcBlockReq::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void GetRpcBlockReq::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockReq::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockReq::release_msg_id() {
+  // @@protoc_insertion_point(field_release:GetRpcBlockReq.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void GetRpcBlockReq::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcBlockReq.msg_id)
+}
+
+// int32 num = 3;
+inline void GetRpcBlockReq::clear_num() {
+  _impl_.num_ = 0;
+}
+inline int32_t GetRpcBlockReq::_internal_num() const {
+  return _impl_.num_;
+}
+inline int32_t GetRpcBlockReq::num() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockReq.num)
+  return _internal_num();
+}
+inline void GetRpcBlockReq::_internal_set_num(int32_t value) {
+  
+  _impl_.num_ = value;
+}
+inline void GetRpcBlockReq::set_num(int32_t value) {
+  _internal_set_num(value);
+  // @@protoc_insertion_point(field_set:GetRpcBlockReq.num)
+}
+
+// int32 height = 4;
+inline void GetRpcBlockReq::clear_height() {
+  _impl_.height_ = 0;
+}
+inline int32_t GetRpcBlockReq::_internal_height() const {
+  return _impl_.height_;
+}
+inline int32_t GetRpcBlockReq::height() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockReq.height)
+  return _internal_height();
+}
+inline void GetRpcBlockReq::_internal_set_height(int32_t value) {
+  
+  _impl_.height_ = value;
+}
+inline void GetRpcBlockReq::set_height(int32_t value) {
+  _internal_set_height(value);
+  // @@protoc_insertion_point(field_set:GetRpcBlockReq.height)
+}
+
+// bool hash = 5;
+inline void GetRpcBlockReq::clear_hash() {
+  _impl_.hash_ = false;
+}
+inline bool GetRpcBlockReq::_internal_hash() const {
+  return _impl_.hash_;
+}
+inline bool GetRpcBlockReq::hash() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockReq.hash)
+  return _internal_hash();
+}
+inline void GetRpcBlockReq::_internal_set_hash(bool value) {
+  
+  _impl_.hash_ = value;
+}
+inline void GetRpcBlockReq::set_hash(bool value) {
+  _internal_set_hash(value);
+  // @@protoc_insertion_point(field_set:GetRpcBlockReq.hash)
+}
+
+// bool preHashFlag = 6;
+inline void GetRpcBlockReq::clear_prehashflag() {
+  _impl_.prehashflag_ = false;
+}
+inline bool GetRpcBlockReq::_internal_prehashflag() const {
+  return _impl_.prehashflag_;
+}
+inline bool GetRpcBlockReq::prehashflag() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockReq.preHashFlag)
+  return _internal_prehashflag();
+}
+inline void GetRpcBlockReq::_internal_set_prehashflag(bool value) {
+  
+  _impl_.prehashflag_ = value;
+}
+inline void GetRpcBlockReq::set_prehashflag(bool value) {
+  _internal_set_prehashflag(value);
+  // @@protoc_insertion_point(field_set:GetRpcBlockReq.preHashFlag)
+}
+
+// -------------------------------------------------------------------
+
+// GetRpcBlockAck
+
+// bytes data = 1;
+inline void GetRpcBlockAck::clear_data() {
+  _impl_.data_.ClearToEmpty();
+}
+inline const std::string& GetRpcBlockAck::data() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockAck.data)
+  return _internal_data();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcBlockAck::set_data(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.data_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcBlockAck.data)
+}
+inline std::string* GetRpcBlockAck::mutable_data() {
+  std::string* _s = _internal_mutable_data();
+  // @@protoc_insertion_point(field_mutable:GetRpcBlockAck.data)
+  return _s;
+}
+inline const std::string& GetRpcBlockAck::_internal_data() const {
+  return _impl_.data_.Get();
+}
+inline void GetRpcBlockAck::_internal_set_data(const std::string& value) {
+  
+  _impl_.data_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockAck::_internal_mutable_data() {
+  
+  return _impl_.data_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockAck::release_data() {
+  // @@protoc_insertion_point(field_release:GetRpcBlockAck.data)
+  return _impl_.data_.Release();
+}
+inline void GetRpcBlockAck::set_allocated_data(std::string* data) {
+  if (data != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.data_.SetAllocated(data, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.data_.IsDefault()) {
+    _impl_.data_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcBlockAck.data)
+}
+
+// string address = 2;
+inline void GetRpcBlockAck::clear_address() {
+  _impl_.address_.ClearToEmpty();
+}
+inline const std::string& GetRpcBlockAck::address() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockAck.address)
+  return _internal_address();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcBlockAck::set_address(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcBlockAck.address)
+}
+inline std::string* GetRpcBlockAck::mutable_address() {
+  std::string* _s = _internal_mutable_address();
+  // @@protoc_insertion_point(field_mutable:GetRpcBlockAck.address)
+  return _s;
+}
+inline const std::string& GetRpcBlockAck::_internal_address() const {
+  return _impl_.address_.Get();
+}
+inline void GetRpcBlockAck::_internal_set_address(const std::string& value) {
+  
+  _impl_.address_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockAck::_internal_mutable_address() {
+  
+  return _impl_.address_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockAck::release_address() {
+  // @@protoc_insertion_point(field_release:GetRpcBlockAck.address)
+  return _impl_.address_.Release();
+}
+inline void GetRpcBlockAck::set_allocated_address(std::string* address) {
+  if (address != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.address_.IsDefault()) {
+    _impl_.address_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcBlockAck.address)
+}
+
+// string msg_id = 3;
+inline void GetRpcBlockAck::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& GetRpcBlockAck::msg_id() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockAck.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcBlockAck::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcBlockAck.msg_id)
+}
+inline std::string* GetRpcBlockAck::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:GetRpcBlockAck.msg_id)
+  return _s;
+}
+inline const std::string& GetRpcBlockAck::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void GetRpcBlockAck::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockAck::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockAck::release_msg_id() {
+  // @@protoc_insertion_point(field_release:GetRpcBlockAck.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void GetRpcBlockAck::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcBlockAck.msg_id)
+}
+
+// -------------------------------------------------------------------
+
+// GetRpcSySInfoReq
+
+// string address = 1;
+inline void GetRpcSySInfoReq::clear_address() {
+  _impl_.address_.ClearToEmpty();
+}
+inline const std::string& GetRpcSySInfoReq::address() const {
+  // @@protoc_insertion_point(field_get:GetRpcSySInfoReq.address)
+  return _internal_address();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcSySInfoReq::set_address(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcSySInfoReq.address)
+}
+inline std::string* GetRpcSySInfoReq::mutable_address() {
+  std::string* _s = _internal_mutable_address();
+  // @@protoc_insertion_point(field_mutable:GetRpcSySInfoReq.address)
+  return _s;
+}
+inline const std::string& GetRpcSySInfoReq::_internal_address() const {
+  return _impl_.address_.Get();
+}
+inline void GetRpcSySInfoReq::_internal_set_address(const std::string& value) {
+  
+  _impl_.address_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcSySInfoReq::_internal_mutable_address() {
+  
+  return _impl_.address_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcSySInfoReq::release_address() {
+  // @@protoc_insertion_point(field_release:GetRpcSySInfoReq.address)
+  return _impl_.address_.Release();
+}
+inline void GetRpcSySInfoReq::set_allocated_address(std::string* address) {
+  if (address != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.address_.IsDefault()) {
+    _impl_.address_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcSySInfoReq.address)
+}
+
+// string msg_id = 2;
+inline void GetRpcSySInfoReq::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& GetRpcSySInfoReq::msg_id() const {
+  // @@protoc_insertion_point(field_get:GetRpcSySInfoReq.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcSySInfoReq::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcSySInfoReq.msg_id)
+}
+inline std::string* GetRpcSySInfoReq::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:GetRpcSySInfoReq.msg_id)
+  return _s;
+}
+inline const std::string& GetRpcSySInfoReq::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void GetRpcSySInfoReq::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcSySInfoReq::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcSySInfoReq::release_msg_id() {
+  // @@protoc_insertion_point(field_release:GetRpcSySInfoReq.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void GetRpcSySInfoReq::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcSySInfoReq.msg_id)
+}
+
+// -------------------------------------------------------------------
+
+// GetRpcSySInfoAck
+
+// bytes data = 1;
+inline void GetRpcSySInfoAck::clear_data() {
+  _impl_.data_.ClearToEmpty();
+}
+inline const std::string& GetRpcSySInfoAck::data() const {
+  // @@protoc_insertion_point(field_get:GetRpcSySInfoAck.data)
+  return _internal_data();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcSySInfoAck::set_data(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.data_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcSySInfoAck.data)
+}
+inline std::string* GetRpcSySInfoAck::mutable_data() {
+  std::string* _s = _internal_mutable_data();
+  // @@protoc_insertion_point(field_mutable:GetRpcSySInfoAck.data)
+  return _s;
+}
+inline const std::string& GetRpcSySInfoAck::_internal_data() const {
+  return _impl_.data_.Get();
+}
+inline void GetRpcSySInfoAck::_internal_set_data(const std::string& value) {
+  
+  _impl_.data_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcSySInfoAck::_internal_mutable_data() {
+  
+  return _impl_.data_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcSySInfoAck::release_data() {
+  // @@protoc_insertion_point(field_release:GetRpcSySInfoAck.data)
+  return _impl_.data_.Release();
+}
+inline void GetRpcSySInfoAck::set_allocated_data(std::string* data) {
+  if (data != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.data_.SetAllocated(data, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.data_.IsDefault()) {
+    _impl_.data_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcSySInfoAck.data)
+}
+
+// string address = 2;
+inline void GetRpcSySInfoAck::clear_address() {
+  _impl_.address_.ClearToEmpty();
+}
+inline const std::string& GetRpcSySInfoAck::address() const {
+  // @@protoc_insertion_point(field_get:GetRpcSySInfoAck.address)
+  return _internal_address();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcSySInfoAck::set_address(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcSySInfoAck.address)
+}
+inline std::string* GetRpcSySInfoAck::mutable_address() {
+  std::string* _s = _internal_mutable_address();
+  // @@protoc_insertion_point(field_mutable:GetRpcSySInfoAck.address)
+  return _s;
+}
+inline const std::string& GetRpcSySInfoAck::_internal_address() const {
+  return _impl_.address_.Get();
+}
+inline void GetRpcSySInfoAck::_internal_set_address(const std::string& value) {
+  
+  _impl_.address_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcSySInfoAck::_internal_mutable_address() {
+  
+  return _impl_.address_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcSySInfoAck::release_address() {
+  // @@protoc_insertion_point(field_release:GetRpcSySInfoAck.address)
+  return _impl_.address_.Release();
+}
+inline void GetRpcSySInfoAck::set_allocated_address(std::string* address) {
+  if (address != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.address_.IsDefault()) {
+    _impl_.address_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcSySInfoAck.address)
+}
+
+// string msg_id = 3;
+inline void GetRpcSySInfoAck::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& GetRpcSySInfoAck::msg_id() const {
+  // @@protoc_insertion_point(field_get:GetRpcSySInfoAck.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcSySInfoAck::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcSySInfoAck.msg_id)
+}
+inline std::string* GetRpcSySInfoAck::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:GetRpcSySInfoAck.msg_id)
+  return _s;
+}
+inline const std::string& GetRpcSySInfoAck::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void GetRpcSySInfoAck::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcSySInfoAck::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcSySInfoAck::release_msg_id() {
+  // @@protoc_insertion_point(field_release:GetRpcSySInfoAck.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void GetRpcSySInfoAck::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcSySInfoAck.msg_id)
+}
+
+// -------------------------------------------------------------------
+
+// GetRpcPubReq
+
+// string address = 1;
+inline void GetRpcPubReq::clear_address() {
+  _impl_.address_.ClearToEmpty();
+}
+inline const std::string& GetRpcPubReq::address() const {
+  // @@protoc_insertion_point(field_get:GetRpcPubReq.address)
+  return _internal_address();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcPubReq::set_address(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcPubReq.address)
+}
+inline std::string* GetRpcPubReq::mutable_address() {
+  std::string* _s = _internal_mutable_address();
+  // @@protoc_insertion_point(field_mutable:GetRpcPubReq.address)
+  return _s;
+}
+inline const std::string& GetRpcPubReq::_internal_address() const {
+  return _impl_.address_.Get();
+}
+inline void GetRpcPubReq::_internal_set_address(const std::string& value) {
+  
+  _impl_.address_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcPubReq::_internal_mutable_address() {
+  
+  return _impl_.address_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcPubReq::release_address() {
+  // @@protoc_insertion_point(field_release:GetRpcPubReq.address)
+  return _impl_.address_.Release();
+}
+inline void GetRpcPubReq::set_allocated_address(std::string* address) {
+  if (address != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.address_.IsDefault()) {
+    _impl_.address_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcPubReq.address)
+}
+
+// string msg_id = 2;
+inline void GetRpcPubReq::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& GetRpcPubReq::msg_id() const {
+  // @@protoc_insertion_point(field_get:GetRpcPubReq.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcPubReq::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcPubReq.msg_id)
+}
+inline std::string* GetRpcPubReq::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:GetRpcPubReq.msg_id)
+  return _s;
+}
+inline const std::string& GetRpcPubReq::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void GetRpcPubReq::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcPubReq::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcPubReq::release_msg_id() {
+  // @@protoc_insertion_point(field_release:GetRpcPubReq.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void GetRpcPubReq::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcPubReq.msg_id)
+}
+
+// -------------------------------------------------------------------
+
+// GetRpcPubAck
+
+// bytes data = 1;
+inline void GetRpcPubAck::clear_data() {
+  _impl_.data_.ClearToEmpty();
+}
+inline const std::string& GetRpcPubAck::data() const {
+  // @@protoc_insertion_point(field_get:GetRpcPubAck.data)
+  return _internal_data();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcPubAck::set_data(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.data_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcPubAck.data)
+}
+inline std::string* GetRpcPubAck::mutable_data() {
+  std::string* _s = _internal_mutable_data();
+  // @@protoc_insertion_point(field_mutable:GetRpcPubAck.data)
+  return _s;
+}
+inline const std::string& GetRpcPubAck::_internal_data() const {
+  return _impl_.data_.Get();
+}
+inline void GetRpcPubAck::_internal_set_data(const std::string& value) {
+  
+  _impl_.data_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcPubAck::_internal_mutable_data() {
+  
+  return _impl_.data_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcPubAck::release_data() {
+  // @@protoc_insertion_point(field_release:GetRpcPubAck.data)
+  return _impl_.data_.Release();
+}
+inline void GetRpcPubAck::set_allocated_data(std::string* data) {
+  if (data != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.data_.SetAllocated(data, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.data_.IsDefault()) {
+    _impl_.data_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcPubAck.data)
+}
+
+// string address = 2;
+inline void GetRpcPubAck::clear_address() {
+  _impl_.address_.ClearToEmpty();
+}
+inline const std::string& GetRpcPubAck::address() const {
+  // @@protoc_insertion_point(field_get:GetRpcPubAck.address)
+  return _internal_address();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcPubAck::set_address(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcPubAck.address)
+}
+inline std::string* GetRpcPubAck::mutable_address() {
+  std::string* _s = _internal_mutable_address();
+  // @@protoc_insertion_point(field_mutable:GetRpcPubAck.address)
+  return _s;
+}
+inline const std::string& GetRpcPubAck::_internal_address() const {
+  return _impl_.address_.Get();
+}
+inline void GetRpcPubAck::_internal_set_address(const std::string& value) {
+  
+  _impl_.address_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcPubAck::_internal_mutable_address() {
+  
+  return _impl_.address_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcPubAck::release_address() {
+  // @@protoc_insertion_point(field_release:GetRpcPubAck.address)
+  return _impl_.address_.Release();
+}
+inline void GetRpcPubAck::set_allocated_address(std::string* address) {
+  if (address != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.address_.IsDefault()) {
+    _impl_.address_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcPubAck.address)
+}
+
+// string msg_id = 3;
+inline void GetRpcPubAck::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& GetRpcPubAck::msg_id() const {
+  // @@protoc_insertion_point(field_get:GetRpcPubAck.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcPubAck::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcPubAck.msg_id)
+}
+inline std::string* GetRpcPubAck::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:GetRpcPubAck.msg_id)
+  return _s;
+}
+inline const std::string& GetRpcPubAck::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void GetRpcPubAck::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcPubAck::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcPubAck::release_msg_id() {
+  // @@protoc_insertion_point(field_release:GetRpcPubAck.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void GetRpcPubAck::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcPubAck.msg_id)
+}
+
+// -------------------------------------------------------------------
+
+// GetRpcBlockInfoReq
+
+// string address = 1;
+inline void GetRpcBlockInfoReq::clear_address() {
+  _impl_.address_.ClearToEmpty();
+}
+inline const std::string& GetRpcBlockInfoReq::address() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockInfoReq.address)
+  return _internal_address();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcBlockInfoReq::set_address(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcBlockInfoReq.address)
+}
+inline std::string* GetRpcBlockInfoReq::mutable_address() {
+  std::string* _s = _internal_mutable_address();
+  // @@protoc_insertion_point(field_mutable:GetRpcBlockInfoReq.address)
+  return _s;
+}
+inline const std::string& GetRpcBlockInfoReq::_internal_address() const {
+  return _impl_.address_.Get();
+}
+inline void GetRpcBlockInfoReq::_internal_set_address(const std::string& value) {
+  
+  _impl_.address_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockInfoReq::_internal_mutable_address() {
+  
+  return _impl_.address_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockInfoReq::release_address() {
+  // @@protoc_insertion_point(field_release:GetRpcBlockInfoReq.address)
+  return _impl_.address_.Release();
+}
+inline void GetRpcBlockInfoReq::set_allocated_address(std::string* address) {
+  if (address != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.address_.IsDefault()) {
+    _impl_.address_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcBlockInfoReq.address)
+}
+
+// string msg_id = 2;
+inline void GetRpcBlockInfoReq::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& GetRpcBlockInfoReq::msg_id() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockInfoReq.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcBlockInfoReq::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcBlockInfoReq.msg_id)
+}
+inline std::string* GetRpcBlockInfoReq::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:GetRpcBlockInfoReq.msg_id)
+  return _s;
+}
+inline const std::string& GetRpcBlockInfoReq::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void GetRpcBlockInfoReq::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockInfoReq::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockInfoReq::release_msg_id() {
+  // @@protoc_insertion_point(field_release:GetRpcBlockInfoReq.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void GetRpcBlockInfoReq::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcBlockInfoReq.msg_id)
+}
+
+// int32 top = 3;
+inline void GetRpcBlockInfoReq::clear_top() {
+  _impl_.top_ = 0;
+}
+inline int32_t GetRpcBlockInfoReq::_internal_top() const {
+  return _impl_.top_;
+}
+inline int32_t GetRpcBlockInfoReq::top() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockInfoReq.top)
+  return _internal_top();
+}
+inline void GetRpcBlockInfoReq::_internal_set_top(int32_t value) {
+  
+  _impl_.top_ = value;
+}
+inline void GetRpcBlockInfoReq::set_top(int32_t value) {
+  _internal_set_top(value);
+  // @@protoc_insertion_point(field_set:GetRpcBlockInfoReq.top)
+}
+
+// int32 num = 4;
+inline void GetRpcBlockInfoReq::clear_num() {
+  _impl_.num_ = 0;
+}
+inline int32_t GetRpcBlockInfoReq::_internal_num() const {
+  return _impl_.num_;
+}
+inline int32_t GetRpcBlockInfoReq::num() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockInfoReq.num)
+  return _internal_num();
+}
+inline void GetRpcBlockInfoReq::_internal_set_num(int32_t value) {
+  
+  _impl_.num_ = value;
+}
+inline void GetRpcBlockInfoReq::set_num(int32_t value) {
+  _internal_set_num(value);
+  // @@protoc_insertion_point(field_set:GetRpcBlockInfoReq.num)
+}
+
+// -------------------------------------------------------------------
+
+// GetRpcBlockInfoAck
+
+// bytes data = 1;
+inline void GetRpcBlockInfoAck::clear_data() {
+  _impl_.data_.ClearToEmpty();
+}
+inline const std::string& GetRpcBlockInfoAck::data() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockInfoAck.data)
+  return _internal_data();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcBlockInfoAck::set_data(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.data_.SetBytes(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcBlockInfoAck.data)
+}
+inline std::string* GetRpcBlockInfoAck::mutable_data() {
+  std::string* _s = _internal_mutable_data();
+  // @@protoc_insertion_point(field_mutable:GetRpcBlockInfoAck.data)
+  return _s;
+}
+inline const std::string& GetRpcBlockInfoAck::_internal_data() const {
+  return _impl_.data_.Get();
+}
+inline void GetRpcBlockInfoAck::_internal_set_data(const std::string& value) {
+  
+  _impl_.data_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockInfoAck::_internal_mutable_data() {
+  
+  return _impl_.data_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockInfoAck::release_data() {
+  // @@protoc_insertion_point(field_release:GetRpcBlockInfoAck.data)
+  return _impl_.data_.Release();
+}
+inline void GetRpcBlockInfoAck::set_allocated_data(std::string* data) {
+  if (data != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.data_.SetAllocated(data, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.data_.IsDefault()) {
+    _impl_.data_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcBlockInfoAck.data)
+}
+
+// string address = 2;
+inline void GetRpcBlockInfoAck::clear_address() {
+  _impl_.address_.ClearToEmpty();
+}
+inline const std::string& GetRpcBlockInfoAck::address() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockInfoAck.address)
+  return _internal_address();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcBlockInfoAck::set_address(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.address_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcBlockInfoAck.address)
+}
+inline std::string* GetRpcBlockInfoAck::mutable_address() {
+  std::string* _s = _internal_mutable_address();
+  // @@protoc_insertion_point(field_mutable:GetRpcBlockInfoAck.address)
+  return _s;
+}
+inline const std::string& GetRpcBlockInfoAck::_internal_address() const {
+  return _impl_.address_.Get();
+}
+inline void GetRpcBlockInfoAck::_internal_set_address(const std::string& value) {
+  
+  _impl_.address_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockInfoAck::_internal_mutable_address() {
+  
+  return _impl_.address_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockInfoAck::release_address() {
+  // @@protoc_insertion_point(field_release:GetRpcBlockInfoAck.address)
+  return _impl_.address_.Release();
+}
+inline void GetRpcBlockInfoAck::set_allocated_address(std::string* address) {
+  if (address != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.address_.SetAllocated(address, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.address_.IsDefault()) {
+    _impl_.address_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcBlockInfoAck.address)
+}
+
+// string msg_id = 3;
+inline void GetRpcBlockInfoAck::clear_msg_id() {
+  _impl_.msg_id_.ClearToEmpty();
+}
+inline const std::string& GetRpcBlockInfoAck::msg_id() const {
+  // @@protoc_insertion_point(field_get:GetRpcBlockInfoAck.msg_id)
+  return _internal_msg_id();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void GetRpcBlockInfoAck::set_msg_id(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.msg_id_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:GetRpcBlockInfoAck.msg_id)
+}
+inline std::string* GetRpcBlockInfoAck::mutable_msg_id() {
+  std::string* _s = _internal_mutable_msg_id();
+  // @@protoc_insertion_point(field_mutable:GetRpcBlockInfoAck.msg_id)
+  return _s;
+}
+inline const std::string& GetRpcBlockInfoAck::_internal_msg_id() const {
+  return _impl_.msg_id_.Get();
+}
+inline void GetRpcBlockInfoAck::_internal_set_msg_id(const std::string& value) {
+  
+  _impl_.msg_id_.Set(value, GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockInfoAck::_internal_mutable_msg_id() {
+  
+  return _impl_.msg_id_.Mutable(GetArenaForAllocation());
+}
+inline std::string* GetRpcBlockInfoAck::release_msg_id() {
+  // @@protoc_insertion_point(field_release:GetRpcBlockInfoAck.msg_id)
+  return _impl_.msg_id_.Release();
+}
+inline void GetRpcBlockInfoAck::set_allocated_msg_id(std::string* msg_id) {
+  if (msg_id != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.msg_id_.SetAllocated(msg_id, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.msg_id_.IsDefault()) {
+    _impl_.msg_id_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:GetRpcBlockInfoAck.msg_id)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -18,7 +18,7 @@
 #include "net/interface.h"
 #include "common/global_data.h"
 #include "include/scope_guard.h"
-
+#include "advanced_menu.h"
 /*************************************SDK access block height, utxo, pledge list, investment list, block request*************************************/
 int GetSDKAllNeed(const std::shared_ptr<GetSDKReq> & req, GetSDKAck & ack)
 {
@@ -61,13 +61,10 @@ int GetSDKAllNeed(const std::shared_ptr<GetSDKReq> & req, GetSDKAck & ack)
     std::vector<Node> satisfiedNode;
     for(const auto & node : nodelist)
     {
-        //Verification of investment and pledge
-        int ret = VerifyBonusAddr(node.address);
-        int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(node.address, global::ca::StakeType::kStakeType_Node);
-        if (stakeTime > 0 && ret == 0)
-        {
-            satisfiedNode.push_back(node);
-        }
+        if(CheckVerifyNodeQualification(node.address) == 0)
+		{
+			satisfiedNode.push_back(node);
+		}
     }
    
     std::sort(satisfiedNode.begin(), satisfiedNode.end(), [&](const Node &n1, const Node &n2)
@@ -1462,7 +1459,6 @@ std::map<int32_t, std::string> GetReqCode()
 
 int SendConfirmTransactionReq(const std::shared_ptr<ConfirmTransactionReq>& msg,   ConfirmTransactionAck & ack)
 {
-
     auto getRandomNumbers = [&](int limit) -> std::vector<int> {
         std::random_device seed;
         std::ranlux48 engine(seed());
@@ -1708,7 +1704,21 @@ int GetRestInvestAmountReqImpl(const std::shared_ptr<GetRestInvestAmountReq>& ms
             }
         }
     }
-    investAmount = global::ca::kMaxInvertAmt - sumInvestAmount;
+    
+    uint64_t height = 0;
+    if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(height)){
+		ERRORLOG("db get top failed!!");
+        return -6;
+    }
+
+    uint64_t maxInvestAmt = 0;
+	if(height >= global::ca::KHardForkHeight){
+		maxInvestAmt = global::ca::kNewMaxInvertAmt;
+	}else{
+		maxInvestAmt = global::ca::kMaxInvertAmt;
+	}
+
+    investAmount = maxInvestAmt - sumInvestAmount;
     ack.set_addr(msg->addr());
     ack.set_amount(investAmount);
 
@@ -1762,9 +1772,14 @@ void RegisterInterface()
     MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetBonusListReq>(HandleGetBonusListReq);
     MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetSDKReq>(HandleGetSDKAllNeedReq);
 	MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<ConfirmTransactionReq>(HandleConfirmTransactionReq);
+	MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<CheckVinReq>(HandleCheckVinReq);
+	MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<CheckVinAck>(HandleCheckVinAck);
     MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetRestInvestAmountReq>(HandleGetRestInvestAmountReq);
     MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<MultiSignTxReq>(HandleMultiSignTxReq);
     MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<BlockStatus>(HandleBlockStatusMsg); //retransmit
+
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<CheckContractPreHashReq>(HandleCheckContractPreHashReq); // retransmit
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<CheckContractPreHashAck>(HandleCheckContractPreHashAck); // retransmit
 
     MagicSingleton<ProtobufDispatcher>::GetInstance()->SyncBlockRegisterCallback<FastSyncGetHashReq>(HandleFastSyncGetHashReq);
     MagicSingleton<ProtobufDispatcher>::GetInstance()->SyncBlockRegisterCallback<FastSyncGetHashAck>(HandleFastSyncGetHashAck);
@@ -1775,6 +1790,8 @@ void RegisterInterface()
     MagicSingleton<ProtobufDispatcher>::GetInstance()->SyncBlockRegisterCallback<SyncGetSumHashAck>(HandleSyncGetSumHashAck);
     MagicSingleton<ProtobufDispatcher>::GetInstance()->SyncBlockRegisterCallback<SyncGetHeightHashReq>(HandleSyncGetHeightHashReq);
     MagicSingleton<ProtobufDispatcher>::GetInstance()->SyncBlockRegisterCallback<SyncGetHeightHashAck>(HandleSyncGetHeightHashAck);
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->SyncBlockRegisterCallback<SyncGetBlockHeightAndHashReq>(HandleSyncGetBlockHeightAndHashReq);
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->SyncBlockRegisterCallback<SyncGetBlockHeightAndHashAck>(HandleSyncGetBlockHeightAndHashAck);
     MagicSingleton<ProtobufDispatcher>::GetInstance()->SyncBlockRegisterCallback<SyncGetBlockReq>(HandleSyncGetBlockReq);
     MagicSingleton<ProtobufDispatcher>::GetInstance()->SyncBlockRegisterCallback<SyncGetBlockAck>(HandleSyncGetBlockAck);
 
@@ -1809,5 +1826,23 @@ void RegisterInterface()
     MagicSingleton<ProtobufDispatcher>::GetInstance()->BlockRegisterCallback<newSeekContractPreHashReq>(_HandleSeekContractPreHashReq);
     MagicSingleton<ProtobufDispatcher>::GetInstance()->BlockRegisterCallback<newSeekContractPreHashAck>(_HandleSeekContractPreHashAck);
 
+    //Log
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetLogReq>(HandleLogReq);
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetLogAck>(HandleLogAck);
+
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetRpcBlockReq>(HandleRpcBlockReq);
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetRpcBlockAck>(HandleRpcBlockAck);
+
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetRpcBlockReq>(HandleRpcBlockReq);
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetRpcBlockAck>(HandleRpcBlockAck);
+
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetRpcBlockInfoReq>(HandleRpcBlockInfoReq);
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetRpcBlockInfoAck>(HandleRpcBlockInfoAck);
+
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetRpcSySInfoReq>(HandleRpcSySInfoReq);
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetRpcSySInfoAck>(HandleRpcSySInfoAck);
+
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetRpcPubReq>(HandleRpcPubReq);
+    MagicSingleton<ProtobufDispatcher>::GetInstance()->CaRegisterCallback<GetRpcPubAck>(HandleRpcPubAck);
 }
 

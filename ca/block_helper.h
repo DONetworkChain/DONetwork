@@ -428,8 +428,8 @@ class BlockHelper
  * @param       sendNodeIds: 
  * @return      int 
  */
-static int GetUtxoFindNode(uint32_t num, uint64_t selfNodeHeight, const std::vector<std::string> &pledgeAddr,
-                            std::vector<std::string> &sendNodeIds);
+int GetUtxoFindNode(uint32_t num, uint64_t selfNodeHeight, const std::vector<std::string> &pledgeAddr,
+                    std::vector<std::string> &sendNodeIds);
 
 /**
  * @brief       

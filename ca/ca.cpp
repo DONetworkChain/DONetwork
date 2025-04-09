@@ -49,7 +49,7 @@
 #include "api/interface/http_api.h"
 #include "../api/rpc_error.h"
 
-#include "algorithm.h" 
+#include "algorithm.h"
 
 
 bool bStopTx = false;
@@ -262,13 +262,21 @@ void HandleTransaction()
     std::map<std::string, int64_t> toAddrAmount;
     toAddrAmount[strToAddr] = amount;
 
-    DBReader dbReader;
+    // DBReader dbReader;
+    // uint64_t top = 0;
+    // if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
+    // {
+    //     ERRORLOG("db get top failed!!");
+    //     return;
+    // }
     uint64_t top = 0;
-    if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
-    {
-        ERRORLOG("db get top failed!!");
+    int retNum = discoverTransactionHeight(top);
+    if(retNum != 0){
+        ERRORLOG("discoverTransactionHeight error {}", retNum);
         return;
     }
+    DEBUGLOG("HandleTransaction create tx top: {}", top);
+
 
     CTransaction outTx;
     TxHelper::vrfAgentType isNeedAgentFlag;
@@ -346,8 +354,8 @@ void HandleStake()
         return;
     }
 
-    std::regex bonus("^(5|6|7|8|9|1[0-9]|20)$");
-    std::cout <<"Please input the bonus pumping percentage to stake (5 - 20):" << std::endl;
+    std::regex bonus("^(50|[1-9]|[1-4][0-9])$");
+    std::cout <<"Please input the bonus pumping percentage to stake (1 - 50):" << std::endl;
     std::string strRewardRank;
     std::cin >> strRewardRank;
     if(!std::regex_match(strRewardRank,bonus))
@@ -357,7 +365,7 @@ void HandleStake()
     }
     
     double commissionRate = std::stold(strRewardRank) / 100;
-    if(commissionRate < global::ca::KMinCommissionRate || commissionRate > global::ca::KMaxCommissionRate)
+    if(commissionRate < global::ca::KNewMinCommissionRate || commissionRate > global::ca::KNewMaxCommissionRate)
     {
         std::cout << "input the bonus pumping percentage error" << std::endl;
         return;
@@ -395,11 +403,18 @@ void HandleStake()
 
     uint64_t stakeAmount = std::stod(strStakeFee) * global::ca::kDecimalNum;
 
-    DBReader dbReader;
+    // DBReader dbReader;
+    // uint64_t top = 0;
+    // if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
+    // {
+    //     ERRORLOG("db get top failed!!");
+    //     return;
+    // }
+
     uint64_t top = 0;
-    if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
-    {
-        ERRORLOG("db get top failed!!");
+    int retNum = discoverTransactionHeight(top);
+    if(retNum != 0){
+        ERRORLOG("discoverTransactionHeight error {}", retNum);
         return;
     }
 
@@ -518,12 +533,7 @@ void HandleUnstake()
         isFindUtxo = input == "1" ? true : false;
     }
 
-    uint64_t top = 0;
-    if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
-    {
-        ERRORLOG("db get top failed!!");
-        return;
-    }
+
     std::string txInfo;
     std::cout << "Enter a description of the transaction, no more than 1 kb" << std::endl;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -535,12 +545,27 @@ void HandleUnstake()
         return;
     }
 
+    // uint64_t top = 0;
+    // if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
+    // {
+    //     ERRORLOG("db get top failed!!");
+    //     return;
+    // }
+    uint64_t top = 0;
+    int retNum = discoverTransactionHeight(top);
+    if(retNum != 0){
+        ERRORLOG("discoverTransactionHeight error {}", retNum);
+        return;
+    }
+
     CTransaction outTx;
     std::vector<TxHelper::Utxo> outVin;
     TxHelper::vrfAgentType isNeedAgentFlag;
     Vrf info;
-    if (TxHelper::CreatUnstakeTransaction(strFromAddr, strUtxoHash, encodedInfo, top + 1, outTx, outVin,isNeedAgentFlag,info,isFindUtxo) != 0)
+    int ret = TxHelper::CreatUnstakeTransaction(strFromAddr, strUtxoHash, encodedInfo, top + 1, outTx, outVin,isNeedAgentFlag,info,isFindUtxo);
+    if (ret != 0)
     {
+        ERRORLOG("CreatUnstakeTransaction fail!!! ret = {}", ret);
         return;
     }
 
@@ -552,7 +577,7 @@ void HandleUnstake()
     txMsgInfo->set_nodeheight(top);
 
     uint64_t localTxUtxoHeight;
-    auto ret = TxHelper::GetTxUtxoHeight(outTx, localTxUtxoHeight);
+    ret = TxHelper::GetTxUtxoHeight(outTx, localTxUtxoHeight);
     if(ret != 0)
     {
         ERRORLOG("GetTxUtxoHeight fail!!! ret = {}", ret);
@@ -669,11 +694,18 @@ void HandleInvest()
         return;
     }
 
-    DBReader dbReader;
+    // DBReader dbReader;
+    // uint64_t top = 0;
+    // if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
+    // {
+    //     ERRORLOG("db get top failed!!");
+    //     return;
+    // }
+
     uint64_t top = 0;
-    if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
-    {
-        ERRORLOG("db get top failed!!");
+    int retNum = discoverTransactionHeight(top);
+    if(retNum != 0){
+        ERRORLOG("discoverTransactionHeight error {}", retNum);
         return;
     }
 
@@ -800,13 +832,6 @@ void HandleDisinvest()
         isFindUtxo = input == "1" ? true : false;
     }
 
-    uint64_t top = 0;
-    if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
-    {
-        ERRORLOG("db get top failed!!");
-        return;
-    }
-
     std::string txInfo;
     std::cout << "Enter a description of the transaction, no more than 1 kb" << std::endl;
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -815,6 +840,19 @@ void HandleDisinvest()
     std::string encodedInfo = Base64Encode(txInfo);
     if(encodedInfo.size() > 1024){
         std::cout << "The information entered exceeds the specified length" << std::endl;
+        return;
+    }
+
+    // uint64_t top = 0;
+    // if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
+    // {
+    //     ERRORLOG("db get top failed!!");
+    //     return;
+    // }
+    uint64_t top = 0;
+    int retNum = discoverTransactionHeight(top);
+    if(retNum != 0){
+        ERRORLOG("discoverTransactionHeight error {}", retNum);
         return;
     }
 
@@ -884,11 +922,18 @@ void HandleBonus()
     std::vector<TxHelper::Utxo> outVin;
     std::string strFromAddr = MagicSingleton<AccountManager>::GetInstance()->GetDefaultAddr();
 
-    DBReader dbReader;
+    // DBReader dbReader;
+    // uint64_t top = 0;
+    // if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
+    // {
+    //     ERRORLOG("db get top failed!!");
+    //     return;
+    // }
+    
     uint64_t top = 0;
-    if (DBStatus::DB_SUCCESS != dbReader.GetBlockTop(top))
-    {
-        ERRORLOG("db get top failed!!");
+    int retNum = discoverTransactionHeight(top);
+    if(retNum != 0){
+        ERRORLOG("discoverTransactionHeight error {}", retNum);
         return;
     }
 
@@ -1312,12 +1357,19 @@ void HandleDeployContract()
         return;
     }
 
-    DBReader dataReader;
+    // DBReader dataReader;
+    // uint64_t top = 0;
+	// if (DBStatus::DB_SUCCESS != dataReader.GetBlockTop(top))
+    // {
+    //     ERRORLOG("db get top failed!!")
+    //     return ;
+    // }
+
     uint64_t top = 0;
-	if (DBStatus::DB_SUCCESS != dataReader.GetBlockTop(top))
-    {
-        ERRORLOG("db get top failed!!")
-        return ;
+    int retNum = discoverTransactionHeight(top);
+    if(retNum != 0){
+        ERRORLOG("discoverTransactionHeight error {}", retNum);
+        return;
     }
 
     uint32_t nContractType = 0;
@@ -1507,11 +1559,10 @@ void HandleDeployContract()
     DEBUGLOG("Transaction result,ret:{}  txHash:{}", ret, outTx.hash())
 }
 
-int discoverTransactionHeight()
+int discoverTransactionHeight(uint64_t &top)
 {
-    uint64_t top = 0;
     if(!BlockHelper::ObtainChainHeight(top)){
-        ERRORLOG("db get top failed!!")
+        ERRORLOG("ObtainChainHeight get top failed!!")
         return -1;
     }
     
@@ -1522,11 +1573,11 @@ int discoverTransactionHeight()
     if (DBStatus::DB_SUCCESS != status)
     {
         DEBUGLOG("GetBlockTop fail!!!");
-        return -1;
+        return -2;
     }
     
     if(selfNodeHeight >= top){
-        return top;
+        return 0;
     }
 
     std::vector<std::string> pledgeAddr;
@@ -1534,29 +1585,26 @@ int discoverTransactionHeight()
     std::vector<Node> nodelist = MagicSingleton<PeerNode>::GetInstance()->GetNodelist();
     for (const auto &node : nodelist)
     {
-        int ret = VerifyBonusAddr(node.address);
-
-        int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(node.address, global::ca::StakeType::kStakeType_Node);
-        if (stakeTime > 0 && ret == 0)
-        {
-            pledgeAddr.push_back(node.address);
-        }
+        if(CheckVerifyNodeQualification(node.address) == 0)
+		{
+			pledgeAddr.push_back(node.address);
+		}
     }
     
     uint64_t endSyncHeight = selfNodeHeight -3;
     std::string msgId;
     if (!GLOBALDATAMGRPTR.CreateWait(90, pledgeAddr.size() * 0.8, msgId))
     {
-        return -2;
+        return -3;
     }
     for (auto &nodeId : pledgeAddr)
     {
         if(!GLOBALDATAMGRPTR.AddResNode(msgId, nodeId))
         {
-            ERRORLOG("_GetSyncBlockHashNode AddResNode error");
-            return -2;
+            ERRORLOG("discoverTransactionHeight AddResNode error");
+            return -4;
         }
-        DEBUGLOG("new sync get block hash from {}", nodeId);
+        DEBUGLOG("Find the transaction height to {}", nodeId);
         SendSyncGetHeightHashReq(nodeId, msgId, selfNodeHeight, endSyncHeight);
     }
     std::vector<std::string> retDatas;
@@ -1565,7 +1613,7 @@ int discoverTransactionHeight()
         if(retDatas.size() < pledgeAddr.size() * 0.5)
         {
             ERRORLOG("wait sync block hash time out send:{} recv:{}", pledgeAddr.size(), retDatas.size());
-            return -2;
+            return -5;
         }
     }
 
@@ -1599,7 +1647,7 @@ int discoverTransactionHeight()
     if(succentCount < (size_t)(retDatas.size() * 0.66))
     {
         ERRORLOG("ret data error succentCount:{}, (uint32_t)(retDatas * 0.66):{}, retDatas.size():{}", succentCount, (size_t)(retDatas.size() * 0.66), retDatas.size());
-        return -2;
+        return -6;
     }
     
     size_t verifyNum = succentCount / 5 * 4;
@@ -1623,13 +1671,13 @@ int discoverTransactionHeight()
         hashes.push_back(syncBlockHash.first);
 
         if(!block.ParseFromString(strblock)){
-            return -3;
+            return -7;
         }
         highestHeight = highestHeight > block.height() ? highestHeight :  block.height();
     }
-
-    DEBUGLOG("highestHeight: {}", highestHeight);
-    return highestHeight;
+    top = highestHeight;
+    DEBUGLOG("discoverTransactionHeight top : {}", top);
+    return 0;
 }
 
 void HandleCallContract()
@@ -1828,13 +1876,13 @@ void HandleCallContract()
     //     ERRORLOG("db get top failed!!")
     //     return ;
     // }
-
-    int top = discoverTransactionHeight();
-    if(top <= 0){
-        ERRORLOG("discoverTransactionHeight error {}", top);
+    uint64_t top = 0;
+    int retNum = discoverTransactionHeight(top);
+    if(retNum != 0){
+        ERRORLOG("discoverTransactionHeight error {}", retNum);
         return;
     }
-    DEBUGLOG("create tx top: {}", top);
+    DEBUGLOG("HandleCallContract create tx top: {}", top);
 
 
     CTransaction outTx;
@@ -1878,7 +1926,7 @@ void HandleCallContract()
 
     // txMsgInfo->set_txutxoheight(localTxUtxoHeight);
 
-    std::cout << "size = " << dirtyContract.size() << std::endl;
+    DEBUGLOG("size =  {}",dirtyContract.size());
     for (const auto& addr : dirtyContract)
     {
         std::cout << "addr = " << "0x"+addr << std::endl;
@@ -2283,13 +2331,22 @@ std::string RpcDeployContract(void * arg,void *ack)
         return "-1";
     }
 
-    DBReader dataReader;
+    // DBReader dataReader;
+    // uint64_t top = 0;
+	// if (DBStatus::DB_SUCCESS != dataReader.GetBlockTop(top))
+    // {
+    //     ack_t->code = -2;
+    //     ack_t->message = "db get top failed!";
+    //     ERRORLOG("db get top failed!");
+    //     return "-2";
+    // }
+
     uint64_t top = 0;
-	if (DBStatus::DB_SUCCESS != dataReader.GetBlockTop(top))
-    {
+    int retNum = discoverTransactionHeight(top);
+    if(retNum != 0){
         ack_t->code = -2;
-        ack_t->message = "db get top failed!";
-        ERRORLOG("db get top failed!");
+        ack_t->message = "Created a deal height failed";
+        ERRORLOG("discoverTransactionHeight error {}", retNum);
         return "-2";
     }
 
@@ -2470,16 +2527,15 @@ std::string RpcCallContract(void * arg,void *ack)
     //     return "db get top failed!!";
     // }
 
-    int top = discoverTransactionHeight();
-    if(top <= 0){
+    uint64_t top = 0;
+    int retNum = discoverTransactionHeight(top);
+    if(retNum != 0){
         ack_t->code = -5;
         ack_t->message = "db get top failed!!";
-        ERRORLOG("db get top failed!!");
+        ERRORLOG("discoverTransactionHeight get top failed ret :{}", retNum);
         return "db get top failed!!";
     }
-    DEBUGLOG("create tx top: {}", top);
-
-
+    DEBUGLOG("RpcCallContract create tx top: {}", top);
 
     std::string encodedInfo = Base64Encode(req->txInfo);
     if(encodedInfo.size() > 1024){
@@ -2584,7 +2640,7 @@ std::string RpcCallContract(void * arg,void *ack)
     txMsgInfo->set_type(0);
     txMsgInfo->set_nodeheight(top);
 
-    std::cout << "size = " << dirtyContract.size() << std::endl;
+    DEBUGLOG("size =  {}",dirtyContract.size());
     for (const auto& addr : dirtyContract)
     {
         std::cout << "addr = " << "0x"+addr << std::endl;
@@ -2665,12 +2721,19 @@ void HandleMultiDeployContract(const std::string &strFromAddr)
         return;
     }
 
-    DBReader dataReader;
+    // DBReader dataReader;
+    // uint64_t top = 0;
+	// if (DBStatus::DB_SUCCESS != dataReader.GetBlockTop(top))
+    // {
+    //     ERRORLOG("db get top failed!!");
+    //     return ;
+    // }
+
     uint64_t top = 0;
-	if (DBStatus::DB_SUCCESS != dataReader.GetBlockTop(top))
-    {
-        ERRORLOG("db get top failed!!");
-        return ;
+    int retNum = discoverTransactionHeight(top);
+    if(retNum != 0){
+        ERRORLOG("discoverTransactionHeight error {}", retNum);
+        return;
     }
 
     CTransaction outTx;

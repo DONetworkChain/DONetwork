@@ -7,8 +7,10 @@
 
 
 bool Log::LogInit(const std::string &path, bool console_out, const std::string &level)
-{  
+{
+    // lyw test to do
     spdlog::level::level_enum convertLevel = GetLogLevel(level);
+    //spdlog::level::level_enum convertLevel = spdlog::level::level_enum::debug;
     return LogInit(path, console_out, convertLevel);
 }
 bool Log::LogInit(const std::string &path, bool console_out, spdlog::level::level_enum level)

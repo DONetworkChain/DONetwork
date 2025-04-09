@@ -35,7 +35,7 @@ namespace Evmone
     int
     ContractInfoAdd(const EvmHost &host, const std::string &txHash, global::ca::TxType TxType,
                     uint32_t transactionVersion,
-                    nlohmann::json &jTxInfo, std::map<std::string, std::string> &contractPreHashCache);
+                    nlohmann::json &jTxInfo, std::map<std::string, std::string> &contractPreHashCache, bool isCheckContractPreHash = false);
     /**
      * @brief       
      * 
@@ -283,7 +283,7 @@ namespace ContractCommonInterface
 
 }
 
-
+bool CheckUtxoOwnership(const CTransaction& tx);
 /**
  * @brief       
  * 

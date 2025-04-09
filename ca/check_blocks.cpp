@@ -50,32 +50,12 @@ int CheckBlocks::GetPledgeAddr(DBReadWriter& dbReader, std::vector<std::string>&
 
     for (const auto &node : nodelist)
     {
-        int ret = VerifyBonusAddr(node.address);
-
-        int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(node.address, global::ca::StakeType::kStakeType_Node);
-        if (stakeTime > 0 && ret == 0)
-        {
+        if(CheckVerifyNodeQualification(node.address) == 0)
+		{
             pledgeAddr.push_back(node.address);
-        }
+		}
     }
 
-    // std::vector<std::string> stakeAddr;
-    // auto status = dbReader.GetStakeAddress(stakeAddr);
-    // if (DBStatus::DB_SUCCESS != status && DBStatus::DB_NOT_FOUND != status)
-    // {
-    //     ERRORLOG("GetStakeAddress error, error num:{}", -1);
-    //     return -1;
-    // }
-
-    // for(const auto& addr : stakeAddr)
-    // {
-    //     if(VerifyBonusAddr(addr) != 0)
-    //     {
-    //         DEBUGLOG("{} doesn't get invested, skip", addr);
-    //         continue;
-    //     }
-    //     pledgeAddr.push_back(addr);
-    // }
     return 0;
 }
 

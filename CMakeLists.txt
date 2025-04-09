@@ -3,8 +3,22 @@ cmake_minimum_required(VERSION 3.0)
 ##set(CMAKE_CXX_COMPILER "/opt/rh/devtoolset-8/root/bin/g++")
 ##set(CMAKE_C_COMPILER "/opt/rh/devtoolset-8/root/bin/gcc")
 
-
 project (don) 
+
+execute_process(
+    COMMAND uname -r
+    OUTPUT_VARIABLE KERNEL_VERSION
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+)
+
+# Options for libzip
+option(ENABLE_COMMONCRYPTO "Enable use of CommonCrypto" OFF)
+option(ENABLE_GNUTLS "Enable use of GnuTLS" OFF)
+option(ENABLE_MBEDTLS "Enable use of mbed TLS" OFF)
+option(ENABLE_WINDOWS_CRYPTO "Enable use of Windows cryptography libraries" OFF)
+option(ENABLE_BZIP2 "Enable use of BZip2" OFF)
+option(ENABLE_LZMA "Enable use of LZMA" OFF)
+option(ENABLE_ZSTD "Enable use of Zstandard" OFF)
 
 #set(CMAKE_CXX_STANDARD 20)
 #set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -45,13 +59,12 @@ add_definitions(-Wno-builtin-macro-redefined)
 
 #add_definitions(-w)
 
-#
 set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CMAKE_COMMAND} -E time")
 set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CMAKE_COMMAND} -E time")
 
 set(CXX_FLAGS
         -Wall
-	-g
+	    -g
         )
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -save-temps")
 
@@ -128,25 +141,23 @@ include_directories("${ROOT_DIR}/silkpre/")
 include_directories("${ROOT_DIR}/evmone/lib/")
 include_directories("${ROOT_DIR}/boost")
 include_directories("${ROOT_DIR}/contract")
-#include_directories(${Boost_INCLUDE_DIRS})
-
+include_directories("${ROOT_DIR}/libzip")
 
 target_link_libraries(${PROJECT_NAME}  dl)
 target_link_libraries(${PROJECT_NAME}  z)
-#target_link_libraries(${PROJECT_NAME}  bz2)
-target_link_libraries(${PROJECT_NAME} -pthread ) 
+target_link_libraries(${PROJECT_NAME}  bz2)
+target_link_libraries(${PROJECT_NAME} -pthread )
 
 
 target_link_libraries (${PROJECT_NAME} ${Boost_LIBRARIES})
 
 add_library(rocksdb STATIC IMPORTED)
 set_property(TARGET rocksdb PROPERTY IMPORTED_LOCATION ${ROOT_DIR}/rocksdb/librocksdb.a)
-target_link_libraries(${PROJECT_NAME}  rocksdb )
+target_link_libraries(${PROJECT_NAME}  rocksdb)
 
 add_library(cacore STATIC IMPORTED)
 set_property(TARGET cacore PROPERTY IMPORTED_LOCATION ${ROOT_DIR}/ca_core/ca_core.a)
 target_link_libraries(${PROJECT_NAME}  cacore )
-
 
 add_library(protobuf STATIC IMPORTED)
 #set_property(TARGET protobuf PROPERTY IMPORTED_LOCATION ${ROOT_DIR}/protobuf/cmake/libprotobuf.a)
@@ -179,6 +190,11 @@ add_library(cryptopp STATIC IMPORTED)
 set_property(TARGET cryptopp PROPERTY IMPORTED_LOCATION ${ROOT_DIR}/cryptopp/libcryptopp.a)
 target_link_libraries(${PROJECT_NAME}  cryptopp )
 
+add_library(libzip STATIC IMPORTED)
+set_property(TARGET libzip PROPERTY IMPORTED_LOCATION ${ROOT_DIR}/libzip/build/lib/libzip.a)
+target_link_libraries(${PROJECT_NAME}   libzip )
+
+
 find_package(GTest)
 if(GTEST_FOUND)
     # GTEST_INCLUDE_DIRS:/usr/local/include
@@ -201,7 +217,6 @@ if(GTEST_FOUND)
     target_link_libraries(test  protobuf )
     target_link_libraries(test  spdlog)
     target_link_libraries(test  openssl)
-
 endif(GTEST_FOUND)
 
 if(PRIMARYCHAIN)

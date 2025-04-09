@@ -179,22 +179,22 @@ u16 IpPort::GetConnectPort(int conFd)
 
 bool IpPort::IsLan(std::string const& ipString)
 {
-	#if PRIMARYCHAIN || TESTCHAIN
+#if PRIMARYCHAIN || TESTCHAIN
 	std::istringstream st(ipString);
 	int ip[2];
-	for(int i = 0; i < 2; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		std::string temp;
-		getline(st,temp,'.');
+		getline(st, temp, '.');
 		std::istringstream a(temp);
 		a >> ip[i];
 	}
-	if((ip[0]==10) || (ip[0]==172 && ip[1]>=16 && ip[1]<=31) || (ip[0]==192 && ip[1]==168))
+	if ((ip[0] == 10) || (ip[0] == 172 && ip[1] >= 16 && ip[1] <= 31) || (ip[0] == 192 && ip[1] == 168))
 	{
 		return true;
 	}
 	return false;
-	# endif
+#endif
 
 	return false;
 }

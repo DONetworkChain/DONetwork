@@ -188,6 +188,7 @@ int SearchStake(const std::string &address, uint64_t &stakeamount,  global::ca::
 
 
 int CheckVerifyNodeQualification(const std::string & base58);
+
 /**
  * @brief       vrf selects the verification of the signature node
  * 
@@ -545,6 +546,10 @@ int VerifyVrf(const std::shared_ptr<BuildBlockBroadcastMsg> &msg, const CBlock& 
  * @return      std::string Contract Addr
  */
 std::string GetContractAddr(const CTransaction & tx);
-
+std::set<std::string> GetcontractPreHash(const CBlock & block);
 bool isLast3SecondsOfCycle(uint64_t timestamp_microseconds);
+
+int HandleCheckContractPreHashReq(const std::shared_ptr<CheckContractPreHashReq> &msg, const MsgData &msgData);
+int HandleCheckContractPreHashAck(const std::shared_ptr<CheckContractPreHashAck> &msg, const MsgData &msgData);
+
 #endif

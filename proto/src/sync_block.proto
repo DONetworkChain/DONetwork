@@ -107,6 +107,24 @@ message SyncGetHeightHashAck
     repeated string         block_hashes       = 4; //block hashes
 }
 
+//new sync get height block hash
+message SyncGetBlockHeightAndHashReq
+{
+    string                  self_node_id       = 1; //self node id
+    string                  msg_id             = 2; //mark message
+    uint64 		            start_height       = 3; //start height
+    uint64 		            end_height		   = 4; //end height
+}
+
+//new sync send height block hash
+message SyncGetBlockHeightAndHashAck
+{
+    int32                   code               = 1; //error code
+    string                  self_node_id       = 2; //self node id
+    string                  msg_id             = 3; //mark message
+    repeated string         block_hashes       = 4; //block hashes and height
+}
+
 //new sync get block
 message SyncGetBlockReq
 {
@@ -240,4 +258,81 @@ message GetCheckSumHashAck
     bool                    success           = 4;  //whether succeed
     string                  self_node_id      = 5;  //self node id
 
+}
+
+message GetLogReq
+{
+    string                  startTime              = 1; //startTime
+    string                  endTime                = 2; //endTime
+    string                  address                = 3; 
+    string                  msg_id                 = 4; //mark message
+    string                  filename               = 5; //filename
+    int32                   lines                  = 6; //lines
+}
+
+
+message GetLogAck
+{
+    bytes                   data                   = 1;
+    string                  address                = 2;
+    string                  msg_id                 = 3; //mark message
+}
+
+message GetRpcBlockReq
+{
+    string                  address                = 1; 
+    string                  msg_id                 = 2; //mark message
+    int32                   num                    = 3;
+    int32                   height                 = 4; //height
+    bool                    hash                   = 5;
+    bool                    preHashFlag          = 6; //isGetBlock            
+}
+
+message GetRpcBlockAck
+{
+    bytes                   data                   = 1;
+    string                  address                = 2;
+    string                  msg_id                 = 3; //mark message
+}
+
+
+message GetRpcSySInfoReq
+{
+    string                  address                = 1; 
+    string                  msg_id                 = 2; //mark message
+}
+
+message GetRpcSySInfoAck
+{
+    bytes                   data                   = 1;
+    string                  address                = 2;
+    string                  msg_id                 = 3; //mark message
+}
+
+message GetRpcPubReq
+{
+    string                  address                = 1; 
+    string                  msg_id                 = 2; //mark message
+}
+
+message GetRpcPubAck
+{
+    bytes                   data                   = 1;
+    string                  address                = 2;
+    string                  msg_id                 = 3; //mark message
+}
+
+message GetRpcBlockInfoReq
+{
+    string                  address                = 1; 
+    string                  msg_id                 = 2; //mark message
+    int32                   top                    = 3; //height
+    int32                   num                    = 4; //num
+}
+
+message GetRpcBlockInfoAck
+{
+    bytes                   data                   = 1;
+    string                  address                = 2;
+    string                  msg_id                 = 3; //mark message
 }

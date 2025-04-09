@@ -227,6 +227,8 @@ private:
      */
     static int _GetSyncBlockHashNode(const std::vector<std::string> &sendNodeIds, uint64_t startSyncHeight, uint64_t endSyncHeight, uint64_t selfNodeHeight, uint64_t chainHeight,
                             std::vector<std::string> &retNodeIds, std::vector<std::string> &reqHashes, uint64_t newSyncSnedNum);
+    static int _GetSyncBlockHashVerify(const std::vector<std::string> &sendNodeIds, uint64_t startSyncHeight, uint64_t endSyncHeight, uint64_t selfNodeHeight, uint64_t chainHeight,
+                            std::vector<std::string> &retNodeIds, std::vector<std::string> &reqHashes, uint64_t newSyncSnedNum);
     
     /**
      * @brief       new sync get block 
@@ -361,6 +363,8 @@ void SendSyncGetSumHashReq(const std::string &nodeId, const std::string &msgId, 
 void SendSyncGetSumHashAck(const std::string &nodeId, const std::string &msgId, uint64_t startHeight, uint64_t endHeight);
 void SendSyncGetHeightHashReq(const std::string &nodeId, const std::string &msgId, uint64_t startHeight, uint64_t endHeight);
 void SendSyncGetHeightHashAck(SyncGetHeightHashAck& ack,const std::string &nodeId, const std::string &msgId, uint64_t startHeight, uint64_t endHeight);
+void SendSyncGetBlockHeightAndHashReq(const std::string &nodeId, const std::string &msgId, uint64_t startHeight, uint64_t endHeight);
+void SendSyncGetBlockHeightAndHashAck(SyncGetBlockHeightAndHashAck& ack,const std::string &nodeId, const std::string &msgId, uint64_t startHeight, uint64_t endHeight);
 void SendSyncGetBlockReq(const std::string &nodeId, const std::string &msgId, const std::vector<std::string> &reqHashes);
 void SendSyncGetBlockAck(const std::string &nodeId, const std::string &msgId, uint64_t startHeight, uint64_t endHeight);
 
@@ -368,6 +372,8 @@ int HandleSyncGetSumHashReq(const std::shared_ptr<SyncGetSumHashReq> &msg, const
 int HandleSyncGetSumHashAck(const std::shared_ptr<SyncGetSumHashAck> &msg, const MsgData &msgdata);
 int HandleSyncGetHeightHashReq(const std::shared_ptr<SyncGetHeightHashReq> &msg, const MsgData &msgdata);
 int HandleSyncGetHeightHashAck(const std::shared_ptr<SyncGetHeightHashAck> &msg, const MsgData &msgdata);
+int HandleSyncGetBlockHeightAndHashReq(const std::shared_ptr<SyncGetBlockHeightAndHashReq> &msg, const MsgData &msgdata);
+int HandleSyncGetBlockHeightAndHashAck(const std::shared_ptr<SyncGetBlockHeightAndHashAck> &msg, const MsgData &msgdata);
 int HandleSyncGetBlockReq(const std::shared_ptr<SyncGetBlockReq> &msg, const MsgData &msgdata);
 int HandleSyncGetBlockAck(const std::shared_ptr<SyncGetBlockAck> &msg, const MsgData &msgdata);
 
@@ -391,5 +397,8 @@ int HandleBlockByUtxoReq(const std::shared_ptr<GetBlockByUtxoReq> &msg, const Ms
 int HandleBlockByUtxoAck(const std::shared_ptr<GetBlockByUtxoAck> &msg, const MsgData &msgdata);
 int HandleBlockByHashReq(const std::shared_ptr<GetBlockByHashReq> &msg, const MsgData &msgdata);
 int HandleBlockByHashAck(const std::shared_ptr<GetBlockByHashAck> &msg, const MsgData &msgdata);
+
+int HandleCheckVinReq(const std::shared_ptr<CheckVinReq> &msg, const MsgData &msgdata);
+int HandleCheckVinAck(const std::shared_ptr<CheckVinAck> &msg, const MsgData &msgdata);
 
 #endif

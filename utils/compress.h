@@ -11,7 +11,7 @@
 #define COMPRESS_H_
 #include <iostream>
 #include <string>
-
+#include <cstdint>
 class Compress
 {
 public:

@@ -163,11 +163,12 @@ bool CBlockHttpCallback::SendBlockHttp(const std::string& block,const std::strin
 //         nlohmann::json blockdataJson = nlohmann::json::parse(block.data());
 //         nlohmann::json modifiedJsonData;
 
-
 //         for (auto it = blockdataJson.begin(); it != blockdataJson.end(); ++it) {
 //             std::string originalKey = it.key();
 //             auto value = it.value();
+
 //             std::string modifiedKey = addHexPrefix(originalKey);
+
 //             modifiedJsonData[modifiedKey] = value;
 //         }
 //         blockdataJson = modifiedJsonData;

@@ -25,6 +25,8 @@ SILKPRE_DIR=./silkpre
 
 CRYPTOPP_DIR=./cryptopp
 
+LIBZIP_DIR=./libzip
+
 GMP_DIR=./gmp
 
 COMPILE_NUM=`cat /proc/cpuinfo| grep  "processor" | wc -l`;
@@ -37,7 +39,10 @@ then
 else
     tar -xvf ./3rd/openssl-3.0.5.tar.gz;
     mv openssl-3.0.5 openssl;
-    cd ${OPENSSL_DIR} && ./Configure && make -j$COMPILE_NUM && make install;
+    cd ${OPENSSL_DIR}
+    ./Configure --prefix=/usr/local/ssl --openssldir=/usr/local/ssl \
+        '-Wl,--enable-new-dtags,-rpath,$(LIBRPATH)' 
+    make -j$COMPILE_NUM && make install;
 fi;
 
 # rocksdb
@@ -166,6 +171,30 @@ then \
             mv cryptopp-CRYPTOPP_8_9_0 cryptopp;\
             cd ${CRYPTOPP_DIR} && make -j$COMPILE_NUM && make test && sudo make install;\
 fi;\
+
+
+#libzip
+cd $SHDIR
+if [ -d ${LIBZIP_DIR} ];
+then
+    echo "libzip compile";
+else
+    unzip ./3rd/libzip-1.11.3.zip;
+    mv libzip-1.11.3 libzip
+    cd ${LIBZIP_DIR} 
+    mkdir -p build
+    cd build
+    cmake .. -DBUILD_SHARED_LIBS=OFF \
+        -DOPENSSL_ROOT_DIR=/usr/local/ssl \
+        -DOPENSSL_LIBRARIES=/usr/local/ssl/lib \
+        -DZSTD=ON \
+        -DENABLE_LZMA=OFF \
+        -DENABLE_ZSTD=OFF \
+        -DCMAKE_INSTALL_RPATH_USE_LINK_PATH=TRUE \
+        -DCMAKE_INSTALL_RPATH=/usr/local/ssl/lib \
+        -DCMAKE_BUILD_WITH_INSTALL_RPATH=TRUE
+    make -j"$COMPILE_NUM" && sudo make install
+fi;
 
 cd $1
 echo "-- make depend done"

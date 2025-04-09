@@ -26,14 +26,15 @@
 #include "proto/transaction.pb.h"
 
 struct ContractTransaction {
-    std::string from;         
+    std::string from;          
     std::string toAddr;        
-    std::string strInput;      
+    std::string strInput;     
     std::string encodedInfo;
-    uint64_t contractTip;     
+    uint64_t contractTip;      
     uint64_t contractTransfer; 
     std::string contractAddress; 
-    bool isFindUtxo = false;     
+    bool isFindUtxo = false; 
+
     ContractTransaction(const std::string &from_, const std::string &toAddr_, const std::string &strInput_, const std::string &encodedInfo_,
                         uint64_t contractTip_, uint64_t contractTransfer_, const std::string &contractAddress_, bool isFindUtxo_)
         : from(from_), toAddr(toAddr_), strInput(strInput_), encodedInfo(encodedInfo_), contractTip(contractTip_), 

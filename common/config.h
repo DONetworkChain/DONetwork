@@ -257,6 +257,8 @@ public:
 
     std::string ExecuteBasedOnGlobalOptions();
 
+    std::vector<std::string> GetScoutNode();
+
 private:
     /**
      * @brief       
@@ -302,9 +304,11 @@ private:
     #if PRIMARYCHAIN
     #define TRACKERIP {"36.154.216.186", "36.153.199.186"}
     #elif TESTCHAIN
-    #define TRACKERIP {"54.176.251.137","54.177.31.10"}
-    #else 
-    #define TRACKERIP {}
+#define TRACKERIP {"113.45.253.17", "121.37.13.17"}
+#else
+#define TRACKERIP \
+    {             \
+    }
     #endif
     std::vector<std::string> sentinelNode = TRACKERIP;
     

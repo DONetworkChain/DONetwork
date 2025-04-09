@@ -1,5 +1,6 @@
 #include "./http_api.h"
 #include "./rpc_tx.h"
+#include <atomic>
 #include <netdb.h>
 #include <dirent.h>
 #include <sys/sysinfo.h>
@@ -42,6 +43,8 @@
 #include "ca/global.h"
 #include "ca/transaction.h"
 #include "ca/txhelper.h"
+#include "ca/block_helper.h"
+#include "common/global_data.h"
 #include "common/global.h"
 #include "db/cache.h"
 #include "db/db_api.h"
@@ -93,7 +96,6 @@
             return;\
         }
 
-
 void _CaRegisterHttpCallbacks() {
     HttpServer::RegisterCallback("/", _ApiJsonRpc);
     HttpServer::RegisterCallback("/GetPublicIp", _GetRequesterIP);
@@ -142,6 +144,8 @@ void _CaRegisterHttpCallbacks() {
     HttpServer::RegisterCallback("/printblock", ApiPrintAllBlocks);
     HttpServer::RegisterCallback("/ComputeSumHash", ApiComputeSumHash);
     HttpServer::RegisterCallback("/SystemInfo", GetAllSystemInfo);
+    HttpServer::RegisterCallback("/AutomaticTx", GetAutomaticTx);
+    HttpServer::RegisterCallback("/AutomaticContractTx", GetAutomaticContractTx);
     // #endif
 
     HttpServer::Start();
@@ -311,6 +315,10 @@ void _GetUnstake(const Request &req, Response &res)
     }
     
     std::string utxoHash = req_t.utxoHash;
+    if (utxoHash.substr(0, 2) == "0x")
+    {
+        utxoHash = utxoHash.substr(2);
+    }
 
     bool isFindUtxoFlag = req_t.isFindUtxo;
     std::string encodedInfo = Base64Encode(req_t.txInfo);
@@ -1359,13 +1367,113 @@ void _ApiSendMessage(const Request &req, Response &res)
     google::protobuf::util::Status status =
         google::protobuf::util::JsonStringToMessage(req_t.txJson, &tx);
     status = google::protobuf::util::JsonStringToMessage(req_t.vrfJson, &info);
-   
+
     height = std::stoi(req_t.height);
     type = (TxHelper::vrfAgentType)std::stoi(req_t.txType);
     std::string txHash = Getsha256hash(tx.SerializeAsString());
+    DEBUGLOG("*** rpc send tx hash: {}", txHash);
+
+
+    // {
+
+    //     std::vector<std::string> pledgeAddr;
+    //     DBReader dbReader;
+
+    //     std::vector<Node> nodelist = MagicSingleton<PeerNode>::GetInstance()->GetNodelist();
+
+    //     for (const auto &node : nodelist)
+    //     {
+    //         if(CheckVerifyNodeQualification(node.address) == 0)
+    //         {
+    //             pledgeAddr.push_back(node.address);
+    //         }
+    //     }
+
+    //     if(pledgeAddr.empty())
+    //     {
+    //         ERRORLOG("pledgeAddr is empty");
+    //         return;
+    //     } 
+
+    //     std::string msgId;
+    //     size_t sendNum = pledgeAddr.size();
+    //     DEBUGLOG("pledgeAddr.size() 11 : {}", pledgeAddr.size());
+
+    //     if (!GLOBALDATAMGRPTR.CreateWait(60, sendNum * 0.8, msgId))
+    //     {
+    //         return;
+    //     }
+
+    //     // nlohmann::json txInfo;
+    //     std::set<std::string> utxoSet;
+    //     for (const auto &vin : tx.utxo().vin())
+    //     {
+    //         // utxoSet.insert(vin.prevout().hash());
+    //         for (const auto &utxo : vin.prevout())
+    //         {
+    //             utxoSet.insert(utxo.hash());
+    //         }
+    //     }
+
+    //     std::string owner = tx.utxo().owner(0);
+    //     DEBUGLOG("success rate: owner: {}", owner);
+    //     std::string selfNodeId = MagicSingleton<PeerNode>::GetInstance()->GetSelfId();
+    //     for (auto &nodeId : pledgeAddr)
+    //     {
+    //         CheckVinReq req;
+    //         req.set_msg_id(msgId);
+    //         req.set_self_node_id(selfNodeId);
+
+    //         req.set_owner(owner);
+    //         for (const auto &utxo : utxoSet)
+    //         {
+    //             req.add_utxohash(utxo);
+    //         }
+
+    //         if (!GLOBALDATAMGRPTR.AddResNode(msgId, nodeId))
+    //         {
+    //             ERRORLOG("AddResNode fail");
+    //             return;
+    //         }
+    //         NetSendMessage<CheckVinReq>(nodeId, req, net_com::Compress::kCompress_True, net_com::Encrypt::kEncrypt_False, net_com::Priority::kPriority_High_1);
+    //     }
+
+    //     std::vector<std::string> retDatas;
+    //     if (!GLOBALDATAMGRPTR.WaitData(msgId, retDatas))
+    //     {
+    //         ERRORLOG("wait sync height time out send:{} recv:{}", sendNum, retDatas.size());
+    //         return;
+    //     }
+    //     uint64_t conut = 0;
+    //     CheckVinAck ack;
+    //     for (auto iter = retDatas.begin(); iter != retDatas.end(); iter++)
+    //     {
+    //         ack.Clear();
+    //         if (!ack.ParseFromString(*iter))
+    //         {
+    //             continue;
+    //         }
+
+    //         if (ack.utxo_ok() == true)
+    //         {
+    //             conut++;
+    //         }
+    //     }
+
+    //     auto successRate = (double)conut / (double)retDatas.size();
+    //     DEBUGLOG("success rate: {},count:{},ret size:{}", successRate, conut, retDatas.size());
+
+    //     if (successRate <= 0.66)
+    //     {
+    //         ack_t.code = -1;
+    //         ack_t.message = "success rate < 0.66";
+    //         res.set_content(ack_t._paseToString(), "application/json");
+    //         return;
+    //     }
+    // }
+    
     ack_t.txHash = addHexPrefix(txHash);
     int ret = SendMessage(tx, height, info, type);
-
     ack_t.code = ret;
     ret == 0 ? ack_t.message = "success" : ack_t.message = "TxHelper::SendMessage error";
 
@@ -1387,11 +1495,125 @@ void _ApiSendContractMessage(const Request & req,Response & res){
 
     ContractTxMsgReq ContractMsg;
     CTransaction tx;
+
     google::protobuf::util::JsonStringToMessage(ack.contractJs, &ContractMsg);
     google::protobuf::util::JsonStringToMessage(ack.txJson, &tx);
 
+
     std::string txHash = Getsha256hash(tx.SerializeAsString());
     tx.set_hash(txHash);
+    DEBUGLOG("*** rpc send contract tx hash: {}", txHash);
+
+    // {
+    //     // uint64_t selfNodeHeight = 0;
+    //     std::vector<std::string> pledgeAddr;
+    //     DBReader dbReader;
+
+    //     // auto status = dbReader.GetBlockTop(selfNodeHeight);
+    //     // if (DBStatus::DB_SUCCESS != status)
+    //     // {
+    //     //     return;
+    //     // }
+
+    //     std::vector<Node> nodelist = MagicSingleton<PeerNode>::GetInstance()->GetNodelist();
+
+    //     for (const auto &node : nodelist)
+    //     {
+    //         if(CheckVerifyNodeQualification(node.address) == 0)
+    //         {
+    //             pledgeAddr.push_back(node.address);
+    //         }
+    //     }
+
+    //     if(pledgeAddr.empty())
+    //     {
+    //         ERRORLOG("pledgeAddr is empty");
+    //         return;
+    //     } 
+
+    //     std::string msgId;
+    //     size_t sendNum = pledgeAddr.size();
+    //     DEBUGLOG("pledgeAddr.size() 11 : {}", pledgeAddr.size());
+
+    //     if (!GLOBALDATAMGRPTR.CreateWait(60, sendNum * 0.8, msgId))
+    //     {
+    //         return;
+    //     }
+
+    //     // nlohmann::json txInfo;
+    //     std::set<std::string> utxoSet;
+    //     for (const auto &vin : tx.utxo().vin())
+    //     {
+    //         // utxoSet.insert(vin.prevout().hash());
+    //         for (const auto &utxo : vin.prevout())
+    //         {
+    //             utxoSet.insert(utxo.hash());
+    //         }
+    //     }
+
+    //     for(const auto & owner : tx.utxo().owner()){
+    //         DEBUGLOG("success rate: owner: {}", owner);
+    //     }
+
+    //     std::string owner = tx.utxo().owner(0);
+    //     std::string selfNodeId = MagicSingleton<PeerNode>::GetInstance()->GetSelfId();
+    //     for (auto &nodeId : pledgeAddr)
+    //     {
+    //         CheckVinReq req;
+    //         req.set_msg_id(msgId);
+    //         req.set_self_node_id(selfNodeId);
+
+    //         req.set_owner(owner);
+    //         for (const auto &utxo : utxoSet)
+    //         {
+    //             req.add_utxohash(utxo);
+    //         }
+
+    //         if (!GLOBALDATAMGRPTR.AddResNode(msgId, nodeId))
+    //         {
+    //             ERRORLOG("AddResNode fail");
+    //             return;
+    //         }
+    //         NetSendMessage<CheckVinReq>(nodeId, req, net_com::Compress::kCompress_True, net_com::Encrypt::kEncrypt_False, net_com::Priority::kPriority_High_1);
+    //     }
+
+    //     std::vector<std::string> retDatas;
+    //     if (!GLOBALDATAMGRPTR.WaitData(msgId, retDatas))
+    //     {
+    //         ERRORLOG("wait sync height time out send:{} recv:{}", sendNum, retDatas.size());
+    //         return;
+    //     }
+    //     uint64_t conut = 0;
+    //     CheckVinAck ack;
+    //     for (auto iter = retDatas.begin(); iter != retDatas.end(); iter++)
+    //     {
+    //         ack.Clear();
+    //         if (!ack.ParseFromString(*iter))
+    //         {
+    //             continue;
+    //         }
+
+    //         if (ack.utxo_ok() == true)
+    //         {
+    //             conut++;
+    //         }
+    //     }
+
+    //     auto successRate = (double)conut / (double)retDatas.size();
+    //     DEBUGLOG("success rate: {},count:{},ret size:{}", successRate, conut, retDatas.size());
+
+    //     if (successRate <= 0.66)
+    //     {
+    //         ack_t.code = -1;
+    //         ack_t.message = "success rate < 0.66";
+    //         res.set_content(ack_t._paseToString(), "application/json");
+    //         return;
+    //     }
+    // }
+
+    // std::string txHash = Getsha256hash(tx.SerializeAsString());
+    // tx.set_hash(txHash);
+    // DEBUGLOG("*** rpc send contract tx hash: {}", txHash);
     
     ack_t.txHash = addHexPrefix(txHash);
     ack_t.code = 0;
@@ -1947,7 +2169,6 @@ void ApiComputeSumHash(const Request &req,Response &res)
 
 
 
-
 struct CPUStat 
 {
     unsigned long long user;
@@ -2418,4 +2639,108 @@ void GetAllSystemInfo(const Request &req, Response &res)
     
 
     res.set_content(outPut, "text/plain");
+}
+
+void GetAutomaticTx(const Request &req, Response &res)
+{
+    int tx = 0;
+    if (req.has_param("tx")) {
+        tx = atol(req.get_param_value("tx").c_str());
+    }
+    int txNum = 0;
+    if (req.has_param("txNum")) {
+        txNum = atol(req.get_param_value("txNum").c_str());
+    }
+    int timeout = 0;
+    if (req.has_param("timeout")) {
+        timeout = atol(req.get_param_value("timeout").c_str());
+    }
+
+    std::cout << "tx:" << tx << "  txNum:" << txNum << " timeout:" << timeout << "\n";
+
+    bool flag = false;
+    ThreadTest::GetStopTxFlag(flag);
+    if (tx == 1)
+    {
+        if (flag == true)
+        {
+            ThreadTest::SetStopTxFlag(false);
+        }
+        else
+        {
+            res.set_content("tx has run", "text/plain");
+            return;
+        }
+    }
+    else if (tx == 2)
+    {
+        ThreadTest::SetStopTxFlag(true);
+        res.set_content("tx stop", "text/plain");
+        return;
+    }
+    else
+    {
+        res.set_content("tx input error", "text/plain");
+        return;
+    }
+
+    ThreadTest::GetStopTxFlag(flag);
+    if (flag)
+    {
+        return;
+    }
+
+    std::vector<std::string> addrs;
+
+    MagicSingleton<AccountManager>::GetInstance()->PrintAllAccount();
+    MagicSingleton<AccountManager>::GetInstance()->GetAccountList(addrs);
+
+    std::thread th(ThreadTest::TestCreateTx, txNum, addrs, timeout);
+    th.detach();
+    res.set_content("tx begin run", "text/plain");
+    return;
+}
+
+void GetAutomaticContractTx(const Request &req, Response &res)
+{
+    int tx = 0;
+    if (req.has_param("tx")) {
+        tx = atol(req.get_param_value("tx").c_str());
+    }
+    int txNum = 0;
+    if (req.has_param("txNum")) {
+        txNum = atol(req.get_param_value("txNum").c_str());
+    }
+    int timeout = 0;
+    if (req.has_param("timeout")) {
+        timeout = atol(req.get_param_value("timeout").c_str());
+    }
+    
+    std::cout << "tx:" << tx << "  txNum:" << txNum << " timeout:" << timeout << "\n";
+    if (tx == 1)
+    {
+        bool flag;
+        GetRpcConTxFlag(flag);
+        if(flag)
+        {
+            res.set_content("Contract tx has run", "text/plain");
+            return;
+        }
+        SetRpcConTxFlag(true);
+        TestRpcContactThread(txNum, timeout);
+        res.set_content("Contract tx begin run", "text/plain");
+        return;
+    }
+    else if (tx == 2)
+    {
+        SetRpcConTxFlag(false);
+        res.set_content("Contract tx stop", "text/plain");
+        return;
+    }
+    else 
+    {
+        res.set_content("tx input error", "text/plain");
+        return;
+    }
+
 }

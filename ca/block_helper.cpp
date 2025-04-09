@@ -69,10 +69,7 @@ int SendBlockByUtxoReq(const std::string &utxo)
 
         for (const auto &node : nodelist)
         {
-            int ret = VerifyBonusAddr(node.address);
-
-            int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(node.address, global::ca::StakeType::kStakeType_Node);
-            if (stakeTime > 0 && ret == 0)
+            if(CheckVerifyNodeQualification(node.address) == 0)
             {
                 pledgeAddr.push_back(node.address);
             }
@@ -259,10 +256,7 @@ int SendBlockByHashReq(const std::map<std::string, bool> &missingHashs)
         
         for (const auto &node : nodelist)
         {
-            int ret = VerifyBonusAddr(node.address);
-
-            int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(node.address, global::ca::StakeType::kStakeType_Node);
-            if (stakeTime > 0 && ret == 0)
+            if(CheckVerifyNodeQualification(node.address) == 0)
             {
                 pledgeAddr.push_back(node.address);
             }
@@ -379,10 +373,7 @@ int SeekBlockByContractPreHashReq(const std::string &seekBlockHash, std::string&
 
         for (const auto &node : nodelist)
         {
-            int ret = VerifyBonusAddr(node.address);
-
-            int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(node.address, global::ca::StakeType::kStakeType_Node);
-            if (stakeTime > 0 && ret == 0)
+            if(CheckVerifyNodeQualification(node.address) == 0)
             {
                 pledgeAddr.push_back(node.address);
             }
@@ -398,7 +389,7 @@ int SeekBlockByContractPreHashReq(const std::string &seekBlockHash, std::string&
 
     std::string msgId;
     size_t sendNum = sendNodeIds.size();
-    if (!GLOBALDATAMGRPTR.CreateWait(2, sendNum / 2, msgId))
+    if (!GLOBALDATAMGRPTR.CreateWait(60, sendNum / 2, msgId))
     {
         return -5;
     }
@@ -1029,6 +1020,12 @@ int BlockHelper::RollbackContractBlock()
             rollbackBlocksHashs.insert(sit->hash());
             if(IsContractBlock(*sit))
             {
+                auto preHashKeys = GetcontractPreHash(*sit);
+                if(!preHashKeys.empty())
+                {
+                    addrMap.insert(preHashKeys.begin(), preHashKeys.end());
+                }
+
                 for(auto& tx :sit->txs())
                 {
                     auto addr = GetContractAddr(tx);
@@ -1077,13 +1074,17 @@ int BlockHelper::RollbackContractBlock()
 
         if(IsContractBlock(block))
         {
+            auto preHashKeys = GetcontractPreHash(block);
             for(auto& tx :block.txs())
             {
                 auto addr = GetContractAddr(tx);
-                if(!addr.empty())
+                preHashKeys.insert(addr);
+                if(!preHashKeys.empty())
                 {
-                    auto findAddr = addrMap.find(addr);
-                    if(findAddr != addrMap.end())
+                    auto intersection = std::set<std::string>();
+                    std::set_intersection(preHashKeys.begin(), preHashKeys.end(), addrMap.begin(), addrMap.end(), std::inserter(intersection, intersection.begin()));
+
+                    if(!intersection.empty())
                     {
                         _rollbackBlocks[block.height()].insert(block);
                     }
@@ -1269,7 +1270,7 @@ void BlockHelper::Process()
     };
 
 
-    uint64_t RollbackTimeout = 60 * 1000000;
+    uint64_t RollbackTimeout = 20 * 1000000;
 
     std::map<uint64_t, std::vector<std::set<CBlock, CBlockCompare>::iterator>> delete_rollback_blocks;
     for(auto iter = _rollbackBlocks.begin(); iter != _rollbackBlocks.end(); ++iter)
@@ -1581,10 +1582,12 @@ ContractPreHashStatus BlockHelper::CheckContractPreHashStatus(const std::string&
 
     DBReader dbReader;
     std::string DBContractPreHash;
+    DEBUGLOG("AAABBBCCC GetLatestUtxoByContractAddr, contractAddr:{}, DBContractPreHash:{}", contractAddr, DBContractPreHash);
     if (DBStatus::DB_SUCCESS != dbReader.GetLatestUtxoByContractAddr(contractAddr, DBContractPreHash))
     {
         return ContractPreHashStatus::Err;
     }
+    DEBUGLOG("AAABBBCCC GetLatestUtxoByContractAddr end");
     if(DBContractPreHash == MEMContractPreHash)
     {
         return ContractPreHashStatus::Normal;
@@ -1880,6 +1883,18 @@ void BlockHelper::AddBroadcastBlock(const CBlock& block, bool status)
         auto ret = checkContractBlock(block, contractTxPreHash);
         if(ret < 0)
         {
+            for(auto iter = _contractBlocks.begin(); iter != _contractBlocks.end();)
+            {
+                DEBUGLOG("delete double block hash:{}", block.hash());
+                if(block.hash() == iter->second.hash())
+                {
+                    _contractBlocks.erase(iter++);
+                }
+                else
+                {
+                    ++iter;
+                }
+            }
             DEBUGLOG("checkContractBlock error, contractBlockHash:{}, contractTxPreHash:{}",block.hash().substr(0,6), contractTxPreHash);
             return;
         }
@@ -1997,10 +2012,7 @@ bool BlockHelper::ObtainChainHeight(uint64_t& chainHeight)
     {
         for (const auto &node : nodes)
         {
-            int ret = VerifyBonusAddr(node.address);
-
-            int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(node.address, global::ca::StakeType::kStakeType_Node);
-            if (stakeTime > 0 && ret == 0)
+            if(CheckVerifyNodeQualification(node.address) == 0)
             {
                 qualifyingNode.push_back(node);
             }

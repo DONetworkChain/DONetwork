@@ -180,7 +180,7 @@ int KeyExchangeManager::SendKeyExchangeReq(Node &dest)
     request.set_allocated_key_info(key_info);
 
     std::string msg_id;
-    if (!GLOBALDATAMGRPTR.CreateWait(3, 1, msg_id))
+    if (!GLOBALDATAMGRPTR.CreateWait(5, 1, msg_id))
     {
         return -4;
     }

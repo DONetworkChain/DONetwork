@@ -336,10 +336,7 @@ RetType BlockStroage::_SeekPreHashThread(uint64_t seekHeight)
 
         for (const auto &node : nodelist)
         {
-            int ret = VerifyBonusAddr(node.address);
-
-            int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(node.address, global::ca::StakeType::kStakeType_Node);
-            if (stakeTime > 0 && ret == 0)
+            if(CheckVerifyNodeQualification(node.address) == 0)
             {
                 pledgeAddr.push_back(node.address);
             }

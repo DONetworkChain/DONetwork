@@ -14,6 +14,7 @@
 #include "ca/failed_transaction_cache.h"
 #include "ca/sync_block.h"
 
+#include "logging.h"
 #include "utils/json.hpp"
 #include "utils/console.h"
 #include "utils/tmp_log.h"
@@ -305,13 +306,10 @@ int TransactionCache::GetBuildBlockHeight(std::vector<TransactionEntity>& txcach
     std::map<std::string, uint64_t> satisfiedAddrs;
     for(auto & node : nodelist)
     {
-        //Verification of investment and pledge
-        int ret = VerifyBonusAddr(node.address);
-        int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(node.address, global::ca::StakeType::kStakeType_Node);
-        if (stakeTime > 0 && ret == 0)
-        {
-            satisfiedAddrs[node.address] = node.height;
-        }
+        if(CheckVerifyNodeQualification(node.address) == 0)
+		{
+			satisfiedAddrs[node.address] = node.height;
+		}
     }
 
     if (satisfiedAddrs.size() < global::ca::kNeed_node_threshold && (maxUtxoHeight < global::ca::kMinUnstakeHeight))
@@ -798,13 +796,12 @@ int TransactionCache::_AddContractInfoCache(const CTransaction &transaction,
         }
 
         ret = Evmone::ContractInfoAdd(host, transaction.hash(), txType, transaction.version(), jTxInfo,
-                                    contractPreHashCache);
+                                      contractPreHashCache);
         if(ret != 0)
         {
             ERRORLOG("ContractInfoAdd fail ret: {}", ret);
             return -4;
         }
-
         Evmone::GetCalledContract(host, calledContract);
    
         if(host.contractDataCache != nullptr) host.contractDataCache->set(jTxInfo[Evmone::contractStorageKeyName]);
@@ -914,11 +911,13 @@ TransactionCache::GetAndUpdateContractPreHash(const std::string &contractAddress
     if (found == contractPreHashCache.end())
     {
         DBReader dbReader;
+        DEBUGLOG("AAABBBCCC GetLatestUtxoByContractAddr, contractAddr:{}, DBContractPreHash:{}", contractAddress, strPrevTxHash);
         if (dbReader.GetLatestUtxoByContractAddr(contractAddress, strPrevTxHash) != DBStatus::DB_SUCCESS)
         {
             ERRORLOG("GetLatestUtxo of ContractAddr {} fail", contractAddress);
             return "";
         }
+        DEBUGLOG("AAABBBCCC GetLatestUtxoByContractAddr end")
         if (strPrevTxHash.empty())
         {
             return "";
@@ -1372,11 +1371,13 @@ int TransactionCache::_GetContractTxPreHash(const std::list<CTransaction>& txs, 
                 continue;
             }
             std::string DBContractPreHash;
+            DEBUGLOG("AAABBBCCC GetLatestUtxoByContractAddr, contractAddr:{}, DBContractPreHash:{}", preHashPair.first, DBContractPreHash);
             if (DBStatus::DB_SUCCESS != dbReader.GetLatestUtxoByContractAddr(preHashPair.first, DBContractPreHash))
             {
                 ERRORLOG("GetLatestUtxoByContractAddr fail !!! ContractAddr:{}", preHashPair.first);
                 return -2;
             }
+            DEBUGLOG("AAABBBCCC GetLatestUtxoByContractAddr end");
             if(DBContractPreHash != preHashPair.second)
             {
                 ERRORLOG("DBContractPreHash:({}) != preHashPair.second:({})", DBContractPreHash, preHashPair.second);
@@ -1397,7 +1398,7 @@ bool TransactionCache::RemoveContractInfoCacheTransaction(const std::map<std::st
         if (contractTxs.find(it->first) != contractTxs.end()) 
         {
             DEBUGLOG("txHash:{}", it->first);
-            it = _contractInfoCache.erase(it); 
+            it = _contractInfoCache.erase(it);
         } 
         else 
         {
@@ -1412,7 +1413,7 @@ bool TransactionCache::RemoveContractsCacheTransaction(const std::map<std::strin
     auto it = _contractCache.begin();
     while (it != _contractCache.end()) {
         if (contractTxs.find(it->GetTransaction().hash()) != contractTxs.end()) {
-            it = _contractCache.erase(it); 
+            it = _contractCache.erase(it);
         } else {
             ++it;
         }
@@ -1442,11 +1443,13 @@ int _HandleSeekContractPreHashReq(const std::shared_ptr<newSeekContractPreHashRe
     for(auto& preHashPair : msg->seekroothash())
     {
         std::string DBContractPreHash;
+        DEBUGLOG("AAABBBCCC GetLatestUtxoByContractAddr, contractAddr:{}, DBContractPreHash:{}", preHashPair.contractaddr(), DBContractPreHash);
         if (DBStatus::DB_SUCCESS != dbReader.GetLatestUtxoByContractAddr(preHashPair.contractaddr(), DBContractPreHash))
         {
             ERRORLOG("GetLatestUtxoByContractAddr fail !!!");
             return -3;
         }
+        DEBUGLOG("AAABBBCCC GetLatestUtxoByContractAddr end");
         if(DBContractPreHash != preHashPair.roothash())
         {
             DEBUGLOG("DBContractPreHash:({}) != roothash:({}) seekId:{}", DBContractPreHash, preHashPair.roothash(), node.address);
@@ -1499,10 +1502,7 @@ int _newSeekContractPreHash(const std::list<std::pair<std::string, std::string>>
         std::vector<Node> nodelist = MagicSingleton<PeerNode>::GetInstance()->GetNodelist();
         for (const auto &node : nodelist)
         {
-            int ret = VerifyBonusAddr(node.address);
-
-            int64_t stakeTime = ca_algorithm::GetPledgeTimeByAddr(node.address, global::ca::StakeType::kStakeType_Node);
-            if (stakeTime > 0 && ret == 0)
+            if(CheckVerifyNodeQualification(node.address) == 0)
             {
                 pledgeAddr.push_back(node.address);
             }
@@ -1522,7 +1522,7 @@ int _newSeekContractPreHash(const std::list<std::pair<std::string, std::string>>
 
     //send_size
     std::string msgId;
-    if (!GLOBALDATAMGRPTR.CreateWait(3, sendNodeIds.size() * 0.8, msgId))
+    if (!GLOBALDATAMGRPTR.CreateWait(60, sendNodeIds.size() * 0.8, msgId))
     {
         return -3;
     }
@@ -1551,6 +1551,7 @@ int _newSeekContractPreHash(const std::list<std::pair<std::string, std::string>>
     std::vector<std::string> ret_datas;
     if (!GLOBALDATAMGRPTR.WaitData(msgId, ret_datas))
     {
+        DEBUGLOG("_newSeekContractPreHash WaitData fail !!! senNum: {}, ret_datas.size: {}", sendNodeIds.size() * 0.8, ret_datas.size());   
         return -5;
     }
 

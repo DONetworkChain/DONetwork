@@ -13,7 +13,7 @@
 #include <fstream>
 #include <map>
 #include <vector>
-
+#include <cstdint>
 #include "vxntp_helper.h"
 
 /**
@@ -119,7 +119,13 @@ public:
      * @return      std::string 
      */
     std::string GetDate(int d=0);
-};
 
+    /**
+     * @brief       Get the Current Time String object
+     * 
+     * @return      std::string 
+     */
+    std::string GetCurrentTimeString();
+};
 
 #endif

@@ -218,3 +218,14 @@ std::string TimeUtil::GetDate(int d)
     std::string date=std::to_string(1900+p->tm_year)+"."+std::to_string(1+p->tm_mon)+"."+std::to_string(p->tm_mday);
     return date;
 }
+
+std::string TimeUtil::GetCurrentTimeString()
+{
+    // get current time
+    auto now = std::chrono::system_clock::now();
+    std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
+    std::tm *now_tm = std::localtime(&now_time_t);
+    std::ostringstream oss;
+    oss << std::put_time(now_tm, "%Y-%m-%d %H:%M:%S");
+    return oss.str();
+}

@@ -17,13 +17,28 @@ int BonusAddrCache::getAmount(const std::string& bonusAddr, uint64_t& amount)
         }
     }
     
-    if(amount >= global::ca::kMinInvestAmt)
+    DBReader db_reader;
+    uint64_t top = 0;
+    if (DBStatus::DB_SUCCESS != db_reader.GetBlockTop(top)){
+		ERRORLOG("db get top failed!!");
+		return -2;
+	}
+
+
+	uint64_t minInvestAmt = 0;
+	if(top >= global::ca::KHardForkHeight){
+        minInvestAmt = global::ca::kNewMinInvestAmt;
+	}else{
+        minInvestAmt = global::ca::kMinInvestAmt;
+	}
+
+    if(amount >= minInvestAmt)
     {
         return 0;
     }
 
     bonus_addr_[bonusAddr].utxos.clear();
-    DBReader db_reader;
+    // DBReader db_reader;
     std::vector<std::string> addrs;
     auto ret = db_reader.GetInvestAddrsByBonusAddr(bonusAddr, addrs);
     if (ret != DBStatus::DB_SUCCESS && ret != DBStatus::DB_NOT_FOUND)
@@ -69,7 +84,7 @@ int BonusAddrCache::getAmount(const std::string& bonusAddr, uint64_t& amount)
                     break;
                 }
             }
-            if(sum_invest_amount >= global::ca::kMinInvestAmt && flag)
+            if(sum_invest_amount >= minInvestAmt && flag)
             {
                 bonus_addr_[bonusAddr].time = tx.time();
                 flag = false;

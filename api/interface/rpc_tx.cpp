@@ -43,7 +43,6 @@
 		}\
 	}
 
-
 #define PARSE_JSON(value)\
   if(jsParams.contains(#value)){\
 		jsParams[#value].get_to(this->value);\
@@ -58,11 +57,9 @@
 		}\
 	}
 
-
 #define TO_JSON(value) jsObject[#value] = this->value;
 #define TO_RESULT(value) jsResult[#value] = this->value;
 #define TO_PARAMS(value) jsParams[#value] = this->value;
-
 
 #define PARSE_REQ(sname)                                                     \
   std::string sname::_paseFromJson(const std::string& json) {                  \
@@ -73,7 +70,6 @@
         PARSE_REGULAR_JSON(id)\
         PARSE_REGULAR_JSON(jsonrpc)\
         PARSE_PARAMS(params)
-        
 
 #define PARSE_ACK(sname)                                                     \
   std::string sname::_paseFromJson(const std::string& json) {                   \
@@ -86,7 +82,6 @@
         PARSE_REGULAR_JSON(jsonrpc)\
         PARSE_PARAMS(result)
 
-
 #define DUMP_REQ(sname)                                                     \
   std::string sname::_paseToString() {                                          \
     nlohmann::json jsObject;                                                   \
@@ -95,7 +90,6 @@
     TO_JSON(id)\
     TO_JSON(jsonrpc)\
     // TO_JSON(params)
-
 
 #define DUMP_ACK(sname)                                                     \
   std::string sname::_paseToString() {                                          \
@@ -107,7 +101,6 @@
       TO_JSON(jsonrpc)
       // TO_JSON(result)
 
-
 #define PARSE_END \
     }                                                                            \
     catch (std::exception & e) {                                                 \
@@ -116,7 +109,6 @@
     }                                                                            \
   return "OK";                                                                 \
   }
-
 
 #define REQ_DUMP_END                                                                \
       jsObject["params"] = jsParams;\
@@ -127,7 +119,6 @@
     }                                                                            \
   return jsObject.dump();                                                      \
   }
-
 
 #define ACK_DUMP_END                                                                \
         TO_RESULT(code)\

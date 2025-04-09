@@ -2,7 +2,7 @@
 #define __VXNTPHELPER_H__
 
 #include "vxd_type.h"
-
+#include <cstdint>
  
 
 #ifdef __cplusplus
@@ -19,7 +19,7 @@ extern "C" {
 
 /**
  * @struct x_ntp_timestamp_t
- * @brief  NTP
+ * @brief  NTP timestamp
  */
 typedef struct x_ntp_timestamp_t
 { 

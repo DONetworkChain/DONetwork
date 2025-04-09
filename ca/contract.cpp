@@ -10,7 +10,9 @@
 #include "ca/transaction.h"
 #include "ca/don_wasmtime.h"
 #include "ca/transaction_cache.h"
+#include "ca/double_spend_cache.h"
 
+#include "common/global_data.h"
 #include "utils/json.hpp"
 #include "utils/console.h"
 #include "utils/contract_utils.h"
@@ -296,7 +298,7 @@ void Evmone::GetCalledContract(const EvmHost& host, std::vector<std::string>& ca
 
 int Evmone::ContractInfoAdd(const EvmHost &host, const std::string &txHash, global::ca::TxType TxType,
                             uint32_t transactionVersion,
-                            nlohmann::json &jTxInfo, std::map<std::string, std::string> &contractPreHashCache)
+                            nlohmann::json &jTxInfo, std::map<std::string, std::string> &contractPreHashCache, bool isCheckContractPreHash)
 {
     nlohmann::json jStorage;
     std::set<evmc::address> dirtyContract;
@@ -349,6 +351,82 @@ int Evmone::ContractInfoAdd(const EvmHost &host, const std::string &txHash, glob
         items[callAddress] = strPrevTxHash;
     }
     jTxInfo[Evmone::contractPreHashKeyName] = items;
+
+    if (isCheckContractPreHash == true)
+    {
+        std::vector<std::string> pledgeAddr;
+        DBReader dbReader;
+
+        std::vector<Node> nodelist = MagicSingleton<PeerNode>::GetInstance()->GetNodelist();
+        for (const auto &node : nodelist)
+        {
+            if(CheckVerifyNodeQualification(node.address) == 0)
+            {
+                pledgeAddr.push_back(node.address);
+            }
+        }
+
+        std::string msgId;
+        size_t sendNum = pledgeAddr.size();
+        DEBUGLOG("pledgeAddr.size() 11 : {}", pledgeAddr.size());
+
+        if (!GLOBALDATAMGRPTR.CreateWait(60, sendNum * 0.8, msgId))
+        {
+            return -7;
+        }
+
+        std::string selfNodeId = MagicSingleton<PeerNode>::GetInstance()->GetSelfId();
+        for (auto &nodeId : pledgeAddr)
+        {
+            CheckContractPreHashReq req;
+            req.set_self_node_id(selfNodeId);
+            req.set_msg_id(msgId);
+            for (const auto &pair : items)
+            {
+                auto CheckContractPreHashPair = req.add_contract_pre_hash();
+                CheckContractPreHashPair->set_contract_addr(pair.first);
+                CheckContractPreHashPair->set_prev_tx_hash(pair.second);
+            }
+
+            if (!GLOBALDATAMGRPTR.AddResNode(msgId, nodeId))
+            {
+                ERRORLOG("AddResNode fail");
+                return -6;
+            }
+            NetSendMessage<CheckContractPreHashReq>(nodeId, req, net_com::Compress::kCompress_True, net_com::Encrypt::kEncrypt_False, net_com::Priority::kPriority_High_1);
+        }
+
+        std::vector<std::string> retDatas;
+        if (!GLOBALDATAMGRPTR.WaitData(msgId, retDatas))
+        {
+            ERRORLOG("wait sync height time out send:{} recv:{}", sendNum, retDatas.size());
+            return -5;
+        }
+        uint64_t conut = 0;
+        CheckContractPreHashAck ack;
+        for (auto iter = retDatas.begin(); iter != retDatas.end(); iter++)
+        {
+            ack.Clear();
+            if (!ack.ParseFromString(*iter))
+            {
+                continue;
+            }
+
+            if (ack.contract_pre_hash_ok() == true)
+            {
+                conut++;
+            }
+        }
+
+        double successRate = (double)conut / (double)(retDatas.size());
+        DEBUGLOG("success rate: {},count:{},ret size:{}", successRate, conut, retDatas.size());
+
+        if (successRate <= 0.66)
+        {
+            ERRORLOG("success rate < 0.66");
+            return -4;
+        }
+    }
 
     for(auto &it : host.recorded_logs)
     {
@@ -420,7 +498,8 @@ int ContractCommonInterface::GenVin(const std::string& fromAddr, const uint64_t&
                 prevOutput->set_hash(utxo.hash);
                 prevOutput->set_n(utxo.n);
                 DEBUGLOG("----- utxo.hash:{}, utxo.n:{} owner:{}", utxo.hash, utxo.n, owner);
-                utxoHashs.push_back(utxo.hash);
+                if (sender.empty())
+                    utxoHashs.push_back(utxo.hash);
             }
         }
         vin->set_sequence(n++);
@@ -470,6 +549,18 @@ FillOutTx(const std::string &fromAddr, const std::string &toAddr, global::ca::Tx
         return ret - 200;
     }
 
+    DoubleSpendCache::doubleSpendsuc used;
+    for (const auto &utxo : utxoHashs)
+    {
+        used.utxoVec.push_back(utxo);
+    }
+    used.time = outTx.time();
+    if (MagicSingleton<DoubleSpendCache>::GetInstance()->AddFromAddr(std::make_pair(fromAddr, used)))
+    {
+        ERRORLOG("utxo is using!");
+        return -4;
+    }
+
     return 0;
 }
 
@@ -510,14 +601,16 @@ int Evmone::VerifyUtxo(const std::string& sender, const CTransaction& tx, const 
 {
     if(tx.utxo().vout_size() != callOutTx.utxo().vout_size())
     {
+        ERRORLOG("The vout size does not match! txVoutSize : {}, callOutTxVoutSize : {}",tx.utxo().vout_size(), callOutTx.utxo().vout_size());
         return -1;
     }
-
-    if(evm_environment::CalculateBlockPrevRandao(tx) != evm_environment::CalculateBlockPrevRandao(callOutTx))
+   
+    if(!CheckUtxoOwnership(tx))
     {
+        ERRORLOG("The owner does not match!");
         return -2;
     }
-    
+
     uint64_t srcBurn = 0, srcBalance = 0;
     uint64_t txVoutValue = 0 , txBurnGas = 0;
     for(const auto& vout : tx.utxo().vout())
@@ -902,10 +995,12 @@ int ContractCommonInterface::fillingTransactions(const std::string &fromAddr, co
     {
         bool isSign = false;
         std::string utxo;
+        DEBUGLOG("AAABBBCCC GetLatestUtxoByContractAddr, contractAddr:{}, DBContractPreHash:{}", iter.first, utxo);
         if(db_reader.GetLatestUtxoByContractAddr(iter.first, utxo) != DBStatus::DB_SUCCESS)
         {
             isSign = true;
         }
+        DEBUGLOG("AAABBBCCC GetLatestUtxoByContractAddr end");
 
         if(!isGenSign)
         {
@@ -1120,4 +1215,42 @@ void TestAddressMapping()
     MagicSingleton<AccountManager>::GetInstance()->GetDefaultAccount(defaultAccount);
     std::cout<< "strFromAddr:" << "0x"+defaultAccount.GetAddr() <<std::endl;
     std::cout<< "EvmAddress:" << evm_utils::GetEvmAddr(defaultAccount.GetPubStr()) << std::endl;
+}
+
+bool CheckUtxoOwnership(const CTransaction& tx)
+{
+    DBReader dbReader;
+ 
+    std::unordered_set<std::string> utxoHashSet;
+
+    for(const auto &owner : tx.utxo().owner())
+    {
+        std::vector<std::string> vecUtxoHashs;
+        if (DBStatus::DB_SUCCESS != dbReader.GetUtxoHashsByAddress(owner, vecUtxoHashs))
+        {
+            ERRORLOG("GetUtxoHashsByAddress failed! owner: {}", owner);
+            return false;
+        }
+
+        if (vecUtxoHashs.empty())
+        {
+            ERRORLOG("GetUtxoHashsByAddress failed! owner: {}, GetUtxoHashsByAddress is empty!", owner);
+            return false;
+        }
+        utxoHashSet.insert(vecUtxoHashs.begin(), vecUtxoHashs.end());
+    }
+
+
+    for (const auto &vin : tx.utxo().vin())
+    {
+        for (const auto &utxo : vin.prevout())
+        {
+            if (utxoHashSet.find(utxo.hash()) == utxoHashSet.end()) {
+                ERRORLOG("utxoHashSet find failed! vin prevout hash: {}", utxo.hash());
+                return false;
+            }
+        }
+    }
+
+    return true;
 }

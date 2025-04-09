@@ -618,3 +618,8 @@ std::string Config::ExecuteBasedOnGlobalOptions(){
     }
     return _ip;
 }
+
+
+std::vector<std::string> Config::GetScoutNode(){
+    return sentinelNode;
+}

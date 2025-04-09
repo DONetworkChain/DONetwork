@@ -5,7 +5,6 @@
 #include "../../net/httplib.h"
 #include "test.h"
 
-
 void _CaRegisterHttpCallbacks();
 
 /**
@@ -182,4 +181,15 @@ void ApiPrintCalc1000SumHash(const Request &req,Response &res);
 void ApiPrintAllBlocks(const Request &req,Response &res);
 void ApiComputeSumHash(const Request &req,Response &res);
 void GetAllSystemInfo(const Request &req, Response &res);
+void GetAutomaticTx(const Request &req, Response &res);
+void GetAutomaticContractTx(const Request &req, Response &res);
+
+int GetFileLine();
+void GetMemOccupy(int lenNum, std::string &strMem);
+void GetDiskType(std::string &strMem);
+std::string ApiGetCpuInfo();
+std::string GetNetRate();
+std::string ApiGetSystemInfo();
+std::string ApiTime();
+std::string GetProcessInfo();
 #endif

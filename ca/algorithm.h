@@ -288,8 +288,10 @@ bool CalculateHeightSumHash(uint64_t startHeight, uint64_t endHeight, DBReadWrit
  * @param       addr: 
  * @param       retCommissionRate: Commission Percentage
  * @return      int 0 success
- */
-int GetCommissionPercentage(const std::string& addr, double& retCommissionRate);
+*/
+// int GetCommissionPercentage(const std::string& addr, double& retCommissionRate);
+
+int GetCommissionPercentage(const std::string& addr, const uint64_t& txHeight, double& retCommissionRate);
 /**
  * @brief       Get the starting address for executing the contract
  * 

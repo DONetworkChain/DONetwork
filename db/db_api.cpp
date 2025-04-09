@@ -580,11 +580,11 @@ DBStatus DBReader::GetMptValueByMptKey(const std::string &mptKey, std::string &M
 
 DBStatus DBReader::GetInitVer(std::string &version)
 {
-    std::string tmpversion;
-    auto ret = ReadData(kInitVersionKey, tmpversion);
-    if (DBStatus::DB_SUCCESS == ret)
+    auto ret = ReadData(kInitVersionKey, version);
+    if (DBStatus::DB_SUCCESS != ret)
     {
-        version = tmpversion;
+        DEBUGLOG("ReadInitVersion Error {}", ret);
+        return ret;
     }
     return ret;
 }

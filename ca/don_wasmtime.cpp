@@ -64,11 +64,13 @@ void DON::_wasm_time_init(){
 
         std::string strPrevTxHash;
         DBReader dataReader;
+        DEBUGLOG("AAABBBCCC GetLatestUtxoByContractAddr, contractAddr:{}, DBContractPreHash:{}", destoryAddr, strPrevTxHash);
         auto ret = dataReader.GetLatestUtxoByContractAddr(destoryAddr, strPrevTxHash);
         if(ret != DBStatus::DB_SUCCESS)
         {
             std::cout << "GetLatestUtxoByContractAddr fail" << std::endl;
         }
+        DEBUGLOG("AAABBBCCC GetTransactionByHash end");
 
         CTransaction PrevTx;
         std::string transactionRaw;
